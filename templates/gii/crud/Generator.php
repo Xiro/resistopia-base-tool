@@ -1,7 +1,7 @@
 <?php
 
 
-namespace backend\templates\gii\crud;
+namespace app\templates\gii\crud;
 
 
 use yii\db\ActiveRecord;
@@ -20,9 +20,6 @@ class Generator extends \yii\gii\generators\crud\Generator
 
     protected $requiredTemplateProperties = array(
         "sortable"          => ["id", "order"],
-        "approval"          => ["id", "approved"], // author_id and author required for notifications
-        "approval-sortable" => ["id", "order", "approved"], // author_id and author required for notifications
-        "rating"            => ["value", "title"],
     );
 
     public $booleanEnums = [

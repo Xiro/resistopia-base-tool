@@ -79,7 +79,7 @@ if (YII_ENV_DEV) {
                 ]
             ],
             'crud'  => [
-                'class'     => 'backend\templates\gii\crud\Generator',
+                'class'     => 'app\templates\gii\crud\Generator',
                 'templates' => [
                     'default'           => '@app/templates/gii/crud/default',
                     'sortable'          => '@app/templates/gii/crud/sortable',

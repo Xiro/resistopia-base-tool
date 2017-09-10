@@ -1,6 +1,6 @@
 <?php
 
-\backend\assets\CrudAutocompleteAsset::register($this);
+\app\assets\CrudAutocompleteAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
