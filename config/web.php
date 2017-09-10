@@ -39,14 +39,22 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
-        'urlManager' => [
+        'urlManager'   => [
+            'class'           => 'yii\web\UrlManager',
+            // Disable index.php
+            'showScriptName'  => false,
+            // Disable r= routes
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules'           => array(
+                '<controller:\w+>/<id:\d+>'              => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>'          => '<controller>/<action>',
+            ),
         ],
-        */
+        'assetManager' => [
+            'class' => 'yii\web\AssetManager',
+            'forceCopy' => true,
+        ],
     ],
     'params' => $params,
 ];
@@ -56,15 +64,28 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '::1'],
+        'generators' => [
+            'model' => [
+                'class'     => 'yii\gii\generators\model\Generator',
+                'templates' => [
+                    'default' => '@app/templates/gii/model/default',
+                ]
+            ],
+            'crud'  => [
+                'class'     => 'backend\templates\gii\crud\Generator',
+                'templates' => [
+                    'default'           => '@app/templates/gii/crud/default',
+                    'sortable'          => '@app/templates/gii/crud/sortable',
+                ]
+            ],
+        ]
     ];
 }
 
