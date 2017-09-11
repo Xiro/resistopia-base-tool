@@ -20,7 +20,13 @@ $(document).ready(function () {
         var controllerClassName = targetNs.replace("models", "controllers") + "\\" + modelClassName + "Controller";
         controllerClassInput.val(controllerClassName);
 
-        var viewPath = "@app/../" + destination + "/views/" + modelViewName;
+        var viewPath = "";
+        if(destination === "app") {
+            viewPath = "@app/views/" + modelViewName;
+        } else {
+            viewPath = "@app/../" + destination + "/views/" + modelViewName;
+        }
+
         viewPathInput.val(viewPath);
     })
 

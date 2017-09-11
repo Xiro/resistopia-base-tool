@@ -7,7 +7,10 @@
 
 namespace app\assets;
 
+use app\assets\plugins\AnimatedLabelFormAsset;
+use app\assets\plugins\FontAwesomeAsset;
 use yii\web\AssetBundle;
+use yii\web\YiiAsset;
 
 /**
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -18,12 +21,13 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'plugins/bootstrap/bootstrap.css', // use custom bootstrap compilation
         'css/layout.css',
     ];
     public $js = [
     ];
     public $depends = [
-        'yii\web\YiiAsset',
+        YiiAsset::class,
+        FontAwesomeAsset::class,
+        AnimatedLabelFormAsset::class
     ];
 }

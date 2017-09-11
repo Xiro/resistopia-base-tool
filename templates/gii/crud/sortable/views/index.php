@@ -4,7 +4,7 @@ use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
-/* @var $generator \backend\templates\gii\crud\Generator */
+/* @var $generator \app\templates\gii\crud\Generator */
 
 $urlParams = $generator->generateUrlParams();
 $nameAttribute = $generator->getNameAttribute();
@@ -31,7 +31,7 @@ echo "<?php\n";
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use backend\assets\plugins\SortableUpdateAsset;
+use app\assets\plugins\SortableUpdateAsset;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -65,12 +65,12 @@ SortableUpdateAsset::register($this);
                     $relation = $generator->getRelationSchema($column->name);
                     if($relation !== false) {
                         echo '[
-                        "class"          => \'common\components\grid\ModelColumn\',
+                        "class"          => \'app\components\grid\ModelColumn\',
                         "attribute"      => "' . lcfirst($relation["className"]) . '",
                     ],' . "\n" . '                    ' ;
                     } elseif(!empty($column->enumValues) && in_array($column->enumValues, $generator->booleanEnums)) {
                         echo '[
-                        "class"          => \'common\components\grid\BooleanColumn\',
+                        "class"          => \'app\components\grid\BooleanColumn\',
                         "headerOptions"  => ["class" => "width-content-adjusted"],
                         "contentOptions" => ["class" => "width-content-adjusted text-center"],
                         "attribute"      => "' . $column->name . '",

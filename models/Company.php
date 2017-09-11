@@ -29,6 +29,7 @@ class Company extends ActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 50],
+            [['name'], 'unique'],
         ];
     }
 

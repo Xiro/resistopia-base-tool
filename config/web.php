@@ -54,6 +54,18 @@ $config = [
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
             'forceCopy' => true,
+            'bundles' => [
+                'yii\bootstrap\BootstrapAsset' => [
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'css' => [
+                        'plugins/bootstrap/bootstrap.css'
+                    ],
+                    'js' => [
+                        'plugins/bootstrap/bootstrap.min.js'
+                    ]
+                ],
+            ],
         ],
     ],
     'params' => $params,

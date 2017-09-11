@@ -1,0 +1,67 @@
+@import "../variables";
+
+
+
+.scrollbar-horizontal(
+  @scrollbar-size: 8px;
+  @scrollbar-line-size: 2px;
+  @scrollbar-space: 4px;
+  @scrollbar-color: @gray-darker;
+  @scrollbar-line-color: @gray-dark;
+  @scrollbar-space-bg: #fff;
+) {
+  @scrollbar-line-space: @scrollbar-space + (@scrollbar-size - @scrollbar-line-size) / 2;
+
+  overflow-x: auto;
+  &::-webkit-scrollbar-track
+  {
+    background-color: @scrollbar-line-color;
+    border-top: @scrollbar-line-space solid @scrollbar-space-bg;
+    border-bottom: @scrollbar-line-space solid @scrollbar-space-bg;
+  }
+  &::-webkit-scrollbar
+  {
+    height: @scrollbar-size + @scrollbar-space * 2;
+    background-color: @scrollbar-color;
+  }
+  &::-webkit-scrollbar-thumb
+  {
+    background-color: @scrollbar-color;
+    height: @scrollbar-size;
+    border-top: @scrollbar-space solid @scrollbar-space-bg;
+    border-bottom: @scrollbar-space solid @scrollbar-space-bg;
+    //border-radius: 9px;
+  }
+}
+
+.scrollbar-vertical(
+  @scrollbar-size: 8px;
+  @scrollbar-line-size: 2px;
+  @scrollbar-space: 4px;
+  @scrollbar-color: @gray-darker;
+  @scrollbar-line-color: @gray-dark;
+  @scrollbar-space-bg: #fff;
+) {
+  @scrollbar-line-space: @scrollbar-space + (@scrollbar-size - @scrollbar-line-size) / 2;
+
+  overflow-y: auto;
+  &::-webkit-scrollbar-track
+  {
+    background-color: @scrollbar-line-color;
+    border-left: @scrollbar-line-space solid @scrollbar-space-bg;
+    border-right: @scrollbar-line-space solid @scrollbar-space-bg;
+  }
+  &::-webkit-scrollbar
+  {
+    width: @scrollbar-size + @scrollbar-space * 2;
+    background-color: @scrollbar-color;
+  }
+  &::-webkit-scrollbar-thumb
+  {
+    background-color: @scrollbar-color;
+    height: @scrollbar-size;
+    border-left: @scrollbar-space solid @scrollbar-space-bg;
+    border-right: @scrollbar-space solid @scrollbar-space-bg;
+    //border-radius: 9px;
+  }
+}

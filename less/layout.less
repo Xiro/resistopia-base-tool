@@ -3,3 +3,84 @@
 body > * {
   font-family: @font-family-base;
 }
+
+body {
+  padding-top: @navbar-height;
+}
+
+.navbar.navbar-inverse {
+  border-bottom: 1px solid @brand-primary;
+  background: #000;
+
+  .navbar-nav>li>a, .navbar-text {
+    font-size: @font-size-large;
+    color: @brand-primary;
+    &:hover {
+      color: lighten(@brand-primary, 10%);
+    }
+  }
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  border-color: @brand-primary;
+  margin-bottom: 33px;
+}
+
+.custom-button(@main-color) {
+  background: darken(@main-color, 30%);
+  border-color: @main-color;
+  color: @main-color;
+  &:hover {
+    background: darken(@main-color, 30%);
+    color: lighten(@main-color, 10%);
+    border-color: lighten(@main-color, 10%);
+  }
+}
+
+.btn-success {
+  .custom-button(@brand-success)
+}
+.btn-primary {
+  .custom-button(@brand-primary)
+}
+
+.checkbox input[type=checkbox] {
+  -webkit-appearance: initial;
+  appearance: initial;
+  background: #000;
+  padding: 7px;
+  border-radius: @border-radius-small;
+  border: 1px solid @brand-primary;
+  display: inline-block;
+  cursor: pointer;
+
+  &:checked {
+    //background-color: @gray-dark;
+  }
+  &:checked:before {
+    position: absolute;
+    //color: @gray-lighter;
+    color: @brand-primary;
+    font-family: "FontAwesome";
+    content: '\f00c';
+    font-size: 12px;
+    top: 1px;
+    left: 1px;
+  }
+  &:focus {
+    outline: 0;
+  }
+
+}
+form.animated-label .checkbox-group .form-group {
+  margin-bottom: 0;
+  .checkbox {
+    margin-top: 0;
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .checkbox input[type=checkbox] {
+    padding: 0;
+  }
+}

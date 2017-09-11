@@ -97,15 +97,22 @@ class Staff extends ActiveRecord
             'call_sign' => 'Call Sign',
             'is_blocked' => 'Is Blocked',
             'is_it' => 'Is It',
-            'company_id' => 'Company ID',
-            'category_id' => 'Category ID',
-            'speciality_id' => 'Speciality ID',
-            'rank_id' => 'Rank ID',
-            'team_id' => 'Team ID',
-            'blood_type_id' => 'Blood Type ID',
-            'eye_color_id' => 'Eye Color ID',
-            'staff_status_id' => 'Staff Status ID',
+            'company_id' => 'Company',
+            'category_id' => 'Category',
+            'speciality_id' => 'Speciality',
+            'rank_id' => 'Rank',
+            'team_id' => 'Team',
+            'blood_type_id' => 'Blood Type',
+            'eye_color_id' => 'Eye Color',
+            'staff_status_id' => 'Staff Status',
         ];
+    }
+
+    public function getName()
+    {
+        return $this->forename .
+            ($this->nickname ? ' "' . $this->nickname . '"' : "") .
+            ($this->surname ? ' "' . $this->surname . '"' : "");
     }
 
     /**
@@ -186,5 +193,15 @@ class Staff extends ActiveRecord
     public function getRoles()
     {
         return $this->hasMany(Role::className(), ['id' => 'role_id'])->viaTable('staff_role', ['staff_id' => 'id']);
+    }
+
+    /**
+     * @param string $roleName
+     * @return \yii\db\ActiveQuery
+     */
+    public function hasRole($roleName)
+    {
+        $roles = array_column($this->getRoles()->asArray()->all(), "name");
+        return in_array($roleName, $roles);
     }
 }

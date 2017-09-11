@@ -7,8 +7,9 @@
 /* @var $generator yii\gii\generators\crud\Generator */
 
 echo $form->field($generator, 'templateDestination')->dropDownList([
-    "backend" => "Backend",
-    "frontend" => "Frontend"
+    "app"      => "App",
+    "backend"  => "Backend",
+    "frontend" => "Frontend",
 ]);
 
 echo $form->field($generator, 'modelClass');

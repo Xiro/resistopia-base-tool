@@ -213,6 +213,22 @@ class m170910_130917_structure extends Migration
             ADD COLUMN `died` DATETIME NULL DEFAULT NULL AFTER `updated`;
         ");
 
+        $this->execute("ALTER TABLE `category`
+	        ADD UNIQUE INDEX `name` (`name`);");
+        $this->execute("ALTER TABLE `company`
+	        ADD UNIQUE INDEX `name` (`name`);");
+        $this->execute("ALTER TABLE `eye_color`
+	        ADD UNIQUE INDEX `name` (`name`);");
+        $this->execute("ALTER TABLE `rank`
+	        ADD UNIQUE INDEX `name` (`name`);");
+        $this->execute("ALTER TABLE `role`
+	        ADD UNIQUE INDEX `name` (`name`);");
+        $this->execute("ALTER TABLE `speciality`
+	        ADD UNIQUE INDEX `name` (`name`);");
+        $this->execute("ALTER TABLE `staff_status`
+	        ADD UNIQUE INDEX `name` (`name`);");
+        $this->execute("ALTER TABLE `team`
+	        ADD UNIQUE INDEX `name` (`name`);");
     }
 
     public function safeDown()

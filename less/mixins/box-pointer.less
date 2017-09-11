@@ -1,0 +1,33 @@
+
+@import "../bootstrap/variables";
+
+.triangle(@size, @color) {
+  width: 0;
+  height: 0;
+  border-left: @size solid transparent;
+  border-right: @size solid transparent;
+  border-bottom: @size solid @color;
+}
+
+.box-pointer(
+  @background: #fff,
+  @pointer-offset: 6px,
+  @pointer-size: 10px
+) {
+  position: absolute;
+  right: @pointer-offset;
+  top: -@pointer-size;
+  .triangle(@pointer-size, @background);
+  z-index: 1100;
+}
+.box-pointer-border(
+  @border-color: @gray-lighter,
+  @pointer-offset: 6px,
+  @pointer-size: 10px
+) {
+  position: absolute;
+  right: @pointer-offset - 1;
+  top: -@pointer-size - 1;
+  .triangle(@pointer-size + 1, @border-color);
+  z-index: 1099;
+}

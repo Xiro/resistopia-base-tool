@@ -16,7 +16,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      * Destination namespace of generated code for advanced yii template
      * @var string
      */
-    public $templateDestination = "backend";
+    public $templateDestination = "cic";
 
     protected $requiredTemplateProperties = array(
         "sortable"          => ["id", "order"],
