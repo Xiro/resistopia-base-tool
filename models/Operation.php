@@ -9,6 +9,8 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property string $name
+ *
+ * @property Mission[] $missions
  */
 class Operation extends ActiveRecord
 {
@@ -39,5 +41,13 @@ class Operation extends ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMissions()
+    {
+        return $this->hasMany(Mission::className(), ['operation_id' => 'id']);
     }
 }

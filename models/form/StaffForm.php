@@ -22,7 +22,7 @@ class StaffForm extends Staff
     public function __construct(array $config = [])
     {
         parent::__construct($config);
-        $this->staff_status_id = StaffStatus::findOne(["name" => "alive"]);
+        $this->staff_status_id = StaffStatus::findOne(["name" => StaffStatus::STATUS_ALIVE]);
     }
 
 

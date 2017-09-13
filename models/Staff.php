@@ -31,6 +31,8 @@ use yii\db\ActiveRecord;
  * @property integer $eye_color_id
  * @property integer $staff_status_id
  *
+ * @property MissionStaff[] $staffMissions
+ * @property Mission[] $missions
  * @property BloodType $bloodType
  * @property Category $category
  * @property Company $company
@@ -115,6 +117,22 @@ class Staff extends ActiveRecord
         return $this->forename .
             ($this->nickname ? ' "' . $this->nickname . '"' : "") .
             ($this->surname ? ' ' . $this->surname : "");
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStaffMissions()
+    {
+        return $this->hasMany(MissionStaff::className(), ['staff_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMissions()
+    {
+        return $this->hasMany(Mission::className(), ['id' => 'mission_id'])->viaTable('mission_staff', ['staff_id' => 'id']);
     }
 
     /**

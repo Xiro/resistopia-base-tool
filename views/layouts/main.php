@@ -9,6 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
+$isAjax = Yii::$app->request->isAjax;
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -35,6 +36,7 @@ AppAsset::register($this);
         ],
     ]);
     $navItems = [];
+    $navItems[] = ['label' => 'Missions', 'url' => ['mission/index']];
     $navItems[] = ['label' => 'Mission Calls', 'url' => ['mission-call/index']];
     $navItems[] = ['label' => 'Staff', 'url' => ['staff/index']];
     echo Nav::widget([
@@ -44,7 +46,7 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <div class="container">
+    <div class="<?= $isAjax ? "" : "container" ?>">
         <?= $content ?>
     </div>
 </div>

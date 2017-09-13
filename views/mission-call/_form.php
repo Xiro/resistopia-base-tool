@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use kartik\select2\Select2;
 use dosamigos\datetimepicker\DateTimePicker;
 use app\helpers\ValMap;
@@ -15,7 +16,7 @@ use yii\bootstrap\ActiveForm;
 <div class="mission-call-form">
 
     <?php $form = ActiveForm::begin([
-        'id'          => 'staff-form',
+        'id'          => 'mission-call-form',
         "options"     => ["class" => "animated-label"],
         "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
     ]); ?>

@@ -14,6 +14,17 @@ use yii\db\ActiveRecord;
  */
 class MissionStatus extends ActiveRecord
 {
+
+    const STATUS_PENDING = "pending";
+    const STATUS_ACTIVE = "active";
+    const STATUS_COMPLETED = "completed";
+    const STATUS_FAILED = "failed";
+
+    public static function statusId($status)
+    {
+        return self::findOne(["name" => $status])->id;
+    }
+
     /**
      * @inheritdoc
      */
@@ -38,7 +49,7 @@ class MissionStatus extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id'   => 'ID',
             'name' => 'Name',
         ];
     }

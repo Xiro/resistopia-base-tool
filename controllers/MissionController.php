@@ -2,19 +2,21 @@
 
 namespace app\controllers;
 
-use app\models\form\StaffForm;
-use Yii;
-use app\models\Staff;
+use app\models\form\MissionForm;
 use app\models\search\StaffSearch;
+use app\models\StaffStatus;
+use Yii;
+use app\models\Mission;
+use app\models\search\MissionSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StaffController implements the CRUD actions for Staff model.
+ * MissionController implements the CRUD actions for Mission model.
  */
-class StaffController extends Controller
+class MissionController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,7 +33,7 @@ class StaffController extends Controller
                     ],
                 ],
             ],
-            'verbs' => [
+            'verbs'  => [
                 'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
@@ -41,32 +43,22 @@ class StaffController extends Controller
     }
 
     /**
-     * Lists all Staff models.
+     * Lists all Mission models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new StaffSearch();
+        $searchModel = new MissionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'search' => $searchModel,
+            'search'       => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
-    public function actionSearch()
-    {
-        $searchModel = new StaffSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->renderPartial("_staff-table-body", [
-            "staffModels" => $dataProvider->getModels()
-        ]);
-    }
-
     /**
-     * Displays a single Staff model.
+     * Displays a single Mission model.
      * @param integer $id
      * @return mixed
      */
@@ -77,36 +69,68 @@ class StaffController extends Controller
     }
 
     /**
-     * Creates a new Staff model.
+     * Creates a new Mission model.
      * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new StaffForm();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->render('create-confirm', ["model" => $model]);
-        }
-
-        return $this->render('create', ["model" => $model]);
-    }
-
-    /**
-     * Updates an existing Staff model.
-     * If update is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = StaffForm::findOne(["id" => $id]);
+        $model = new MissionForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
 
-        return $this->render('update', ["model" => $model]);
+        $viewParams = [
+            "model" => $model,
+        ];
+        $this->addStaffSearchParams($viewParams);
+        return $this->render('create', $viewParams);
+    }
+
+    public function actionSearchStaff()
+    {
+        $searchModel = new StaffSearch();
+        $searchModel->staff_status_id = StaffStatus::findOne(["name" => StaffStatus::STATUS_ALIVE])->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->renderPartial("_staff-list-table-body", [
+            "staffModels" => $dataProvider->getModels()
+        ]);
+    }
+
+    /**
+     * Updates an existing Mission model.
+     * If update is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @throws NotFoundHttpException if the model cannot be found
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $model = MissionForm::findOne($id);
+        if (!$model) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
+
+        $viewParams = [
+            "model" => $model,
+        ];
+        $this->addStaffSearchParams($viewParams);
+        return $this->render('update', $viewParams);
+    }
+
+    protected function addStaffSearchParams(&$viewParams)
+    {
+        $searchModel = new StaffSearch();
+        $searchModel->staff_status_id = StaffStatus::findOne(["name" => StaffStatus::STATUS_ALIVE])->id;
+        $staffDataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $viewParams["staffSearch"] = $searchModel;
+        $viewParams["staffDataProvider"] = $staffDataProvider;
     }
 
     /**
@@ -123,7 +147,7 @@ class StaffController extends Controller
     }
 
     /**
-     * Deletes an existing Staff model.
+     * Deletes an existing Mission model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -136,15 +160,15 @@ class StaffController extends Controller
     }
 
     /**
-     * Finds the Staff model based on its primary key value.
+     * Finds the Mission model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Staff the loaded model
+     * @return Mission the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Staff::findOne($id)) !== null) {
+        if (($model = Mission::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

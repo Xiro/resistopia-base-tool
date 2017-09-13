@@ -14,6 +14,11 @@ use yii\db\ActiveRecord;
  */
 class StaffStatus extends ActiveRecord
 {
+
+    const STATUS_ALIVE = "alive";
+    const STATUS_MISSING = "missing";
+    const STATUS_DEAD = "dead";
+
     /**
      * @inheritdoc
      */

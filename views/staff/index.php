@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $search \app\models\search\StaffSearch */
 
-use app\assets\page\StaffSearchAsset;
+use app\assets\page\IndexSearchAsset;
 use app\helpers\ValMap;
 use app\models\Category;
 use app\models\Speciality;
@@ -18,7 +18,7 @@ use kartik\select2\Select2;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 
-StaffSearchAsset::register($this);
+IndexSearchAsset::register($this);
 
 $this->title = 'Staff';
 $this->params['breadcrumbs'][] = $this->title;
@@ -34,14 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a(
                 "<span class=\"glyphicon glyphicon-plus\"></span> Add Staff Member",
                 ["create"],
-                ["class" => "btn btn-success ajax-dialog"]
+                ["class" => "btn btn-primary ajax-dialog"]
             ); ?>
             </span>
         </h1>
 
         <div class="">
             <?php $form = ActiveForm::begin([
-                'id'          => 'staff-search-form',
+                'id'          => 'index-search-form',
                 "action"      => Url::to(["staff/search"]),
                 "options"     => [
                     'clientValidation' => false,
@@ -54,16 +54,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ]); ?>
             <?php ActiveForm::end(); ?>
 
-            <table class="table table-bordered" id="staff-table">
+            <table class="table table-bordered staff-table" id="index-search-table">
                 <thead>
                 <tr class="animated-label">
-                    <th>
-                        <?= $form->field($search, 'rpn')->textInput(["form" => "staff-search-form"]) ?>
+                    <th class="rpn">
+                        <?= $form->field($search, 'rpn')->textInput(["form" => "index-search-form"]) ?>
                     </th>
-                    <th>
-                        <?= $form->field($search, 'name')->textInput(["form" => "staff-search-form"]) ?>
+                    <th class="name">
+                        <?= $form->field($search, 'name')->textInput(["form" => "index-search-form"]) ?>
                     </th>
-                    <th style="min-width: 150px">
+                    <th class="category">
                         <?= $form->field($search, 'category_id', [
                             'labelOptions' => ['class' => ($search->category_id ? "move" : "")]
                         ])->widget(Select2::classname(), [
@@ -71,14 +71,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data'          => ValMap::model(Category::class, "id", "name"),
                             'options'       => [
                                 'placeholder' => '',
-                                'form'        => 'staff-search-form',
+                                'form'        => 'index-search-form',
                             ],
                             'pluginOptions' => [
                                 'allowClear' => true,
                             ],
                         ])->label("Category") ?>
                     </th>
-                    <th style="min-width: 160px">
+                    <th class="speciality">
                         <?= $form->field($search, 'speciality_id', [
                             'labelOptions' => ['class' => ($search->speciality_id ? "move" : "")]
                         ])->widget(Select2::classname(), [
@@ -86,14 +86,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data'          => ValMap::model(Speciality::class, "id", "name"),
                             'options'       => [
                                 'placeholder' => '',
-                                'form'        => 'staff-search-form',
+                                'form'        => 'index-search-form',
                             ],
                             'pluginOptions' => [
                                 'allowClear' => true,
                             ],
                         ])->label("Speciality") ?>
                     </th>
-                    <th style="min-width: 160px">
+                    <th class="team">
                         <?= $form->field($search, 'team_id', [
                             'labelOptions' => ['class' => ($search->team_id ? "move" : "")]
                         ])->widget(Select2::classname(), [
@@ -101,14 +101,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data'          => ValMap::model(Team::class, "id", "name"),
                             'options'       => [
                                 'placeholder' => '',
-                                'form'        => 'staff-search-form',
+                                'form'        => 'index-search-form',
                             ],
                             'pluginOptions' => [
                                 'allowClear' => true,
                             ],
                         ])->label("Team") ?>
                     </th>
-                    <th style="min-width: 100px">
+                    <th class="staff-status">
                         <?= $form->field($search, 'staff_status_id', [
                             'labelOptions' => ['class' => ($search->staff_status_id ? "move" : "")]
                         ])->widget(Select2::classname(), [
@@ -116,14 +116,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data'          => ValMap::model(StaffStatus::class, "id", "name"),
                             'options'       => [
                                 'placeholder' => '',
-                                'form'        => 'staff-search-form',
+                                'form'        => 'index-search-form',
                             ],
                             'pluginOptions' => [
                                 'allowClear' => true,
                             ],
                         ])->label("Status") ?>
                     </th>
-                    <th style="min-width: 110px">
+                    <th class="call-sign">
                         <?= $form->field($search, 'call_sign', [
                             'labelOptions' => ['class' => ($search->call_sign ? "move" : "")]
                         ])->widget(Select2::classname(), [
@@ -135,20 +135,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             ),
                             'options'       => [
                                 'placeholder' => '',
-                                'form'        => 'staff-search-form',
+                                'form'        => 'index-search-form',
                             ],
                             'pluginOptions' => [
                                 'allowClear' => true,
                             ],
-                        ])->label("Call Sign") ?>
+                        ])->label("CS") ?>
                     </th>
-                    <th>
-                        <?php
-//                        echo Html::button("Clear", [
-//                            "class" => "btn btn-default search-clear",
-//                            "style" => "width: 100%",
-//                        ])
-                        ?>
+                    <th class="actions">
                     </th>
                 </tr>
                 </thead>

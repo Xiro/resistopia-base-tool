@@ -2,21 +2,20 @@
 
 namespace app\assets\page;
 
-use app\assets\AppAsset;
 use yii\web\AssetBundle;
 
-class StaffSearchAsset extends AssetBundle
+class MissionFormAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-//        'css/staff-search.css',
+        'css/mission-form.css',
     ];
     public $js = [
-        'js/staff-search.js',
+        'js/mission-form.js',
     ];
     public $depends = [
-        AppAsset::class,
+        IndexSearchAsset::class,
     ];
 
 }

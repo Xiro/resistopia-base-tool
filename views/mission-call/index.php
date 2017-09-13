@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a(
                 "<span class=\"glyphicon glyphicon-plus\"></span> Add Mission Call",
                 ["create"],
-                ["class" => "btn btn-success ajax-dialog"]
+                ["class" => "btn btn-primary ajax-dialog"]
             ); ?>
             </span>
         </h1>

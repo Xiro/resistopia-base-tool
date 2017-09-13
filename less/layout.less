@@ -12,9 +12,13 @@ body {
   border-bottom: 1px solid @brand-primary;
   background: #000;
 
-  .navbar-nav>li>a, .navbar-text {
+  .navbar-nav > li > a, .navbar-text {
     font-size: @font-size-large;
     color: @brand-primary;
+    border-left: 1px solid @brand-primary;
+    &:first-child {
+      border-right: 1px solid @brand-primary;
+    }
     &:hover {
       color: lighten(@brand-primary, 10%);
     }
@@ -44,15 +48,19 @@ body {
     color: lighten(@text-color, 10%);
   }
 }
+
 .btn-success {
   .custom-button(@brand-success)
 }
+
 .btn-primary {
   .custom-button(@brand-primary)
 }
+
 .btn-warning {
   .custom-button(@brand-warning)
 }
+
 .btn-danger {
   .custom-button(@brand-danger)
 }
@@ -85,6 +93,7 @@ body {
   }
 
 }
+
 form.animated-label .checkbox-group .form-group {
   margin-bottom: 0;
   .checkbox {
@@ -99,12 +108,12 @@ form.animated-label .checkbox-group .form-group {
 }
 
 .table-bordered,
-.table-bordered>tbody>tr>td,
-.table-bordered>tbody>tr>th,
-.table-bordered>tfoot>tr>td,
-.table-bordered>tfoot>tr>th,
-.table-bordered>thead>tr>td,
-.table-bordered>thead>tr>th {
+.table-bordered > tbody > tr > td,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > td,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > thead > tr > th {
   border-color: @brand-primary;
 }
 
@@ -136,8 +145,69 @@ table tr.animated-label {
 
 }
 
-#staff-table {
-  td {
+.jumbotron {
+  background: none;
+}
+
+table {
+
+  // all
+
+  .animated-label .actions {
+    padding: 8px
+  }
+  td.actions {
     white-space: nowrap;
+  }
+
+  // staff
+
+  &.staff-table {
+    .rpn {
+      width: 70px;
+      white-space: nowrap;
+    }
+    .category {
+      min-width: 150px
+    }
+    .speciality {
+      min-width: 160px
+    }
+    .team {
+      min-width: 160px
+    }
+    .staff-status {
+      min-width: 100px
+    }
+    .call-sign {
+      min-width: 50px;
+    }
+  }
+
+  // mission
+
+  &.mission-table {
+    .mission-status {
+      min-width: 100px
+    }
+    .mission-type {
+      min-width: 100px
+    }
+    .zone {
+      min-width: 75px
+    }
+    .description, .debrief-comment {
+      max-width: 250px;
+    }
+    .rp, .fp {
+      width: 35px;
+      text-align: center;
+    }
+    td.started {
+      white-space: nowrap;
+    }
+    td.ended {
+      white-space: nowrap;
+    }
   }
 }

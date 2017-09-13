@@ -16,11 +16,15 @@ use yii\db\ActiveRecord;
  * @property string $started
  * @property string $ended
  * @property string $debrief_comment
+ * @property integer $operation_id
  * @property integer $mission_type_id
  * @property integer $mission_status_id
  *
  * @property MissionStatus $missionStatus
  * @property MissionType $missionType
+ * @property Operation $operation
+ * @property MissionStaff[] $missionStaff
+ * @property Staff[] $staff
  */
 class Mission extends ActiveRecord
 {
@@ -38,13 +42,14 @@ class Mission extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'RP', 'FP', 'zone', 'mission_type_id', 'mission_status_id'], 'required'],
+            [['name', 'RP', 'FP', 'zone', 'operation_id', 'mission_type_id', 'mission_status_id'], 'required'],
             [['description', 'zone', 'debrief_comment'], 'string'],
-            [['RP', 'FP', 'mission_type_id', 'mission_status_id'], 'integer'],
+            [['RP', 'FP', 'operation_id', 'mission_type_id', 'mission_status_id'], 'integer'],
             [['started', 'ended'], 'safe'],
             [['name'], 'string', 'max' => 50],
             [['mission_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => MissionStatus::className(), 'targetAttribute' => ['mission_status_id' => 'id']],
             [['mission_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => MissionType::className(), 'targetAttribute' => ['mission_type_id' => 'id']],
+            [['operation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Operation::className(), 'targetAttribute' => ['operation_id' => 'id']],
         ];
     }
 
@@ -54,18 +59,54 @@ class Mission extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'description' => 'Description',
-            'RP' => 'Rp',
-            'FP' => 'Fp',
-            'zone' => 'Zone',
-            'started' => 'Started',
-            'ended' => 'Ended',
-            'debrief_comment' => 'Debrief Comment',
-            'mission_type_id' => 'Mission Type ID',
+            'id'                => 'ID',
+            'name'              => 'Name',
+            'description'       => 'Description',
+            'RP'                => 'Rp',
+            'FP'                => 'Fp',
+            'zone'              => 'Zone',
+            'started'           => 'Started',
+            'ended'             => 'Ended',
+            'debrief_comment'   => 'Debrief Comment',
+            'operation_id'      => 'Operation ID',
+            'mission_type_id'   => 'Mission Type ID',
             'mission_status_id' => 'Mission Status ID',
         ];
+    }
+
+    public function save($runValidation = true, $attributeNames = null)
+    {
+
+        if (
+            (
+                $this->mission_status_id == MissionStatus::statusId(MissionStatus::STATUS_COMPLETED)
+                || $this->mission_status_id == MissionStatus::statusId(MissionStatus::STATUS_FAILED)
+            )
+            && empty($this->ended)
+        ) {
+            $this->ended = date("Y-m-d\TH:m:i", time());
+        }
+        return parent::save($runValidation, $attributeNames);
+    }
+
+
+    public function getCutDescription($max = 40)
+    {
+        return $this->cutText($this->description, $max);
+    }
+
+    public function getCutDebriefComment($max = 40)
+    {
+        return $this->cutText($this->debrief_comment, $max);
+    }
+
+    protected function cutText($text, $max)
+    {
+        if (strlen($text) > $max) {
+            $offset = ($max - 3) - strlen($text);
+            $text = substr($text, 0, strrpos($text, ' ', $offset)) . '...';
+        }
+        return $text;
     }
 
     /**
@@ -82,5 +123,29 @@ class Mission extends ActiveRecord
     public function getMissionType()
     {
         return $this->hasOne(MissionType::className(), ['id' => 'mission_type_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOperation()
+    {
+        return $this->hasOne(Operation::className(), ['id' => 'operation_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMissionStaff()
+    {
+        return $this->hasMany(MissionStaff::className(), ['mission_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStaff()
+    {
+        return $this->hasMany(Staff::className(), ['id' => 'staff_id'])->viaTable('mission_staff', ['mission_id' => 'id']);
     }
 }
