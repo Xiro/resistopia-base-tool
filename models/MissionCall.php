@@ -13,8 +13,8 @@ use yii\db\ActiveRecord;
  * @property integer $RP
  * @property integer $FP
  * @property string $zone
- * @property string $due
- * @property string $max_duration
+ * @property string $scheduled_start
+ * @property string $scheduled_end
  * @property integer $fighter
  * @property integer $radio
  * @property integer $medic
@@ -42,10 +42,10 @@ class MissionCall extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'RP', 'FP', 'zone', 'due', 'max_duration'], 'required'],
+            [['name', 'RP', 'FP', 'zone', 'scheduled_start', 'scheduled_end'], 'required'],
             [['description', 'zone'], 'string'],
             [['RP', 'FP', 'fighter', 'radio', 'medic', 'technician', 'science', 'guard', 'vip', 'mission_type_id'], 'integer'],
-            [['due', 'max_duration'], 'safe'],
+            [['scheduled_start', 'scheduled_end'], 'safe'],
             [['name'], 'string', 'max' => 50],
             [['mission_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => MissionType::className(), 'targetAttribute' => ['mission_type_id' => 'id']],
         ];
@@ -63,8 +63,8 @@ class MissionCall extends ActiveRecord
             'RP' => 'Rp',
             'FP' => 'Fp',
             'zone' => 'Zone',
-            'due' => 'Due',
-            'max_duration' => 'Max Duration',
+            'scheduled_start' => 'Scheduled Start',
+            'scheduled_end' => 'Scheduled End',
             'fighter' => 'Fighter',
             'radio' => 'Radio',
             'medic' => 'Medic',

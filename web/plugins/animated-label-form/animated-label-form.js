@@ -36,6 +36,14 @@ function setupAnimatedFormLabels(contentElement) {
         }
     });
 
+    contentElement.find('.date-picker input').on("changeDate", function () {
+        if(!$(this).val().length) {
+            $(this).parent().find("label").removeClass("move");
+        } else {
+            $(this).parent().find("label").addClass("move");
+        }
+    });
+
     contentElement.find('textarea').each(function () {
         if($(this).val() !== "") {
             var label = $(this).parent().children("label");

@@ -2,7 +2,6 @@
 
 namespace app\models\search;
 
-use app\helpers\DebugSql;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;

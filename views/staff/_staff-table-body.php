@@ -25,7 +25,7 @@ use app\widgets\Glyphicon;
             ) ?>
             <?= Html::a(
                     Glyphicon::trash(),
-                    ['staff/confirm-delete'],
+                    ['staff/confirm-delete', 'id' => $staff->id],
                     ["class" => "ajax-dialog"]
             ) ?>
         </td>
