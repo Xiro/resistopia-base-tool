@@ -42,7 +42,18 @@ use yii\bootstrap\ActiveForm;
             <?= $form->field($model, 'nickname')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'profession')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'gender', [
+                'labelOptions' => ['class' => ($model->gender ? "move" : "")]
+            ])->widget(Select2::classname(), [
+                'showToggleAll' => false,
+                'data'          => ["male" => "male", "female" => "female"],
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ])->label("Gender") ?>
         </div>
     </div>
     <div class="row">
@@ -55,8 +66,12 @@ use yii\bootstrap\ActiveForm;
             ])->widget(Select2::classname(), [
                 'showToggleAll' => false,
                 'data'          => ValMap::model(EyeColor::class, "id", "name"),
-                'options'       => ['placeholder' => ''],
-                'pluginOptions' => [],
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
             ])->label("Eye Color") ?>
         </div>
     </div>
@@ -67,12 +82,16 @@ use yii\bootstrap\ActiveForm;
             ])->widget(Select2::classname(), [
                 'showToggleAll' => false,
                 'data'          => ValMap::model(BloodType::class, "id", "name"),
-                'options'       => ['placeholder' => ''],
-                'pluginOptions' => [],
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
             ])->label("Blood Type") ?>
         </div>
         <div class="col-md-6">
-
+            <?= $form->field($model, 'profession')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
 
@@ -85,8 +104,13 @@ use yii\bootstrap\ActiveForm;
             ])->widget(Select2::classname(), [
                 'showToggleAll' => false,
                 'data'          => ValMap::model(Company::class, "id", "name"),
-                'options'       => ['placeholder' => '', 'allowClear' => true],
-                'pluginOptions' => ['closeOnSelect' => false, 'tags' => true, 'allowClear' => true],
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'tags' => true,
+                    'allowClear' => true,
+                ],
             ])->label("Company") ?>
         </div>
         <div class="col-md-6">
@@ -95,8 +119,12 @@ use yii\bootstrap\ActiveForm;
             ])->widget(Select2::classname(), [
                 'showToggleAll' => false,
                 'data'          => ValMap::model(Category::class, "id", "name"),
-                'options'       => ['placeholder' => ''],
-                'pluginOptions' => [],
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
             ])->label("Category") ?>
         </div>
     </div>
@@ -107,8 +135,12 @@ use yii\bootstrap\ActiveForm;
             ])->widget(Select2::classname(), [
                 'showToggleAll' => false,
                 'data'          => ValMap::model(Speciality::class, "id", "name"),
-                'options'       => ['placeholder' => ''],
-                'pluginOptions' => [],
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
             ])->label("Speciality") ?>
         </div>
         <div class="col-md-6">
@@ -117,8 +149,12 @@ use yii\bootstrap\ActiveForm;
             ])->widget(Select2::classname(), [
                 'showToggleAll' => false,
                 'data'          => ValMap::model(Rank::class, "id", "name"),
-                'options'       => ['placeholder' => ''],
-                'pluginOptions' => ['closeOnSelect' => false],
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
             ])->label("Rank") ?>
         </div>
     </div>
@@ -129,8 +165,13 @@ use yii\bootstrap\ActiveForm;
             ])->widget(Select2::classname(), [
                 'showToggleAll' => false,
                 'data'          => ValMap::model(Team::class, "id", "name"),
-                'options'       => ['placeholder' => '', 'multiple' => false],
-                'pluginOptions' => ['closeOnSelect' => false, 'tags' => true],
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'tags' => true,
+                    'allowClear' => true,
+                ],
             ])->label("Team") ?>
         </div>
         <div class="col-md-6">
@@ -149,8 +190,12 @@ use yii\bootstrap\ActiveForm;
             ])->widget(Select2::classname(), [
                 'showToggleAll' => false,
                 'data'          => ValMap::model(StaffStatus::class, "id", "name"),
-                'options'       => ['placeholder' => ''],
-                'pluginOptions' => [],
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
             ])->label("Status") ?>
         </div>
     </div>
@@ -161,8 +206,14 @@ use yii\bootstrap\ActiveForm;
             ])->widget(Select2::classname(), [
                 'showToggleAll' => false,
                 'data'          => ValMap::model(Role::class, "id", "name"),
-                'options'       => ['placeholder' => '', 'multiple' => true],
-                'pluginOptions' => ['closeOnSelect' => false],
+                'options'       => [
+                    'placeholder' => '',
+                    'multiple' => true,
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'closeOnSelect' => false
+                ],
             ])->label("Roles") ?>
         </div>
         <div class="col-md-6 checkbox-group">

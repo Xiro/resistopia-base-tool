@@ -7,6 +7,7 @@ use Yii;
 use app\models\Staff;
 use app\models\search\StaffSearch;
 use yii\filters\AccessControl;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -50,8 +51,18 @@ class StaffController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'search' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionSearch()
+    {
+        $searchModel = new StaffSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->renderPartial("_staff-table-body", [
+            "staffModels" => $dataProvider->getModels()
         ]);
     }
 

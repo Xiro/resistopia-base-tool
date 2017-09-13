@@ -9,6 +9,7 @@ namespace app\assets;
 
 use app\assets\plugins\AnimatedLabelFormAsset;
 use app\assets\plugins\FontAwesomeAsset;
+use yii\bootstrap\BootstrapAsset;
 use yii\web\AssetBundle;
 use yii\web\YiiAsset;
 
@@ -27,6 +28,7 @@ class AppAsset extends AssetBundle
     ];
     public $depends = [
         YiiAsset::class,
+        BootstrapAsset::class,
         FontAwesomeAsset::class,
         AnimatedLabelFormAsset::class
     ];

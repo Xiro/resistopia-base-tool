@@ -7,7 +7,7 @@
 @form-background-highlight: darken(@text-color, 30%);
 @form-border-radius: 0;
 
-form.animated-label {
+.animated-label {
   visibility: hidden;
 
   .row .form-control,
@@ -20,7 +20,7 @@ form.animated-label {
   }
 }
 
-form.animated-label .form-group {
+.animated-label .form-group {
 
   @label-font-size-small: round(@font-size-small * 1);
 
@@ -41,7 +41,7 @@ form.animated-label .form-group {
     border-color: @form-text-color!important;
   }
   .select2-selection {
-    padding: 11px 12px 6px;
+    padding: 11px 22px 6px 12px;
   }
   textarea {
     width: 100%;
@@ -149,7 +149,7 @@ form.animated-label .form-group {
 
 /* Select2 styling */
 
-.select2-container {
+.select2-container.select2-container--krajee {
   width: 100% !important;
 
   .select2-selection {
@@ -170,6 +170,11 @@ form.animated-label .form-group {
   .select2-selection__rendered {
     padding: 0 !important;
     color: @form-text-color!important;
+  }
+
+  .select2-selection__clear {
+    top: -4px;
+    color: lighten(@form-text-color, 20%);
   }
 
   .select2-search--dropdown.select2-search {
@@ -224,7 +229,7 @@ form.animated-label .form-group {
 
 }
 
-form.animated-label.borderless .form-group {
+.animated-label.borderless .form-group {
 
   input, select, textarea {
     border-top: none;

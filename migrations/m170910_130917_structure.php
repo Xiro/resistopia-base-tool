@@ -229,6 +229,10 @@ class m170910_130917_structure extends Migration
 	        ADD UNIQUE INDEX `name` (`name`);");
         $this->execute("ALTER TABLE `team`
 	        ADD UNIQUE INDEX `name` (`name`);");
+
+        $this->execute("ALTER TABLE `staff`
+            ADD COLUMN `gender` ENUM('male','female') NULL DEFAULT NULL AFTER `nickname`;
+        ");
     }
 
     public function safeDown()

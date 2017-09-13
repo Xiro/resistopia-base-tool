@@ -48,6 +48,7 @@ class StaffForm extends Staff
                 "isIt",
                 "isBlocked",
             ], "safe"],
+            [['category_id'], 'required'],
             [['team'], 'string', 'max' => 50],
             [['company'], 'string', 'max' => 50],
         ]);
@@ -60,8 +61,8 @@ class StaffForm extends Staff
             $rpn .= substr($this->forename, 0, 1);
             $rpn .= substr($this->surname, 0, 1);
             $rpn .= "-";
-            $rpn .= substr(microtime(),rand(0,26),5);
-            $alreadyExists = 0 < self::findOne(["rpn" => $rpn]);
+            $rpn .= rand(10000,99999);
+            $alreadyExists = 0 < self::find()->where(["rpn" => $rpn])->count();
         } while($alreadyExists);
         return $rpn;
     }
@@ -73,6 +74,7 @@ class StaffForm extends Staff
     {
         $this->is_it = $this->isIt == "0" ? "No" : "Yes";
         $this->is_blocked = $this->isBlocked == "0" ? "No" : "Yes";
+        $this->call_sign = !$this->call_sign ? null : $this->call_sign;
 
         $this->updateDynamicToOne("team_id", Team::className(), $this->team);
         $this->updateDynamicToOne("company_id", Company::className(), $this->company);

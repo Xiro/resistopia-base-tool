@@ -30,18 +30,31 @@ body {
   background: darken(@main-color, 30%);
   border-color: @main-color;
   color: @main-color;
-  &:hover {
+  &:hover, &:focus, &:active {
     background: darken(@main-color, 30%);
     color: lighten(@main-color, 10%);
     border-color: lighten(@main-color, 10%);
   }
 }
 
+.btn-default {
+  .custom-button(#000);
+  color: @text-color;
+  &:hover, &:focus, &:active {
+    color: lighten(@text-color, 10%);
+  }
+}
 .btn-success {
   .custom-button(@brand-success)
 }
 .btn-primary {
   .custom-button(@brand-primary)
+}
+.btn-warning {
+  .custom-button(@brand-warning)
+}
+.btn-danger {
+  .custom-button(@brand-danger)
 }
 
 .checkbox input[type=checkbox] {
@@ -82,5 +95,49 @@ form.animated-label .checkbox-group .form-group {
 @supports (-ms-ime-align: auto) {
   .checkbox input[type=checkbox] {
     padding: 0;
+  }
+}
+
+.table-bordered,
+.table-bordered>tbody>tr>td,
+.table-bordered>tbody>tr>th,
+.table-bordered>tfoot>tr>td,
+.table-bordered>tfoot>tr>th,
+.table-bordered>thead>tr>td,
+.table-bordered>thead>tr>th {
+  border-color: @brand-primary;
+}
+
+div.table {
+  display: table;
+  .table-row {
+    display: table-row;
+    > div {
+      display: table-cell;
+    }
+  }
+}
+
+table tr.animated-label {
+  th {
+    padding: 0;
+
+    .form-group {
+      margin-bottom: 0;
+      input[type='text'],
+      .select2-selection,
+      select,
+      textarea {
+        margin-top: 0;
+        border: none;
+      }
+    }
+  }
+
+}
+
+#staff-table {
+  td {
+    white-space: nowrap;
   }
 }

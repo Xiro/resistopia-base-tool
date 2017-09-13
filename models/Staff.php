@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property string $forename
  * @property string $surname
  * @property string $nickname
+ * @property string $gender
  * @property integer $height
  * @property string $profession
  * @property string $password
@@ -58,9 +59,9 @@ class Staff extends ActiveRecord
     {
         return [
             [['rpn', 'forename', 'rank_id', 'staff_status_id'], 'required'],
+            [['gender', 'is_blocked', 'is_it'], 'string'],
             [['height', 'company_id', 'category_id', 'speciality_id', 'rank_id', 'team_id', 'blood_type_id', 'eye_color_id', 'staff_status_id'], 'integer'],
             [['created', 'updated', 'died'], 'safe'],
-            [['is_blocked', 'is_it'], 'string'],
             [['rpn'], 'string', 'max' => 10],
             [['forename', 'surname', 'nickname', 'profession', 'password'], 'string', 'max' => 50],
             [['call_sign'], 'string', 'max' => 4],
@@ -88,6 +89,7 @@ class Staff extends ActiveRecord
             'forename' => 'Forename',
             'surname' => 'Surname',
             'nickname' => 'Nickname',
+            'gender' => 'Gender',
             'height' => 'Height',
             'profession' => 'Profession',
             'password' => 'Password',
@@ -112,7 +114,7 @@ class Staff extends ActiveRecord
     {
         return $this->forename .
             ($this->nickname ? ' "' . $this->nickname . '"' : "") .
-            ($this->surname ? ' "' . $this->surname . '"' : "");
+            ($this->surname ? ' ' . $this->surname : "");
     }
 
     /**
