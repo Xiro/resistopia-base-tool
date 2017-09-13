@@ -58,16 +58,7 @@ MissionFormAsset::register($this);
             <div class="row">
                 <div class="col-md-12">
                     <?php
-                    $operationData = ArrayHelper::map(
-                        Operation::find()
-                            ->joinWith("missions")
-                            ->where(["mission.mission_status_id" => MissionStatus::findOne(["name" => MissionStatus::STATUS_ACTIVE])->id])
-                            ->orWhere(["mission.mission_status_id" => MissionStatus::findOne(["name" => MissionStatus::STATUS_PENDING])->id])
-                            ->groupBy("operation.id")
-                            ->all(),
-                        "id",
-                        "name"
-                    );
+                    $operationData = ValMap::model(Operation::class, "id", "name");
                     if ($model->operation && !is_numeric($model->operation)) {
                         $operationData[$model->operation] = $model->operation;
                     }

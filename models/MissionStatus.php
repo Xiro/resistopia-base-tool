@@ -20,6 +20,26 @@ class MissionStatus extends ActiveRecord
     const STATUS_COMPLETED = "completed";
     const STATUS_FAILED = "failed";
 
+    public static function pendingId()
+    {
+        return self::statusId(self::STATUS_PENDING);
+    }
+
+    public static function activeId()
+    {
+        return self::statusId(self::STATUS_ACTIVE);
+    }
+
+    public static function completedId()
+    {
+        return self::statusId(self::STATUS_COMPLETED);
+    }
+
+    public static function failedId()
+    {
+        return self::statusId(self::STATUS_FAILED);
+    }
+
     public static function statusId($status)
     {
         return self::findOne(["name" => $status])->id;

@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  * @property string $name
  *
  * @property Mission[] $missions
+ * @property Mission[] $activeMissions
  */
 class Operation extends ActiveRecord
 {
@@ -49,5 +50,14 @@ class Operation extends ActiveRecord
     public function getMissions()
     {
         return $this->hasMany(Mission::className(), ['operation_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getActiveMissions()
+    {
+        return $this->hasMany(Mission::className(), ['operation_id' => 'id'])
+            ->where(["mission.mission_status_id" => MissionStatus::statusId(MissionStatus::STATUS_ACTIVE)]);
     }
 }

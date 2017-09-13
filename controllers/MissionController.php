@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\form\MissionForm;
+use app\models\MissionStatus;
+use app\models\Operation;
 use app\models\search\StaffSearch;
 use app\models\StaffStatus;
 use Yii;
@@ -54,6 +56,29 @@ class MissionController extends Controller
         return $this->render('index', [
             'search'       => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionSearch()
+    {
+        $searchModel = new MissionSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->renderPartial("_mission-table-body", [
+            "missionModels" => $dataProvider->getModels()
+        ]);
+    }
+
+    public function actionControl()
+    {
+        $activeOperations = Operation::find()
+            ->joinWith("missions")
+            ->where(["mission.mission_status_id" => MissionStatus::activeId()])
+            ->groupBy("operation.id")
+            ->all();
+
+        return $this->render("control", [
+            "operations" => $activeOperations
         ]);
     }
 

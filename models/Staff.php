@@ -112,6 +112,13 @@ class Staff extends ActiveRecord
         ];
     }
 
+    public function delete()
+    {
+        MissionStaff::deleteAll(["staff_id" => $this->id]);
+        StaffRole::deleteAll(["staff_id" => $this->id]);
+        return parent::delete();
+    }
+
     public function getName()
     {
         return $this->forename .

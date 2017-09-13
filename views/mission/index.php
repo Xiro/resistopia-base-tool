@@ -8,10 +8,13 @@ use kartik\select2\Select2;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use app\assets\page\IndexSearchAsset;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $search \app\models\search\MissionSearch */
+
+IndexSearchAsset::register($this);
 
 $this->title = 'Missions';
 $this->params['breadcrumbs'][] = $this->title;
@@ -36,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="">
             <?php $form = ActiveForm::begin([
                 'id'          => 'index-search-form',
-                "action"      => Url::to(["staff/search"]),
+                "action"      => Url::to(["mission/search"]),
                 "options"     => [
                     'clientValidation' => false,
                     "class"            => "animated-label",
@@ -89,9 +92,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'labelOptions' => ['class' => ($search->zone ? "move" : "")]
                         ])->widget(Select2::classname(), [
                             'showToggleAll' => false,
-                            'data'          => [ 1 => '1', 2 => '2', 3 => '3', ],
+                            'data'          => [1 => '1', 2 => '2', 3 => '3',],
                             'options'       => [
                                 'placeholder' => '',
+                                'form'        => 'index-search-form',
                             ],
                             'pluginOptions' => [
                                 'allowClear' => true,
@@ -112,43 +116,49 @@ $this->params['breadcrumbs'][] = $this->title;
                     </th>
                     <th class="started">
                         <?= $form->field($search, 'started', [
-                            'options' => ['class' => "form-group date-picker"],
+                            'options'      => ['class' => "form-group date-picker"],
                             'labelOptions' => ['class' => ($search->started ? "move" : "")]
                         ])->widget(DateTimePicker::className(), [
-                            'size' => 'sm',
-                            'template' => '{input}',
+                            'size'           => 'sm',
+                            'template'       => '{input}',
                             'pickButtonIcon' => 'glyphicon glyphicon-time',
-                            'clientOptions' => [
-                                'type' => 'TYPE_BUTTON',
-                                'startView' => 1,
-                                'minView' => 0,
-                                'maxView' => 1,
-                                'autoclose' => true,
+                            'clientOptions'  => [
+                                'type'       => 'TYPE_BUTTON',
+                                'startView'  => 1,
+                                'minView'    => 0,
+                                'maxView'    => 1,
+                                'autoclose'  => true,
                                 'linkFormat' => 'HH:ii P', // if inline = true
                                 // 'format' => 'HH:ii P', // if inline = false
-                                'todayBtn' => true
-                            ]
-                        ]);?>
+                                'todayBtn'   => true
+                            ],
+                            'options'        => [
+                                'form' => 'index-search-form',
+                            ],
+                        ]); ?>
                     </th>
                     <th class="ended">
                         <?= $form->field($search, 'ended', [
-                            'options' => ['class' => "form-group date-picker"],
+                            'options'      => ['class' => "form-group date-picker"],
                             'labelOptions' => ['class' => ($search->ended ? "move" : "")]
                         ])->widget(DateTimePicker::className(), [
-                            'size' => 'sm',
-                            'template' => '{input}',
+                            'size'           => 'sm',
+                            'template'       => '{input}',
                             'pickButtonIcon' => 'glyphicon glyphicon-time',
-                            'clientOptions' => [
-                                'type' => 'TYPE_BUTTON',
-                                'startView' => 1,
-                                'minView' => 0,
-                                'maxView' => 1,
-                                'autoclose' => true,
+                            'clientOptions'  => [
+                                'type'       => 'TYPE_BUTTON',
+                                'startView'  => 1,
+                                'minView'    => 0,
+                                'maxView'    => 1,
+                                'autoclose'  => true,
                                 'linkFormat' => 'HH:ii P', // if inline = true
                                 // 'format' => 'HH:ii P', // if inline = false
-                                'todayBtn' => true
-                            ]
-                        ]);?>
+                                'todayBtn'   => true
+                            ],
+                            'options'        => [
+                                'form' => 'index-search-form',
+                            ],
+                        ]); ?>
                     </th>
                     <th class="actions"></th>
                 </tr>

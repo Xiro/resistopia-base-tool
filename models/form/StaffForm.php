@@ -58,8 +58,8 @@ class StaffForm extends Staff
     {
         do {
             $rpn = "";
-            $rpn .= substr($this->forename, 0, 1);
-            $rpn .= substr($this->surname, 0, 1);
+            $rpn .= strtoupper(substr($this->forename, 0, 1));
+            $rpn .= strtoupper(substr($this->surname, 0, 1));
             $rpn .= "-";
             $rpn .= rand(10000,99999);
             $alreadyExists = 0 < self::find()->where(["rpn" => $rpn])->count();

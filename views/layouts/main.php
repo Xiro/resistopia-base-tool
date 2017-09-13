@@ -35,13 +35,13 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $navItems = [];
-    $navItems[] = ['label' => 'Missions', 'url' => ['mission/index']];
+    $navItems[] = ['label' => 'Mission Control', 'url' => ['mission/control']];
     $navItems[] = ['label' => 'Mission Calls', 'url' => ['mission-call/index']];
+    $navItems[] = ['label' => 'Missions', 'url' => ['mission/index']];
     $navItems[] = ['label' => 'Staff', 'url' => ['staff/index']];
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $navItems,
+        'items'   => $navItems,
     ]);
     NavBar::end();
     ?>

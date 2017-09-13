@@ -8,6 +8,7 @@ $(document).ready(function () {
     var formFields = $("[form='index-search-form']");
     var formInputs = $("input[form='index-search-form']");
     var formSelects = $("select[form='index-search-form']");
+    var datePicker = $(".date-picker input[form='index-search-form']");
     var sendTimeOut;
 
     function sendSearchForm() {
@@ -30,6 +31,9 @@ $(document).ready(function () {
         }, 400);
     });
     formSelects.on("change", function () {
+        sendSearchForm();
+    });
+    datePicker.on("changeDate", function () {
         sendSearchForm();
     });
 

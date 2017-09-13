@@ -109,6 +109,13 @@ class Mission extends ActiveRecord
         return $text;
     }
 
+    public function delete()
+    {
+        MissionStaff::deleteAll(["mission_id" => $this->id]);
+        return parent::delete();
+    }
+
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -147,5 +154,16 @@ class Mission extends ActiveRecord
     public function getStaff()
     {
         return $this->hasMany(Staff::className(), ['id' => 'staff_id'])->viaTable('mission_staff', ['mission_id' => 'id']);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCallSigns()
+    {
+        $callSigns = $this->hasMany(Staff::className(), ['id' => 'staff_id'])
+            ->viaTable('mission_staff', ['mission_id' => 'id'])
+            ->where("staff.call_sign IS NOT NULL")->asArray()->all();
+        return array_column($callSigns, "call_sign");
     }
 }

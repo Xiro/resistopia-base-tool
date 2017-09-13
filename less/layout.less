@@ -42,9 +42,12 @@ body {
 }
 
 .btn-default {
-  .custom-button(#000);
+  background: #000;
+  border-color: @text-color;
   color: @text-color;
   &:hover, &:focus, &:active {
+    background: darken(@brand-primary, 30%);
+    border-color: @text-color;
     color: lighten(@text-color, 10%);
   }
 }
@@ -195,6 +198,9 @@ table {
     }
     .zone {
       min-width: 75px
+    }
+    th.debrief-comment {
+      white-space: nowrap;
     }
     .description, .debrief-comment {
       max-width: 250px;
