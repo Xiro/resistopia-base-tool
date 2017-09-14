@@ -22,6 +22,7 @@ use yii\db\ActiveRecord;
  * @property integer $science
  * @property integer $guard
  * @property integer $vip
+ * @property integer $operation_id
  * @property integer $mission_type_id
  *
  * @property MissionType $missionType
@@ -45,7 +46,7 @@ class MissionCall extends ActiveRecord
             [['name', 'RP', 'FP', 'zone', 'scheduled_start', 'scheduled_end'], 'required'],
             [['description', 'zone'], 'string'],
             [['RP', 'FP', 'fighter', 'radio', 'medic', 'technician', 'science', 'guard', 'vip', 'mission_type_id'], 'integer'],
-            [['scheduled_start', 'scheduled_end'], 'safe'],
+            [['scheduled_start', 'scheduled_end', 'operation_id'], 'safe'],
             [['name'], 'string', 'max' => 50],
             [['mission_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => MissionType::className(), 'targetAttribute' => ['mission_type_id' => 'id']],
         ];
@@ -72,6 +73,7 @@ class MissionCall extends ActiveRecord
             'science' => 'Science',
             'guard' => 'Guard',
             'vip' => 'Vip',
+            'operation_id' => 'Operation ID',
             'mission_type_id' => 'Mission Type ID',
         ];
     }

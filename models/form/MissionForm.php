@@ -14,17 +14,11 @@ class MissionForm extends Mission implements StaffSelectFormInterface
     use UpdateToManyTrait;
 
     public $staffSelect = [];
-    public $operation;
 
     public function __construct(array $config = [])
     {
         parent::__construct($config);
         $this->mission_status_id = MissionStatus::findOne(["name" => MissionStatus::STATUS_PENDING]);
-    }
-
-    public function afterFind()
-    {
-        $this->operation = $this->operation_id ? $this->operation_id : null;
     }
 
     /**
@@ -35,14 +29,11 @@ class MissionForm extends Mission implements StaffSelectFormInterface
         return array_merge(parent::rules(), [
             [[
                 "staffSelect",
-                "operation",
             ], "safe"],
             [[
                 'mission_type_id',
                 'mission_status_id',
-                'operation'
             ], 'required'],
-            [['operation'], 'string', 'max' => 50],
         ]);
     }
 
@@ -63,19 +54,20 @@ class MissionForm extends Mission implements StaffSelectFormInterface
      */
     public function save($runValidation = true, $attributeNames = null)
     {
-        if(is_numeric($this->operation) && Operation::find()->where(["id" => $this->operation])->count() > 0) {
-            $this->operation_id = $this->operation;
-        } elseif(null !== ($operation = Operation::findOne(["name" => $this->operation]))) {
+        if(!is_numeric($this->operation_id) && null !== ($operation = Operation::findOne(["name" => $this->operation_id]))) {
             $this->operation_id = $operation->id;
-        } else {
+        } elseif(!is_numeric($this->operation_id) && !empty($this->operation_id)) {
             $addOperation = new Operation();
-            $addOperation->name = $this->operation;
+            $addOperation->name = $this->operation_id;
             $addOperation->save();
             $this->operation_id = $addOperation->id;
         }
 
-        if($this->isNewRecord || $this->getIsNewRecord()) {
-            parent::save($runValidation, $attributeNames);
+        if($this->getIsNewRecord()) {
+            $isSaved = parent::save($runValidation, $attributeNames);
+            if(!$isSaved) {
+                return false;
+            }
         }
 
         $this->updateToMany("staff", Staff::className(), $this->staffSelect);

@@ -44,8 +44,8 @@ class Mission extends ActiveRecord
         return [
             [['name', 'RP', 'FP', 'zone', 'operation_id', 'mission_type_id', 'mission_status_id'], 'required'],
             [['description', 'zone', 'debrief_comment'], 'string'],
-            [['RP', 'FP', 'operation_id', 'mission_type_id', 'mission_status_id'], 'integer'],
-            [['started', 'ended'], 'safe'],
+            [['RP', 'FP', 'mission_type_id', 'mission_status_id'], 'integer'],
+            [['started', 'ended', 'operation_id'], 'safe'],
             [['name'], 'string', 'max' => 50],
             [['mission_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => MissionStatus::className(), 'targetAttribute' => ['mission_status_id' => 'id']],
             [['mission_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => MissionType::className(), 'targetAttribute' => ['mission_type_id' => 'id']],

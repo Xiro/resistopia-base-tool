@@ -29,6 +29,11 @@ use app\widgets\Glyphicon;
         <td><?= $missionCall->vip ?></td>
         <td>
             <?= Html::a(
+                Glyphicon::play(),
+                ['mission/create-from-call', 'id' => $missionCall->id],
+                ["class" => ""]
+            ) ?>
+            <?= Html::a(
                 Glyphicon::pencil(),
                 ['mission-call/update', 'id' => $missionCall->id],
                 ["class" => ""]

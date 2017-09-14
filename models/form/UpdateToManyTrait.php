@@ -30,6 +30,7 @@ trait UpdateToManyTrait
         }
 
         $addIds = array_diff($selectedIds, $existingIds);
+
         foreach ($addIds as $addId) {
             $linkModel = $modelClass::findOne($addId);
             if(!$linkModel) {

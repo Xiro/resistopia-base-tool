@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\form\MissionForm;
+use app\models\MissionCall;
 use app\models\MissionStatus;
 use app\models\Operation;
 use app\models\search\StaffSearch;
@@ -103,6 +104,34 @@ class MissionController extends Controller
         $model = new MissionForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
+
+        $viewParams = [
+            "model" => $model,
+        ];
+        $this->addStaffSearchParams($viewParams);
+        return $this->render('create', $viewParams);
+    }
+
+    /**
+     * Creates a new Mission model.
+     * If creation is successful, the browser will be redirected to the 'index' page.
+     * @param $id
+     * @throws NotFoundHttpException if the model cannot be found
+     * @return mixed
+     */
+    public function actionCreateFromCall($id)
+    {
+        $missionCall = MissionCall::findOne($id);
+        if(!$missionCall) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        $model = new MissionForm();
+        $model->setAttributes($missionCall->getAttributes());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//            $missionCall->delete();
             return $this->redirect(['index']);
         }
 

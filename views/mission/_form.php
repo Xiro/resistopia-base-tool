@@ -59,12 +59,12 @@ StaffSelectFormAsset::register($this);
                 <div class="col-md-12">
                     <?php
                     $operationData = ValMap::model(Operation::class, "id", "name");
-                    if ($model->operation && !is_numeric($model->operation)) {
-                        $operationData[$model->operation] = $model->operation;
+                    if ($model->operation_id && !is_numeric($model->operation_id)) {
+                        $operationData[$model->operation_id] = $model->operation_id;
                     }
                     ?>
-                    <?= $form->field($model, 'operation', [
-                        'labelOptions' => ['class' => ($model->operation ? "move" : "")]
+                    <?= $form->field($model, 'operation_id', [
+                        'labelOptions' => ['class' => ($model->operation_id ? "move" : "")]
                     ])->widget(Select2::classname(), [
                         'showToggleAll' => false,
                         'data'          => $operationData,

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\form\MissionCallForm;
 use Yii;
 use app\models\MissionCall;
 use app\models\search\MissionCallSearch;
@@ -72,7 +73,7 @@ class MissionCallController extends Controller
      */
     public function actionCreate()
     {
-        $model = new MissionCall();
+        $model = new MissionCallForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -85,11 +86,15 @@ class MissionCallController extends Controller
      * Updates an existing MissionCall model.
      * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
+     * @throws NotFoundHttpException if the model cannot be found
      * @return mixed
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = MissionCallForm::findOne($id);
+        if(!$model) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);

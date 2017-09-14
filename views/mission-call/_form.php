@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Url;
+use app\models\Operation;
 use kartik\select2\Select2;
 use dosamigos\datetimepicker\DateTimePicker;
 use app\helpers\ValMap;
@@ -9,7 +9,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\MissionCall */
+/* @var $model app\models\form\MissionCallForm */
 /* @var $form yii\bootstrap\ActiveForm */
 ?>
 
@@ -28,6 +28,29 @@ use yii\bootstrap\ActiveForm;
             <div class="row">
                 <div class="col-md-12">
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <?php
+                    $operationData = ValMap::model(Operation::class, "id", "name");
+                    if ($model->operation_id && !is_numeric($model->operation_id)) {
+                        $operationData[$model->operation_id] = $model->operation_id;
+                    }
+                    ?>
+                    <?= $form->field($model, 'operation_id', [
+                        'labelOptions' => ['class' => ($model->operation_id ? "move" : "")]
+                    ])->widget(Select2::classname(), [
+                        'showToggleAll' => false,
+                        'data'          => $operationData,
+                        'options'       => [
+                            'placeholder' => '',
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                            'tags'       => true,
+                        ],
+                    ])->label("Operation") ?>
                 </div>
             </div>
             <div class="row">
@@ -64,7 +87,7 @@ use yii\bootstrap\ActiveForm;
         </div>
         <div class="col-md-6">
             <?= $form->field($model, 'description')->textarea([
-                    'style' => "height: 117px"
+                    'style' => "height: 193px"
             ]) ?>
         </div>
     </div>
