@@ -112,8 +112,10 @@ $this->params['breadcrumbs'][] = $this->title;
     $systemInfo["Last Update"] = date("d.m.Y H:i", strtotime($model->updated));
     $systemInfo["Died"] = $model->died ? date("d.m.Y H:i", strtotime($model->died)) : "";
 
+    $systemInfo["RP unpaid/paid"] = $model->getUnpaidRP() . "/" .$model->getPaidRP();
     $systemInfo["Is blocked"] = $model->is_blocked === "Yes" ? '<span class="btn btn-danger">BLOCKED</span>' : "No";
     $systemInfo["Is IT"] = $model->is_it;
+
 
     ?>
     <div class="model-details row affiliations">

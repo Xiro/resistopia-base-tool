@@ -136,9 +136,38 @@ class Staff extends ActiveRecord
             ($this->surname ? ' ' . $this->surname : "");
     }
 
-    public function load($data, $formName = null)
+    /**
+     * Get the sum of all RP that were already paid to a staff member
+     * @return integer
+     */
+    public function getPaidRP()
     {
-        return parent::load($data, $formName);
+        return $this->getRpSum("Yes");
+    }
+
+    /**
+     * Get the sum of all RP that must yet be paid to a staff member
+     * @return integer
+     */
+    public function getUnpaidRP()
+    {
+        return $this->getRpSum("No");
+    }
+
+    /**
+     * @param string $paid
+     * @return integer
+     */
+    protected function getRpSum($paid = "Yes")
+    {
+        $rpSum = MissionStaff::find()
+            ->joinWith("mission")
+            ->where(["staff_id" => $this->id])
+            ->andWhere(["paid" => $paid])
+            ->andWhere(["mission.mission_status_id" => MissionStatus::completedId()])
+            ->asArray()
+            ->sum("mission.RP");
+        return $rpSum ? $rpSum : 0;
     }
 
     public function getActiveMissions()
