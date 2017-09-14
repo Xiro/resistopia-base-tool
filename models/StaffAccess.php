@@ -5,22 +5,22 @@ namespace app\models;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "staff_role".
+ * This is the model class for table "staff_access".
  *
  * @property integer $staff_id
- * @property integer $role_id
+ * @property integer $access_id
  *
- * @property Role $role
+ * @property Access $access
  * @property Staff $staff
  */
-class StaffRole extends ActiveRecord
+class StaffAccess extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'staff_role';
+        return 'staff_access';
     }
 
     /**
@@ -29,10 +29,10 @@ class StaffRole extends ActiveRecord
     public function rules()
     {
         return [
-            [['staff_id', 'role_id'], 'required'],
-            [['staff_id', 'role_id'], 'integer'],
-            [['staff_id', 'role_id'], 'unique', 'targetAttribute' => ['staff_id', 'role_id'], 'message' => 'The combination of Staff ID and Role ID has already been taken.'],
-            [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
+            [['staff_id', 'access_id'], 'required'],
+            [['staff_id', 'access_id'], 'integer'],
+            [['staff_id', 'access_id'], 'unique', 'targetAttribute' => ['staff_id', 'access_id'], 'message' => 'The combination of Staff ID and Access ID has already been taken.'],
+            [['access_id'], 'exist', 'skipOnError' => true, 'targetClass' => Access::className(), 'targetAttribute' => ['access_id' => 'id']],
             [['staff_id'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['staff_id' => 'id']],
         ];
     }
@@ -44,16 +44,16 @@ class StaffRole extends ActiveRecord
     {
         return [
             'staff_id' => 'Staff ID',
-            'role_id' => 'Role ID',
+            'access_id' => 'Access ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRole()
+    public function getAccess()
     {
-        return $this->hasOne(Role::className(), ['id' => 'role_id']);
+        return $this->hasOne(Access::className(), ['id' => 'access_id']);
     }
 
     /**

@@ -6,7 +6,7 @@ use app\models\Category;
 use app\models\Company;
 use app\models\EyeColor;
 use app\models\Rank;
-use app\models\Role;
+use app\models\Access;
 use app\models\Speciality;
 use app\models\StaffStatus;
 use app\models\Team;
@@ -205,11 +205,11 @@ use yii\bootstrap\ActiveForm;
     </div>
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'roleSelect', [
+            <?= $form->field($model, 'accessSelect', [
                 'labelOptions' => ['class' => ($model->staff_status_id ? "move" : "")]
             ])->widget(Select2::classname(), [
                 'showToggleAll' => false,
-                'data'          => ValMap::model(Role::class, "id", "name"),
+                'data'          => ValMap::model(Access::class, "id", "name"),
                 'options'       => [
                     'placeholder' => '',
                     'multiple' => true,
@@ -218,7 +218,7 @@ use yii\bootstrap\ActiveForm;
                     'allowClear' => true,
                     'closeOnSelect' => false
                 ],
-            ])->label("Roles") ?>
+            ])->label("Security Access") ?>
         </div>
         <div class="col-md-6 checkbox-group">
             <?= $form->field($model, 'isBlocked')

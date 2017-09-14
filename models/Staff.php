@@ -42,8 +42,8 @@ use yii\db\ActiveRecord;
  * @property Speciality $speciality
  * @property StaffStatus $staffStatus
  * @property Team $team
- * @property StaffRole[] $staffRoles
- * @property Role[] $roles
+ * @property StaffAccess[] $staffAccesses
+ * @property Access[] $accesses
  */
 class Staff extends ActiveRecord
 {
@@ -125,7 +125,7 @@ class Staff extends ActiveRecord
     public function delete()
     {
         MissionStaff::deleteAll(["staff_id" => $this->id]);
-        StaffRole::deleteAll(["staff_id" => $this->id]);
+        StaffAccess::deleteAll(["staff_id" => $this->id]);
         return parent::delete();
     }
 
@@ -280,26 +280,26 @@ class Staff extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStaffRoles()
-    {
-        return $this->hasMany(StaffRole::className(), ['staff_id' => 'id']);
-    }
+   public function getStaffAccesses()
+   {
+       return $this->hasMany(StaffAccess::className(), ['staff_id' => 'id']);
+   }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRoles()
+    public function getAccesses()
     {
-        return $this->hasMany(Role::className(), ['id' => 'role_id'])->viaTable('staff_role', ['staff_id' => 'id']);
+        return $this->hasMany(Access::className(), ['id' => 'access_id'])->viaTable('staff_access', ['staff_id' => 'id']);
     }
 
     /**
-     * @param string $roleName
+     * @param string $accessName
      * @return \yii\db\ActiveQuery
      */
-    public function hasRole($roleName)
+    public function hasAccess($accessName)
     {
-        $roles = array_column($this->getRoles()->asArray()->all(), "name");
-        return in_array($roleName, $roles);
+        $roles = array_column($this->getAccesses()->asArray()->all(), "name");
+        return in_array($accessName, $roles);
     }
 }

@@ -5,22 +5,26 @@ namespace app\models;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "role".
+ * This is the model class for table "access".
  *
  * @property integer $id
  * @property string $name
  *
- * @property StaffRole[] $staffRoles
+ * @property StaffAccess[] $staffAccesses
  * @property Staff[] $staff
  */
-class Role extends ActiveRecord
+class Access extends ActiveRecord
 {
+    const ACCESS_MISSION = "Mission";
+    const ACCESS_STAFF = "Staff";
+    const ACCESS_MEDICINE = "Medicine";
+    const ACCESS_SECURITY = "Security";
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'role';
+        return 'access';
     }
 
     /**
@@ -48,9 +52,9 @@ class Role extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStaffRoles()
+    public function getStaffAccesses()
     {
-        return $this->hasMany(StaffRole::className(), ['role_id' => 'id']);
+        return $this->hasMany(StaffAccess::className(), ['access_id' => 'id']);
     }
 
     /**
@@ -58,6 +62,6 @@ class Role extends ActiveRecord
      */
     public function getStaff()
     {
-        return $this->hasMany(Staff::className(), ['id' => 'staff_id'])->viaTable('staff_role', ['role_id' => 'id']);
+        return $this->hasMany(Staff::className(), ['id' => 'staff_id'])->viaTable('staff_access', ['access_id' => 'id']);
     }
 }

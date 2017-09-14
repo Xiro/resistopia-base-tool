@@ -3,7 +3,7 @@
 namespace app\models\form;
 
 use app\models\Company;
-use app\models\Role;
+use app\models\Access;
 use app\models\Staff;
 use app\models\StaffStatus;
 use app\models\Team;
@@ -15,7 +15,7 @@ class StaffForm extends Staff
     use UpdateToManyTrait;
     use UpdateDynamicToOneTrait;
 
-    public $roleSelect;
+    public $accessSelect;
     public $isIt = 1;
     public $isBlocked = 0;
 
@@ -30,7 +30,7 @@ class StaffForm extends Staff
     {
         $this->isIt = $this->is_it === "Yes" ? true : false;
         $this->isBlocked = $this->is_blocked === "Yes" ? true : false;
-        $this->roleSelect = ArrayHelper::map($this->roles, "name", "id");
+        $this->accessSelect = ArrayHelper::map($this->accesses, "name", "id");
     }
 
     /**
@@ -40,7 +40,7 @@ class StaffForm extends Staff
     {
         return array_merge(parent::rules(), [
             [[
-                "roleSelect",
+                "accessSelect",
                 "isIt",
                 "isBlocked",
             ], "safe"],
@@ -77,7 +77,7 @@ class StaffForm extends Staff
             $this->rpn = $this->createRpn();
             parent::save($runValidation, $attributeNames);
         }
-        $this->updateToMany("roles", Role::className(), $this->roleSelect);
+        $this->updateToMany("accesses", Access::className(), $this->accessSelect);
 
         return parent::save($runValidation, $attributeNames);
     }
