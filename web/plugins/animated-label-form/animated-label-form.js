@@ -73,8 +73,10 @@ function setupAnimatedFormLabels(contentElement) {
     contentElement.find(".animated-label").css("visibility", "visible");
 }
 
-$(document).ready(function () {
-
-    setupAnimatedFormLabels($("body"));
-
-});
+if(typeof contentSetupFunctions !== "undefined") {
+    contentSetupFunctions.push(setupAnimatedFormLabels);
+} else {
+    $(document).ready(function () {
+        setupAnimatedFormLabels($("body"));
+    });
+}

@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\form\TeamForm;
+use app\models\MissionStaff;
+use app\models\MissionStatus;
 use app\models\search\StaffSearch;
 use Yii;
 use app\models\Team;
@@ -32,7 +34,7 @@ class TeamController extends Controller
                     ],
                 ],
             ],
-            'verbs' => [
+            'verbs'  => [
                 'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
@@ -51,8 +53,18 @@ class TeamController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'search' => $searchModel,
+            'search'       => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionSearch()
+    {
+        $searchModel = new TeamSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->renderPartial("_team-table-body", [
+            "teamModels" => $dataProvider->getModels()
         ]);
     }
 
@@ -65,6 +77,44 @@ class TeamController extends Controller
     {
         $model = $this->findModel($id);
         return $this->render('view', ["model" => $model]);
+    }
+
+    /**
+     * Displays a single Team model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionPay($id)
+    {
+        $model = $this->findModel($id);
+
+        $params = [];
+
+        $staffIds = array_column($model->getStaff()->select("id")->asArray()->all(), "id");
+        $staffIdsCondition = \Yii::$app->db->getQueryBuilder()->buildCondition(
+            ['IN', 'staff_id', $staffIds],
+            $params
+        );
+        $missionStatusCondition = \Yii::$app->db->getQueryBuilder()->buildCondition(
+            ['m.mission_status_id' => MissionStatus::completedId()]
+            , $params
+        );
+
+        $isUpdated = Yii::$app->db->createCommand(
+            "UPDATE mission_staff ms " .
+            "JOIN mission m ON ms.mission_id = m.id " .
+            "SET paid = 'Yes' " .
+            "WHERE $staffIdsCondition " .
+            "AND $missionStatusCondition",
+            $params
+        )->execute();
+
+        if ($isUpdated) {
+            Yii::$app->session->setFlash("success", $model->name . " was paid");
+        } else {
+            Yii::$app->session->setFlash("error", var_export($isUpdated, true) . " Error paying " . $model->name);
+        }
+        return $this->redirect(['index']);
     }
 
     /**
@@ -112,19 +162,27 @@ class TeamController extends Controller
         return $this->render('update', $viewParams);
     }
 
+    /**
+     * loads search table body of the staff selection in the team form
+     * @return string
+     */
     public function actionSearchStaff()
     {
         $searchModel = new StaffSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere("team_id IS NULL");
 
-        return $this->renderPartial("../staff/_staff-list-table-body", [
+        return $this->renderPartial("../staff/_staff-select-table-form-body", [
             "staffModels" => $dataProvider->getModels(),
-            "modelName" => "TeamForm",
-            "exclude" => ["team"],
+            "modelName"   => "TeamForm",
+            "exclude"     => ["team"],
         ]);
     }
 
+    /**
+     * add parameters to display the staff search in the team form
+     * @param $viewParams
+     */
     protected function addStaffSearchParams(&$viewParams)
     {
         $searchModel = new StaffSearch();

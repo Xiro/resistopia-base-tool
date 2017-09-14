@@ -16,7 +16,7 @@ class AjaxLayout extends Component
     public function switchToAjaxLayout()
     {
         if(Yii::$app->request->hasProperty("isAjax") && Yii::$app->request->isAjax) {
-            Yii::$app->controller->layout = false;
+            Yii::$app->controller->layout = "ajax-html";
         }
     }
 

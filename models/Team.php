@@ -51,6 +51,40 @@ class Team extends ActiveRecord
     }
 
     /**
+     * Get the sum of all RP that were already paid to a team
+     * @return integer
+     */
+    public function getPaidRP()
+    {
+        return $this->getRpSum("Yes");
+    }
+
+    /**
+     * Get the sum of all RP that must yet be paid to a team
+     * @return integer
+     */
+    public function getUnpaidRP()
+    {
+        return $this->getRpSum("No");
+    }
+
+    /**
+     * @param string $paid
+     * @return integer
+     */
+    protected function getRpSum($paid = "Yes")
+    {
+        $rpSum = MissionStaff::find()
+            ->joinWith("mission")
+            ->where(["staff_id" => $this->getStaff()->select("id")])
+            ->andWhere(["paid" => $paid])
+            ->andWhere(["mission.mission_status_id" => MissionStatus::completedId()])
+            ->asArray()
+            ->sum("mission.RP");
+        return $rpSum ? $rpSum : 0;
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getStaff()

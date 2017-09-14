@@ -31,12 +31,12 @@ use app\widgets\Glyphicon;
             <?= Html::a(
                 Glyphicon::pencil(),
                 ['mission-call/update', 'id' => $missionCall->id],
-                ["class" => "ajax-dialog"]
+                ["class" => ""]
             ) ?>
             <?= Html::a(
                 Glyphicon::trash(),
                 ['mission-call/confirm-delete', 'id' => $missionCall->id],
-                ["class" => "ajax-dialog"]
+                ["class" => "ajax-dialog", "data-size" => "sm"]
             ) ?>
         </td>
     </tr>

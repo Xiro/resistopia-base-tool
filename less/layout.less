@@ -1,4 +1,5 @@
 @import "bootstrap/variables";
+@import "mixins";
 
 body > * {
   font-family: @font-family-base;
@@ -25,9 +26,17 @@ body {
   }
 }
 
-.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+.h1, .h2, .h3, .h4, .h5, .h6,
+h1, h2, h3, h4, h5, h6 {
   border-color: @brand-primary;
+}
+.h1, .h2, .h3,
+h1, h2, h3 {
   margin-bottom: 33px;
+}
+.h4, .h5, .h6,
+h4, h5, h6 {
+  margin-bottom: 15px;
 }
 
 .custom-button(@main-color) {
@@ -58,6 +67,10 @@ body {
 
 .btn-primary {
   .custom-button(@brand-primary)
+}
+
+.btn-info {
+  .custom-button(@brand-info)
 }
 
 .btn-warning {
@@ -110,6 +123,50 @@ form.animated-label .checkbox-group .form-group {
   }
 }
 
+#flash-messages {
+  position: fixed;
+  z-index: 3000;
+  width: auto;
+  background: none;
+  max-width: 400px;
+  left: 0;
+  .transition(top ease 0.5s);
+  //top: @navbar-height;
+  padding: @padding-small-vertical @padding-small-horizontal;
+
+  .alert {
+    display: none;
+    margin-bottom: @padding-small-horizontal;
+    background: fade(#000, 95%);
+    color: @text-color;
+
+    @darken-alert-border: 20%;
+
+    &.alert-success {
+      .btn-success;
+    }
+
+    &.alert-info {
+      .btn-info;
+    }
+
+    &.alert-warning {
+      .btn-warning;
+    }
+
+    &.alert-danger {
+      .btn-danger;
+    }
+
+    button {
+      position: relative;
+      top: -3px;
+      margin-left: 15px;
+      color: lighten(@text-color, 20%);
+    }
+  }
+}
+
 .table-bordered,
 .table-bordered > tbody > tr > td,
 .table-bordered > tbody > tr > th,
@@ -150,6 +207,10 @@ table tr.animated-label {
 
 .jumbotron {
   background: none;
+}
+
+.text-large {
+  font-size: @font-size-large;
 }
 
 table {
@@ -221,8 +282,11 @@ table {
   // team
 
   &.team-table {
-    th.members {
+    th.members, th.unpaid, th.paid {
       padding: 9px;
+    }
+    .members, .unpaid, .paid {
+      text-align: right;
     }
   }
 

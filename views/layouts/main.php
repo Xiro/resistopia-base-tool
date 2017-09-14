@@ -26,6 +26,21 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
+<?php
+$flashMessages = [];
+foreach (Yii::$app->session->getAllFlashes() as $status => $data) {
+    $data = (array)$data;
+    foreach ($data as $message) {
+        $flashMessages[] = [
+            "status"  => $status,
+            "message" => $message
+        ];
+    }
+}
+?>
+<div id="flash-messages" data-messages='<?= json_encode($flashMessages) ?>'>
+</div>
+
 <div class="wrap">
     <?php
     NavBar::begin([

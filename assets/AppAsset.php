@@ -8,6 +8,7 @@
 namespace app\assets;
 
 use app\assets\plugins\AnimatedLabelFormAsset;
+use app\assets\plugins\DialogAsset;
 use app\assets\plugins\FontAwesomeAsset;
 use yii\bootstrap\BootstrapAsset;
 use yii\web\AssetBundle;
@@ -25,11 +26,13 @@ class AppAsset extends AssetBundle
         'css/layout.css',
     ];
     public $js = [
+        'js/layout.js'
     ];
     public $depends = [
         YiiAsset::class,
         BootstrapAsset::class,
         FontAwesomeAsset::class,
-        AnimatedLabelFormAsset::class
+        AnimatedLabelFormAsset::class,
+        DialogAsset::class,
     ];
 }

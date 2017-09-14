@@ -119,7 +119,7 @@ class MissionController extends Controller
         $searchModel->staff_status_id = StaffStatus::findOne(["name" => StaffStatus::STATUS_ALIVE])->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->renderPartial("../staff/_staff-list-table-body", [
+        return $this->renderPartial("../staff/_staff-select-table-form-body", [
             "staffModels" => $dataProvider->getModels(),
             "modelName"   => "MissionForm",
         ]);

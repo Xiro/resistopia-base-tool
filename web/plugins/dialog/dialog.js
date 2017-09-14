@@ -34,6 +34,7 @@ var dialogCount = 0;
  */
 function Dialog(data) {
 
+    this.zIndex = typeof data.zIndex === "undefined" ? 2000 + dialogCount * 10 : data.zIndex;
     this.size = typeof data.size === "undefined" ? "md" : data.size;
     this.heading = typeof data.heading === "undefined" ? null : data.heading;
     this.headingSize = typeof data.headingSize === "undefined" ? "h1" : data.headingSize;
@@ -86,11 +87,13 @@ function Dialog(data) {
             var prependDialogsTo = $("body");
             prependDialogsTo.prepend(dialogWrapperHtml);
             this.wrapperElement = prependDialogsTo.find("#" + this.dialogId);
+            this.wrapperElement.css("z-index", self.zIndex -1);
             dialogCount++;
         } else {
             this.wrapperElement.html(dialogHtml);
         }
         this.boxElement = this.wrapperElement.find(".dialog");
+        this.boxElement.css("z-index", self.zIndex);
         this.contentElement = this.wrapperElement.find(".dialog-content");
 
         // add buttons
@@ -156,7 +159,8 @@ function Dialog(data) {
         }
 
         this.start(this);
-        this.wrapperElement.attr("style", "display:none");
+        this.wrapperElement.css("display", "none");
+        this.wrapperElement.css("visibility", "visible");
         if(this.openOnLoad) {
             this.open(this);
         }

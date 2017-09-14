@@ -79,7 +79,7 @@ $modelName = (new ReflectionClass($model))->getShortName();
             </tr>
             </thead>
             <tbody>
-            <?= $this->render("_staff-list-table-body", [
+            <?= $this->render("_staff-select-table-form-body", [
                 "staffModels" => $staffDataProvider->getModels(),
                 "exclude"     => $exclude,
                 "modelName"   => $modelName,
@@ -117,7 +117,7 @@ $modelName = (new ReflectionClass($model))->getShortName();
             </tr>
             </thead>
             <tbody>
-            <?= $this->render("_staff-list-table-body", [
+            <?= $this->render("_staff-select-table-form-body", [
                 "staffModels" => $model->getCombinedStaffModels(),
                 "modelName"   => $modelName,
                 "exclude"     => $exclude,

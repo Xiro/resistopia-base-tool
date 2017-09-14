@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="container-fluid padding-large-vertical">
 
-        <h2><?= Html::encode($this->title) ?></h2>
+        <h2 style="margin-bottom: 10px"><?= Html::encode($this->title) ?></h2>
 
         <div class="text-large">
             <p class="padding-large-vertical">

@@ -42,37 +42,4 @@ $(document).ready(function () {
         formSelects.select2("val", "");
     });
 
-    // ajax dialogs
-
-
-    // function ajaxActionGetHtml(actionUrl, data, callback) {
-    //     data = typeof data === "undefined" ? [] : data;
-    //     $.get({
-    //         url: actionUrl,
-    //         data: data,
-    //         dataType: "html"
-    //     }).done(function (html) {
-    //         callback(html);
-    //     })
-    // }
-    //
-    // $("a.ajax-dialog").click(function (e) {
-    //     e.preventDefault();
-    //     var actionUrl = $(this).attr("href");
-    //     var size = $(this).data("size");
-    //     size = size ? size : "lg";
-    //     ajaxActionGetHtml(actionUrl, [], function (content) {
-    //         var AjaxDialog = new Dialog({
-    //             size: size,
-    //             buttons: [],
-    //             content: content,
-    //             start: function (dialog) {
-    //                 setupAnimatedFormLabels(dialog.contentElement);
-    //                 console.log("loaded");
-    //
-    //             }
-    //         });
-    //     });
-    // });
-
 });
