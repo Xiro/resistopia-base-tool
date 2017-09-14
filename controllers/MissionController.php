@@ -131,7 +131,7 @@ class MissionController extends Controller
         $model->setAttributes($missionCall->getAttributes());
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            $missionCall->delete();
+            $missionCall->delete();
             return $this->redirect(['index']);
         }
 
