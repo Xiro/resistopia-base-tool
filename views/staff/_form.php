@@ -89,9 +89,13 @@ use yii\bootstrap\ActiveForm;
                     'allowClear' => true,
                 ],
             ])->label("Blood Type") ?>
+
+            <?= $form->field($model, 'profession')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'profession')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'comment')->textarea([
+                'style' => "height: 117px"
+            ]) ?>
         </div>
     </div>
 

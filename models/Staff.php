@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  * @property integer $height
  * @property string $profession
  * @property string $password
+ * @property string $comment
  * @property string $created
  * @property string $updated
  * @property string $died
@@ -61,7 +62,7 @@ class Staff extends ActiveRecord
     {
         return [
             [['rpn', 'forename', 'rank_id', 'staff_status_id'], 'required'],
-            [['gender', 'is_blocked', 'is_it'], 'string'],
+            [['gender', 'comment', 'is_blocked', 'is_it'], 'string'],
             [['height', 'company_id', 'category_id', 'speciality_id', 'rank_id', 'blood_type_id', 'eye_color_id', 'staff_status_id'], 'integer'],
             [['created', 'updated', 'died'], 'safe'],
             [['rpn'], 'string', 'max' => 10],
@@ -86,30 +87,39 @@ class Staff extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'rpn' => 'Rpn',
-            'forename' => 'Forename',
-            'surname' => 'Surname',
-            'nickname' => 'Nickname',
-            'gender' => 'Gender',
-            'height' => 'Height',
-            'profession' => 'Profession',
-            'password' => 'Password',
-            'created' => 'Created',
-            'updated' => 'Updated',
-            'died' => 'Died',
-            'call_sign' => 'Call Sign',
-            'is_blocked' => 'Is Blocked',
-            'is_it' => 'Is It',
-            'company_id' => 'Company',
-            'category_id' => 'Category',
-            'speciality_id' => 'Speciality',
-            'rank_id' => 'Rank',
-            'team_id' => 'Team',
-            'blood_type_id' => 'Blood Type',
-            'eye_color_id' => 'Eye Color',
+            'id'              => 'ID',
+            'rpn'             => 'Rpn',
+            'forename'        => 'Forename',
+            'surname'         => 'Surname',
+            'nickname'        => 'Nickname',
+            'gender'          => 'Gender',
+            'height'          => 'Height',
+            'profession'      => 'Profession',
+            'password'        => 'Password',
+            'comment'         => 'Comment',
+            'created'         => 'Created',
+            'updated'         => 'Updated',
+            'died'            => 'Died',
+            'call_sign'       => 'Call Sign',
+            'is_blocked'      => 'Is Blocked',
+            'is_it'           => 'Is It',
+            'company_id'      => 'Company',
+            'category_id'     => 'Category',
+            'speciality_id'   => 'Speciality',
+            'rank_id'         => 'Rank',
+            'team_id'         => 'Team',
+            'blood_type_id'   => 'Blood Type',
+            'eye_color_id'    => 'Eye Color',
             'staff_status_id' => 'Staff Status',
         ];
+    }
+
+    public function save($runValidation = true, $attributeNames = null)
+    {
+        if ($this->staff_status_id == StaffStatus::deadId() && empty($this->died)) {
+            $this->died = date("Y-m-d\TH:m:i", time());
+        }
+        return parent::save($runValidation, $attributeNames);
     }
 
     public function delete()

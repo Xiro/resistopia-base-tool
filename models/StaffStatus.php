@@ -19,6 +19,26 @@ class StaffStatus extends ActiveRecord
     const STATUS_MISSING = "missing";
     const STATUS_DEAD = "dead";
 
+    public static function aliveId()
+    {
+        return self::statusId(self::STATUS_ALIVE);
+    }
+
+    public static function missingId()
+    {
+        return self::statusId(self::STATUS_MISSING);
+    }
+
+    public static function deadId()
+    {
+        return self::statusId(self::STATUS_DEAD);
+    }
+
+    public static function statusId($status)
+    {
+        return self::findOne(["name" => $status])->id;
+    }
+
     /**
      * @inheritdoc
      */

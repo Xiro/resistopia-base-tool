@@ -9,6 +9,7 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property string $name
+ * @property string $comment
  *
  * @property Staff[] $staff
  */
@@ -28,6 +29,7 @@ class Team extends ActiveRecord
     public function rules()
     {
         return [
+            [['comment'], 'string'],
             [['name'], 'string', 'max' => 50],
             [['name'], 'unique'],
         ];
@@ -41,6 +43,7 @@ class Team extends ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'comment' => 'Comment',
         ];
     }
 

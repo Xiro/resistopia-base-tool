@@ -32,7 +32,16 @@ use yii\helpers\Url;
         "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
     ]); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'comment')->textarea([
+                'style' => "height: 117px"
+            ]) ?>
+        </div>
+    </div>
 
     <h4>Staff</h4>
 

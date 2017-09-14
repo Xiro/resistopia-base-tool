@@ -76,11 +76,10 @@ class Mission extends ActiveRecord
 
     public function save($runValidation = true, $attributeNames = null)
     {
-
         if (
             (
-                $this->mission_status_id == MissionStatus::statusId(MissionStatus::STATUS_COMPLETED)
-                || $this->mission_status_id == MissionStatus::statusId(MissionStatus::STATUS_FAILED)
+                $this->mission_status_id == MissionStatus::completedId()
+                || $this->mission_status_id == MissionStatus::failedId()
             )
             && empty($this->ended)
         ) {
