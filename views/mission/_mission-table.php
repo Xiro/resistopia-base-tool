@@ -228,7 +228,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <th class="ended">Ended</th>
             <?php endif; ?>
             <?php if (!in_array("call-sign", $exclude)): ?>
-                <th class="call-sign">Call Sign</th>
+                <th class="call-sign">CS</th>
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th class="actions"></th>
