@@ -20,8 +20,9 @@
     position: relative;
     .transition(all ease 0.5s);
 
-    &.stretch .dialog-content {
-      .scrollbar-vertical(8px, 0px, 0px, @brand-primary, @brand-primary, #000)
+    .dialog-content {
+      padding-right: 8px;
+      .scrollbar-vertical(6px, 0px, 0px, @brand-primary, @brand-primary, #000)
     }
 
     @dialog-height-sm: 40%;

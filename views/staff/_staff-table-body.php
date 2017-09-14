@@ -48,16 +48,20 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php endif; ?>
         <?php if (!in_array("actions", $exclude)): ?>
             <td class="actions">
-                <?= Html::a(
-                    Glyphicon::pencil(),
-                    ['staff/update', 'id' => $staff->id],
-                    ["class" => ""]
-                ) ?>
-                <?= Html::a(
-                    Glyphicon::trash(),
-                    ['staff/confirm-delete', 'id' => $staff->id],
-                    ["class" => "ajax-dialog", "data-size" => "sm"]
-                ) ?>
+                <?php if (!in_array("action-update", $exclude)): ?>
+                    <?= Html::a(
+                        Glyphicon::pencil(),
+                        ['staff/update', 'id' => $staff->id],
+                        ["class" => ""]
+                    ) ?>
+                <?php endif; ?>
+                <?php if (!in_array("action-delete", $exclude)): ?>
+                    <?= Html::a(
+                        Glyphicon::trash(),
+                        ['staff/confirm-delete', 'id' => $staff->id],
+                        ["class" => "ajax-dialog", "data-size" => "sm"]
+                    ) ?>
+                <?php endif; ?>
             </td>
         <?php endif; ?>
     </tr>

@@ -12,6 +12,9 @@ use app\models\Mission;
  */
 class MissionSearch extends Mission
 {
+
+    public $call_sign;
+
     /**
      * @inheritdoc
      */
@@ -19,7 +22,7 @@ class MissionSearch extends Mission
     {
         return [
             [['id', 'RP', 'FP', 'mission_type_id', 'mission_status_id'], 'integer'],
-            [['name', 'description', 'zone', 'started', 'ended', 'debrief_comment'], 'safe'],
+            [['name', 'description', 'zone', 'started', 'ended', 'debrief_comment', 'call_sign'], 'safe'],
         ];
     }
 
@@ -103,6 +106,10 @@ class MissionSearch extends Mission
                 [">=", "started", $from],
                 ["<=", "started", $to],
             ]);
+        }
+        if ($this->call_sign) {
+            $query->joinWith("staff");
+            $query->andWhere(["staff.call_sign" => $this->call_sign]);
         }
 
         return $query;

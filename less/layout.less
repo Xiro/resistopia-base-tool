@@ -29,6 +29,7 @@ body {
 .h1, .h2, .h3, .h4, .h5, .h6,
 h1, h2, h3, h4, h5, h6 {
   border-color: @brand-primary;
+  text-transform: uppercase;
 }
 .h1, .h2, .h3,
 h1, h2, h3 {
@@ -256,10 +257,10 @@ table {
 
   &.mission-table {
     .mission-status {
-      min-width: 100px
+      min-width: 90px
     }
     .mission-type {
-      min-width: 100px
+      min-width: 90px
     }
     .zone {
       min-width: 75px
@@ -279,6 +280,9 @@ table {
     }
     td.ended {
       white-space: nowrap;
+    }
+    .call-sign {
+      min-width: 50px;
     }
   }
 

@@ -87,6 +87,33 @@ class Team extends ActiveRecord
         return $rpSum ? $rpSum : 0;
     }
 
+    public function getActiveMissions()
+    {
+        return $this->getMissions(MissionStatus::activeId());
+    }
+
+    public function getPastMissions()
+    {
+        return $this->getMissions([
+            MissionStatus::completedId(),
+            MissionStatus::failedId()
+        ]);
+    }
+
+    public function getPendingMissions()
+    {
+        return $this->getMissions(MissionStatus::pendingId());
+    }
+
+    protected function getMissions($statusId)
+    {
+        return Mission::find()
+            ->joinWith("missionStaff")
+            ->where(["mission_staff.staff_id" => $this->getStaff()->select("id")])
+            ->andWhere(["mission.mission_status_id" => $statusId])
+            ->all();
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

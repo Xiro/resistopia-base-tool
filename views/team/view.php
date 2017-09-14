@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Team */
@@ -29,6 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
             </span>
     </h1>
 
+    <?= nl2br($model->comment); ?>
+
     <h4>Payments</h4>
 
     <?php $unpaidRp = $model->getUnpaidRP(); ?>
@@ -47,7 +48,43 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render("../staff/_staff-table", [
         "staffModels" => $model->staff,
-        "exclude"     => ["team", "actions"]
+        "exclude"     => ["team", "action-delete"]
     ]) ?>
+
+    <h4>Pending Missions</h4>
+
+    <?php $pendingMissions = $model->getPendingMissions(); ?>
+    <?php if($pendingMissions): ?>
+        <?= $this->render("../mission/_mission-table", [
+            "missionModels" => $pendingMissions,
+            "exclude" => ["status", "debrief-comment", "ended", "action-delete"],
+        ]); ?>
+    <?php else: ?>
+        <p class="text-large">No members of team <?= $model->name ?> are waiting for any missions</p>
+    <?php endif; ?>
+
+    <h4>Active Missions</h4>
+
+    <?php $activeMissions = $model->getActiveMissions(); ?>
+    <?php if($activeMissions): ?>
+        <?= $this->render("../mission/_mission-table", [
+            "missionModels" => $activeMissions,
+            "exclude" => ["status", "debrief-comment", "ended", "action-delete"],
+        ]); ?>
+    <?php else: ?>
+        <p class="text-large">No members of team <?= $model->name ?> are currently on a mission</p>
+    <?php endif; ?>
+
+    <h4>Past Missions</h4>
+
+    <?php $pastMissions = $model->getPastMissions(); ?>
+    <?php if($pastMissions): ?>
+        <?= $this->render("../mission/_mission-table", [
+            "missionModels" => $pastMissions,
+            "exclude" => ["started", "description", "action-delete"],
+        ]); ?>
+    <?php else: ?>
+        <p class="text-large">No members of team <?= $model->name ?> have been on any mission yet</p>
+    <?php endif; ?>
 
 </div>

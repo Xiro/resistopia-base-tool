@@ -36,7 +36,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?= Html::a(
                     Glyphicon::eye_open(),
                     ['team/view', 'id' => $team->id],
-                    ["class" => "ajax-dialog"]
+                    ["class" => "ajax-dialog", "data-size" => "lg"]
                 ) ?>
                 <?= Html::a(
                     Glyphicon::pencil(),
