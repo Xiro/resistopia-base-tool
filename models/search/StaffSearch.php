@@ -105,6 +105,9 @@ class StaffSearch extends Staff
             }
             $query->andWhere($where);
         }
+        if ($this->is_blocked) {
+            $query->andWhere(["is_blocked" => $this->is_blocked]);
+        }
         if ($this->category_id) {
             $query->andWhere(["category_id" => $this->category_id]);
         }

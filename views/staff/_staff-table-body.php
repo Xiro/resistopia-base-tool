@@ -48,6 +48,13 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php endif; ?>
         <?php if (!in_array("actions", $exclude)): ?>
             <td class="actions">
+                <?php if (!in_array("action-view", $exclude)): ?>
+                    <?= Html::a(
+                        Glyphicon::eye_open(),
+                        ['staff/view', 'id' => $staff->id],
+                        ["class" => "ajax-dialog", "data-size" => "lg"]
+                    ) ?>
+                <?php endif; ?>
                 <?php if (!in_array("action-update", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::pencil(),

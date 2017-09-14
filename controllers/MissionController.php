@@ -115,8 +115,7 @@ class MissionController extends Controller
 
     public function actionSearchStaff()
     {
-        $searchModel = new StaffSearch();
-        $searchModel->staff_status_id = StaffStatus::findOne(["name" => StaffStatus::STATUS_ALIVE])->id;
+        $searchModel = $this->createStaffSearchModelForSelect();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderPartial("../staff/_staff-select-table-form-body", [
@@ -152,11 +151,18 @@ class MissionController extends Controller
 
     protected function addStaffSearchParams(&$viewParams)
     {
-        $searchModel = new StaffSearch();
-        $searchModel->staff_status_id = StaffStatus::findOne(["name" => StaffStatus::STATUS_ALIVE])->id;
+        $searchModel = $this->createStaffSearchModelForSelect();
         $staffDataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $viewParams["staffSearch"] = $searchModel;
         $viewParams["staffDataProvider"] = $staffDataProvider;
+    }
+
+    protected function createStaffSearchModelForSelect()
+    {
+        $searchModel = new StaffSearch();
+        $searchModel->staff_status_id = StaffStatus::findOne(["name" => StaffStatus::STATUS_ALIVE])->id;
+        $searchModel->is_blocked = "No";
+        return $searchModel;
     }
 
     /**

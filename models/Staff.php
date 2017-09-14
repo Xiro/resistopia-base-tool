@@ -141,6 +141,33 @@ class Staff extends ActiveRecord
         return parent::load($data, $formName);
     }
 
+    public function getActiveMissions()
+    {
+        return $this->getMissionsByStatus(MissionStatus::activeId());
+    }
+
+    public function getPastMissions()
+    {
+        return $this->getMissionsByStatus([
+            MissionStatus::completedId(),
+            MissionStatus::failedId()
+        ]);
+    }
+
+    public function getPendingMissions()
+    {
+        return $this->getMissionsByStatus(MissionStatus::pendingId());
+    }
+
+    protected function getMissionsByStatus($statusId)
+    {
+        return Mission::find()
+            ->joinWith("missionStaff")
+            ->where(["mission_staff.staff_id" => $this->id])
+            ->andWhere(["mission.mission_status_id" => $statusId])
+            ->all();
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
