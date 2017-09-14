@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     $systemInfo = [];
-    $systemInfo["Roles"] = $model->roles ? implode(", ", array_column($model->getRoles()->asArray()->all(), "name")) : "n/a";
+    $systemInfo["Access"] = $model->accesses ? implode(", ", array_column($model->getAccesses()->asArray()->all(), "name")) : "n/a";
     $systemInfo["Call Sign"] = $model->call_sign ? $model->call_sign : "n/a";
     $systemInfo["Status"] = $model->staff_status_id ? $model->staffStatus->name : "n/a";
 
