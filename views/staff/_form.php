@@ -99,7 +99,7 @@ use yii\bootstrap\ActiveForm;
 
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'company', [
+            <?= $form->field($model, 'company_id', [
                 'labelOptions' => ['class' => ($model->company_id ? "move" : "")]
             ])->widget(Select2::classname(), [
                 'showToggleAll' => false,
@@ -160,7 +160,7 @@ use yii\bootstrap\ActiveForm;
     </div>
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'team', [
+            <?= $form->field($model, 'team_id', [
                 'labelOptions' => ['class' => ($model->team_id ? "move" : "")]
             ])->widget(Select2::classname(), [
                 'showToggleAll' => false,

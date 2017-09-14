@@ -44,6 +44,12 @@ class Team extends ActiveRecord
         ];
     }
 
+    public function delete()
+    {
+        Staff::updateAll(["team_id" => null], ["team_id" => $this->id]);
+        return parent::delete();
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

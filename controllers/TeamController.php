@@ -2,23 +2,20 @@
 
 namespace app\controllers;
 
-use app\models\form\MissionForm;
-use app\models\MissionStatus;
-use app\models\Operation;
+use app\models\form\TeamForm;
 use app\models\search\StaffSearch;
-use app\models\StaffStatus;
 use Yii;
-use app\models\Mission;
-use app\models\search\MissionSearch;
+use app\models\Team;
+use app\models\search\TeamSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MissionController implements the CRUD actions for Mission model.
+ * TeamController implements the CRUD actions for Team model.
  */
-class MissionController extends Controller
+class TeamController extends Controller
 {
     /**
      * @inheritdoc
@@ -35,7 +32,7 @@ class MissionController extends Controller
                     ],
                 ],
             ],
-            'verbs'  => [
+            'verbs' => [
                 'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
@@ -45,45 +42,22 @@ class MissionController extends Controller
     }
 
     /**
-     * Lists all Mission models.
+     * Lists all Team models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new MissionSearch();
+        $searchModel = new TeamSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'search'       => $searchModel,
+            'search' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
-    public function actionSearch()
-    {
-        $searchModel = new MissionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->renderPartial("_mission-table-body", [
-            "missionModels" => $dataProvider->getModels()
-        ]);
-    }
-
-    public function actionControl()
-    {
-        $activeOperations = Operation::find()
-            ->joinWith("missions")
-            ->where(["mission.mission_status_id" => MissionStatus::activeId()])
-            ->groupBy("operation.id")
-            ->all();
-
-        return $this->render("control", [
-            "operations" => $activeOperations
-        ]);
-    }
-
     /**
-     * Displays a single Mission model.
+     * Displays a single Team model.
      * @param integer $id
      * @return mixed
      */
@@ -94,13 +68,13 @@ class MissionController extends Controller
     }
 
     /**
-     * Creates a new Mission model.
+     * Creates a new Team model.
      * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new MissionForm();
+        $model = new TeamForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -113,20 +87,8 @@ class MissionController extends Controller
         return $this->render('create', $viewParams);
     }
 
-    public function actionSearchStaff()
-    {
-        $searchModel = new StaffSearch();
-        $searchModel->staff_status_id = StaffStatus::findOne(["name" => StaffStatus::STATUS_ALIVE])->id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->renderPartial("../staff/_staff-list-table-body", [
-            "staffModels" => $dataProvider->getModels(),
-            "modelName"   => "MissionForm",
-        ]);
-    }
-
     /**
-     * Updates an existing Mission model.
+     * Updates an existing Team model.
      * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @throws NotFoundHttpException if the model cannot be found
@@ -134,7 +96,7 @@ class MissionController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = MissionForm::findOne($id);
+        $model = TeamForm::findOne($id);
         if (!$model) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
@@ -150,11 +112,24 @@ class MissionController extends Controller
         return $this->render('update', $viewParams);
     }
 
+    public function actionSearchStaff()
+    {
+        $searchModel = new StaffSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere("team_id IS NULL");
+
+        return $this->renderPartial("../staff/_staff-list-table-body", [
+            "staffModels" => $dataProvider->getModels(),
+            "modelName" => "TeamForm",
+            "exclude" => ["team"],
+        ]);
+    }
+
     protected function addStaffSearchParams(&$viewParams)
     {
         $searchModel = new StaffSearch();
-        $searchModel->staff_status_id = StaffStatus::findOne(["name" => StaffStatus::STATUS_ALIVE])->id;
         $staffDataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $staffDataProvider->query->where("team_id IS NULL");
         $viewParams["staffSearch"] = $searchModel;
         $viewParams["staffDataProvider"] = $staffDataProvider;
     }
@@ -173,7 +148,7 @@ class MissionController extends Controller
     }
 
     /**
-     * Deletes an existing Mission model.
+     * Deletes an existing Team model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -186,15 +161,15 @@ class MissionController extends Controller
     }
 
     /**
-     * Finds the Mission model based on its primary key value.
+     * Finds the Team model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Mission the loaded model
+     * @return Team the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Mission::findOne($id)) !== null) {
+        if (($model = Team::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

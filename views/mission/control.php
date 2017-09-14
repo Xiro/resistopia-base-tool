@@ -4,8 +4,6 @@
 /* @var $missions \app\models\Mission[] */
 /* @var $operations \app\models\Operation[] */
 
-use yii\helpers\Html;
-
 $this->title = 'Mission Control';
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -14,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="container">
 
         <?php foreach ($operations as $operation): ?>
-            <h3 style="margin-bottom: 10px"><?= $operation->name ?></h3>
+            <h3 style="margin-bottom: 0; padding-left: 9px"><?= $operation->name ?></h3>
             <table class="table table-bordered mission-table">
                 <thead>
                 <tr>

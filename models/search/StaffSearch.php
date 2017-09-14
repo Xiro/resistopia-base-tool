@@ -93,7 +93,7 @@ class StaffSearch extends Staff
         $query = Staff::find();
 
         if ($this->rpn) {
-            $query->andWhere("rpn LIKE '%" . $this->rpn. "%'");
+            $query->andWhere("rpn LIKE '%" . strtoupper($this->rpn). "%'");
         }
         if ($this->name) {
             $parts = explode(" ", $this->name);

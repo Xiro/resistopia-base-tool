@@ -39,6 +39,7 @@ AppAsset::register($this);
     $navItems[] = ['label' => 'Mission Calls', 'url' => ['mission-call/index']];
     $navItems[] = ['label' => 'Missions', 'url' => ['mission/index']];
     $navItems[] = ['label' => 'Staff', 'url' => ['staff/index']];
+    $navItems[] = ['label' => 'Teams', 'url' => ['team/index']];
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items'   => $navItems,

@@ -4,15 +4,15 @@ namespace app\assets\page;
 
 use yii\web\AssetBundle;
 
-class MissionFormAsset extends AssetBundle
+class StaffSelectFormAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/mission-form.css',
+        'css/staff-select-form.css',
     ];
     public $js = [
-        'js/mission-form.js',
+        'js/staff-select-form.js',
     ];
     public $depends = [
         IndexSearchAsset::class,

@@ -62,7 +62,7 @@ class Staff extends ActiveRecord
         return [
             [['rpn', 'forename', 'rank_id', 'staff_status_id'], 'required'],
             [['gender', 'is_blocked', 'is_it'], 'string'],
-            [['height', 'company_id', 'category_id', 'speciality_id', 'rank_id', 'team_id', 'blood_type_id', 'eye_color_id', 'staff_status_id'], 'integer'],
+            [['height', 'company_id', 'category_id', 'speciality_id', 'rank_id', 'blood_type_id', 'eye_color_id', 'staff_status_id'], 'integer'],
             [['created', 'updated', 'died'], 'safe'],
             [['rpn'], 'string', 'max' => 10],
             [['forename', 'surname', 'nickname', 'profession', 'password'], 'string', 'max' => 50],
@@ -124,6 +124,11 @@ class Staff extends ActiveRecord
         return $this->forename .
             ($this->nickname ? ' "' . $this->nickname . '"' : "") .
             ($this->surname ? ' ' . $this->surname : "");
+    }
+
+    public function load($data, $formName = null)
+    {
+        return parent::load($data, $formName);
     }
 
     /**

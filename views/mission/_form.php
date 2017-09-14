@@ -1,6 +1,6 @@
 <?php
 
-use app\assets\page\MissionFormAsset;
+use app\assets\page\StaffSelectFormAsset;
 use app\helpers\ValMap;
 use app\models\MissionStatus;
 use app\models\MissionType;
@@ -14,7 +14,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use app\models\Operation;
 
-MissionFormAsset::register($this);
+StaffSelectFormAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\form\MissionForm */
@@ -153,93 +153,12 @@ MissionFormAsset::register($this);
 
     <h4>Staff</h4>
 
-    <div class="row">
-        <div class="col-md-6">
-            <table class="table table-bordered staff-table" id="index-search-table">
-                <thead>
-                <tr class="animated-label">
-                    <th class="rpn">
-                        <?= $form->field($staffSearch, 'rpn')->textInput(["form" => "index-search-form"]) ?>
-                    </th>
-                    <th class="name">
-                        <?= $form->field($staffSearch, 'name')->textInput(["form" => "index-search-form"]) ?>
-                    </th>
-                    <th class="team">
-                        <?= $form->field($staffSearch, 'team_id', [
-                            'labelOptions' => ['class' => ($staffSearch->team_id ? "move" : "")]
-                        ])->widget(Select2::classname(), [
-                            'showToggleAll' => false,
-                            'data'          => ValMap::model(Team::class, "id", "name"),
-                            'options'       => [
-                                'placeholder' => '',
-                                'form'        => 'index-search-form',
-                            ],
-                            'pluginOptions' => [
-                                'allowClear' => true,
-                            ],
-                        ])->label("Team") ?>
-                    </th>
-                    <th class="call-sign">
-                        <?= $form->field($staffSearch, 'call_sign', [
-                            'labelOptions' => ['class' => ($staffSearch->call_sign ? "move" : "")]
-                        ])->widget(Select2::classname(), [
-                            'showToggleAll' => false,
-                            'data'          => ArrayHelper::map(
-                                Staff::find()->where("call_sign IS NOT NULL")->all(),
-                                "call_sign",
-                                "call_sign"
-                            ),
-                            'options'       => [
-                                'placeholder' => '',
-                                'form'        => 'index-search-form',
-                            ],
-                            'pluginOptions' => [
-                                'allowClear' => true,
-                            ],
-                        ])->label("CS") ?>
-                    </th>
-                    <th class="actions" style="padding: 8px">
-                        <?= Glyphicon::arrow_right(["class" => "list-btn add-all-staff"]) ?>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <?= $this->render("_staff-list-table-body", [
-                    "staffModels" => $staffDataProvider->getModels()
-                ]); ?>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-6">
-            <table class="table table-bordered staff-table" id="staff-selection-table">
-                <thead>
-                <tr>
-                    <th class="rpn">
-                        RPN
-                    </th>
-                    <th class="name">
-                        Name
-                    </th>
-                    <th class="team">
-                        Team
-                    </th>
-                    <th class="call-sign">
-                        Call Sign
-                    </th>
-                    <th class="actions">
-                        <?= Glyphicon::remove(["class" => "assigned-btn remove-all-staff"]) ?>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <?= $this->render("_staff-list-table-body", [
-                    "staffModels" => $model->getCombinedStaffModels(),
-                    "checked" => true,
-                ]); ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <?= $this->render("../staff/_staff-select-table-form", [
+        "form"              => $form,
+        "model"             => $model,
+        "staffSearch"       => $staffSearch,
+        "staffDataProvider" => $staffDataProvider,
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton(

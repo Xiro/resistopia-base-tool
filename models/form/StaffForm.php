@@ -7,15 +7,15 @@ use app\models\Role;
 use app\models\Staff;
 use app\models\StaffStatus;
 use app\models\Team;
-use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 class StaffForm extends Staff
 {
 
+    use UpdateToManyTrait;
+    use UpdateDynamicToOneTrait;
+
     public $roleSelect;
-    public $team;
-    public $company;
     public $isIt = 1;
     public $isBlocked = 0;
 
@@ -30,8 +30,6 @@ class StaffForm extends Staff
     {
         $this->isIt = $this->is_it === "Yes" ? true : false;
         $this->isBlocked = $this->is_blocked === "Yes" ? true : false;
-        $this->team = $this->team_id ? $this->team_id : null;
-        $this->company = $this->company_id ? $this->company_id : null;
         $this->roleSelect = ArrayHelper::map($this->roles, "name", "id");
     }
 
@@ -43,14 +41,10 @@ class StaffForm extends Staff
         return array_merge(parent::rules(), [
             [[
                 "roleSelect",
-                "team",
-                "company",
                 "isIt",
                 "isBlocked",
             ], "safe"],
             [['category_id'], 'required'],
-            [['team'], 'string', 'max' => 50],
-            [['company'], 'string', 'max' => 50],
         ]);
     }
 
@@ -76,60 +70,16 @@ class StaffForm extends Staff
         $this->is_blocked = $this->isBlocked == "0" ? "No" : "Yes";
         $this->call_sign = !$this->call_sign ? null : $this->call_sign;
 
-        $this->updateDynamicToOne("team_id", Team::className(), $this->team);
-        $this->updateDynamicToOne("company_id", Company::className(), $this->company);
+        $this->updateDynamicToOne("team_id", Team::className(), $this->team_id);
+        $this->updateDynamicToOne("company_id", Company::className(), $this->company_id);
 
         if($this->isNewRecord || $this->getIsNewRecord()) {
             $this->rpn = $this->createRpn();
             parent::save($runValidation, $attributeNames);
         }
-        $this->updateManyToMany("roles", Role::className(), $this->roleSelect);
+        $this->updateToMany("roles", Role::className(), $this->roleSelect);
 
         return parent::save($runValidation, $attributeNames);
-    }
-
-    public function updateDynamicToOne($idColumn, $modelClass, $value, $modelValueAttr = "name")
-    {
-        if(!$value) {
-            return null;
-        }
-        /** @var ActiveRecord $modelClass */
-        $hasModel = 0 < $modelClass::find()->where(["id" => $value])->count();
-        if($hasModel) {
-            $this->$idColumn = $value;
-        } else {
-            /** @var ActiveRecord $addModel */
-            $addModel = new $modelClass;
-            $addModel->$modelValueAttr = $value;
-            $addModel->save();
-            $this->$idColumn = $addModel->id;
-        }
-    }
-
-    protected function updateManyToMany($relationName, $modelClass, $selectedIds)
-    {
-        $selectedIds = empty($selectedIds) ? array() : $selectedIds;
-        /** @var ActiveRecord $modelClass */
-
-        $existing = [];
-        foreach ($this->$relationName as $relatedModel) {
-            $existing[$relatedModel->id] = $relatedModel;
-        }
-        $existingIds = array_keys($existing);
-
-        $removeIds = array_diff($existingIds, $selectedIds);
-        foreach ($removeIds as $removeId) {
-            $this->unlink($relationName, $existing[$removeId], true);
-        }
-
-        $addIds = array_diff($selectedIds, $existingIds);
-        foreach ($addIds as $addId) {
-            $linkModel = $modelClass::findOne($addId);
-            if(!$linkModel) {
-                throw new \InvalidArgumentException("$modelClass with ID $addId does not exist");
-            }
-            $this->link($relationName, $linkModel);
-        }
     }
 
 }
