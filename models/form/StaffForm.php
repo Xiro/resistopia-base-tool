@@ -19,13 +19,18 @@ class StaffForm extends Staff
     public $isIt = 1;
     public $isBlocked = 0;
 
+    /**
+     * {@inheritdoc}
+     */
     public function __construct(array $config = [])
     {
         parent::__construct($config);
         $this->staff_status_id = StaffStatus::findOne(["name" => StaffStatus::STATUS_ALIVE]);
     }
 
-
+    /**
+     * {@inheritdoc}
+     */
     public function afterFind()
     {
         $this->isIt = $this->is_it === "Yes" ? true : false;

@@ -3,13 +3,14 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use app\models\Team;
+use app\models\search\TeamSearch;
 use kartik\select2\Select2;
 use app\helpers\ValMap;
 use app\assets\page\IndexSearchAsset;
 
 /* @var $this yii\web\View */
-/* @var $teamModels \app\models\Team[] */
-/* @var $search \app\models\search\TeamSearch */
+/* @var $models Team[] */
+/* @var $search TeamSearch */
 /* @var $searchUrl string */
 /* @var $exclude array */
 
@@ -18,23 +19,21 @@ $search = !isset($search) ? null : $search;
 $searchUrl = !isset($searchUrl) ? Url::to(["team/search"]) : $searchUrl;
 $exclude = !isset($exclude) ? array() : $exclude;
 
-?>
-<?php if ($search): ?>
-    <?php IndexSearchAsset::register($this); ?>
-    <?php $form = ActiveForm::begin([
+if ($search) {
+    IndexSearchAsset::register($this);
+    $form = ActiveForm::begin([
         'id'          => 'index-search-form',
         "action"      => $searchUrl,
         "options"     => [
             'clientValidation' => false,
             "class"            => "animated-label",
-            "data"             => [
-
-            ]
+            "data"             => []
         ],
         "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
-    ]); ?>
-    <?php ActiveForm::end(); ?>
-<?php endif; ?>
+    ]);
+    ActiveForm::end();
+}
+?>
 
 <table class="table table-bordered team-table" id="index-search-table">
     <thead>
@@ -94,7 +93,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
     </thead>
     <tbody>
     <?= $this->render("_team-table-body", [
-        "teamModels" => $teamModels,
+        "teamModels" => $models,
         "exclude"    => $exclude
     ]); ?>
     </tbody>

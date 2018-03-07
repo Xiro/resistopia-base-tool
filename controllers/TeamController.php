@@ -53,18 +53,22 @@ class TeamController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'search'       => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
+    /**
+     * (for ajax use) search and render a table body
+     * @return string
+     */
     public function actionSearch()
     {
         $searchModel = new TeamSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->renderPartial("_team-table-body", [
-            "teamModels" => $dataProvider->getModels()
+        return $this->renderPartial('_table-body', [
+            'models' => $dataProvider->getModels()
         ]);
     }
 
@@ -72,6 +76,7 @@ class TeamController extends Controller
      * Displays a single Team model.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
@@ -83,6 +88,7 @@ class TeamController extends Controller
      * Displays a single Team model.
      * @param integer $id
      * @return mixed
+     * @throws \Exception
      */
     public function actionPay($id)
     {
@@ -197,6 +203,7 @@ class TeamController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionConfirmDelete($id)
     {
@@ -210,6 +217,7 @@ class TeamController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {

@@ -29,14 +29,29 @@ use yii\bootstrap\ActiveForm;
 <div class="<?= $modelNameId ?>-form">
 
     <?= '<?php $form = ActiveForm::begin([
-            "options"     => ["class" => "animated-label"],
-            "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
-    ]); ?>' . "\n" ?>
-
-<?php foreach ($generator->getColumnNames() as $attribute) {
-    if (in_array($attribute, $safeAttributes)) {
-        echo "    <?= " . $generator->generateActiveField($attribute) . " ?>\n\n";
+        "options"     => ["class" => "animated-label"],
+        "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
+    ]); ?>' . "\n\n" ?>
+<?php
+$beginRow = true;
+$t = "    ";
+foreach ($generator->getColumnNames() as $attribute) {
+    if (!in_array($attribute, $safeAttributes)) {
+        continue;
     }
+
+    if($beginRow) {
+        echo "$t<div class=\"row\">\n";
+    }
+
+    echo "$t$t<div class=\"col-md-6\">\n";
+    echo "$t$t$t<?= " . $generator->generateActiveField($attribute) . " ?>\n";
+    echo "$t$t</div>\n";
+
+    if(!$beginRow) {
+        echo "$t</div>\n\n";
+    }
+    $beginRow = !$beginRow;
 } ?>
     <div class="form-group">
         <?= '<?= Html::submitButton(

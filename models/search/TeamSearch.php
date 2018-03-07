@@ -19,7 +19,7 @@ class TeamSearch extends Team
     {
         return [
             [['id'], 'integer'],
-            [['name'], 'safe'],
+            [['name', 'comment'], 'safe'],
         ];
     }
 
@@ -62,7 +62,8 @@ class TeamSearch extends Team
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'comment', $this->comment]);
 
         return $dataProvider;
     }

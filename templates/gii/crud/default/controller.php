@@ -24,6 +24,13 @@ $urlParams = $generator->generateUrlParams();
 $actionParams = $generator->generateActionParams();
 $actionParamComments = $generator->generateActionParamComments();
 
+$fullClass = ltrim($generator->modelClass, '\\');
+$hasFormModel = $generator->generateFormModel;
+$formModelClass = StringHelper::basename($generator->formModelClass);
+if ($modelClass === $formModelClass) {
+    $formModelAlias = $formModelClass . 'Form';
+}
+
 echo "<?php\n";
 ?>
 
@@ -31,6 +38,9 @@ namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>
 
 use Yii;
 use <?= ltrim($generator->modelClass, '\\') ?>;
+<?php if (!empty($generator->generateFormModel)): ?>
+use <?= ltrim($generator->formModelClass, '\\') . (isset($formModelAlias) ? " as $formModelAlias" : "") ?>;
+<?php endif; ?>
 <?php if (!empty($generator->searchModelClass)): ?>
 use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
 <?php else: ?>
@@ -96,9 +106,34 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     }
 
     /**
+     * (for ajax use) search and render a table body
+     * @return string
+     */
+    public function actionSearch()
+    {
+<?php if (!empty($generator->searchModelClass)): ?>
+        $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->renderPartial('_table-body', [
+            'models' => $dataProvider->getModels()
+        ]);
+<?php else: ?>
+        $dataProvider = new ActiveDataProvider([
+            'query' => <?= $modelClass ?>::find()
+        ]);
+
+        return $this->renderPartial('index', [
+            'models' => $dataProvider->getModels()
+        ]);
+<?php endif; ?>
+    }
+
+    /**
      * Displays a single <?= $modelClass ?> model.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView(<?= $actionParams ?>)
     {
@@ -113,7 +148,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionCreate()
     {
-        $model = new <?= $modelClass ?>();
+        $model = new <?= $hasFormModel ? $formModelClass : $modelClass ?>();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -127,10 +162,18 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * If update is successful, the browser will be redirected to the 'index' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate(<?= $actionParams ?>)
     {
+<?php if($hasFormModel): ?>
+        $model = <?= $formModelClass ?>::findOne(<?= $actionParams ?>);
+        if ($model === null) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+<?php else: ?>
         $model = $this->findModel(<?= $actionParams ?>);
+<?php endif; ?>
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -144,6 +187,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionConfirmDelete($id)
     {
@@ -157,6 +201,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete(<?= $actionParams ?>)
     {

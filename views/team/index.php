@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $search \app\models\search\TeamSearch */
+/* @var $searchModel app\models\search\TeamSearch */
 
 $this->title = 'Teams';
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,20 +18,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <span class="heading-btn-group pull-right">
             <?= Html::a(
-                "<span class=\"glyphicon glyphicon-plus\"></span> Add Team",
+                '<span class="glyphicon glyphicon-plus"></span> Create Team',
                 ["create"],
                 ["class" => "btn btn-primary"]
             ); ?>
             </span>
         </h1>
 
-        <div class="cropped-width-md">
-
-            <?= $this->render("_team-table", [
-                "search"     => $search,
-                "teamModels" => $dataProvider->getModels(),
+        <div class="">
+            <?= $this->render("_table", [
+                "searchModel" => $searchModel,
+                "models"      => $dataProvider->getModels(),
             ]) ?>
-
         </div>
     </div>
 </div>

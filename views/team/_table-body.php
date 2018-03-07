@@ -1,6 +1,6 @@
 <?php
 
-/* @var $teamModels \app\models\Team[] */
+/* @var $models \app\models\Team[] */
 /* @var $exclude array */
 
 use yii\helpers\Html;
@@ -9,26 +9,26 @@ use app\widgets\Glyphicon;
 $exclude = !isset($exclude) ? array() : $exclude;
 ?>
 
-<?php foreach ($teamModels as $team): ?>
+<?php foreach ($models as $model): ?>
     <tr>
         <?php if (!in_array("name", $exclude)): ?>
             <td class="name">
-                <?= $team->name ?>
+                <?= $model->name ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("paid", $exclude)): ?>
             <td class="paid">
-                <?= $team->getPaidRP() . " RP" ?>
+                <?= $model->getPaidRP() . " RP" ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("unpaid", $exclude)): ?>
             <td class="unpaid">
-                <?= $team->getUnpaidRP() . " RP" ?>
+                <?= $model->getUnpaidRP() . " RP" ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("members", $exclude)): ?>
             <td class="members">
-                <?= $team->getStaff()->count() ?>
+                <?= $model->getStaff()->count() ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("actions", $exclude)): ?>
@@ -36,21 +36,21 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?php if (!in_array("action-view", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::eye_open(),
-                        ['team/view', 'id' => $team->id],
+                        ['team/view', 'id' => $model->id],
                         ["class" => "ajax-dialog", "data-size" => "lg"]
                     ) ?>
                 <?php endif; ?>
                 <?php if (!in_array("action-update", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::pencil(),
-                        ['team/update', 'id' => $team->id],
+                        ['team/update', 'id' => $model->id],
                         ["class" => ""]
                     ) ?>
                 <?php endif; ?>
                 <?php if (!in_array("action-delete", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::trash(),
-                        ['team/confirm-delete', 'id' => $team->id],
+                        ['team/confirm-delete', 'id' => $model->id],
                         ["class" => "ajax-dialog", "data-size" => "sm"]
                     ) ?>
                 <?php endif; ?>

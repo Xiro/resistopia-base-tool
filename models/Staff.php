@@ -122,6 +122,11 @@ class Staff extends ActiveRecord
         return parent::save($runValidation, $attributeNames);
     }
 
+    /**
+     * @return false|int
+     * @throws \Exception
+     * @throws \yii\db\StaleObjectException
+     */
     public function delete()
     {
         MissionStaff::deleteAll(["staff_id" => $this->id]);
@@ -134,6 +139,11 @@ class Staff extends ActiveRecord
         return $this->forename .
             ($this->nickname ? ' "' . $this->nickname . '"' : "") .
             ($this->surname ? ' ' . $this->surname : "");
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 
     /**

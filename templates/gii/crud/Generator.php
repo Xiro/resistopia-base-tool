@@ -4,7 +4,9 @@
 namespace app\templates\gii\crud;
 
 
+use Yii;
 use yii\db\ActiveRecord;
+use yii\gii\CodeFile;
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 use yii\helpers\VarDumper;
@@ -17,6 +19,9 @@ class Generator extends \yii\gii\generators\crud\Generator
      * @var string
      */
     public $templateDestination = "cic";
+    public $formModelClass = '';
+    public $generateFormModel = true;
+    public $enableSelect2Fields = true;
 
     protected $requiredTemplateProperties = array(
         "sortable"          => ["id", "order"],
@@ -36,7 +41,48 @@ class Generator extends \yii\gii\generators\crud\Generator
     {
         return array_merge(parent::rules(), [
             [['modelClass'], 'validateHasProperties'],
+            [['formModelClass'], 'filter', 'filter' => 'trim'],
+            [['formModelClass'], 'compare', 'compareAttribute' => 'modelClass', 'operator' => '!==', 'message' => 'Form Model Class must not be equal to Model Class.'],
+            [['formModelClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
+            [['formModelClass'], 'validateNewClass'],
         ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return array_merge(parent::attributeLabels(), [
+            'formModelClass' => 'Form Model Class',
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function hints()
+    {
+        return array_merge(parent::hints(), [
+            'formModelClass' => 'This is the name of the form model class to be generated. You should provide a fully
+                qualified namespaced class name, e.g., <code>app\models\PostForm</code>.',
+        ]);
+    }
+
+    public function generate()
+    {
+        if(empty($this->formModelClass)) {
+            $this->generateFormModel = false;
+        }
+
+        $files = parent::generate();
+
+        if ($this->generateFormModel) {
+            $formModel = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->formModelClass, '\\') . '.php'));
+            $files[] = new CodeFile($formModel, $this->render('form.php'));
+        }
+
+        return $files;
     }
 
     public function validateHasProperties()
@@ -105,9 +151,10 @@ class Generator extends \yii\gii\generators\crud\Generator
     /**
      * Generates code for active field
      * @param string $attribute
+     * @param int $tabOffset
      * @return string
      */
-    public function generateActiveField($attribute)
+    public function generateActiveField($attribute, $tabOffset = 1)
     {
         $foreignKeyColumns = $this->getForeignKeyColumns();
         $tableSchema = $this->getTableSchema();
@@ -118,6 +165,7 @@ class Generator extends \yii\gii\generators\crud\Generator
                 return "\$form->field(\$model, '$attribute')";
             }
         }
+        for($t = ""; strlen($t) < $tabOffset*4; $t .= "    ") true;
         $column = $tableSchema->columns[$attribute];
         if (in_array($attribute, $foreignKeyColumns)) {
             $relatedSchema = $this->getRelationSchema($attribute);
@@ -125,11 +173,30 @@ class Generator extends \yii\gii\generators\crud\Generator
                 return '"" // $form->field($model, ' . $attribute . ')->dropDownList(/* insert related values */)->label(/* insert label */)';
             }
             $label = Inflector::camel2words(Inflector::id2camel(str_replace(["id", "ID", "Id", "_id"], "", $attribute)));
-            return '$form->field($model, \'' . $attribute . '\')->dropDownList(\yii\helpers\ArrayHelper::map(' . "\n        "
-                . $relatedSchema["class"] . '::find()->all(), "'
-                . $relatedSchema["primaryKey"] . '", "'
-                . $this->getNameAttribute($relatedSchema["class"]) . '"' . "\n    "
-                . '), ["prompt" => ""])->label("' . $label . '")';
+            if($this->enableSelect2Fields) {
+                return "\$form->field(\$model, '$attribute', [\n$t"
+                    . "    'labelOptions' => ['class' => (\$model->$attribute ? 'move' : '')]\n$t"
+                    . "])->widget(Select2::classname(), [\n$t"
+                    . "    'showToggleAll' => false,\n$t"
+                    . "    'data'          => ValMap::model(\n$t"
+                    . "             " . $relatedSchema["class"] . "::class,\n$t"
+                    . "             '" . $relatedSchema["primaryKey"] . "', \n$t"
+                    . "             '" . $this->getNameAttribute($relatedSchema["class"]) . "'\n$t"
+                    . "         ),\n$t"
+                    . "    'options'       => [\n$t"
+                    . "        'placeholder' => '',\n$t"
+                    . "    ],\n$t"
+                    . "    'pluginOptions' => [\n$t"
+                    . "        'allowClear' => true,\n$t"
+                    . "    ],\n$t"
+                    . "])->label('$label')";
+            } else {
+                return '$form->field($model, \'' . $attribute . '\')->dropDownList(\yii\helpers\ArrayHelper::map(' . "\n$t    "
+                    . $relatedSchema["class"] . '::find()->all(), "'
+                    . $relatedSchema["primaryKey"] . '", "'
+                    . $this->getNameAttribute($relatedSchema["class"]) . '"' . "\n$t"
+                    . '), ["prompt" => ""])->label("' . $label . '")';
+            }
         }
         if ($column->phpType === 'boolean') {
             return "\$form->field(\$model, '$attribute')->checkbox()";
@@ -146,8 +213,24 @@ class Generator extends \yii\gii\generators\crud\Generator
                 foreach ($column->enumValues as $enumValue) {
                     $dropDownOptions[$enumValue] = Inflector::humanize($enumValue);
                 }
-                return "\$form->field(\$model, '$attribute')->dropDownList("
-                    . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)) . ", ['prompt' => ''])";
+                $dropdownValuesPrint = preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions));
+                if($this->enableSelect2Fields) {
+                    return "\$form->field(\$model, '$attribute', [\n$t"
+                        . "    'labelOptions' => ['class' => (\$model->$attribute ? 'move' : '')]\n$t"
+                        . "])->widget(Select2::classname(), [\n$t"
+                        . "    'showToggleAll' => false,\n$t"
+                        . "    'data'          => $dropdownValuesPrint,\n$t"
+                        . "    'options'       => [\n$t"
+                        . "        'placeholder' => '',\n$t"
+                        . "    ],\n$t"
+                        . "    'pluginOptions' => [\n$t"
+                        . "        'allowClear' => true,\n$t"
+                        . "    ],\n$t"
+                        . "])";
+                } else {
+                    return "\$form->field(\$model, '$attribute')->dropDownList("
+                        . $dropdownValuesPrint . ", ['prompt' => ''])";
+                }
             } elseif ($column->phpType !== 'string' || $column->size === null) {
                 return "\$form->field(\$model, '$attribute')->$input()";
             } else {
@@ -189,14 +272,12 @@ class Generator extends \yii\gii\generators\crud\Generator
                 //echo "Related class $relatedClass does not exist or is not a child of ActiveRecord";
                 return false;
             }
+
+            $uniqueValues = [];
             foreach ($relatedRules as $relatedRule) {
                 if ($relatedRule[1] == "unique") {
                     $uniqueValues = $relatedRule[0];
                 }
-            }
-            if (!isset($uniqueValues)) {
-                //echo "No unique values found";
-                return false;
             }
 
             return array(
@@ -208,6 +289,19 @@ class Generator extends \yii\gii\generators\crud\Generator
         }
         //echo "No related schema found";
         return false;
+    }
+    /**
+     * Generate a relation name for the specified table and a base name.
+     * @param string $key a base name that the relation name may be generated from
+     * @return string the relation name
+     */
+    public function getRelationName($key)
+    {
+        if (!empty($key) && substr_compare($key, 'id', -2, 2, true) === 0 && strcasecmp($key, 'id')) {
+            $key = rtrim(substr($key, 0, -2), '_');
+        }
+        $name = lcfirst(Inflector::id2camel($key, '_'));
+        return $name;
     }
 
 }

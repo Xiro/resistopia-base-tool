@@ -2,9 +2,9 @@
 
 namespace app\controllers;
 
-use app\models\form\StaffForm;
 use Yii;
 use app\models\Staff;
+use app\models\form\StaffForm;
 use app\models\search\StaffSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -50,18 +50,22 @@ class StaffController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'search' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
+    /**
+     * (for ajax use) search and render a table body
+     * @return string
+     */
     public function actionSearch()
     {
         $searchModel = new StaffSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->renderPartial("_staff-table-body", [
-            "staffModels" => $dataProvider->getModels()
+        return $this->renderPartial('_table-body', [
+            'models' => $dataProvider->getModels()
         ]);
     }
 
@@ -69,6 +73,7 @@ class StaffController extends Controller
      * Displays a single Staff model.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
@@ -97,10 +102,14 @@ class StaffController extends Controller
      * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
-        $model = StaffForm::findOne(["id" => $id]);
+        $model = StaffForm::findOne($id);
+        if ($model === null) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -114,6 +123,7 @@ class StaffController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionConfirmDelete($id)
     {
@@ -127,6 +137,7 @@ class StaffController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {

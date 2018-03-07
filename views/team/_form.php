@@ -1,8 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Team */
@@ -12,6 +12,22 @@ use yii\helpers\Url;
 ?>
 
 <div class="team-form">
+
+    <?php $form = ActiveForm::begin([
+        "options"     => ["class" => "animated-label"],
+        "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
+    ]); ?>
+
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'comment')->textarea(['style' => "height: 117px"]) ?>
+        </div>
+    </div>
+
+    <h4>Staff</h4>
 
     <?php $form = ActiveForm::begin([
         'id'          => 'index-search-form',
@@ -27,25 +43,7 @@ use yii\helpers\Url;
     ]); ?>
     <?php ActiveForm::end(); ?>
 
-    <?php $form = ActiveForm::begin([
-        "options"     => ["class" => "animated-label"],
-        "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
-    ]); ?>
-
-    <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'comment')->textarea([
-                'style' => "height: 117px"
-            ]) ?>
-        </div>
-    </div>
-
-    <h4>Staff</h4>
-
-    <?= $this->render("../staff/_staff-select-table-form", [
+    <?= $this->render("../staff/_select-table-form", [
         "form"              => $form,
         "model"             => $model,
         "staffSearch"       => $staffSearch,

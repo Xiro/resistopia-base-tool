@@ -3,6 +3,7 @@ $(document).ready(function () {
     var templateDestinationSelect = $("select[name='Generator[templateDestination]']");
     var modelClassInput = $("input[name='Generator[modelClass]']");
     var searchModelClassInput = $("input[name='Generator[searchModelClass]']");
+    var formModelClassInput = $("input[name='Generator[formModelClass]']");
     var controllerClassInput = $("input[name='Generator[controllerClass]']");
     var viewPathInput = $("input[name='Generator[viewPath]']");
 
@@ -16,6 +17,10 @@ $(document).ready(function () {
 
         var modelSearchClass = modelNs + "\\search\\" + modelClassName + "Search";
         searchModelClassInput.val(modelSearchClass);
+
+        var modelFormClass = modelNs + "\\form\\" + modelClassName + "Form";
+        console.log(modelFormClass);
+        formModelClassInput.val(modelFormClass);
 
         var controllerClassName = targetNs.replace("models", "controllers") + "\\" + modelClassName + "Controller";
         controllerClassInput.val(controllerClassName);

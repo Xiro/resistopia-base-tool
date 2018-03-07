@@ -10,6 +10,8 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property string $name
  * @property string $comment
+ * @property integer paidRP
+ * @property integer unpaidRP
  *
  * @property Staff[] $staff
  */
@@ -47,6 +49,11 @@ class Team extends ActiveRecord
         ];
     }
 
+    /**
+     * @return false|int
+     * @throws \Exception
+     * @throws \yii\db\StaleObjectException
+     */
     public function delete()
     {
         Staff::updateAll(["team_id" => null], ["team_id" => $this->id]);
