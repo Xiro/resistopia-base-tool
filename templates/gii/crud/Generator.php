@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\templates\gii\crud;
+namespace mate\yii\generators\crud;
 
 
 use Yii;
@@ -18,13 +18,13 @@ class Generator extends \yii\gii\generators\crud\Generator
      * Destination namespace of generated code for advanced yii template
      * @var string
      */
-    public $templateDestination = "cic";
+    public $templateDestination;
     public $formModelClass = '';
     public $generateFormModel = true;
     public $enableSelect2Fields = true;
 
     protected $requiredTemplateProperties = array(
-        "sortable"          => ["id", "order"],
+        "sortable" => ["id", "order"],
     );
 
     public $booleanEnums = [
@@ -40,6 +40,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
+            [['templateDestination'], 'safe'],
             [['modelClass'], 'validateHasProperties'],
             [['formModelClass'], 'filter', 'filter' => 'trim'],
             [['formModelClass'], 'compare', 'compareAttribute' => 'modelClass', 'operator' => '!==', 'message' => 'Form Model Class must not be equal to Model Class.'],
@@ -71,7 +72,8 @@ class Generator extends \yii\gii\generators\crud\Generator
 
     public function generate()
     {
-        if(empty($this->formModelClass)) {
+        Yii::$app->language = "en";
+        if (empty($this->formModelClass)) {
             $this->generateFormModel = false;
         }
 
@@ -165,7 +167,7 @@ class Generator extends \yii\gii\generators\crud\Generator
                 return "\$form->field(\$model, '$attribute')";
             }
         }
-        for($t = ""; strlen($t) < $tabOffset*4; $t .= "    ") true;
+        for ($t = ""; strlen($t) < $tabOffset * 4; $t .= "    ") true;
         $column = $tableSchema->columns[$attribute];
         if (in_array($attribute, $foreignKeyColumns)) {
             $relatedSchema = $this->getRelationSchema($attribute);
@@ -173,10 +175,10 @@ class Generator extends \yii\gii\generators\crud\Generator
                 return '"" // $form->field($model, ' . $attribute . ')->dropDownList(/* insert related values */)->label(/* insert label */)';
             }
             $label = Inflector::camel2words(Inflector::id2camel(str_replace(["id", "ID", "Id", "_id"], "", $attribute)));
-            if($this->enableSelect2Fields) {
+            if ($this->enableSelect2Fields) {
                 return "\$form->field(\$model, '$attribute', [\n$t"
                     . "    'labelOptions' => ['class' => (\$model->$attribute ? 'move' : '')]\n$t"
-                    . "])->widget(Select2::classname(), [\n$t"
+                    . "])->widget(Select2::class, [\n$t"
                     . "    'showToggleAll' => false,\n$t"
                     . "    'data'          => ValMap::model(\n$t"
                     . "             " . $relatedSchema["class"] . "::class,\n$t"
@@ -214,10 +216,10 @@ class Generator extends \yii\gii\generators\crud\Generator
                     $dropDownOptions[$enumValue] = Inflector::humanize($enumValue);
                 }
                 $dropdownValuesPrint = preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions));
-                if($this->enableSelect2Fields) {
+                if ($this->enableSelect2Fields) {
                     return "\$form->field(\$model, '$attribute', [\n$t"
                         . "    'labelOptions' => ['class' => (\$model->$attribute ? 'move' : '')]\n$t"
-                        . "])->widget(Select2::classname(), [\n$t"
+                        . "])->widget(Select2::class, [\n$t"
                         . "    'showToggleAll' => false,\n$t"
                         . "    'data'          => $dropdownValuesPrint,\n$t"
                         . "    'options'       => [\n$t"
@@ -290,6 +292,7 @@ class Generator extends \yii\gii\generators\crud\Generator
         //echo "No related schema found";
         return false;
     }
+
     /**
      * Generate a relation name for the specified table and a base name.
      * @param string $key a base name that the relation name may be generated from
@@ -304,4 +307,60 @@ class Generator extends \yii\gii\generators\crud\Generator
         return $name;
     }
 
+    public function excludeColumnInViewTable($column)
+    {
+        $columnName = $column->name;
+//        echo $columnName;
+        if (
+            in_array($columnName, $this->getTableSchema()->primaryKey)
+            || preg_match('/\b(\w*password\w*)\b/', $columnName)
+            || preg_match('/\b(\w*pass\w*)\b/', $columnName)
+            || preg_match('/\b(\w*passwd\w*)\b/', $columnName)
+            || preg_match('/\b(\w*passcode\w*)\b/', $columnName)
+            || preg_match('/\b(\w*key\w*)\b/', $columnName)
+            || preg_match('/\b(\w*id\w*)\b/', $columnName)
+            || in_array($column->dbType, ['text', 'mediumtext', 'longtext', 'json'])
+        ) return true;
+        return false;
+    }
+
+    /**
+     * Generates a string depending on enableI18N property
+     *
+     * @param string $string the text be generated
+     * @param array $placeholders the placeholders to use by `Yii::t()`
+     * @return string
+     */
+    public function generateString($string = '', $placeholders = [])
+    {
+        $string = addslashes($string);
+        if ($this->enableI18N) {
+            // If there are placeholders, use them
+            if (!empty($placeholders)) {
+                $ph = ",  [";
+                $last = end($placeholders);
+                foreach ($placeholders as $key => $value) {
+                    $ph .= "'$key' => $value";
+                    $ph .= $value === $last ? "" : ", ";
+                }
+                $ph .= "]";
+            } else {
+                $ph = '';
+            }
+            $str = "Yii::t('" . $this->messageCategory . "', '" . $string . "'" . $ph . ")";
+        } else {
+            // No I18N, replace placeholders by real words, if any
+            if (!empty($placeholders)) {
+                $phKeys = array_map(function ($word) {
+                    return '{' . $word . '}';
+                }, array_keys($placeholders));
+                $phValues = array_values($placeholders);
+                $str = "'" . str_replace($phKeys, $phValues, $string) . "'";
+            } else {
+                // No placeholders, just the given string
+                $str = "'" . $string . "'";
+            }
+        }
+        return $str;
+    }
 }

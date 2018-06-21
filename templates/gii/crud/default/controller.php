@@ -8,7 +8,7 @@ use yii\helpers\StringHelper;
 
 
 /* @var $this yii\web\View */
-/* @var $generator app\templates\gii\crud\Generator */
+/* @var $generator mate\yii\generators\crud\Generator */
 
 $controllerClass = StringHelper::basename($generator->controllerClass);
 $modelClass = StringHelper::basename($generator->modelClass);
@@ -63,7 +63,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'allow' => true,
@@ -72,7 +72,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 ],
             ],
             'verbs' => [
-                'class'   => VerbFilter::className(),
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -116,7 +116,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderPartial('_table-body', [
-            'models' => $dataProvider->getModels()
+            'dataProvider' => $dataProvider
         ]);
 <?php else: ?>
         $dataProvider = new ActiveDataProvider([
@@ -124,7 +124,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         ]);
 
         return $this->renderPartial('index', [
-            'models' => $dataProvider->getModels()
+            'dataProvider' => $dataProvider
         ]);
 <?php endif; ?>
     }
@@ -201,7 +201,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException|\Exception if the model cannot be found
      */
     public function actionDelete(<?= $actionParams ?>)
     {

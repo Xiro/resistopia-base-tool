@@ -87,17 +87,31 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
         'allowedIPs' => ['127.0.0.1', '::1'],
         'generators' => [
+//            'model' => [
+//                'class'     => 'yii\gii\generators\model\Generator',
+//                'templates' => [
+//                    'default' => '@app/templates/gii/model/default',
+//                ]
+//            ],
+//            'crud'  => [
+//                'class'     => 'app\templates\gii\crud\Generator',
+//                'templates' => [
+//                    'default'           => '@app/templates/gii/crud/default',
+//                    'sortable'          => '@app/templates/gii/crud/sortable',
+//                ]
+//            ],
             'model' => [
-                'class'     => 'yii\gii\generators\model\Generator',
+                'class'     => 'mate\yii\generators\model\Generator',
                 'templates' => [
-                    'default' => '@app/templates/gii/model/default',
+                    'default' => '@app/vendor/mate-code/yii2-mates/src/generators/model/default',
                 ]
             ],
             'crud'  => [
-                'class'     => 'app\templates\gii\crud\Generator',
+                'class'     => 'mate\yii\generators\crud\Generator',
                 'templates' => [
-                    'default'           => '@app/templates/gii/crud/default',
-                    'sortable'          => '@app/templates/gii/crud/sortable',
+                    'default' => '@app/vendor/mate-code/yii2-mates/src/generators/crud/default',
+                    'sortable' => '@app/vendor/mate-code/yii2-mates/src/generators/crud/sortable',
+                    'approval' => '@app/vendor/mate-code/yii2-mates/src/generators/crud/approval',
                 ]
             ],
         ]

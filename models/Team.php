@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -9,9 +10,10 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property string $name
+ * @property string $description
  * @property string $comment
- * @property integer paidRP
- * @property integer unpaidRP
+ * @property string $created
+ * @property string $updated
  *
  * @property Staff[] $staff
  */
@@ -31,9 +33,10 @@ class Team extends ActiveRecord
     public function rules()
     {
         return [
-            [['comment'], 'string'],
-            [['name'], 'string', 'max' => 50],
-            [['name'], 'unique'],
+            [['name'], 'required'],
+            [['description', 'comment'], 'string'],
+            [['created', 'updated'], 'safe'],
+            [['name'], 'string', 'max' => 128],
         ];
     }
 
@@ -45,80 +48,11 @@ class Team extends ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'description' => 'Description',
             'comment' => 'Comment',
+            'created' => 'Created',
+            'updated' => 'Updated',
         ];
-    }
-
-    /**
-     * @return false|int
-     * @throws \Exception
-     * @throws \yii\db\StaleObjectException
-     */
-    public function delete()
-    {
-        Staff::updateAll(["team_id" => null], ["team_id" => $this->id]);
-        return parent::delete();
-    }
-
-    /**
-     * Get the sum of all RP that were already paid to a team
-     * @return integer
-     */
-    public function getPaidRP()
-    {
-        return $this->getRpSum("Yes");
-    }
-
-    /**
-     * Get the sum of all RP that must yet be paid to a team
-     * @return integer
-     */
-    public function getUnpaidRP()
-    {
-        return $this->getRpSum("No");
-    }
-
-    /**
-     * @param string $paid
-     * @return integer
-     */
-    protected function getRpSum($paid = "Yes")
-    {
-        $rpSum = MissionStaff::find()
-            ->joinWith("mission")
-            ->where(["staff_id" => $this->getStaff()->select("id")])
-            ->andWhere(["paid" => $paid])
-            ->andWhere(["mission.mission_status_id" => MissionStatus::completedId()])
-            ->asArray()
-            ->sum("mission.RP");
-        return $rpSum ? $rpSum : 0;
-    }
-
-    public function getActiveMissions()
-    {
-        return $this->getMissions(MissionStatus::activeId());
-    }
-
-    public function getPastMissions()
-    {
-        return $this->getMissions([
-            MissionStatus::completedId(),
-            MissionStatus::failedId()
-        ]);
-    }
-
-    public function getPendingMissions()
-    {
-        return $this->getMissions(MissionStatus::pendingId());
-    }
-
-    protected function getMissions($statusId)
-    {
-        return Mission::find()
-            ->joinWith("missionStaff")
-            ->where(["mission_staff.staff_id" => $this->getStaff()->select("id")])
-            ->andWhere(["mission.mission_status_id" => $statusId])
-            ->all();
     }
 
     /**

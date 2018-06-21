@@ -12,42 +12,14 @@ use app\models\Staff;
  */
 class StaffSearch extends Staff
 {
-
-    public $name;
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [[
-                'id',
-                'height',
-                'company_id',
-                'category_id',
-                'speciality_id',
-                'rank_id',
-                'team_id',
-                'blood_type_id',
-                'eye_color_id',
-                'staff_status_id'
-            ], 'integer'],
-            [[
-                'rpn',
-                'forename',
-                'surname',
-                'nickname',
-                'name',
-                'profession',
-                'password',
-                'created',
-                'updated',
-                'died',
-                'call_sign',
-                'is_blocked',
-                'is_it'
-            ], 'safe'],
+            [['rpn', 'forename', 'surname', 'nickname', 'gender', 'date_of_birth', 'profession', 'callsign', 'created', 'updated'], 'safe'],
+            [['height', 'status_it', 'status_be13', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'base_category_id', 'special_function_id', 'company_id', 'citizenship_id', 'eye_color_id', 'team_id'], 'integer'],
         ];
     }
 
@@ -69,60 +41,51 @@ class StaffSearch extends Staff
      */
     public function search($params)
     {
-        if(isset($params["StaffSearch"])) {
-            $params = $params["StaffSearch"];
-        }
-        $this->setAttributes($params);
-
-        $query = $this->searchQuery();
-
-        $query->groupBy("staff.id");
-
-        $dataProvider = new ActiveDataProvider([
-            "query" => $query,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-        ]);
-
-        return $dataProvider;
-    }
-
-    public function searchQuery($exclude = null)
-    {
         $query = Staff::find();
 
-        if ($this->rpn) {
-            $query->andWhere("rpn LIKE '%" . strtoupper($this->rpn). "%'");
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
         }
-        if ($this->name) {
-            $parts = explode(" ", $this->name);
-            $where = ["or"];
-            foreach ($parts as $part) {
-                $where[] = "forename LIKE '%$part%'";
-                $where[] = "surname LIKE '%$part%'";
-                $where[] = "nickname LIKE '%$part%'";
-            }
-            $query->andWhere($where);
-        }
-        if ($this->is_blocked) {
-            $query->andWhere(["is_blocked" => $this->is_blocked]);
-        }
-        if ($this->category_id) {
-            $query->andWhere(["category_id" => $this->category_id]);
-        }
-        if ($this->speciality_id) {
-            $query->andWhere(["speciality_id" => $this->speciality_id]);
-        }
-        if ($this->team_id) {
-            $query->andWhere(["team_id" => $this->team_id]);
-        }
-        if ($this->staff_status_id) {
-            $query->andWhere(["staff_status_id" => $this->staff_status_id]);
-        }
-        if ($this->call_sign) {
-            $query->andWhere(["call_sign" => $this->call_sign]);
-        }
-        return $query;
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'date_of_birth' => $this->date_of_birth,
+            'height' => $this->height,
+            'status_it' => $this->status_it,
+            'status_be13' => $this->status_be13,
+            'status_alive' => $this->status_alive,
+            'status_in_base' => $this->status_in_base,
+            'squat_number' => $this->squat_number,
+            'access_key_id' => $this->access_key_id,
+            'rank_id' => $this->rank_id,
+            'base_category_id' => $this->base_category_id,
+            'special_function_id' => $this->special_function_id,
+            'company_id' => $this->company_id,
+            'citizenship_id' => $this->citizenship_id,
+            'eye_color_id' => $this->eye_color_id,
+            'team_id' => $this->team_id,
+            'created' => $this->created,
+            'updated' => $this->updated,
+        ]);
+
+        $query->andFilterWhere(['like', 'rpn', $this->rpn])
+            ->andFilterWhere(['like', 'forename', $this->forename])
+            ->andFilterWhere(['like', 'surname', $this->surname])
+            ->andFilterWhere(['like', 'nickname', $this->nickname])
+            ->andFilterWhere(['like', 'gender', $this->gender])
+            ->andFilterWhere(['like', 'profession', $this->profession])
+            ->andFilterWhere(['like', 'callsign', $this->callsign]);
+
+        return $dataProvider;
     }
 }

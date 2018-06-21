@@ -4,7 +4,7 @@ use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
-/* @var $generator \app\templates\gii\crud\Generator */
+/* @var $generator mate\yii\generators\crud\Generator */
 
 $urlParams = $generator->generateUrlParams();
 $nameAttribute = $generator->getNameAttribute();
@@ -30,90 +30,37 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
-use yii\helpers\Url;
-use app\assets\plugins\SortableUpdateAsset;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel yii\data\ActiveDataProvider */
+/* @var $searchModel <?= $generator->searchModelClass ?> */
 
-$this->title = '<?= $modelNameShownPl ?>';
+$this->title = <?= $generator->generateString($modelNameShownPl) ?>;
 $this->params['breadcrumbs'][] = $this->title;
 
-SortableUpdateAsset::register($this);
 ?>
 <div class="<?= $modelNameId ?>-index">
     <div class="container">
 
-        <h1><?= "<?= " ?>Html::encode($this->title) ?></h1>
+        <h1>
+            <?= "<?=" ?> Html::encode($this->title) ?>
 
-        <div class="<?= $containerClass ?>">
-
-            <?= '<?= \yii\grid\GridView::widget([
-                "dataProvider" => $dataProvider,
-                "filterModel"  => $searchModel,
-                "layout"       => "{items}{pager}",
-                "tableOptions" => [
-                    "class"                => "table table-bordered sortable",
-                    "data-sortable-update" => Url::to(["update-order"]),
-                ],
-                "columns"      => [' . "\n   " ?>
-                <?php foreach ($generator->getTableSchema()->columns as $column) {
-                    if(in_array($column->name, $generator->getTableSchema()->primaryKey)) {
-                        continue;
-                    }
-                    $relation = $generator->getRelationSchema($column->name);
-                    if($relation !== false) {
-                        echo '[
-                        "class"          => \'app\components\grid\ModelColumn\',
-                        "attribute"      => "' . lcfirst($relation["className"]) . '",
-                    ],' . "\n" . '                    ' ;
-                    } elseif(!empty($column->enumValues) && in_array($column->enumValues, $generator->booleanEnums)) {
-                        echo '[
-                        "class"          => \'app\components\grid\BooleanColumn\',
-                        "headerOptions"  => ["class" => "width-content-adjusted"],
-                        "contentOptions" => ["class" => "width-content-adjusted text-center"],
-                        "attribute"      => "' . $column->name . '",
-                    ],' . "\n" . '                    ';
-                    } elseif($column->name == "order") {
-                        echo '[
-                        "headerOptions"  => ["class" => "width-content-adjusted"],
-                        "contentOptions" => ["class" => "width-content-adjusted text-right order-content"],
-                        "attribute"      => "order",
-                    ],' . "\n" . '                    ';
-                    } elseif ($column->type == "integer") {
-                        echo '[
-                        "headerOptions"  => ["class" => "width-content-adjusted"],
-                        "contentOptions" => ["class" => "width-content-adjusted text-right"],
-                        "attribute"      => "' . $column->name . '",
-                    ],' . "\n" . '                    ';
-                    } else {
-                        echo '[
-                        "attribute"      => "' . $column->name . '",
-                    ],' . "\n" . '                    ' ;
-                    }
-                }
-                echo '[
-                        "class"          => "yii\grid\ActionColumn",
-                        "contentOptions" => ["class" => "action-column text-right"],
-                        "buttonOptions"  => ["class" => "ajax-dialog"],
-                        "template"       => "{update} {confirm-delete}",
-                        "buttons" => [
-                            "confirm-delete" => function ($url) {
-                                return Html::a(\'<span class="glyphicon glyphicon-trash"></span>\', $url, ["class" => "ajax-dialog"]);
-                            }
-                        ]
-                    ],' . "\n"?>
-                <?= '],
-
-            ]) ?>' . "\n"  ?>
-
+            <span class="heading-btn-group pull-right">
             <?= '<?= Html::a(
-                "<span class=\"glyphicon glyphicon-plus\"></span> Create ' . $modelNameShown . '",
+                "<span class=\"glyphicon glyphicon-plus\"></span> " . ' . $generator->generateString('Create {subject}', [
+                    'subject' => $generator->generateString($modelNameShown)
+                ]) . ',
                 ["create"],
-                ["class" => "btn btn-success ajax-dialog"]
+                ["class" => "btn btn-success"]
             ); ?>' . "\n" ?>
+            </span>
+        </h1>
 
+        <div class="">
+            <?= "<?=" ?> $this->render("_table", [
+                "dataProvider" => $dataProvider,
+                "searchModel"  => $searchModel,
+            ]) ?>
         </div>
     </div>
 </div>

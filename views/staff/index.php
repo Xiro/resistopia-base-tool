@@ -18,17 +18,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <span class="heading-btn-group pull-right">
             <?= Html::a(
-                '<span class="glyphicon glyphicon-plus"></span> Add Staff Member',
+                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Staff',
                 ["create"],
-                ["class" => "btn btn-primary"]
+                ["class" => "btn btn-success"]
             ); ?>
             </span>
         </h1>
 
         <div class="">
             <?= $this->render("_table", [
-                "searchModel" => $searchModel,
-                "models"      => $dataProvider->getModels(),
+                "dataProvider" => $dataProvider,
+                "searchModel"  => $searchModel,
             ]) ?>
         </div>
     </div>

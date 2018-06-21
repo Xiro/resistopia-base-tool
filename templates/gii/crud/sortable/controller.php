@@ -8,7 +8,7 @@ use yii\helpers\StringHelper;
 
 
 /* @var $this yii\web\View */
-/* @var $generator app\templates\gii\crud\Generator */
+/* @var $generator mate\yii\generators\crud\Generator */
 
 $controllerClass = StringHelper::basename($generator->controllerClass);
 $modelClass = StringHelper::basename($generator->modelClass);
@@ -24,6 +24,13 @@ $urlParams = $generator->generateUrlParams();
 $actionParams = $generator->generateActionParams();
 $actionParamComments = $generator->generateActionParamComments();
 
+$fullClass = ltrim($generator->modelClass, '\\');
+$hasFormModel = $generator->generateFormModel;
+$formModelClass = StringHelper::basename($generator->formModelClass);
+if ($modelClass === $formModelClass) {
+    $formModelAlias = $formModelClass . 'Form';
+}
+
 echo "<?php\n";
 ?>
 
@@ -31,6 +38,9 @@ namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>
 
 use Yii;
 use <?= ltrim($generator->modelClass, '\\') ?>;
+<?php if (!empty($generator->generateFormModel)): ?>
+use <?= ltrim($generator->formModelClass, '\\') . (isset($formModelAlias) ? " as $formModelAlias" : "") ?>;
+<?php endif; ?>
 <?php if (!empty($generator->searchModelClass)): ?>
 use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
 <?php else: ?>
@@ -53,7 +63,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'allow' => true,
@@ -62,7 +72,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -99,15 +109,39 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     }
 
     /**
+     * (for ajax use) search and render a table body
+     * @return string
+     */
+    public function actionSearch()
+    {
+<?php if (!empty($generator->searchModelClass)): ?>
+        $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->renderPartial('_table-body', [
+            'dataProvider' => $dataProvider
+        ]);
+<?php else: ?>
+        $dataProvider = new ActiveDataProvider([
+            'query' => <?= $modelClass ?>::find()
+        ]);
+
+        return $this->renderPartial('index', [
+            'dataProvider' => $dataProvider
+        ]);
+<?php endif; ?>
+    }
+
+    /**
      * Displays a single <?= $modelClass ?> model.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView(<?= $actionParams ?>)
     {
-        return $this->render('view', [
-            'model' => $this->findModel(<?= $actionParams ?>),
-        ]);
+        $model = $this->findModel($id);
+        return $this->render('view', ["model" => $model]);
     }
 
     /**
@@ -117,7 +151,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionCreate()
     {
-        $model = new <?= $modelClass ?>();
+        $model = new <?= $hasFormModel ? $formModelClass : $modelClass ?>();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -135,10 +169,18 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * If update is successful, the browser will be redirected to the 'index' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate(<?= $actionParams ?>)
     {
+<?php if($hasFormModel): ?>
+        $model = <?= $formModelClass ?>::findOne(<?= $actionParams ?>);
+        if ($model === null) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+<?php else: ?>
         $model = $this->findModel(<?= $actionParams ?>);
+<?php endif; ?>
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -148,10 +190,11 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     }
 
     /**
-    * AJAX action
-    * Update the order of all given items
-    * @return string
-    */
+     * AJAX action
+     * Update the order of all given items
+     * @return string
+     * @throws NotFoundHttpException some model cannot be found
+     */
     public function actionUpdateOrder()
     {
         if (!Yii::$app->request->isAjax) {
@@ -171,10 +214,11 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     }
 
     /**
-     * Deletes an existing EyeColor model.
+     * Deletes an existing <?= $modelClass ?> model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionConfirmDelete($id)
     {
@@ -188,6 +232,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
+     * @throws NotFoundHttpException|\Exception if the model cannot be found
      */
     public function actionDelete(<?= $actionParams ?>)
     {

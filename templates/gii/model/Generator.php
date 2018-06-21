@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace backend\templates\gii\model;
+namespace mate\yii\generators\model;
 
 /**
  * This generator will generate one or multiple ActiveRecord classes for the specified database table.
@@ -43,7 +43,7 @@ class Generator extends \yii\gii\generators\model\Generator
                     $link = $this->generateRelationLink(array_flip($refs));
                     $relationName = $this->generateRelationName($relations, $table, $fks[0], false);
                     $relations[$table->fullName][$relationName] = [
-                        "return \$this->hasOne($refClassName::className(), $link);",
+                        "return \$this->hasOne($refClassName::class, $link);",
                         $refClassName,
                         false,
                     ];
@@ -53,7 +53,7 @@ class Generator extends \yii\gii\generators\model\Generator
                     $link = $this->generateRelationLink($refs);
                     $relationName = $this->generateRelationName($relations, $refTableSchema, $className, $hasMany);
                     $relations[$refTableSchema->fullName][$relationName] = [
-                        "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "($className::className(), $link);",
+                        "return \$this->" . ($hasMany ? 'hasMany' : 'hasOne') . "($className::class, $link);",
                         $refTable,
                         $className,
                         $hasMany,
@@ -100,7 +100,7 @@ class Generator extends \yii\gii\generators\model\Generator
             $viaLink = $this->generateRelationLink($firstKey);
             $relationName = $this->generateRelationName($relations, $table0Schema, key($secondKey), true);
             $relations[$table0Schema->fullName][$relationName] = [
-                "return \$this->hasMany($className1::className(), $link)->viaTable('"
+                "return \$this->hasMany($className1::class, $link)->viaTable('"
                 . $this->generateTableName($table->name) . "', $viaLink);",
                 $className1,
                 true,
@@ -110,7 +110,7 @@ class Generator extends \yii\gii\generators\model\Generator
             $viaLink = $this->generateRelationLink($secondKey);
             $relationName = $this->generateRelationName($relations, $table1Schema, key($firstKey), true);
             $relations[$table1Schema->fullName][$relationName] = [
-                "return \$this->hasMany($className0::className(), $link)->viaTable('"
+                "return \$this->hasMany($className0::class, $link)->viaTable('"
                 . $this->generateTableName($table->name) . "', $viaLink);",
                 $className0,
                 true,

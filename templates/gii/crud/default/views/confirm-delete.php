@@ -4,7 +4,7 @@ use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
-/* @var $generator app\templates\gii\crud\Generator */
+/* @var $generator mate\yii\generators\crud\Generator */
 
 $modelNameShown = Inflector::camel2words(StringHelper::basename($generator->modelClass));
 $modelNameShownPl = Inflector::pluralize($modelNameShown);
@@ -18,8 +18,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
-$this->title = 'Delete <?= $modelNameShown ?>';
-$this->params['breadcrumbs'][] = ['label' => '<?= $modelNameShownPl ?>', 'url' => ['index']];
+$this->title = <?= $generator->generateString('Delete {subject}', [
+    'subject' => $generator->generateString($modelNameShown),
+]); ?>;
+$this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString($modelNameShownPl) ?>, 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="<?= $modelNameId ?>-confirm-delete">
@@ -30,12 +32,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="text-large">
             <p class="padding-large-vertical">
-                Are you sure you want to delete the <?= $modelNameShown ?> <b>'<?= '<?= $model->' . $generator->getNameAttribute() . ' ?>' ?>'</b>?
+                <?= '<?= ' . $generator->generateString('Are you sure you want to delete this entry?') ?> ?>
             </p>
             <div class="row">
                 <div class="col-md-6">
                     <?= '<?= Html::a(
-                        "Yes",
+                        ' . $generator->generateString('Yes') . ',
                         ["delete", "id" => $model->id],
                         [
                             "class" => "btn btn-default btn-block",
@@ -45,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-6">
                     <?= '<?= Html::a(
-                        "No",
+                        ' . $generator->generateString('No') . ',
                         ["index"],
                         ["class" => "btn btn-default btn-block"]
                     ) ?>' . "\n" ?>

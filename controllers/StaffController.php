@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Staff;
-use app\models\form\StaffForm;
+use app\models\StaffForm;
 use app\models\search\StaffSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -23,7 +23,7 @@ class StaffController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'allow' => true,
@@ -32,7 +32,7 @@ class StaffController extends Controller
                 ],
             ],
             'verbs' => [
-                'class'   => VerbFilter::className(),
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -50,7 +50,7 @@ class StaffController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel'  => $searchModel,
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -65,13 +65,13 @@ class StaffController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderPartial('_table-body', [
-            'models' => $dataProvider->getModels()
+            'dataProvider' => $dataProvider
         ]);
     }
 
     /**
      * Displays a single Staff model.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -91,7 +91,7 @@ class StaffController extends Controller
         $model = new StaffForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->render('create-confirm', ["model" => $model]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', ["model" => $model]);
@@ -100,7 +100,7 @@ class StaffController extends Controller
     /**
      * Updates an existing Staff model.
      * If update is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -135,9 +135,9 @@ class StaffController extends Controller
     /**
      * Deletes an existing Staff model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException|\Exception if the model cannot be found
      */
     public function actionDelete($id)
     {
@@ -149,7 +149,7 @@ class StaffController extends Controller
     /**
      * Finds the Staff model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
+     * @param string $id
      * @return Staff the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

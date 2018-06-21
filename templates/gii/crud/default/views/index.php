@@ -4,7 +4,7 @@ use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
-/* @var $generator app\templates\gii\crud\Generator */
+/* @var $generator mate\yii\generators\crud\Generator */
 
 $urlParams = $generator->generateUrlParams();
 $nameAttribute = $generator->getNameAttribute();
@@ -35,7 +35,7 @@ use yii\helpers\Html;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $searchModel <?= $generator->searchModelClass ?> */
 
-$this->title = '<?= $modelNameShownPl ?>';
+$this->title = <?= $generator->generateString($modelNameShownPl) ?>;
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -46,18 +46,20 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= "<?=" ?> Html::encode($this->title) ?>
 
             <span class="heading-btn-group pull-right">
-            <?= "<?=" ?> Html::a(
-                '<span class="glyphicon glyphicon-plus"></span> Create <?= $modelNameShown ?>',
+            <?= '<?= Html::a(
+                "<span class=\"glyphicon glyphicon-plus\"></span> " . ' . $generator->generateString('Create {subject}', [
+                    'subject' => $generator->generateString($modelNameShown)
+                ]) . ',
                 ["create"],
-                ["class" => "btn btn-primary"]
-            ); ?>
+                ["class" => "btn btn-success"]
+            ); ?>' . "\n" ?>
             </span>
         </h1>
 
         <div class="">
             <?= "<?=" ?> $this->render("_table", [
-                "searchModel" => $searchModel,
-                "models"      => $dataProvider->getModels(),
+                "dataProvider" => $dataProvider,
+                "searchModel"  => $searchModel,
             ]) ?>
         </div>
     </div>

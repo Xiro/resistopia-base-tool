@@ -4,7 +4,7 @@ use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
-/* @var $generator app\templates\gii\crud\Generator */
+/* @var $generator mate\yii\generators\crud\Generator */
 
 /* @var $model \yii\db\ActiveRecord */
 $model = new $generator->modelClass();
@@ -20,9 +20,15 @@ echo "<?php\n";
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use kartik\select2\Select2;
+use mate\yii\widgets\ValMap;
 
 /* @var $this yii\web\View */
+<?php if($generator->generateFormModel): ?>
+/* @var $model <?= ltrim($generator->formModelClass, '\\') ?> */
+<?php else: ?>
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
+<?php endif; ?>
 /* @var $form yii\bootstrap\ActiveForm */
 ?>
 
@@ -45,17 +51,21 @@ foreach ($generator->getColumnNames() as $attribute) {
     }
 
     echo "$t$t<div class=\"col-md-6\">\n";
-    echo "$t$t$t<?= " . $generator->generateActiveField($attribute) . " ?>\n";
+    echo "$t$t$t<?= " . $generator->generateActiveField($attribute, 3) . " ?>\n";
     echo "$t$t</div>\n";
 
     if(!$beginRow) {
         echo "$t</div>\n\n";
     }
     $beginRow = !$beginRow;
-} ?>
+}
+if(!$beginRow) {
+    echo "$t</div>\n\n";
+}
+?>
     <div class="form-group">
         <?= '<?= Html::submitButton(
-            $model->isNewRecord ? "Create" : "Update",
+            $model->isNewRecord ? ' . $generator->generateString('Create') . ' : ' . $generator->generateString('Update') . ',
             ["class" => $model->isNewRecord ? "btn btn-success" : "btn btn-primary"]
         ) ?>' . "\n" ?>
     </div>

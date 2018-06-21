@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -29,7 +30,6 @@ class EyeColor extends ActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 50],
-            [['name'], 'unique'],
         ];
     }
 

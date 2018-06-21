@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -28,8 +29,8 @@ class Company extends ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['name'], 'string', 'max' => 50],
-            [['name'], 'unique'],
         ];
     }
 

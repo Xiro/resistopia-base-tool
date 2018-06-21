@@ -4,7 +4,7 @@ use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
-/* @var $generator app\templates\gii\crud\Generator */
+/* @var $generator mate\yii\generators\crud\Generator */
 
 $urlParams = $generator->generateUrlParams();
 $nameAttribute = $generator->getNameAttribute();
@@ -13,7 +13,7 @@ $modelClassName = StringHelper::basename($generator->modelClass);
 $modelNameShown = Inflector::camel2words($modelClassName);
 $modelNameShownPl = Inflector::pluralize(Inflector::camel2words($modelClassName));
 $modelNameId = Inflector::camel2id($modelClassName);
-$modelNameUrl = Inflector::slug($modelClassName);
+$modelNameUrl = $modelNameId;
 
 $searchModelName = StringHelper::basename($generator->searchModelClass);
 
@@ -32,43 +32,43 @@ if($columnCount <= 3) {
 }
 echo "<?php\n";
 ?>
-/* @var $models <?= $generator->modelClass ?>[] */
+/* @var $dataProvider \yii\data\ActiveDataProvider */
 /* @var $exclude array */
 
 use yii\helpers\Html;
-use app\widgets\Glyphicon;
+use mate\yii\widgets\Glyphicon;
 
+$pagination = $dataProvider->pagination;
+$pagination->totalCount = $dataProvider->totalCount;
 $exclude = !isset($exclude) ? array() : $exclude;
 ?>
-
-<?= "<?php" ?> foreach ($models as $model): ?>
-    <tr>
+<tbody data-page="<?= "<?=" ?> $pagination->page + 1 ?>"
+       data-page-size="<?= "<?=" ?> $pagination->pageSize ?>"
+       data-page-count="<?= "<?=" ?> $pagination->pageCount ?>">
+<?= "<?php" ?> /** @var $model \<?= $generator->modelClass ?> */ ?>
+<?= "<?php" ?> foreach ($dataProvider->getModels() as $model): ?>
+    <tr data-key="<?= "<?=" ?> $model-><?= $generator->getTableSchema()->primaryKey[0] ?> ?>">
 <?php foreach ($generator->getTableSchema()->columns as $column):
+    if($generator->excludeColumnInViewTable($column)) continue;
+    $foreignKeyColumns = $generator->getForeignKeyColumns();
+    if (in_array($column->name, $foreignKeyColumns)) {
 
-if(
-    in_array($column->name, $generator->getTableSchema()->primaryKey)
-    || preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)
-) continue;
+        $relatedSchema = $generator->getRelationSchema($column->name);
+        $relationName = $generator->getRelationName($column->name);
 
-$foreignKeyColumns = $generator->getForeignKeyColumns();
-if (in_array($column->name, $foreignKeyColumns)) {
+        if($relatedSchema && method_exists($relatedSchema['class'], '__toString')) {
+            $callVarString = '$model->' . $relationName;
+        } elseif($relatedSchema && $nameAttribute = $generator->getNameAttribute($relatedSchema["class"])) {
+            $callVarString = '$model->' . $relationName . ' ? $model->' . $relationName . '->' . $nameAttribute . ' : "None"';
+        } else {
+            $callVarString = '"n/a" // IMPLEMENT FOR: $model->' . $relationName;
+        }
 
-    $relatedSchema = $generator->getRelationSchema($column->name);
-    $relationName = $generator->getRelationName($column->name);
-
-    if($relatedSchema && method_exists($relatedSchema['class'], '__toString')) {
-        $callVarString = '$model->' . $relationName;
-    } elseif($relatedSchema && $nameAttribute = $generator->getNameAttribute($relatedSchema["class"])) {
-        $callVarString = '$model->' . $relationName . ' ? $model->' . $relationName . '->' . $nameAttribute . ' : "None"';
+        $excludeName = $relationName;
     } else {
-        $callVarString = '"n/a" // IMPLEMENT FOR: $model->' . $relationName;
+        $excludeName = $column->name;
+        $callVarString = '$model->' . $column->name;
     }
-
-    $excludeName = $relationName;
-} else {
-    $excludeName = $column->name;
-    $callVarString = '$model->' . $column->name;
-}
 ?>
         <?= "<?php" ?> if (!in_array("<?= $excludeName ?>", $exclude)): ?>
             <td class="<?= $excludeName ?>">
@@ -88,8 +88,7 @@ if (in_array($column->name, $foreignKeyColumns)) {
                 <?= "<?php" ?> if (!in_array("action-update", $exclude)): ?>
                     <?= "<?=" ?> Html::a(
                         Glyphicon::pencil(),
-                        ['<?= $modelNameUrl ?>/update', 'id' => $model->id],
-                        ["class" => ""]
+                        ['<?= $modelNameUrl ?>/update', 'id' => $model->id]
                     ) ?>
                 <?= "<?php" ?> endif; ?>
                 <?= "<?php" ?> if (!in_array("action-delete", $exclude)): ?>
@@ -103,3 +102,4 @@ if (in_array($column->name, $foreignKeyColumns)) {
         <?= "<?php" ?> endif; ?>
     </tr>
 <?= "<?php" ?> endforeach; ?>
+</tbody>

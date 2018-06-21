@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -9,7 +10,10 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property string $name
+ * @property string $short_name
+ * @property integer $access_mask_id
  *
+ * @property AccessMask $accessMask
  * @property Staff[] $staff
  */
 class Rank extends ActiveRecord
@@ -28,8 +32,11 @@ class Rank extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'string', 'max' => 50],
-            [['name'], 'unique'],
+            [['name', 'short_name', 'access_mask_id'], 'required'],
+            [['access_mask_id'], 'integer'],
+            [['name'], 'string', 'max' => 128],
+            [['short_name'], 'string', 'max' => 12],
+            [['access_mask_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessMask::className(), 'targetAttribute' => ['access_mask_id' => 'id']],
         ];
     }
 
@@ -41,7 +48,17 @@ class Rank extends ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'short_name' => 'Short Name',
+            'access_mask_id' => 'Access Mask ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccessMask()
+    {
+        return $this->hasOne(AccessMask::className(), ['id' => 'access_mask_id']);
     }
 
     /**

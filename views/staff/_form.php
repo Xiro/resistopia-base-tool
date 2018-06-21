@@ -1,238 +1,264 @@
 <?php
 
-use app\helpers\ValMap;
-use app\models\BloodType;
-use app\models\Category;
-use app\models\Company;
-use app\models\EyeColor;
-use app\models\Rank;
-use app\models\Access;
-use app\models\Speciality;
-use app\models\StaffStatus;
-use app\models\Team;
-use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use kartik\select2\Select2;
+use mate\yii\widgets\ValMap;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\form\StaffForm */
+/* @var $model app\models\StaffForm */
 /* @var $form yii\bootstrap\ActiveForm */
 ?>
 
 <div class="staff-form">
 
     <?php $form = ActiveForm::begin([
-        'id'          => 'staff-form',
         "options"     => ["class" => "animated-label"],
         "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
     ]); ?>
 
-    <h3>Personal Information</h3>
-
     <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'rpn')->textInput(['maxlength' => true]) ?>
+        </div>
         <div class="col-md-6">
             <?= $form->field($model, 'forename')->textInput(['maxlength' => true]) ?>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-6">
             <?= $form->field($model, 'surname')->textInput(['maxlength' => true]) ?>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <?= $form->field($model, 'nickname')->textInput(['maxlength' => true]) ?>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-6">
             <?= $form->field($model, 'gender', [
-                'labelOptions' => ['class' => ($model->gender ? "move" : "")]
-            ])->widget(Select2::classname(), [
+                'labelOptions' => ['class' => ($model->gender ? 'move' : '')]
+            ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => ["male" => "male", "female" => "female"],
+                'data'          => [ 'm' => 'M', 'f' => 'F', ],
                 'options'       => [
                     'placeholder' => '',
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label("Gender") ?>
+            ]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'date_of_birth')->textInput() ?>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'profession')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'callsign')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-6">
             <?= $form->field($model, 'height')->textInput() ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'eye_color_id', [
-                'labelOptions' => ['class' => ($model->eye_color_id ? "move" : "")]
-            ])->widget(Select2::classname(), [
-                'showToggleAll' => false,
-                'data'          => ValMap::model(EyeColor::class, "id", "name"),
-                'options'       => [
-                    'placeholder' => '',
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ])->label("Eye Color") ?>
+            <?= $form->field($model, 'status_it')->textInput() ?>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'blood_type_id', [
-                'labelOptions' => ['class' => ($model->blood_type_id ? "move" : "")]
-            ])->widget(Select2::classname(), [
+            <?= $form->field($model, 'status_be13')->textInput() ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'status_alive')->textInput() ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'status_in_base')->textInput() ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'squat_number')->textInput() ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'access_key_id', [
+                'labelOptions' => ['class' => ($model->access_key_id ? 'move' : '')]
+            ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => ValMap::model(BloodType::class, "id", "name"),
+                'data'          => ValMap::model(
+                         app\models\AccessKey::class,
+                         'id', 
+                         'id'
+                     ),
                 'options'       => [
                     'placeholder' => '',
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label("Blood Type") ?>
-
-            <?= $form->field($model, 'profession')->textInput(['maxlength' => true]) ?>
+            ])->label('Access Key') ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'comment')->textarea([
-                'style' => "height: 117px"
-            ]) ?>
+            <?= $form->field($model, 'rank_id', [
+                'labelOptions' => ['class' => ($model->rank_id ? 'move' : '')]
+            ])->widget(Select2::class, [
+                'showToggleAll' => false,
+                'data'          => ValMap::model(
+                         app\models\Rank::class,
+                         'id', 
+                         'name'
+                     ),
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ])->label('Rank') ?>
         </div>
     </div>
 
-    <h3>Affiliation</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'base_category_id', [
+                'labelOptions' => ['class' => ($model->base_category_id ? 'move' : '')]
+            ])->widget(Select2::class, [
+                'showToggleAll' => false,
+                'data'          => ValMap::model(
+                         app\models\BaseCategory::class,
+                         'id', 
+                         'name'
+                     ),
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ])->label('Base Category') ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'special_function_id', [
+                'labelOptions' => ['class' => ($model->special_function_id ? 'move' : '')]
+            ])->widget(Select2::class, [
+                'showToggleAll' => false,
+                'data'          => ValMap::model(
+                         app\models\SpecialFunction::class,
+                         'id', 
+                         'name'
+                     ),
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ])->label('Special Function') ?>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-6">
             <?= $form->field($model, 'company_id', [
-                'labelOptions' => ['class' => ($model->company_id ? "move" : "")]
-            ])->widget(Select2::classname(), [
+                'labelOptions' => ['class' => ($model->company_id ? 'move' : '')]
+            ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => ValMap::model(Company::class, "id", "name"),
+                'data'          => ValMap::model(
+                         app\models\Company::class,
+                         'id', 
+                         'name'
+                     ),
                 'options'       => [
                     'placeholder' => '',
                 ],
                 'pluginOptions' => [
-                    'tags' => true,
                     'allowClear' => true,
                 ],
-            ])->label("Company") ?>
+            ])->label('Company') ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'category_id', [
-                'labelOptions' => ['class' => ($model->category_id ? "move" : "")]
-            ])->widget(Select2::classname(), [
+            <?= $form->field($model, 'citizenship_id', [
+                'labelOptions' => ['class' => ($model->citizenship_id ? 'move' : '')]
+            ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => ValMap::model(Category::class, "id", "name"),
+                'data'          => ValMap::model(
+                         app\models\Citizenship::class,
+                         'id', 
+                         'name'
+                     ),
                 'options'       => [
                     'placeholder' => '',
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label("Category") ?>
+            ])->label('Citizenship') ?>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'speciality_id', [
-                'labelOptions' => ['class' => ($model->speciality_id ? "move" : "")]
-            ])->widget(Select2::classname(), [
+            <?= $form->field($model, 'eye_color_id', [
+                'labelOptions' => ['class' => ($model->eye_color_id ? 'move' : '')]
+            ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => ValMap::model(Speciality::class, "id", "name"),
+                'data'          => ValMap::model(
+                         app\models\EyeColor::class,
+                         'id', 
+                         'name'
+                     ),
                 'options'       => [
                     'placeholder' => '',
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label("Speciality") ?>
+            ])->label('Eye Color') ?>
         </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'rank_id', [
-                'labelOptions' => ['class' => ($model->rank_id ? "move" : "")]
-            ])->widget(Select2::classname(), [
-                'showToggleAll' => false,
-                'data'          => ValMap::model(Rank::class, "id", "name"),
-                'options'       => [
-                    'placeholder' => '',
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ])->label("Rank") ?>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <?= $form->field($model, 'team_id', [
-                'labelOptions' => ['class' => ($model->team_id ? "move" : "")]
-            ])->widget(Select2::classname(), [
+                'labelOptions' => ['class' => ($model->team_id ? 'move' : '')]
+            ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => ValMap::model(Team::class, "id", "name"),
+                'data'          => ValMap::model(
+                         app\models\Team::class,
+                         'id', 
+                         'name'
+                     ),
                 'options'       => [
                     'placeholder' => '',
                 ],
                 'pluginOptions' => [
-                    'tags' => true,
                     'allowClear' => true,
                 ],
-            ])->label("Team") ?>
-        </div>
-        <div class="col-md-6">
+            ])->label('Team') ?>
         </div>
     </div>
 
-    <h3>System</h3>
-
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'call_sign')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'created')->textInput() ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'staff_status_id', [
-                'labelOptions' => ['class' => ($model->staff_status_id ? "move" : "")]
-            ])->widget(Select2::classname(), [
-                'showToggleAll' => false,
-                'data'          => ValMap::model(StaffStatus::class, "id", "name"),
-                'options'       => [
-                    'placeholder' => '',
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ])->label("Status") ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'accessSelect', [
-                'labelOptions' => ['class' => ($model->staff_status_id ? "move" : "")]
-            ])->widget(Select2::classname(), [
-                'showToggleAll' => false,
-                'data'          => ValMap::model(Access::class, "id", "name"),
-                'options'       => [
-                    'placeholder' => '',
-                    'multiple' => true,
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                    'closeOnSelect' => false
-                ],
-            ])->label("Security Access") ?>
-        </div>
-        <div class="col-md-6 checkbox-group">
-            <?= $form->field($model, 'isBlocked')
-                ->checkbox(["checked" => false])->label("SECURITY BLOCK") ?>
-            <?= $form->field($model, 'isIt')
-                ->checkbox(["checked" => true])->label("Is In Time") ?>
-        </div>
-        <div class="col-md-3">
+            <?= $form->field($model, 'updated')->textInput() ?>
         </div>
     </div>
 
     <div class="form-group">
         <?= Html::submitButton(
-            $model->isNewRecord ? "Create" : "Update",
+            $model->isNewRecord ? 'Create' : 'Update',
             ["class" => $model->isNewRecord ? "btn btn-success" : "btn btn-primary"]
         ) ?>
     </div>

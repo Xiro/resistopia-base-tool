@@ -4,7 +4,7 @@ use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
-/* @var $generator app\templates\gii\crud\Generator */
+/* @var $generator mate\yii\generators\crud\Generator */
 
 $urlParams = $generator->generateUrlParams();
 
@@ -44,8 +44,8 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
     ]) ?>
 
     <p>
-        <?= "<?=" ?> Html::a(<?= $generator->generateString('Update') ?>, ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary ajax-dialog']) ?>
-        <?= "<?=" ?> Html::a(<?= $generator->generateString('Delete') ?>, ['confirm-delete', <?= $urlParams ?>], ['class' => 'btn btn-danger ajax-dialog']) ?>
+        <?= "<?=" ?> Html::a(<?= $generator->generateString('Update') ?>, ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) ?>
+        <?= "<?=" ?> Html::a(<?= $generator->generateString('Delete') ?>, ['confirm-delete', <?= $urlParams ?>], ['class' => 'btn btn-danger']) ?>
     </p>
 
 </div>
