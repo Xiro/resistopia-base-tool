@@ -55,6 +55,7 @@ use yii\db\ActiveRecord;
  */
 class Staff extends ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -72,7 +73,7 @@ class Staff extends ActiveRecord
             [['rpn', 'forename', 'surname', 'gender', 'date_of_birth', 'access_key_id', 'rank_id'], 'required'],
             [['gender'], 'string'],
             [['date_of_birth', 'created', 'updated'], 'safe'],
-            [['height', 'status_it', 'status_be13', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'base_category_id', 'special_function_id', 'company_id', 'citizenship_id', 'eye_color_id', 'team_id'], 'integer'],
+            [['height', 'status_it', 'status_be13', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'base_category_id', 'special_function_id', 'eye_color_id'], 'integer'],
             [['rpn'], 'string', 'max' => 8],
             [['forename', 'surname', 'nickname', 'profession', 'callsign'], 'string', 'max' => 128],
             [['rpn'], 'unique'],
@@ -93,7 +94,7 @@ class Staff extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'rpn' => 'Rpn',
+            'rpn' => 'RPN',
             'forename' => 'Forename',
             'surname' => 'Surname',
             'nickname' => 'Nickname',
@@ -102,23 +103,29 @@ class Staff extends ActiveRecord
             'profession' => 'Profession',
             'callsign' => 'Callsign',
             'height' => 'Height',
-            'status_it' => 'Status It',
-            'status_be13' => 'Status Be13',
+            'status_it' => 'Status IT',
+            'status_be13' => 'Status BE13',
             'status_alive' => 'Status Alive',
             'status_in_base' => 'Status In Base',
             'squat_number' => 'Squat Number',
-            'access_key_id' => 'Access Key ID',
-            'rank_id' => 'Rank ID',
-            'base_category_id' => 'Base Category ID',
-            'special_function_id' => 'Special Function ID',
-            'company_id' => 'Company ID',
-            'citizenship_id' => 'Citizenship ID',
-            'eye_color_id' => 'Eye Color ID',
-            'team_id' => 'Team ID',
+            'access_key_id' => 'Access Key',
+            'rank_id' => 'Rank',
+            'base_category_id' => 'Base Category',
+            'special_function_id' => 'Special Function',
+            'company_id' => 'Company',
+            'citizenship_id' => 'Citizenship',
+            'eye_color_id' => 'Eye Color',
+            'team_id' => 'Team',
             'created' => 'Created',
             'updated' => 'Updated',
         ];
     }
+
+    public function getName()
+    {
+        return $this->forename . ' ' . ($this->nickname ? '"' . $this->nickname . '" ' : '') . $this->surname;
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery

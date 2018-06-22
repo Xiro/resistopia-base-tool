@@ -105,4 +105,8 @@ $(document).ready(function () {
 
     setupContent($("body"));
 
+    // input masks
+
+    $('.mask-date').mask('00.00.0000', {placeholder: 'dd.mm.yyyy'}).addClass('has-content');
+
 });

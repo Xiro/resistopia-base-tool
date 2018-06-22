@@ -3,19 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Staff;
-use app\models\StaffForm;
-use app\models\search\StaffSearch;
-use yii\db\ActiveQuery;
+use app\models\Team;
+use app\models\search\TeamSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StaffController implements the CRUD actions for Staff model.
+ * TeamController implements the CRUD actions for Team model.
  */
-class StaffController extends Controller
+class TeamController extends Controller
 {
     /**
      * @inheritdoc
@@ -28,7 +26,6 @@ class StaffController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-//                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -42,18 +39,13 @@ class StaffController extends Controller
     }
 
     /**
-     * Lists all Staff models.
+     * Lists all Team models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new StaffSearch();
+        $searchModel = new TeamSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        /** @var ActiveQuery $query */
-        $query = $dataProvider->query;
-        $query->joinWith('team')
-            ->joinWith('baseCategory')
-            ->joinWith('specialFunction');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -67,7 +59,7 @@ class StaffController extends Controller
      */
     public function actionSearch()
     {
-        $searchModel = new StaffSearch();
+        $searchModel = new TeamSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderPartial('_table-body', [
@@ -76,8 +68,8 @@ class StaffController extends Controller
     }
 
     /**
-     * Displays a single Staff model.
-     * @param string $id
+     * Displays a single Team model.
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -88,13 +80,13 @@ class StaffController extends Controller
     }
 
     /**
-     * Creates a new Staff model.
+     * Creates a new Team model.
      * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new StaffForm();
+        $model = new Team();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -104,18 +96,15 @@ class StaffController extends Controller
     }
 
     /**
-     * Updates an existing Staff model.
+     * Updates an existing Team model.
      * If update is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
-        $model = StaffForm::findOne($id);
-        if ($model === null) {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -139,9 +128,9 @@ class StaffController extends Controller
     }
 
     /**
-     * Deletes an existing Staff model.
+     * Deletes an existing Team model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException|\Exception if the model cannot be found
      */
@@ -153,15 +142,15 @@ class StaffController extends Controller
     }
 
     /**
-     * Finds the Staff model based on its primary key value.
+     * Finds the Team model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Staff the loaded model
+     * @param integer $id
+     * @return Team the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Staff::findOne($id)) !== null) {
+        if (($model = Team::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

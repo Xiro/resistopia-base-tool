@@ -21,7 +21,6 @@ function setupAnimatedFormLabels(contentElement) {
         var choices = $(this).parent().find(".select2-selection__choice");
         var search = $(this).parent().find(".select2-search__field");
         if(choices.length !== 0 || search.length !== 0) {
-            console.log("is multi");
             if(choices.length === 0 && search.val().length === 0) {
                 $(this).parent().find("label").removeClass("move");
             } else {
@@ -45,7 +44,7 @@ function setupAnimatedFormLabels(contentElement) {
     });
 
     contentElement.find('textarea').each(function () {
-        if($(this).val() !== "") {
+        if($(this).val() !== "" || typeof  $(this).attr('placeholder') !== "undefined") {
             var label = $(this).parent().children("label");
             label.addClass("no-transition");
             $(this).addClass("has-content").delay(500, function () {
@@ -55,7 +54,7 @@ function setupAnimatedFormLabels(contentElement) {
     });
 
     function toggleLabelForInputs(element) {
-        if(element.val() === null || element.val().length === 0) {
+        if((element.val() === null || element.val().length === 0) && typeof element.attr('placeholder') === 'undefined') {
             element.removeClass("has-content")
                 .removeAttr("value");
         } else {

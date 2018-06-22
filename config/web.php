@@ -6,7 +6,7 @@ $db = require(__DIR__ . '/db.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'ajaxLayout'],
+    'bootstrap' => ['log', 'ajaxLayout', 'selectData'],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -29,17 +29,17 @@ $config = [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
         'ajaxLayout' => [
             'class' => 'app\components\AjaxLayout'
+        ],
+        'selectData' => [
+            'class' => 'mate\yii\components\SelectData',
+            'maps' => [
+                'default' => [
+                    'from' => 'id',
+                    'to' => 'name'
+                ],
+            ]
         ],
         'db' => $db,
         'urlManager'   => [
@@ -56,7 +56,7 @@ $config = [
         ],
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
-            'forceCopy' => true,
+//            'forceCopy' => true,
             'bundles' => [
                 'yii\bootstrap\BootstrapAsset' => [
                     'basePath' => '@webroot',
@@ -87,19 +87,6 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
         'allowedIPs' => ['127.0.0.1', '::1'],
         'generators' => [
-//            'model' => [
-//                'class'     => 'yii\gii\generators\model\Generator',
-//                'templates' => [
-//                    'default' => '@app/templates/gii/model/default',
-//                ]
-//            ],
-//            'crud'  => [
-//                'class'     => 'app\templates\gii\crud\Generator',
-//                'templates' => [
-//                    'default'           => '@app/templates/gii/crud/default',
-//                    'sortable'          => '@app/templates/gii/crud/sortable',
-//                ]
-//            ],
             'model' => [
                 'class'     => 'mate\yii\generators\model\Generator',
                 'templates' => [

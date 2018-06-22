@@ -15,7 +15,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "mate-code/yii2-mates": "~0.1",
+        "mate-code/yii2-mates": "~1.2.1",
         "mate-code/dialog": "~1.0",
         "mate-code/alert-boxes": "~1.0",
         "mate-code/animated-label-form": "~1.0",
@@ -24,7 +24,8 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "yiisoft/yii2-jui": "^2.0",
         "kartik-v/yii2-widget-select2": "@dev",
-        "2amigos/yii2-date-time-picker-widget": "~1.0"
+        "2amigos/yii2-date-time-picker-widget": "~1.0",
+        "igorescobar/jQuery-Mask-Plugin": "^1.14"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

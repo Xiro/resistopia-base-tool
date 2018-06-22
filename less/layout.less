@@ -117,8 +117,15 @@ form.animated-label .checkbox-group .form-group {
     margin-top: 0;
   }
 }
+
 textarea {
   .scrollbar-vertical(8px, 0px, 0px, @brand-primary, @brand-primary, #000)
+}
+
+.help-block {
+  .help-block-error {
+    color: @alert-danger-text;
+  }
 }
 
 @supports (-ms-ime-align: auto) {
@@ -236,19 +243,16 @@ table {
       width: 70px;
       white-space: nowrap;
     }
-    .category {
+    .base_category {
       min-width: 150px
     }
-    .speciality {
-      min-width: 160px
+    .special_function {
+      min-width: 170px
     }
     .team {
       min-width: 160px
     }
-    .staff-status {
-      min-width: 100px
-    }
-    .call-sign {
+    .call_sign {
       min-width: 50px;
     }
   }
