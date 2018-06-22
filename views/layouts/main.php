@@ -50,6 +50,16 @@ foreach (Yii::$app->session->getAllFlashes() as $status => $data) {
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    $navItems[] = ['label' => 'Access', 'items' => [
+        ['label' => 'Rights', 'url' => ['access-bit/index']],
+        ['label' => 'Masks', 'url' => ['access-mask/index']],
+        ['label' => 'Security Areas', 'url' => ['access-security-area/index']],
+        ['label' => 'Categories', 'url' => ['access-category/index']],
+    ]];
+    $navItems[] = ['label' => 'Admin', 'items' => [
+        ['label' => 'Users', 'url' => ['user/index']],
+        ['label' => 'Ranks', 'url' => ['rank/index']],
+    ]];
     $navItems[] = ['label' => 'Mission Control', 'url' => ['mission/control']];
     $navItems[] = ['label' => 'Mission Calls', 'url' => ['mission-call/index']];
     $navItems[] = ['label' => 'Missions', 'url' => ['mission/index']];

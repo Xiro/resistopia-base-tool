@@ -12,6 +12,7 @@ use app\assets\plugins\DialogAsset;
 use app\assets\plugins\FontAwesomeAsset;
 use mate\yii\assets\JQueryMaskAsset;
 use yii\bootstrap\BootstrapAsset;
+use yii\bootstrap\BootstrapPluginAsset;
 use yii\web\AssetBundle;
 use yii\web\YiiAsset;
 
@@ -32,6 +33,7 @@ class AppAsset extends AssetBundle
     public $depends = [
         YiiAsset::class,
         BootstrapAsset::class,
+        BootstrapPluginAsset::class,
         FontAwesomeAsset::class,
         AnimatedLabelFormAsset::class,
         DialogAsset::class,

@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel app\models\search\StaffSearch */
+/* @var $searchModel app\models\search\UserSearch */
 
-$this->title = 'Staff';
+$this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="staff-index">
+<div class="user-index">
     <div class="container">
 
         <h1>
@@ -18,9 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <span class="heading-btn-group pull-right">
             <?= Html::a(
-                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Staff',
+                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create User',
                 ["create"],
-                ["class" => "btn btn-default"]
+                ["class" => "btn btn-success"]
             ); ?>
             </span>
         </h1>

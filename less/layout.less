@@ -14,16 +14,39 @@ body {
   background: #000;
 
   .navbar-nav > li > a, .navbar-text {
-    font-size: @font-size-large;
-    color: @brand-primary;
-    border-left: 1px solid @brand-primary;
+    border-right: 1px solid @brand-primary;
+    border-left: none!important;
     &:first-child {
-      border-right: 1px solid @brand-primary;
-    }
-    &:hover {
-      color: lighten(@brand-primary, 10%);
+      border-left: 1px solid @brand-primary!important;
     }
   }
+
+  .dropdown-menu {
+    background: #000;
+    padding: 0;
+    right: -1px;
+
+    > li > a {
+      border: 1px solid @brand-primary;
+    }
+  }
+
+  .navbar-nav > li > a, .navbar-text,
+  .dropdown-menu > li > a {
+    font-size: @font-size-large;
+    color: @brand-primary;
+    &:hover {
+      color: lighten(@brand-primary, 10%);
+      background: darken(@brand-primary, 25%)
+    }
+  }
+
+  .navbar-nav > li.active > a, .navbar-text,
+  .dropdown-menu > li.active > a {
+    color: lighten(@brand-primary, 10%);
+    background: darken(@brand-primary, 25%)
+  }
+
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6,
@@ -60,6 +83,12 @@ h4, h5, h6 {
     border-color: @text-color;
     color: lighten(@text-color, 10%);
   }
+}
+
+.border-light {
+  padding: @padding-large-vertical @padding-large-horizontal;
+  //margin: @padding-large-vertical;
+  border: 1px solid @brand-primary;
 }
 
 .btn-success {

@@ -4,18 +4,18 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\forms\StaffForm */
+/* @var $model app\models\forms\AccessBitForm */
 
-$this->title = 'Create Staff';
-$this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
+$this->title = 'Create Access Bit';
+$this->params['breadcrumbs'][] = ['label' => 'Access Bits', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="staff-create">
+<div class="access-bit-create">
     <div class="container">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <?= $this->render("_form", [
-            "model" => $model,
-        ]) ?>
+        "model" => $model,
+    ]) ?>
     </div>
 </div>

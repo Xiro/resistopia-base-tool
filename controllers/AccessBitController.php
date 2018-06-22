@@ -3,18 +3,18 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Staff;
-use app\models\forms\StaffForm;
-use app\models\search\StaffSearch;
+use app\models\AccessBit;
+use app\models\forms\AccessBitForm;
+use app\models\search\AccessBitSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StaffController implements the CRUD actions for Staff model.
+ * AccessBitController implements the CRUD actions for AccessBit model.
  */
-class StaffController extends Controller
+class AccessBitController extends Controller
 {
     /**
      * @inheritdoc
@@ -27,7 +27,7 @@ class StaffController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-//                        'roles' => ['@'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -41,13 +41,16 @@ class StaffController extends Controller
     }
 
     /**
-     * Lists all Staff models.
+     * Lists all AccessBit models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new StaffSearch();
+        $searchModel = new AccessBitSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->setSort([
+            'defaultOrder' => ['order' => SORT_ASC]
+        ]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -61,7 +64,7 @@ class StaffController extends Controller
      */
     public function actionSearch()
     {
-        $searchModel = new StaffSearch();
+        $searchModel = new AccessBitSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderPartial('_table-body', [
@@ -70,8 +73,8 @@ class StaffController extends Controller
     }
 
     /**
-     * Displays a single Staff model.
-     * @param string $id
+     * Displays a single AccessBit model.
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -82,31 +85,35 @@ class StaffController extends Controller
     }
 
     /**
-     * Creates a new Staff model.
+     * Creates a new AccessBit model.
      * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new StaffForm();
+        $model = new AccessBitForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
+        }
+
+        if($model->order === null) {
+            $model->order = AccessBit::find()->count() + 1;
         }
 
         return $this->render('create', ["model" => $model]);
     }
 
     /**
-     * Updates an existing Staff model.
+     * Updates an existing AccessBit model.
      * If update is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
-        $model = StaffForm::findOne($id);
+        $model = AccessBitForm::findOne($id);
         if ($model === null) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
@@ -119,7 +126,31 @@ class StaffController extends Controller
     }
 
     /**
-     * Deletes an existing EyeColor model.
+     * AJAX action
+     * Update the order of all given items
+     * @return string
+     * @throws NotFoundHttpException some model cannot be found
+     */
+    public function actionUpdateOrder()
+    {
+        if (!Yii::$app->request->isAjax) {
+            return $this->redirect(['index']);
+        }
+        $post = Yii::$app->request->post();
+
+        foreach ($post["order"] as $modelData) {
+            $model = $this->findModel($modelData["id"]);
+            $model->order = $modelData["order"];
+            $success = $model->save();
+            if(!$success) {
+                return json_encode(["status" => "error"]);
+            }
+        }
+        return json_encode(["status" => "success"]);
+    }
+
+    /**
+     * Deletes an existing AccessBit model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -133,9 +164,9 @@ class StaffController extends Controller
     }
 
     /**
-     * Deletes an existing Staff model.
+     * Deletes an existing AccessBit model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException|\Exception if the model cannot be found
      */
@@ -147,15 +178,15 @@ class StaffController extends Controller
     }
 
     /**
-     * Finds the Staff model based on its primary key value.
+     * Finds the AccessBit model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Staff the loaded model
+     * @param integer $id
+     * @return AccessBit the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Staff::findOne($id)) !== null) {
+        if (($model = AccessBit::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

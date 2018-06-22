@@ -105,6 +105,15 @@ $(document).ready(function () {
 
     setupContent($("body"));
 
+    $(document).ready(function(){
+        $('.dropdown-toggle').dropdown()
+    });
+    $('.dropdown').hover(function () {
+        $(this).children(".dropdown-menu").show();
+    }, function () {
+        $(this).children(".dropdown-menu").hide();
+    });
+
     // input masks
 
     $('.mask-date').mask('00.00.0000', {placeholder: 'dd.mm.yyyy'}).addClass('has-content');

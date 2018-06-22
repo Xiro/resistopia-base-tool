@@ -77,6 +77,7 @@ class Staff extends ActiveRecord
             [['rpn'], 'string', 'max' => 8],
             [['forename', 'surname', 'nickname', 'profession', 'callsign'], 'string', 'max' => 128],
             [['rpn'], 'unique'],
+            [['callsign'], 'unique'],
             [['access_key_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessKey::className(), 'targetAttribute' => ['access_key_id' => 'id']],
             [['base_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => BaseCategory::className(), 'targetAttribute' => ['base_category_id' => 'id']],
             [['citizenship_id'], 'exist', 'skipOnError' => true, 'targetClass' => Citizenship::className(), 'targetAttribute' => ['citizenship_id' => 'id']],

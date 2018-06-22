@@ -5,9 +5,9 @@ use yii\bootstrap\ActiveForm;
 use kartik\select2\Select2;
 use dosamigos\datetimepicker\DateTimePicker;
 use mate\yii\widgets\SelectData;
-Yii::$app->selectData->clear();
+
 /* @var $this yii\web\View */
-/* @var $model app\models\StaffForm */
+/* @var $model app\models\forms\StaffForm */
 /* @var $form yii\bootstrap\ActiveForm */
 ?>
 
@@ -24,16 +24,16 @@ Yii::$app->selectData->clear();
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'forename')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'forename')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'surname')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'surname')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'nickname')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'nickname')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
         </div>
         <div class="col-sm-6">
             <?= $form->field($model, 'gender', [
@@ -54,11 +54,12 @@ Yii::$app->selectData->clear();
     <div class="row">
         <div class="col-sm-6">
             <?= $form->field($model, 'date_of_birth')->textInput([
-                    'class' => 'form-control mask-date has-content'
+                    'class' => 'form-control mask-date ',
+                    'autocomplete' => 'off'
             ]) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'height')->textInput() ?>
+            <?= $form->field($model, 'height')->textInput(['autocomplete' => 'off']) ?>
         </div>
     </div>
 
@@ -78,7 +79,7 @@ Yii::$app->selectData->clear();
             ])->label('Eye Color') ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'profession')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'profession')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
         </div>
     </div>
 
@@ -194,7 +195,7 @@ Yii::$app->selectData->clear();
             <?= $form->field($model, 'status_it')->checkbox()->label('Is IT') ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'callsign')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'callsign')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
         </div>
     </div>
 
