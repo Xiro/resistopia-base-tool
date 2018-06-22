@@ -94,7 +94,11 @@ class AccessBitController extends Controller
         $model = new AccessBitForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            if(Yii::$app->request->post('submit') == "continue") {
+                $model = new AccessBitForm();
+            } else {
+                return $this->redirect(['index']);
+            }
         }
 
         if($model->order === null) {

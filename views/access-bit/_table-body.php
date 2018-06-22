@@ -25,15 +25,30 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?= $model->name ?>
             </td>
         <?php endif; ?>
+        <?php if (!in_array("key", $exclude)): ?>
+            <td class="key">
+                <?= $model->key ?>
+            </td>
+        <?php endif; ?>
+        <?php if (!in_array("access_category", $exclude)): ?>
+            <td class="access_category">
+                <?= $model->access_category_id ? $model->accessCategory->name : '' ?>
+            </td>
+        <?php endif; ?>
+        <?php if (!in_array("comment", $exclude)): ?>
+            <td class="comment">
+                <?= $model->comment ?>
+            </td>
+        <?php endif; ?>
         <?php if (!in_array("actions", $exclude)): ?>
             <td class="actions">
-                <?php if (!in_array("action-view", $exclude)): ?>
+                <?php /*if (!in_array("action-view", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::eye_open(),
                         ['access-bit/view', 'id' => $model->bit_pos],
                         ["class" => "ajax-dialog", "data-size" => "lg"]
                     ) ?>
-                <?php endif; ?>
+                <?php endif; */ ?>
                 <?php if (!in_array("action-update", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::pencil(),

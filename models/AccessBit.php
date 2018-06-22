@@ -37,7 +37,7 @@ class AccessBit extends ActiveRecord
         return [
             [['name', 'access_category_id'], 'required'],
             [['comment'], 'string'],
-            [['order', 'access_category_id'], 'integer'],
+            [['order'], 'integer'],
             [['key', 'name'], 'string', 'max' => 50],
             [['key'], 'unique'],
             [['access_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessCategory::className(), 'targetAttribute' => ['access_category_id' => 'id']],

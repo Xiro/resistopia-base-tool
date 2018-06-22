@@ -3,7 +3,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use app\models\search\AccessBitSearch;
 use kartik\select2\Select2;
-use mate\yii\widgets\ValMap;
+use mate\yii\widgets\SelectData;
 use mate\yii\assets\TableSearchAsset;
 use mate\yii\assets\SortableUpdateAsset;
 
@@ -53,6 +53,35 @@ if ($searchModel) {
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                 </th>
             <?php endif; ?>
+            <?php if (!in_array("key", $exclude)): ?>
+                <?php $excludeSearchParams[] = "key"; ?>
+                <th class="key">
+                    <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
+                </th>
+            <?php endif; ?>
+            <?php if (!in_array("access_category", $exclude)): ?>
+                <?php $excludeSearchParams[] = "access_category"; ?>
+                <th class="access_category">
+                    <?= $form->field($model, 'access_category_id', [
+                        'labelOptions' => ['class' => ($model->access_category_id ? "move" : "")]
+                    ])->widget(Select2::class, [
+                        'showToggleAll' => false,
+                        'data'          => SelectData::fromModel(\app\models\AccessCategory::class),
+                        'options'       => [
+                            'placeholder' => ''
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ])->label('Category') ?>
+                </th>
+            <?php endif; ?>
+            <?php if (!in_array("comment", $exclude)): ?>
+                <?php $excludeSearchParams[] = "comment"; ?>
+                <th class="comment">
+                    <?= $form->field($model, 'comment')->textInput(['maxlength' => true]) ?>
+                </th>
+            <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th>
                     <input type="hidden" name="page" value="<?=  $dataProvider->pagination->page ?>">
@@ -75,6 +104,15 @@ if ($searchModel) {
             <?php endif; ?>
             <?php if (!in_array("name", $exclude)): ?>
                 <th class="name"><?= 'Name' ?></th>
+            <?php endif; ?>
+            <?php if (!in_array("key", $exclude)): ?>
+                <th class="key"><?= 'Key' ?></th>
+            <?php endif; ?>
+            <?php if (!in_array("access_category", $exclude)): ?>
+                <th class="access_category"><?= 'Category' ?></th>
+            <?php endif; ?>
+            <?php if (!in_array("comment", $exclude)): ?>
+                <th class="comment"><?= 'Comment' ?></th>
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th></th>
