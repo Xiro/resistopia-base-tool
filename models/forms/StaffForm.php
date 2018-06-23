@@ -25,7 +25,15 @@ class StaffForm extends Staff
     public function rules()
     {
         return array_merge(parent::rules(), [
+            [['date_of_birth'], 'validateDate'],
         ]);
+    }
+
+    public function validateDate()
+    {
+        if(1 !== preg_match('/[0-9]{2}.[0-9]{2}.[0-9]{4}/', $this->date_of_birth)) {
+            $this->addError('date_of_birth', "Date of birth must be in format dd.mm.yyyy");
+        }
     }
 
     public function afterFind()
@@ -40,9 +48,9 @@ class StaffForm extends Staff
             $rpn .= strtoupper(substr($this->forename, 0, 1));
             $rpn .= strtoupper(substr($this->surname, 0, 1));
             $rpn .= "-";
-            $rpn .= rand(10000,99999);
+            $rpn .= rand(10000, 99999);
             $alreadyExists = 0 < self::find()->where(["rpn" => $rpn])->count();
-        } while($alreadyExists);
+        } while ($alreadyExists);
         return $rpn;
     }
 
@@ -51,12 +59,16 @@ class StaffForm extends Staff
      */
     public function save($runValidation = true, $attributeNames = null)
     {
+        if(!$this->validate()) {
+            return false;
+        }
         $this->updateToOne('team');
         $this->updateToOne('company');
         $this->updateToOne('citizenship');
-        $this->date_of_birth = date('Y-m-d', strtotime($this->date_of_birth));
 
-        if($this->getIsNewRecord()) {
+        $this->date_of_birth = implode("-", array_reverse(explode(".", $this->date_of_birth)));
+
+        if ($this->getIsNewRecord()) {
             $this->rpn = $this->createRpn();
 
             $accessKey = new AccessKey();
@@ -65,7 +77,16 @@ class StaffForm extends Staff
             $this->access_key_id = $accessKey->id;
         }
 
-        return parent::save($runValidation, $attributeNames);
+        $accessMasks = [];
+        if ($this->base_category_id && $this->baseCategory->accessMask) {
+            $accessMasks[] = $this->baseCategory->accessMask;
+        }
+        if ($this->rank_id && $this->rank->accessMask) {
+            $accessMasks[] = $this->rank->accessMask;
+        }
+        $this->accessKey->changeAccessMasks($accessMasks);
+
+        return parent::save(false, $attributeNames);
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\forms\AccessKeyForm;
 use Yii;
 use app\models\Staff;
 use app\models\forms\StaffForm;
@@ -116,6 +117,33 @@ class StaffController extends Controller
         }
 
         return $this->render('update', ["model" => $model]);
+    }
+
+    /**
+     * Update the AccessKey of a staff member
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionGrantRights($id)
+    {
+        $model = $this->findModel($id);
+
+        $accessKey = AccessKeyForm::findOne($model->access_key_id);
+        if ($accessKey === null) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $post = Yii::$app->request->post();
+        $accessKey->load($post);
+        if ($post && $accessKey->save()) {
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('grant-rights', [
+            'model' => $model,
+            'accessKey' => $accessKey,
+        ]);
     }
 
     /**

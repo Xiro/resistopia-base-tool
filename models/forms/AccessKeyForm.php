@@ -2,12 +2,9 @@
 
 namespace app\models\forms;
 
-use app\models\AccessMask;
+use app\models\AccessKey;
 
-/**
- * AccessMaskForm represents the form for the model `app\models\AccessMask`.
- */
-class AccessMaskForm extends AccessMask
+class AccessKeyForm extends AccessKey
 {
 
     public $accessBits = [];
@@ -27,19 +24,11 @@ class AccessMaskForm extends AccessMask
      */
     public function save($runValidation = true, $attributeNames = null)
     {
-        $oldKey = $this->access_key;
         $this->access_key = 0;
         foreach ($this->accessBits as $bitPos) {
             $this->access_key |= 1 << $bitPos - 1;
         }
-        $isSaved = parent::save($runValidation, $attributeNames);
-        if($isSaved) {
-            foreach ($this->accessKeys as $accessKey) {
-                $accessKey->removeMaskKey($oldKey);
-                $accessKey->addMaskKey($this->access_key);
-            }
-        }
-        return $isSaved;
+        return parent::save($runValidation, $attributeNames);
     }
 
 }

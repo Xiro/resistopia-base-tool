@@ -91,7 +91,6 @@ class StaffSearch extends Staff
             ->andFilterWhere(['like', 'callsign', $this->callsign]);
 
         if($this->name) {
-            // @ToDo: Implement name search
             $nameParts = explode(' ', $this->name);
             $query->andFilterWhere(['or',
                 ['like', 'forename', $nameParts],

@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\forms\StaffForm */
 
-$this->title = 'Update Staff';
+$this->title = "Update " . $model->rpn . " (" . $model->getName() . ")";
 $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->rpn, 'url' => ['view', 'id' => $model->rpn]];
 $this->params['breadcrumbs'][] = 'Update';

@@ -65,6 +65,12 @@ $exclude = !isset($exclude) ? array() : $exclude;
                         ['staff/update', 'id' => $model->rpn]
                     ) ?>
                 <?php endif; ?>
+                <?php if (!in_array("action-grant-rights", $exclude)): ?>
+                    <?= Html::a(
+                        Glyphicon::lock(),
+                        ['staff/grant-rights', 'id' => $model->rpn]
+                    ) ?>
+                <?php endif; ?>
                 <?php if (!in_array("action-delete", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::trash(),

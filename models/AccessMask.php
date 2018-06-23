@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  *
  * @property BaseCategory[] $baseCategories
  * @property Rank[] $ranks
+ * @property AccessKey[] $accessKeys
  */
 class AccessMask extends ActiveRecord
 {
@@ -51,6 +52,11 @@ class AccessMask extends ActiveRecord
         ];
     }
 
+    public function afterFind()
+    {
+        $this->access_key = (int) $this->access_key;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -65,5 +71,13 @@ class AccessMask extends ActiveRecord
     public function getRanks()
     {
         return $this->hasMany(Rank::className(), ['access_mask_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccessKeys()
+    {
+        return $this->hasMany(AccessKey::class, ['id' => 'access_key_id'])->viaTable('access_key_mask', ['access_mask_id' => 'id']);
     }
 }
