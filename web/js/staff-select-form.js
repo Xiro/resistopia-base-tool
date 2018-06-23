@@ -1,47 +1,53 @@
 
-$(document).ready(function () {
+$.fn.tableFormSelect = function() {
+    var form = this;
+    var searchList = form.find(".table-form-selectable");
+    var selectionList = form.find(".table-form-selected");
 
-    var searchList = $("#index-search-table");
-    var selectionList = $("#staff-selection-table");
-
-    function addStaff(row) {
-        var id = row.data("id");
-        if(selectionList.find('[data-id=' + id + ']').length === 0) {
+    function addRow(row) {
+        var id = row.data("key");
+        if(selectionList.find('[data-key=' + id + ']').length === 0) {
             row = row.clone();
             selectionList.find("tbody").append(row);
-            row.find(".staff-select-checkbox").attr("checked", true);
+            row.find(".table-form-select-checkbox").attr("checked", true);
         }
     }
 
-    function removeStaff(row) {
+    function removeRow(row) {
         row.remove();
     }
 
     searchList.click(function (e) {
         var target = $(e.target);
-        if(target.is(".add-staff")) {
+        if(target.is(".add-row")) {
             var row = target.closest("tr");
-            addStaff(row);
+            addRow(row);
         }
-        if(target.is(".add-all-staff")) {
+        if(target.is(".add-all-rows")) {
             searchList.find("tbody tr").each(function () {
-                addStaff($(this));
+                addRow($(this));
             });
         }
     });
 
     selectionList.click(function (e) {
         var target = $(e.target);
-        if(target.is(".remove-staff")) {
+        if(target.is(".remove-row")) {
             var row = target.closest("tr");
-            removeStaff(row);
+            removeRow(row);
         }
-        if(target.is(".remove-all-staff")) {
+        if(target.is(".remove-all-rows")) {
             selectionList.find("tbody tr").each(function () {
-                removeStaff($(this));
+                removeRow($(this));
             });
         }
     });
+};
 
+$(document).ready(function () {
+
+    $('.table-form').each(function () {
+        $(this).tableFormSelect();
+    });
 
 });

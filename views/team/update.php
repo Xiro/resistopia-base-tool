@@ -3,7 +3,7 @@
 use app\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Team */
+/* @var $model \app\models\forms\TeamForm */
 
 $this->title = 'Update Team';
 $this->params['breadcrumbs'][] = ['label' => 'Teams', 'url' => ['index']];

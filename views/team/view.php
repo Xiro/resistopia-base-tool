@@ -2,6 +2,7 @@
 
 use app\helpers\Html;
 use yii\data\ActiveDataProvider;
+use app\components\Access;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Team */
@@ -36,14 +37,17 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= nl2br($model->description); ?>
     </p>
 
+    <?php if (Access::to('staff/view')): ?>
 
-    <h4>Members</h4>
+        <h4>Members</h4>
 
-    <?= $this->render("../staff/_table", [
-        "dataProvider" => new ActiveDataProvider([
-            'query' => $model->getStaff(),
-        ]),
-        "exclude"      => ["team", "action-delete"]
-    ]) ?>
+        <?= $this->render("../staff/_table", [
+            "dataProvider" => new ActiveDataProvider([
+                'query' => $model->getStaff(),
+            ]),
+            "exclude"      => ["team", "action-delete"]
+        ]) ?>
+
+    <?php endif; ?>
 
 </div>

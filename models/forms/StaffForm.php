@@ -59,15 +59,6 @@ class StaffForm extends Staff
      */
     public function save($runValidation = true, $attributeNames = null)
     {
-        if(!$this->validate()) {
-            return false;
-        }
-        $this->updateToOne('team');
-        $this->updateToOne('company');
-        $this->updateToOne('citizenship');
-
-        $this->date_of_birth = implode("-", array_reverse(explode(".", $this->date_of_birth)));
-
         if ($this->getIsNewRecord()) {
             $this->rpn = $this->createRpn();
 
@@ -76,6 +67,15 @@ class StaffForm extends Staff
             $accessKey->save();
             $this->access_key_id = $accessKey->id;
         }
+
+        if(!$this->validate()) {
+            return false;
+        }
+        $this->updateToOne('team');
+        $this->updateToOne('company');
+        $this->updateToOne('citizenship');
+
+        $this->date_of_birth = implode("-", array_reverse(explode(".", $this->date_of_birth)));
 
         $accessMasks = [];
         if ($this->base_category_id && $this->baseCategory->accessMask) {

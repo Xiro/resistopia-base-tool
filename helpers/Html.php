@@ -3,6 +3,8 @@
 namespace app\helpers;
 
 use app\components\Access;
+use app\models\AccessBit;
+use mate\yii\widgets\SelectData;
 
 class Html extends \yii\helpers\Html
 {
@@ -25,7 +27,7 @@ class Html extends \yii\helpers\Html
                 $accessKey = implode('/', $keyParts);
             }
 
-            if(!Access::to($accessKey)) {
+            if(!Access::to($accessKey, true, true)) {
                 return null;
             }
         }

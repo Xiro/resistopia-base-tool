@@ -65,6 +65,8 @@ foreach (Yii::$app->session->getAllFlashes() as $status => $data) {
         ]);
     }
 
+    $navItems = [];
+
     $accessItems = [];
     Access::addNavItem(['label' => 'Rights', 'url' => ['access-bit/index']], $accessItems);
     Access::addNavItem(['label' => 'Masks', 'url' => ['access-mask/index']], $accessItems);

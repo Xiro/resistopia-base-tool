@@ -25,18 +25,18 @@ class StaffController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::class,
+                'class'      => AccessControl::class,
                 'ruleConfig' => [
                     'class' => AccessRule::class
                 ],
-                'rules' => [
+                'rules'      => [
                     [
                         'allow' => true,
                         'roles' => ['§'],
                     ],
                 ],
             ],
-            'verbs' => [
+            'verbs'  => [
                 'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
@@ -55,7 +55,7 @@ class StaffController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -71,6 +71,28 @@ class StaffController extends Controller
 
         return $this->renderPartial('_table-body', [
             'dataProvider' => $dataProvider
+        ]);
+    }
+
+    /**
+     * (for ajax use) search and render a table form body
+     * @param string $teamId
+     * @return string
+     */
+    public function actionSearchTeamForm($teamId)
+    {
+        $searchModel = new StaffSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere([
+            'or',
+            ['!=', 'team_id', $teamId],
+            ['team_id' => null]
+        ]);
+
+        return $this->renderPartial('_table-form-body', [
+            'dataProvider' => $dataProvider,
+            "modelName"   => "TeamForm",
+            'exclude'      => ['team']
         ]);
     }
 
@@ -145,7 +167,7 @@ class StaffController extends Controller
         }
 
         return $this->render('grant-rights', [
-            'model' => $model,
+            'model'     => $model,
             'accessKey' => $accessKey,
         ]);
     }

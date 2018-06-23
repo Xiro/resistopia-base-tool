@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\components\AccessRule;
 use Yii;
 use app\models\Team;
+use app\models\forms\TeamForm;
 use app\models\search\TeamSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -91,7 +92,7 @@ class TeamController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Team();
+        $model = new TeamForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -109,7 +110,10 @@ class TeamController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = TeamForm::findOne($id);
+        if ($model === null) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
