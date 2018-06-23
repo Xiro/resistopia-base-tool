@@ -46,6 +46,9 @@ class StaffSearch extends Staff
     public function search($params)
     {
         $query = Staff::find();
+        $query->joinWith("team");
+        $query->joinWith("baseCategory");
+        $query->joinWith("specialFunction");
 
         // add conditions that should always apply here
 

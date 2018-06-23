@@ -2,7 +2,7 @@
 /* @var $dataProvider \yii\data\ActiveDataProvider */
 /* @var $exclude array */
 
-use yii\helpers\Html;
+use app\helpers\Html;
 use mate\yii\widgets\Glyphicon;
 
 $pagination = $dataProvider->pagination;
@@ -42,24 +42,10 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php endif; ?>
         <?php if (!in_array("actions", $exclude)): ?>
             <td class="actions">
-                <?php /*if (!in_array("action-view", $exclude)): ?>
-                    <?= Html::a(
-                        Glyphicon::eye_open(),
-                        ['access-bit/view', 'id' => $model->bit_pos],
-                        ["class" => "ajax-dialog", "data-size" => "lg"]
-                    ) ?>
-                <?php endif; */ ?>
-                <?php /*if (!in_array("action-update", $exclude)): ?>
+                <?php if (!in_array("action-update", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::pencil(),
                         ['access-bit/update', 'id' => $model->bit_pos]
-                    ) ?>
-                <?php endif;*/ ?>
-                <?php if (!in_array("action-delete", $exclude)): ?>
-                    <?= Html::a(
-                        Glyphicon::trash(),
-                        ['access-bit/confirm-delete', 'id' => $model->bit_pos],
-                        ["class" => "ajax-dialog", "data-size" => "sm"]
                     ) ?>
                 <?php endif; ?>
             </td>

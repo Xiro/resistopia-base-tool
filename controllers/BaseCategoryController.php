@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\AccessRule;
 use Yii;
 use app\models\BaseCategory;
 use app\models\search\BaseCategorySearch;
@@ -23,10 +24,13 @@ class BaseCategoryController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => AccessRule::class
+                ],
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['§'],
                     ],
                 ],
             ],

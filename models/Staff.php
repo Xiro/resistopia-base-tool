@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property string $forename
  * @property string $surname
  * @property string $nickname
+ * @property string $name
  * @property string $gender
  * @property string $date_of_birth
  * @property string $profession

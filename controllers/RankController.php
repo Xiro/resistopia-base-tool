@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\AccessRule;
 use Yii;
 use app\models\Rank;
 use app\models\search\RankSearch;
@@ -23,10 +24,13 @@ class RankController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => AccessRule::class
+                ],
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['§'],
                     ],
                 ],
             ],

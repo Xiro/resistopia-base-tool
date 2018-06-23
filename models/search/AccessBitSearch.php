@@ -42,6 +42,7 @@ class AccessBitSearch extends AccessBit
     public function search($params)
     {
         $query = AccessBit::find();
+        $query->joinWith("accessCategory");
 
         // add conditions that should always apply here
 

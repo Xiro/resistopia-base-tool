@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\AccessRule;
 use Yii;
 use app\models\Company;
 use app\models\search\CompanySearch;
@@ -23,10 +24,13 @@ class CompanyController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => AccessRule::class
+                ],
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['§'],
                     ],
                 ],
             ],

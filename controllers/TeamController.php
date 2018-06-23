@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\AccessRule;
 use Yii;
 use app\models\Team;
 use app\models\search\TeamSearch;
@@ -23,9 +24,13 @@ class TeamController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => AccessRule::class
+                ],
                 'rules' => [
                     [
                         'allow' => true,
+                        'roles' => ['§'],
                     ],
                 ],
             ],

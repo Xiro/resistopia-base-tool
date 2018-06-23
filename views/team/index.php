@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Html;
+use app\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a(
                 "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Team',
                 ["create"],
-                ["class" => "btn btn-success"]
+                ["class" => "btn btn-default"]
             ); ?>
             </span>
         </h1>

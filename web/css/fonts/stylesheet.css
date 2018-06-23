@@ -1,0 +1,143 @@
+@font-face {
+    font-family: 'Work Sans';
+    src: local('Work Sans Bold'), local('WorkSans-Bold'),
+        url('WorkSans-Bold.woff2') format('woff2'),
+        url('WorkSans-Bold.woff') format('woff'),
+        url('WorkSans-Bold.ttf') format('truetype'),
+        url('WorkSans-Bold.svg#WorkSans-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Work Sans';
+    src: local('Work Sans ExtraLight'), local('WorkSans-ExtraLight'),
+        url('WorkSans-ExtraLight.woff2') format('woff2'),
+        url('WorkSans-ExtraLight.woff') format('woff'),
+        url('WorkSans-ExtraLight.ttf') format('truetype'),
+        url('WorkSans-ExtraLight.svg#WorkSans-ExtraLight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: local('Orbitron Black'), local('Orbitron-Black'),
+        url('Orbitron-Black.woff2') format('woff2'),
+        url('Orbitron-Black.woff') format('woff'),
+        url('Orbitron-Black.ttf') format('truetype'),
+        url('Orbitron-Black.svg#Orbitron-Black') format('svg');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Work Sans';
+    src: local('Work Sans SemiBold'), local('WorkSans-SemiBold'),
+        url('WorkSans-SemiBold.woff2') format('woff2'),
+        url('WorkSans-SemiBold.woff') format('woff'),
+        url('WorkSans-SemiBold.ttf') format('truetype'),
+        url('WorkSans-SemiBold.svg#WorkSans-SemiBold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: local('Orbitron Bold'), local('Orbitron-Bold'),
+        url('Orbitron-Bold.woff2') format('woff2'),
+        url('Orbitron-Bold.woff') format('woff'),
+        url('Orbitron-Bold.ttf') format('truetype'),
+        url('Orbitron-Bold.svg#Orbitron-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Work Sans';
+    src: local('Work Sans Black'), local('WorkSans-Black'),
+        url('WorkSans-Black.woff2') format('woff2'),
+        url('WorkSans-Black.woff') format('woff'),
+        url('WorkSans-Black.ttf') format('truetype'),
+        url('WorkSans-Black.svg#WorkSans-Black') format('svg');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Work Sans';
+    src: local('Work Sans Thin'), local('WorkSans-Thin'),
+        url('WorkSans-Thin.woff2') format('woff2'),
+        url('WorkSans-Thin.woff') format('woff'),
+        url('WorkSans-Thin.ttf') format('truetype'),
+        url('WorkSans-Thin.svg#WorkSans-Thin') format('svg');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Work Sans';
+    src: local('Work Sans ExtraBold'), local('WorkSans-ExtraBold'),
+        url('WorkSans-ExtraBold.woff2') format('woff2'),
+        url('WorkSans-ExtraBold.woff') format('woff'),
+        url('WorkSans-ExtraBold.ttf') format('truetype'),
+        url('WorkSans-ExtraBold.svg#WorkSans-ExtraBold') format('svg');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Work Sans';
+    src: local('Work Sans Medium'), local('WorkSans-Medium'),
+        url('WorkSans-Medium.woff2') format('woff2'),
+        url('WorkSans-Medium.woff') format('woff'),
+        url('WorkSans-Medium.ttf') format('truetype'),
+        url('WorkSans-Medium.svg#WorkSans-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: local('Orbitron Regular'), local('Orbitron-Regular'),
+        url('Orbitron-Regular.woff2') format('woff2'),
+        url('Orbitron-Regular.woff') format('woff'),
+        url('Orbitron-Regular.ttf') format('truetype'),
+        url('Orbitron-Regular.svg#Orbitron-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Work Sans';
+    src: local('Work Sans Light'), local('WorkSans-Light'),
+        url('WorkSans-Light.woff2') format('woff2'),
+        url('WorkSans-Light.woff') format('woff'),
+        url('WorkSans-Light.ttf') format('truetype'),
+        url('WorkSans-Light.svg#WorkSans-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: local('Orbitron Medium'), local('Orbitron-Medium'),
+        url('Orbitron-Medium.woff2') format('woff2'),
+        url('Orbitron-Medium.woff') format('woff'),
+        url('Orbitron-Medium.ttf') format('truetype'),
+        url('Orbitron-Medium.svg#Orbitron-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Work Sans';
+    src: local('Work Sans'), local('WorkSans-Regular'),
+        url('WorkSans-Regular.woff2') format('woff2'),
+        url('WorkSans-Regular.woff') format('woff'),
+        url('WorkSans-Regular.ttf') format('truetype'),
+        url('WorkSans-Regular.svg#WorkSans-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+

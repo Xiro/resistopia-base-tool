@@ -60,14 +60,6 @@ class AccessBit extends ActiveRecord
 
     public function isInKey($accessKey)
     {
-//        echo '<pre>';
-//        echo print_r(array(
-//            decbin($accessKey),
-//            $this->bit_pos,
-//            1 << $this->bit_pos - 1,
-//        ));
-//        echo '</pre>';
-//        exit;
         return (bool) ($accessKey & (1 << $this->bit_pos - 1));
     }
 

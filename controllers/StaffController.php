@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\AccessRule;
 use app\models\forms\AccessKeyForm;
 use Yii;
 use app\models\Staff;
@@ -25,10 +26,13 @@ class StaffController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => AccessRule::class
+                ],
                 'rules' => [
                     [
                         'allow' => true,
-//                        'roles' => ['@'],
+                        'roles' => ['§'],
                     ],
                 ],
             ],

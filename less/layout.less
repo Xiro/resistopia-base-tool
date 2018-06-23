@@ -1,5 +1,8 @@
 @import "bootstrap/variables";
 @import "mixins";
+@import "fonts";
+
+@font-family-heading: "Orbitron", monospace;
 
 body > * {
   font-family: @font-family-base;
@@ -41,6 +44,11 @@ body {
     }
   }
 
+  .navbar-header > .navbar-brand {
+    color: @brand-primary;
+    cursor: default;
+  }
+
   .navbar-nav > li.active > a, .navbar-text,
   .dropdown-menu > li.active > a {
     color: lighten(@brand-primary, 10%);
@@ -52,7 +60,11 @@ body {
 .h1, .h2, .h3, .h4, .h5, .h6,
 h1, h2, h3, h4, h5, h6 {
   border-color: @brand-primary;
-  text-transform: uppercase;
+  //text-transform: uppercase;
+  font-family: @font-family-heading;
+  * {
+    font-family: @font-family-base;
+  }
 }
 .h1, .h2, .h3,
 h1, h2, h3 {
@@ -109,6 +121,14 @@ h4, h5, h6 {
 
 .btn-danger {
   .custom-button(@brand-danger)
+}
+
+.alert {
+  background: none;
+
+  &.alert-danger {
+    border-color: @alert-danger-text;
+  }
 }
 
 .checkbox input[type=checkbox] {

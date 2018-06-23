@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\AccessRule;
 use app\models\forms\LoginForm;
 use Yii;
 use app\models\User;
@@ -25,10 +26,23 @@ class UserController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => AccessRule::class
+                ],
                 'rules' => [
                     [
+                        'actions' => ['logout'],
                         'allow' => true,
-//                        'roles' => ['@'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['login'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['§'],
                     ],
                 ],
             ],

@@ -3,11 +3,13 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use yii\helpers\Html;
+use app\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\components\AccessRule;
+use app\components\Access;
 
 $isAjax = Yii::$app->request->isAjax;
 AppAsset::register($this);
@@ -21,6 +23,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans|Orbitron" rel="stylesheet">
     <?php $this->head() ?>
 </head>
 <body>
@@ -43,33 +46,52 @@ foreach (Yii::$app->session->getAllFlashes() as $status => $data) {
 
 <div class="wrap">
     <?php
+    $staff = AccessRule::activeStaff(false);
     NavBar::begin([
-//        'brandLabel' => 'My Company',
-//        'brandUrl' => Yii::$app->homeUrl,
+        'brandLabel' => $staff ? $staff->name . ' (' . $staff->rpn . ')' : '',
+        'brandUrl' => false,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $navItems[] = ['label' => 'Access', 'items' => [
-        ['label' => 'Rights', 'url' => ['access-bit/index']],
-        ['label' => 'Masks', 'url' => ['access-mask/index']],
-        ['label' => 'Security Areas', 'url' => ['access-security-area/index']],
-        ['label' => 'Categories', 'url' => ['access-category/index']],
-    ]];
-    $navItems[] = ['label' => 'Admin', 'items' => [
-        ['label' => 'Base Categories', 'url' => ['base-category/index']],
-        ['label' => 'Citizenships', 'url' => ['citizenship/index']],
-        ['label' => 'Companies', 'url' => ['company/index']],
-        ['label' => 'Eye Colors', 'url' => ['eye-color/index']],
-        ['label' => 'Ranks', 'url' => ['rank/index']],
-        ['label' => 'Special Functions', 'url' => ['special-function/index']],
-        ['label' => 'Users', 'url' => ['user/index']],
-    ]];
-    $navItems[] = ['label' => 'Mission Control', 'url' => ['mission/control']];
-    $navItems[] = ['label' => 'Mission Calls', 'url' => ['mission-call/index']];
-    $navItems[] = ['label' => 'Missions', 'url' => ['mission/index']];
-    $navItems[] = ['label' => 'Staff', 'url' => ['staff/index']];
-    $navItems[] = ['label' => 'Teams', 'url' => ['team/index']];
+
+    if($staff) {
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-left'],
+            'items'   => [
+//                ['label' => $staff->name, 'url' => false],
+                ['label' => 'Logout', 'url' => ['user/logout']],
+            ],
+        ]);
+    }
+
+    $accessItems = [];
+    Access::addNavItem(['label' => 'Rights', 'url' => ['access-bit/index']], $accessItems);
+    Access::addNavItem(['label' => 'Masks', 'url' => ['access-mask/index']], $accessItems);
+    Access::addNavItem(['label' => 'Security Areas', 'url' => ['access-security-area/index']], $accessItems);
+    Access::addNavItem(['label' => 'Categories', 'url' => ['access-category/index']], $accessItems);
+    if(!empty($accessItems)) {
+        $navItems[] = ['label' => 'Access', 'items' => $accessItems];
+    }
+
+    $adminItems = [];
+    Access::addNavItem(['label' => 'Base Categories', 'url' => ['base-category/index']], $adminItems);
+    Access::addNavItem(['label' => 'Citizenships', 'url' => ['citizenship/index']], $adminItems);
+    Access::addNavItem(['label' => 'Companies', 'url' => ['company/index']], $adminItems);
+    Access::addNavItem(['label' => 'Eye Colors', 'url' => ['eye-color/index']], $adminItems);
+    Access::addNavItem(['label' => 'Ranks', 'url' => ['rank/index']], $adminItems);
+    Access::addNavItem(['label' => 'Special Functions', 'url' => ['special-function/index']], $adminItems);
+    Access::addNavItem(['label' => 'Users', 'url' => ['user/index']], $adminItems);
+    if(!empty($adminItems)) {
+        $navItems[] = ['label' => 'Admin', 'items' => $adminItems];
+    }
+
+//    $navItems[] = ['label' => 'Mission Control', 'url' => ['mission/control']];
+//    $navItems[] = ['label' => 'Mission Calls', 'url' => ['mission-call/index']];
+//    $navItems[] = ['label' => 'Missions', 'url' => ['mission/index']];
+    Access::addNavItem(['label' => 'Staff', 'url' => ['staff/index']], $navItems);
+    Access::addNavItem(['label' => 'Teams', 'url' => ['team/index']], $navItems);
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items'   => $navItems,
