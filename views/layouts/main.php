@@ -57,8 +57,13 @@ foreach (Yii::$app->session->getAllFlashes() as $status => $data) {
         ['label' => 'Categories', 'url' => ['access-category/index']],
     ]];
     $navItems[] = ['label' => 'Admin', 'items' => [
-        ['label' => 'Users', 'url' => ['user/index']],
+        ['label' => 'Base Categories', 'url' => ['base-category/index']],
+        ['label' => 'Citizenships', 'url' => ['citizenship/index']],
+        ['label' => 'Companies', 'url' => ['company/index']],
+        ['label' => 'Eye Colors', 'url' => ['eye-color/index']],
         ['label' => 'Ranks', 'url' => ['rank/index']],
+        ['label' => 'Special Functions', 'url' => ['special-function/index']],
+        ['label' => 'Users', 'url' => ['user/index']],
     ]];
     $navItems[] = ['label' => 'Mission Control', 'url' => ['mission/control']];
     $navItems[] = ['label' => 'Mission Calls', 'url' => ['mission-call/index']];

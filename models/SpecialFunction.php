@@ -49,6 +49,17 @@ class SpecialFunction extends ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function delete()
+    {
+        foreach ($this->staff as $staff) {
+            $staff->unlink('specialFunction', $this);
+        }
+        return parent::delete();
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getStaff()

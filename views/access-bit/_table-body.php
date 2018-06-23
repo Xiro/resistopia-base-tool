@@ -49,12 +49,12 @@ $exclude = !isset($exclude) ? array() : $exclude;
                         ["class" => "ajax-dialog", "data-size" => "lg"]
                     ) ?>
                 <?php endif; */ ?>
-                <?php if (!in_array("action-update", $exclude)): ?>
+                <?php /*if (!in_array("action-update", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::pencil(),
                         ['access-bit/update', 'id' => $model->bit_pos]
                     ) ?>
-                <?php endif; ?>
+                <?php endif;*/ ?>
                 <?php if (!in_array("action-delete", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::trash(),

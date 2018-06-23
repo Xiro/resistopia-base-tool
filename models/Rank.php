@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $short_name
  * @property integer $access_mask_id
+ * @property integer $order
  *
  * @property AccessMask $accessMask
  * @property Staff[] $staff
@@ -32,8 +33,8 @@ class Rank extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'short_name', 'access_mask_id'], 'required'],
-            [['access_mask_id'], 'integer'],
+            [['name', 'short_name'], 'required'],
+            [['access_mask_id', 'order'], 'integer'],
             [['name'], 'string', 'max' => 128],
             [['short_name'], 'string', 'max' => 12],
             [['access_mask_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessMask::className(), 'targetAttribute' => ['access_mask_id' => 'id']],
@@ -50,7 +51,19 @@ class Rank extends ActiveRecord
             'name' => 'Name',
             'short_name' => 'Short Name',
             'access_mask_id' => 'Access Mask ID',
+            'order' => 'Order',
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function delete()
+    {
+        foreach ($this->staff as $staff) {
+            $staff->unlink('rank', $this);
+        }
+        return parent::delete();
     }
 
     /**

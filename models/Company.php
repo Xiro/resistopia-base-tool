@@ -46,6 +46,17 @@ class Company extends ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function delete()
+    {
+        foreach ($this->staff as $staff) {
+            $staff->unlink('company', $this);
+        }
+        return parent::delete();
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getStaff()

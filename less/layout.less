@@ -35,7 +35,7 @@ body {
   .dropdown-menu > li > a {
     font-size: @font-size-large;
     color: @brand-primary;
-    &:hover {
+    &:hover, &:focus, &:active {
       color: lighten(@brand-primary, 10%);
       background: darken(@brand-primary, 25%)
     }
@@ -147,6 +147,10 @@ form.animated-label .checkbox-group .form-group {
   }
 }
 
+.checkbox-group {
+  margin-bottom: 30px;
+}
+
 textarea {
   .scrollbar-vertical(8px, 0px, 0px, @brand-primary, @brand-primary, #000)
 }
@@ -243,6 +247,45 @@ table tr.animated-label {
     }
   }
 
+}
+
+.select2-container.select2-container--krajee .select2-selection__clear {
+  top: 4px;
+}
+
+ul.pagination {
+
+  display: block;
+  width: 100%;
+  text-align: center;
+
+  > li {
+    display: inline-block;
+  }
+
+  > li.active > a,
+  > li.disabled > a,
+  > li > a {
+    background: transparent;
+    border-color: @brand-primary;
+  }
+  > li > a {
+    color: @brand-primary;
+  }
+  > li > a:active,
+  > li > a:focus,
+  > li > a:hover {
+    color: lighten(@brand-primary, 15%)!important;
+    background: darken(@brand-primary, 25%)!important;
+    border-color: @brand-primary!important;
+  }
+  > li.disabled > a {
+    color: darken(@brand-primary, 10%);
+  }
+  > li.active > a {
+    color: lighten(@brand-primary, 15%);
+    background: darken(@brand-primary, 25%);
+  }
 }
 
 .jumbotron {

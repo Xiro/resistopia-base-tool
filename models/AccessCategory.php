@@ -55,4 +55,15 @@ class AccessCategory extends ActiveRecord
     {
         return $this->hasMany(AccessBit::className(), ['access_category_id' => 'id']);
     }
+
+    public function getAccessBitsCheckboxList()
+    {
+        $accessBits = $this->getAccessBits()->asArray()->all();
+        $checkboxList = array_combine(
+            array_column($accessBits, "bit_pos"),
+            array_column($accessBits, "name")
+        );
+        return $checkboxList;
+    }
+
 }

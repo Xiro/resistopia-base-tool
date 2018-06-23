@@ -17,7 +17,6 @@ use yii\db\ActiveRecord;
  *
  * @property AccessCategory $accessCategory
  * @property AccessSecurityArea[] $accessSecurityAreas
- * @property StaffFileMemo[] $staffFileMemos
  */
 class AccessBit extends ActiveRecord
 {
@@ -59,6 +58,19 @@ class AccessBit extends ActiveRecord
         ];
     }
 
+    public function isInKey($accessKey)
+    {
+//        echo '<pre>';
+//        echo print_r(array(
+//            decbin($accessKey),
+//            $this->bit_pos,
+//            1 << $this->bit_pos - 1,
+//        ));
+//        echo '</pre>';
+//        exit;
+        return (bool) ($accessKey & (1 << $this->bit_pos - 1));
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -75,11 +87,4 @@ class AccessBit extends ActiveRecord
         return $this->hasMany(AccessSecurityArea::className(), ['access_bit_pos' => 'bit_pos']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStaffFileMemos()
-    {
-        return $this->hasMany(StaffFileMemo::className(), ['access_bit_id' => 'bit_pos']);
-    }
 }

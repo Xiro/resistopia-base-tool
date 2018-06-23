@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a(
                 "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Access Bit',
                 ["create"],
-                ["class" => "btn btn-success"]
+                ["class" => "btn btn-default"]
             ); ?>
             </span>
         </h1>

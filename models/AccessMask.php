@@ -10,11 +10,9 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property string $name
- * @property string $key
  * @property string $access_key
- * @property integer $read_only
+ * @property integer $protected
  *
- * @property AccessKeyMask[] $accessKeyMasks
  * @property BaseCategory[] $baseCategories
  * @property Rank[] $ranks
  */
@@ -35,10 +33,8 @@ class AccessMask extends ActiveRecord
     {
         return [
             [['name', 'access_key'], 'required'],
-            [['read_only'], 'integer'],
-            [['name', 'key'], 'string', 'max' => 50],
-            [['access_key'], 'string', 'max' => 28],
-            [['key'], 'unique'],
+            [['protected'], 'integer'],
+            [['name'], 'string', 'max' => 50],
         ];
     }
 
@@ -50,18 +46,9 @@ class AccessMask extends ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'key' => 'Key',
             'access_key' => 'Access Key',
-            'read_only' => 'Read Only',
+            'protected' => 'Protected',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAccessKeyMasks()
-    {
-        return $this->hasMany(AccessKeyMask::className(), ['access_mask_id' => 'id']);
     }
 
     /**

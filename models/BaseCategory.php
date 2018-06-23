@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property string $name
  * @property integer $access_mask_id
+ * @property integer $order
  *
  * @property AccessMask $accessMask
  * @property Staff[] $staff
@@ -31,8 +32,8 @@ class BaseCategory extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'access_mask_id'], 'required'],
-            [['access_mask_id'], 'integer'],
+            [['name'], 'required'],
+            [['access_mask_id', 'order'], 'integer'],
             [['name'], 'string', 'max' => 50],
             [['access_mask_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessMask::className(), 'targetAttribute' => ['access_mask_id' => 'id']],
         ];
@@ -47,7 +48,19 @@ class BaseCategory extends ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'access_mask_id' => 'Access Mask ID',
+            'order' => 'Order',
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function delete()
+    {
+        foreach ($this->staff as $staff) {
+            $staff->unlink('baseCategory', $this);
+        }
+        return parent::delete();
     }
 
     /**
