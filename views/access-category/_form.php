@@ -21,9 +21,6 @@ use mate\yii\widgets\ValMap;
         <div class="col-sm-6">
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-sm-6">
-            <?= $form->field($model, 'order')->textInput() ?>
-        </div>
     </div>
 
     <div class="form-group">
@@ -32,6 +29,8 @@ use mate\yii\widgets\ValMap;
             ["class" => $model->isNewRecord ? "btn btn-success" : "btn btn-primary"]
         ) ?>
     </div>
+
+    <?= $form->field($model, 'order')->hiddenInput()->label(false) ?>
 
     <?php ActiveForm::end(); ?>
 

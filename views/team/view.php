@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $this->render("../staff/_table", [
             "dataProvider" => new ActiveDataProvider([
                 'query' => $model->getStaff(),
+                'pagination' => false,
             ]),
             "exclude"      => ["team", "action-delete"]
         ]) ?>

@@ -6,12 +6,14 @@ use app\helpers\Html;
 use mate\yii\widgets\Glyphicon;
 
 $pagination = $dataProvider->pagination;
-$pagination->totalCount = $dataProvider->totalCount;
+if($pagination) {
+    $pagination->totalCount = $dataProvider->totalCount;
+}
 $exclude = !isset($exclude) ? array() : $exclude;
 ?>
-<tbody data-page="<?= $pagination->page + 1 ?>"
-       data-page-size="<?= $pagination->pageSize ?>"
-       data-page-count="<?= $pagination->pageCount ?>">
+<tbody data-page="<?= $pagination ? $pagination->page + 1 : 0 ?>"
+       data-page-size="<?= $pagination ? $pagination->pageSize : 0 ?>"
+       data-page-count="<?= $pagination ? $pagination->pageCount : 0 ?>">
 <?php /** @var $model \app\models\Staff */ ?>
 <?php foreach ($dataProvider->getModels() as $model): ?>
     <tr data-key="<?= $model->rpn ?>">
@@ -69,6 +71,12 @@ $exclude = !isset($exclude) ? array() : $exclude;
                     <?= Html::a(
                         Glyphicon::lock(),
                         ['staff/grant-rights', 'id' => $model->rpn]
+                    ) ?>
+                <?php endif; ?>
+                <?php if (!in_array("action-add-file-memo", $exclude)): ?>
+                    <?= Html::a(
+                        Glyphicon::file(),
+                        ['staff-file-memo/create', 'id' => $model->rpn]
                     ) ?>
                 <?php endif; ?>
                 <?php if (!in_array("action-delete", $exclude)): ?>

@@ -36,6 +36,9 @@ $config = [
         'selectData' => [
             'class' => 'mate\yii\components\SelectData',
             'maps' => [
+                'app\models\Staff' => [
+                    'orderBy' => ['forename'=> 'ASC', 'surname' => 'ASC'],
+                ],
                 'default' => [
                     'from' => 'id',
                     'to' => 'name'

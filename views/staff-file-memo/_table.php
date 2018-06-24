@@ -1,32 +1,32 @@
 <?php
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-use app\models\search\TeamSearch;
+use app\models\search\StaffFileMemoSearch;
 use kartik\select2\Select2;
-use mate\yii\widgets\ValMap;
+use mate\yii\widgets\SelectData;
 use mate\yii\assets\TableSearchAsset;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel TeamSearch */
+/* @var $searchModel StaffFileMemoSearch */
 /* @var $searchUrl string */
 /* @var $exclude array */
 
 $form = null;
 $searchModel = !isset($searchModel) ? null : $searchModel;
-$searchUrl = !isset($searchUrl) ? Url::to(["team/search"]) : $searchUrl;
+$searchUrl = !isset($searchUrl) ? Url::to(["staff-file-memo/search"]) : $searchUrl;
 $exclude = !isset($exclude) ? array() : $exclude;
 
 if ($searchModel) {
     TableSearchAsset::register($this);
     $form = ActiveForm::begin([
-        'id'          => 'team-search-form',
+        'id'          => 'staff-file-memo-search-form',
         "action"      => $searchUrl,
         "options"     => [
             'clientValidation' => false,
             "class"            => "animated-label table-search-form",
             "data"             => [
-                'target-table' => '#team-search-table'
+                'target-table' => '#staff-file-memo-search-table'
             ]
         ],
         "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
@@ -35,16 +35,28 @@ if ($searchModel) {
 }
 ?>
 
-<table class="table table-bordered team-table" id="team-search-table">
+<table class="table table-bordered staff-file-memo-table" id="staff-file-memo-search-table">
     <thead>
     <?php if ($searchModel): ?>
         <?php $excludeSearchParams = []; ?>
         <tr class="animated-label">
             <?php $model = $searchModel ?>
-            <?php if (!in_array("name", $exclude)): ?>
-                <?php $excludeSearchParams[] = "name"; ?>
-                <th class="name">
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?php if (!in_array("title", $exclude)): ?>
+                <?php $excludeSearchParams[] = "title"; ?>
+                <th class="title">
+                    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+                </th>
+            <?php endif; ?>
+            <?php if (!in_array("staff_name", $exclude)): ?>
+                <?php $excludeSearchParams[] = "staff_name"; ?>
+                <th class="staff">
+                    <?= $form->field($model, 'staff_name')->textInput(['maxlength' => true])->label('Staff') ?>
+                </th>
+            <?php endif; ?>
+            <?php if (!in_array("author_name", $exclude)): ?>
+                <?php $excludeSearchParams[] = "author_name"; ?>
+                <th class="author_name">
+                    <?= $form->field($model, 'author_name')->textInput(['maxlength' => true])->label('Author') ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("created", $exclude)): ?>
@@ -76,8 +88,14 @@ if ($searchModel) {
         </tr>
     <?php else: ?>
         <tr>
-            <?php if (!in_array("name", $exclude)): ?>
-                <th class="name"><?= 'Name' ?></th>
+            <?php if (!in_array("title", $exclude)): ?>
+                <th class="title"><?= 'Title' ?></th>
+            <?php endif; ?>
+            <?php if (!in_array("staff_name", $exclude)): ?>
+                <th class="staff_name"><?= 'Staff' ?></th>
+            <?php endif; ?>
+            <?php if (!in_array("author_name", $exclude)): ?>
+                <th class="author_name"><?= 'Author' ?></th>
             <?php endif; ?>
             <?php if (!in_array("created", $exclude)): ?>
                 <th class="created"><?= 'Created' ?></th>

@@ -2,11 +2,13 @@
 
 use app\helpers\Html;
 use mate\yii\widgets\Glyphicon;
+use yii\data\ActiveDataProvider;
+use app\components\Access;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Staff */
 
-$this->title = $model->getName() . " (" . $model->rpn . ")";
+$this->title = $model->nameWithRpn;
 $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -119,11 +121,26 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php endforeach; ?>
     </div>
 
+    <?php if ($model->getStaffFileMemos()->count() > 0 && Access::to('staff-file-memo/view')): ?>
+        <div class="model-details-section">
+            <h4>File Memos</h4>
+
+            <?= $this->render('../staff-file-memo/_table', [
+                'dataProvider' => new ActiveDataProvider([
+                    'query'      => $model->getStaffFileMemos(),
+                    'pagination' => false,
+                ]),
+                'exclude'      => ['staff_name'],
+            ]) ?>
+        </div>
+    <?php endif; ?>
+
     <?php if ($model->staffBackground): ?>
-        <br><br>
-        <?= $this->render('../staff-background/_details', [
-            'model' => $model->staffBackground
-        ]) ?>
+        <div class="model-details-section">
+            <?= $this->render('../staff-background/_details', [
+                'model' => $model->staffBackground
+            ]) ?>
+        </div>
     <?php endif; ?>
 
 </div>

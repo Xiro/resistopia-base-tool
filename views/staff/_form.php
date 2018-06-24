@@ -210,19 +210,6 @@ use mate\yii\widgets\SelectData;
             $model->isNewRecord ? 'Create' : 'Update',
             ["class" => $model->isNewRecord ? "btn btn-success" : "btn btn-primary"]
         ) ?>
-
-        <?php if (!$model->isNewRecord): ?>
-            <?= Html::a(
-                Html::button(
-                    $model->staffBackground ? 'Update Background' : 'Add Background',
-                    ["class" => $model->isNewRecord ? "btn btn-success" : "btn btn-primary"]
-                ),
-                [
-                    $model->staffBackground ? 'staff-background/update' : 'staff-background/create',
-                    'id' => $model->rpn
-                ]
-            ) ?>
-        <?php endif; ?>
     </div>
 
     <?php ActiveForm::end(); ?>

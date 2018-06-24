@@ -3,7 +3,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use app\models\search\UserSearch;
 use kartik\select2\Select2;
-use mate\yii\widgets\ValMap;
+use mate\yii\widgets\SelectData;
 use mate\yii\assets\TableSearchAsset;
 
 /* @var $this yii\web\View */
@@ -48,8 +48,8 @@ if ($searchModel) {
                         'labelOptions' => ['class' => ($model->rpn ? 'move' : '')]
                     ])->widget(Select2::class, [
                         'showToggleAll' => false,
-                        'data'          => ValMap::model(
-                                 app\models\Staff::class,
+                        'data'          => SelectData::fromModel(
+                                app\models\Staff::class,
                                  'rpn', 
                                  'rpn'
                              ),

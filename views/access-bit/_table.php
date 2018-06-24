@@ -84,8 +84,9 @@ if ($searchModel) {
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th>
-                    <input type="hidden" name="page" value="<?=  $dataProvider->pagination->page ?>">
-                    <input type="hidden" name="per-page" value="<?=  $dataProvider->pagination->pageSize ?>">
+                    <?php $pagination = $dataProvider->pagination; ?>
+                    <input type="hidden" name="page" value="<?=  $pagination ? $pagination->page : 0 ?>">
+                    <input type="hidden" name="per-page" value="<?=  $pagination ? $pagination->pageSize : 0 ?>">
                     <?php
                     $hiddenAttributes = $searchModel->getAttributes(null, $excludeSearchParams);
                     foreach ($hiddenAttributes as $name => $value) {

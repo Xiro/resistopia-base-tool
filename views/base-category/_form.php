@@ -3,7 +3,7 @@
 use app\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\select2\Select2;
-use mate\yii\widgets\ValMap;
+use mate\yii\widgets\SelectData;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\BaseCategory */
@@ -26,11 +26,7 @@ use mate\yii\widgets\ValMap;
                 'labelOptions' => ['class' => ($model->access_mask_id ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => ValMap::model(
-                         app\models\AccessMask::class,
-                         'id', 
-                         'name'
-                     ),
+                'data'          => SelectData::fromModel(app\models\AccessMask::class),
                 'options'       => [
                     'placeholder' => '',
                 ],

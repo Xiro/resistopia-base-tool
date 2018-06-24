@@ -13,6 +13,7 @@ use yii\db\ActiveRecord;
  * @property string $surname
  * @property string $nickname
  * @property string $name
+ * @property string $nameWithRpn
  * @property string $gender
  * @property string $date_of_birth
  * @property string $profession
@@ -51,7 +52,6 @@ use yii\db\ActiveRecord;
  * @property Team $team
  * @property StaffBackground $staffBackground
  * @property StaffFileMemo[] $staffFileMemos
- * @property StaffFileMemo[] $staffFileMemos0
  * @property User[] $users
  */
 class Staff extends ActiveRecord
@@ -128,6 +128,10 @@ class Staff extends ActiveRecord
         return $this->forename . ' ' . ($this->nickname ? '"' . $this->nickname . '" ' : '') . $this->surname;
     }
 
+    public function getNameWithRpn()
+    {
+        return $this->name . ' (' . $this->rpn . ')';
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -263,14 +267,6 @@ class Staff extends ActiveRecord
     public function getStaffFileMemos()
     {
         return $this->hasMany(StaffFileMemo::className(), ['rpn' => 'rpn']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStaffFileMemos0()
-    {
-        return $this->hasMany(StaffFileMemo::className(), ['author_rpn' => 'rpn']);
     }
 
     /**

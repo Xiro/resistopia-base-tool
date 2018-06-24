@@ -3,14 +3,14 @@
 use app\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\select2\Select2;
-use mate\yii\widgets\SelectData;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Rank */
+/* @var $model app\models\StaffFileMemo */
 /* @var $form yii\bootstrap\ActiveForm */
 ?>
 
-<div class="rank-form">
+<div class="staff-file-memo-form">
 
     <?php $form = ActiveForm::begin([
         "options"     => ["class" => "animated-label"],
@@ -19,27 +19,31 @@ use mate\yii\widgets\SelectData;
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'short_name')->textInput(['maxlength' => true]) ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <?= $form->field($model, 'access_mask_id', [
-                'labelOptions' => ['class' => ($model->access_mask_id ? 'move' : '')]
+            <?= $form->field($model, 'access_bit_id', [
+                'labelOptions' => ['class' => ($model->access_bit_id ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\AccessMask::class),
+                'data'          => ArrayHelper::map(
+                    app\models\AccessBit::find()->where(['like', 'key', 'security-level/%', false])->all(),
+                    'bit_pos',
+                    'name'
+                ),
                 'options'       => [
                     'placeholder' => '',
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label('Access Mask') ?>
+            ])->label('Required Security Level') ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <?= $form->field($model, 'file_memo')->textarea(['rows' => 12]) ?>
         </div>
     </div>
 
@@ -49,8 +53,6 @@ use mate\yii\widgets\SelectData;
             ["class" => $model->isNewRecord ? "btn btn-success" : "btn btn-primary"]
         ) ?>
     </div>
-
-    <?= $form->field($model, 'order')->hiddenInput()->label(false) ?>
 
     <?php ActiveForm::end(); ?>
 

@@ -18,6 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <span class="heading-btn-group pull-right">
             <?= Html::a(
+                'File Memos',
+                ["staff-file-memo/index"],
+                ["class" => "btn btn-default"]
+            ); ?>
+            <?= Html::a(
                 "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Staff',
                 ["create"],
                 ["class" => "btn btn-default"]
