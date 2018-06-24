@@ -4,15 +4,15 @@ use app\helpers\Html;
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Resistopia CIC Tool';
 ?>
 <div class="site-index">
 
     <div class="jumbotron text-center">
-        <h1>Resistopia CIC Tool</h1>
+        <h1><?= $this->title ?></h1>
 
         <p class="lead">This is the test version of the CIC tool</p>
-        <p class="lead">Contact a developer to get a login</p>
+        <p class="lead">Feel free to go nuts</p>
     </div>
 
 </div>

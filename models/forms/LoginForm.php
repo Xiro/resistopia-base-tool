@@ -31,6 +31,7 @@ class LoginForm extends Model
             [['rpn', 'password'], 'required'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+            ['rpn', 'validateApproval'],
         ];
     }
 
@@ -47,7 +48,18 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Incorrect RPN or password.');
+            }
+        }
+    }
+
+    public function validateApproval($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+
+            $user = $this->getUser();
+            if($user && !$user->approved) {
+                $this->addError($attribute, 'Unapproved account. Please contact the CIC.');
             }
         }
     }

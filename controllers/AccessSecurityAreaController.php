@@ -2,21 +2,18 @@
 
 namespace app\controllers;
 
-use app\components\AccessRule;
-use app\models\forms\LoginForm;
 use Yii;
-use app\models\User;
-use app\models\forms\UserForm;
-use app\models\search\UserSearch;
+use app\models\AccessSecurityArea;
+use app\models\search\AccessSecurityAreaSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * AccessSecurityAreaController implements the CRUD actions for AccessSecurityArea model.
  */
-class UserController extends Controller
+class AccessSecurityAreaController extends Controller
 {
     /**
      * @inheritdoc
@@ -26,23 +23,10 @@ class UserController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'ruleConfig' => [
-                    'class' => AccessRule::class
-                ],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['login', 'request'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['§'],
                     ],
                 ],
             ],
@@ -56,83 +40,12 @@ class UserController extends Controller
     }
 
     /**
-     * Login action.
-     *
-     * @return string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $this->layout = 'login';
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goHome();
-        }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * @return \yii\web\Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->redirect(['login']);
-    }
-
-    /**
-     * register account and request its approval
-     * @return string|\yii\web\Response
-     */
-    public function actionRequest()
-    {
-        $this->layout = "login";
-        $model = new UserForm();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->addFlash('success', 'Your account has been requested. Please ask for approval at the CIC human resources department.');
-            return $this->redirect(['login']);
-        }
-
-        return $this->render('request', ["model" => $model]);
-    }
-
-    public function actionApprove($id = null)
-    {
-        if($id && ($user = $this->findModel($id))) {
-            $user->approved = 1;
-            if($user->save()) {
-                Yii::$app->session->addFlash('success', 'User was approved and should now be able to log in.');
-            } else {
-                Yii::$app->session->addFlash('danger', "Error approving the user");
-            }
-        }
-
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['approved' => 0]);
-        $dataProvider->setPagination(false);
-
-        return $this->render('index', [
-            'searchModel' => null,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Lists all User models.
+     * Lists all AccessSecurityArea models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
+        $searchModel = new AccessSecurityAreaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -147,7 +60,7 @@ class UserController extends Controller
      */
     public function actionSearch()
     {
-        $searchModel = new UserSearch();
+        $searchModel = new AccessSecurityAreaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderPartial('_table-body', [
@@ -156,7 +69,7 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a single User model.
+     * Displays a single AccessSecurityArea model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -168,14 +81,13 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new AccessSecurityArea model.
      * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new UserForm();
-        $model->approved = 1;
+        $model = new AccessSecurityArea();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -185,7 +97,7 @@ class UserController extends Controller
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing AccessSecurityArea model.
      * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -193,10 +105,7 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = UserForm::findOne($id);
-        if ($model === null) {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -220,7 +129,7 @@ class UserController extends Controller
     }
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing AccessSecurityArea model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -234,15 +143,15 @@ class UserController extends Controller
     }
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the AccessSecurityArea model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
+     * @return AccessSecurityArea the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = AccessSecurityArea::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -1,16 +1,16 @@
 <?php
 
-use app\helpers\Html;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel app\models\search\UserSearch */
+/* @var $searchModel app\models\search\AccessSecurityAreaSearch */
 
-$this->title = 'Users';
+$this->title = 'Access Security Areas';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="user-index">
+<div class="access-security-area-index">
     <div class="container">
 
         <h1>
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <span class="heading-btn-group pull-right">
             <?= Html::a(
-                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create User',
+                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Access Security Area',
                 ["create"],
                 ["class" => "btn btn-default"]
             ); ?>

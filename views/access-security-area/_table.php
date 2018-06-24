@@ -1,32 +1,32 @@
 <?php
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-use app\models\search\UserSearch;
+use app\models\search\AccessSecurityAreaSearch;
 use kartik\select2\Select2;
 use mate\yii\widgets\SelectData;
 use mate\yii\assets\TableSearchAsset;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel UserSearch */
+/* @var $searchModel AccessSecurityAreaSearch */
 /* @var $searchUrl string */
 /* @var $exclude array */
 
 $form = null;
 $searchModel = !isset($searchModel) ? null : $searchModel;
-$searchUrl = !isset($searchUrl) ? Url::to(["user/search"]) : $searchUrl;
+$searchUrl = !isset($searchUrl) ? Url::to(["access-security-area/search"]) : $searchUrl;
 $exclude = !isset($exclude) ? array() : $exclude;
 
 if ($searchModel) {
     TableSearchAsset::register($this);
     $form = ActiveForm::begin([
-        'id'          => 'user-search-form',
+        'id'          => 'access-security-area-search-form',
         "action"      => $searchUrl,
         "options"     => [
             'clientValidation' => false,
             "class"            => "animated-label table-search-form",
             "data"             => [
-                'target-table' => '#user-search-table'
+                'target-table' => '#access-security-area-search-table'
             ]
         ],
         "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
@@ -35,23 +35,29 @@ if ($searchModel) {
 }
 ?>
 
-<table class="table table-bordered user-table" id="user-search-table">
+<table class="table table-bordered access-security-area-table" id="access-security-area-search-table">
     <thead>
     <?php if ($searchModel): ?>
         <?php $excludeSearchParams = []; ?>
         <tr class="animated-label">
             <?php $model = $searchModel ?>
-            <?php if (!in_array("rpn", $exclude)): ?>
-                <?php $excludeSearchParams[] = "rpn"; ?>
-                <th class="rpn">
-                    <?= $form->field($model, 'rpn', [
-                        'labelOptions' => ['class' => ($model->rpn ? 'move' : '')]
+            <?php if (!in_array("name", $exclude)): ?>
+                <?php $excludeSearchParams[] = "name"; ?>
+                <th class="name">
+                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                </th>
+            <?php endif; ?>
+            <?php if (!in_array("accessBitPos", $exclude)): ?>
+                <?php $excludeSearchParams[] = "access_bit_pos"; ?>
+                <th class="accessBitPos">
+                    <?= $form->field($model, 'access_bit_pos', [
+                        'labelOptions' => ['class' => ($model->access_bit_pos ? 'move' : '')]
                     ])->widget(Select2::class, [
                         'showToggleAll' => false,
                         'data'          => SelectData::fromModel(
-                                app\models\Staff::class,
-                                 'rpn', 
-                                 'rpn'
+                                 app\models\AccessBit::class,
+                                 'bit_pos', 
+                                 'name'
                              ),
                         'options'       => [
                             'placeholder' => '',
@@ -59,19 +65,7 @@ if ($searchModel) {
                         'pluginOptions' => [
                             'allowClear' => true,
                         ],
-                    ])->label('Rpn') ?>
-                </th>
-            <?php endif; ?>
-            <?php if (!in_array("created", $exclude)): ?>
-                <?php $excludeSearchParams[] = "created"; ?>
-                <th class="created">
-                    <?= $form->field($model, 'created')->textInput() ?>
-                </th>
-            <?php endif; ?>
-            <?php if (!in_array("updated", $exclude)): ?>
-                <?php $excludeSearchParams[] = "updated"; ?>
-                <th class="updated">
-                    <?= $form->field($model, 'updated')->textInput() ?>
+                    ])->label('Access Bit Pos') ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
@@ -91,14 +85,11 @@ if ($searchModel) {
         </tr>
     <?php else: ?>
         <tr>
-            <?php if (!in_array("rpn", $exclude)): ?>
-                <th class="rpn"><?= 'Rpn' ?></th>
+            <?php if (!in_array("name", $exclude)): ?>
+                <th class="name"><?= 'Name' ?></th>
             <?php endif; ?>
-            <?php if (!in_array("created", $exclude)): ?>
-                <th class="created"><?= 'Created' ?></th>
-            <?php endif; ?>
-            <?php if (!in_array("updated", $exclude)): ?>
-                <th class="updated"><?= 'Updated' ?></th>
+            <?php if (!in_array("accessBitPos", $exclude)): ?>
+                <th class="accessBitPos"><?= 'Access Bit Pos' ?></th>
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th></th>

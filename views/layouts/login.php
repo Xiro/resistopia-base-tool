@@ -4,8 +4,8 @@
 /* @var $content string */
 
 use app\helpers\Html;
-use yii\helpers\Url;
 use app\assets\AppAsset;
+use mate\yii\widgets\AlertBoxes;
 
 AppAsset::register($this);
 ?>
@@ -21,15 +21,10 @@ AppAsset::register($this);
     <?php $this->head() ?>
 </head>
 <body class="login">
-<?php $this->beginBody() ?>
 
-<!--<div class="container-fluid container-inverse">-->
-<!--    <div class="container text-center">-->
-<!--        <br>-->
-<!--        <img src="--><?//= Url::base() ?><!--/img/logo_inversed.png"><br>-->
-<!--        <br>-->
-<!--    </div>-->
-<!--</div>-->
+<?= AlertBoxes::htmlFromFlashMessages() ?>
+
+<?php $this->beginBody() ?>
 
 <div class="container">
     <?= $content ?>

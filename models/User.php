@@ -15,6 +15,7 @@ use yii\web\IdentityInterface;
  * @property string $password_hash
  * @property string $auth_key
  * @property integer $access_key_id
+ * @property integer $approved;
  * @property string $created
  * @property string $updated
  *
@@ -38,7 +39,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['password_hash', 'auth_key', 'access_key_id'], 'required'],
-            [['access_key_id'], 'integer'],
+            [['access_key_id', 'approved'], 'integer'],
             [['created', 'updated'], 'safe'],
             [['rpn'], 'string', 'max' => 8],
             [['password_hash'], 'string', 'max' => 255],
@@ -61,6 +62,7 @@ class User extends ActiveRecord implements IdentityInterface
             'password_hash' => 'Password Hash',
             'auth_key' => 'Auth Key',
             'access_key_id' => 'Access Key',
+            'approved' => 'Approved',
             'created' => 'Created',
             'updated' => 'Updated',
         ];

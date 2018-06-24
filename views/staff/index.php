@@ -1,6 +1,7 @@
 <?php
 
 use app\helpers\Html;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -17,16 +18,23 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::encode($this->title) ?>
 
             <span class="heading-btn-group pull-right">
-            <?= Html::a(
-                'File Memos',
-                ["staff-file-memo/index"],
-                ["class" => "btn btn-default"]
-            ); ?>
-            <?= Html::a(
-                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Staff',
-                ["create"],
-                ["class" => "btn btn-default"]
-            ); ?>
+                <?php if (User::find()->where(['approved' => 0])->count()): ?>
+                    <?= Html::a(
+                        'Approve Users',
+                        ["user/approve"],
+                        ["class" => "btn btn-default"]
+                    ); ?>
+                <?php endif; ?>
+                <?= Html::a(
+                    'File Memos',
+                    ["staff-file-memo/index"],
+                    ["class" => "btn btn-default"]
+                ); ?>
+                <?= Html::a(
+                    "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Staff',
+                    ["create"],
+                    ["class" => "btn btn-default"]
+                ); ?>
             </span>
         </h1>
 

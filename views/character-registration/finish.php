@@ -15,7 +15,7 @@ $this->title = 'Your RPN: ' . $model->rpn;
             <h1><?= $this->title ?></h1>
 
             <p class="text-large">
-                <b>Important!</b><br> Remember your RPN, you will need it during the event or if you want to make any more changes before the event.<br>
+                <b>Important!</b><br> Remember your RPN <?= $model->rpn ?>, you will need it during the event or if you want to make more changes before the event.<br>
                 If you want to change any information during the event, visit the CIC.
             </p>
 
@@ -35,5 +35,4 @@ $this->title = 'Your RPN: ' . $model->rpn;
         </div>
     </div>
 
-</div>
 </div>

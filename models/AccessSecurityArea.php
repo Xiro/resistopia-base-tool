@@ -45,7 +45,7 @@ class AccessSecurityArea extends ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'access_bit_pos' => 'Access Bit Pos',
+            'access_bit_pos' => 'Access Right',
         ];
     }
 
