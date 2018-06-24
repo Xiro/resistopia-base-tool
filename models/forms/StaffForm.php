@@ -68,12 +68,13 @@ class StaffForm extends Staff
             $this->access_key_id = $accessKey->id;
         }
 
-        if(!$this->validate()) {
-            return false;
-        }
         $this->updateToOne('team');
         $this->updateToOne('company');
         $this->updateToOne('citizenship');
+
+        if(!$this->validate()) {
+            return false;
+        }
 
         $this->date_of_birth = implode("-", array_reverse(explode(".", $this->date_of_birth)));
 

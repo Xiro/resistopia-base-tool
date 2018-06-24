@@ -18,20 +18,12 @@ function ucfirst(string) {
  * FLASH MESSAGES
  *****************/
 
+$.fn.alertBox.options.theme = 'black';
+$.fn.alertBox.options.enableHeading = false;
+
 function addMessage(data) {
     $('body').alertBox(data);
 }
-
-$(document).ready(function () {
-    $.fn.alertBox.options.theme = 'black';
-    $.fn.alertBox.options.enableHeading = false;
-
-    // close initially loaded flash messages
-    var messagesData = $("#flash-messages").data("messages");
-    $.each(messagesData, function () {
-        addMessage(this);
-    });
-});
 
 var contentSetupFunctions = [];
 

@@ -10,6 +10,7 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\components\AccessRule;
 use app\components\Access;
+use mate\yii\widgets\AlertBoxes;
 
 $isAjax = Yii::$app->request->isAjax;
 AppAsset::register($this);
@@ -23,26 +24,13 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans|Orbitron" rel="stylesheet">
     <?php $this->head() ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
 
-<?php
-$flashMessages = [];
-foreach (Yii::$app->session->getAllFlashes() as $status => $data) {
-    $data = (array)$data;
-    foreach ($data as $message) {
-        $flashMessages[] = [
-            "status"  => $status,
-            "message" => $message
-        ];
-    }
-}
-?>
-<div id="flash-messages" data-messages='<?= json_encode($flashMessages) ?>'>
-</div>
+
+<?= AlertBoxes::htmlFromFlashMessages() ?>
 
 <div class="wrap">
     <?php
