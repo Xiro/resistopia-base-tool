@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
             Glyphicon::eye_open(),
             ["team/view", "id" => $model->team_id],
             ["class" => "ajax-dialog", "data-size" => "lg"]
-        ) . '</span>': "None";
+        ) . '</span>' : "None";
     $affiliations["Category"] = $model->base_category_id ? $model->baseCategory->name : "n/a";
     $affiliations["Company"] = $model->company_id ? $model->company->name : "n/a";
 
@@ -118,5 +118,12 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         <?php endforeach; ?>
     </div>
+
+    <?php if ($model->staffBackground): ?>
+        <br><br>
+        <?= $this->render('../staff-background/_details', [
+            'model' => $model->staffBackground
+        ]) ?>
+    <?php endif; ?>
 
 </div>

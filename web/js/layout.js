@@ -18,53 +18,14 @@ function ucfirst(string) {
  * FLASH MESSAGES
  *****************/
 
-var boxCount = 0;
-var alertBoxes = $("#flash-messages");
-
 function addMessage(data) {
-    var type = data.type;
-    if(!type) {
-        type = data.status;
-    }
-    var messageText = data.message;
-    if (!type) {
-        type = "success";
-    }
-
-    // message visibility based on word count
-    // 210 W/m (3.5 W/s) + 2 seconds reaction time and buffer
-    var wordCount = messageText.trim().split(/\s+/).length;
-    var messageVisibilityTime = (wordCount / 3.5 + 2) * 1000;
-
-    // status aliases
-    switch (type) {
-        case "error":
-            type = "danger";break;
-        case "skipped":
-            type = "info";
-    }
-
-    var messageId = 'w4-' + type + '-' + boxCount;
-    var msgHtml = '<div class="alert alert-' + type + '" id="' + messageId + '">';
-    msgHtml += '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>';
-    msgHtml += messageText;
-    msgHtml += '</div>';
-
-    if(alertBoxes.find(".alert").length >= 3) {
-        alertBoxes.find(".alert").last().remove();
-    }
-    alertBoxes.prepend(msgHtml);
-    alertBoxes.find("#" + messageId)
-        .slideDown()
-        .delay(messageVisibilityTime)
-        .slideUp(function () {
-            $(this).remove();
-        })
-    ;
-    boxCount++;
+    $('body').alertBox(data);
 }
 
 $(document).ready(function () {
+    $.fn.alertBox.options.theme = 'black';
+    $.fn.alertBox.options.enableHeading = false;
+
     // close initially loaded flash messages
     var messagesData = $("#flash-messages").data("messages");
     $.each(messagesData, function () {
@@ -119,7 +80,6 @@ $(document).ready(function () {
     $('.mask-date').mask('00.00.0000', {placeholder: 'dd.mm.yyyy'}).addClass('has-content');
 
     // checkbox groups
-
 
     $(".group-control-checkbox").click(function () {
         var groupDiv = $(this).closest(".checkbox-group");

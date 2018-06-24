@@ -123,13 +123,19 @@ h4, h5, h6 {
   .custom-button(@brand-danger)
 }
 
-.alert {
-  background: none;
+.alert-boxes {
+  background: #000!important;
 
-  &.alert-danger {
-    border-color: @alert-danger-text;
+  .alert {
+    background: fade(#000, 90%);
+    color: @brand-primary!important;
+
+    @darken-alert-border: 20%;
+    border: 1px solid @brand-primary!important;
+    border-bottom: 3px solid darken(@brand-primary, @darken-alert-border)!important;
   }
 }
+
 
 .checkbox input[type=checkbox] {
   -webkit-appearance: initial;
@@ -184,50 +190,6 @@ textarea {
 @supports (-ms-ime-align: auto) {
   .checkbox input[type=checkbox] {
     padding: 0;
-  }
-}
-
-#flash-messages {
-  position: fixed;
-  z-index: 3000;
-  width: auto;
-  background: none;
-  max-width: 400px;
-  left: 0;
-  .transition(top ease 0.5s);
-  //top: @navbar-height;
-  padding: @padding-small-vertical @padding-small-horizontal;
-
-  .alert {
-    display: none;
-    margin-bottom: @padding-small-horizontal;
-    background: fade(#000, 95%);
-    color: @text-color;
-
-    @darken-alert-border: 20%;
-
-    &.alert-success {
-      .btn-success;
-    }
-
-    &.alert-info {
-      .btn-info;
-    }
-
-    &.alert-warning {
-      .btn-warning;
-    }
-
-    &.alert-danger {
-      .btn-danger;
-    }
-
-    button {
-      position: relative;
-      top: -3px;
-      margin-left: 15px;
-      color: lighten(@text-color, 20%);
-    }
   }
 }
 

@@ -10,6 +10,7 @@ namespace app\assets;
 use app\assets\plugins\AnimatedLabelFormAsset;
 use app\assets\plugins\DialogAsset;
 use app\assets\plugins\FontAwesomeAsset;
+use mate\yii\assets\AlertBoxesAsset;
 use mate\yii\assets\JQueryMaskAsset;
 use yii\bootstrap\BootstrapAsset;
 use yii\bootstrap\BootstrapPluginAsset;
@@ -37,6 +38,7 @@ class AppAsset extends AssetBundle
         FontAwesomeAsset::class,
         AnimatedLabelFormAsset::class,
         DialogAsset::class,
+        AlertBoxesAsset::class,
         JQueryMaskAsset::class,
     ];
 }

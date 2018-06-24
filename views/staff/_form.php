@@ -40,7 +40,7 @@ use mate\yii\widgets\SelectData;
                 'labelOptions' => ['class' => ($model->gender ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => [ 'm' => 'Male', 'f' => 'Female', ],
+                'data'          => ['m' => 'Male', 'f' => 'Female',],
                 'options'       => [
                     'placeholder' => '',
                 ],
@@ -54,8 +54,8 @@ use mate\yii\widgets\SelectData;
     <div class="row">
         <div class="col-sm-6">
             <?= $form->field($model, 'date_of_birth')->textInput([
-                    'class' => 'form-control mask-date ',
-                    'autocomplete' => 'off'
+                'class'        => 'form-control mask-date ',
+                'autocomplete' => 'off'
             ]) ?>
         </div>
         <div class="col-sm-6">
@@ -99,7 +99,7 @@ use mate\yii\widgets\SelectData;
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
-                    'tags' => true,
+                    'tags'       => true,
                 ],
             ])->label('Team') ?>
         </div>
@@ -114,7 +114,7 @@ use mate\yii\widgets\SelectData;
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
-                    'tags' => true,
+                    'tags'       => true,
                 ],
             ])->label('Company') ?>
         </div>
@@ -177,7 +177,7 @@ use mate\yii\widgets\SelectData;
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
-                    'tags' => true,
+                    'tags'       => true,
                 ],
             ])->label('Citizenship') ?>
         </div>
@@ -185,7 +185,6 @@ use mate\yii\widgets\SelectData;
 
 
     <h3>System</h3>
-
 
 
     <div class="row">
@@ -211,6 +210,19 @@ use mate\yii\widgets\SelectData;
             $model->isNewRecord ? 'Create' : 'Update',
             ["class" => $model->isNewRecord ? "btn btn-success" : "btn btn-primary"]
         ) ?>
+
+        <?php if (!$model->isNewRecord): ?>
+            <?= Html::a(
+                Html::button(
+                    $model->staffBackground ? 'Update Background' : 'Add Background',
+                    ["class" => $model->isNewRecord ? "btn btn-success" : "btn btn-primary"]
+                ),
+                [
+                    $model->staffBackground ? 'staff-background/update' : 'staff-background/create',
+                    'id' => $model->rpn
+                ]
+            ) ?>
+        <?php endif; ?>
     </div>
 
     <?php ActiveForm::end(); ?>
