@@ -105,7 +105,7 @@ class StaffFileMemoController extends Controller
         $model->author_rpn = AccessRule::activeStaff()->rpn;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->goBack(['index']);
         }
 
         return $this->render('create', ["model" => $model]);
@@ -129,7 +129,7 @@ class StaffFileMemoController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->goBack(['index']);
         }
 
         return $this->render('update', ["model" => $model]);

@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Html;
+use app\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\select2\Select2;
 use mate\yii\widgets\SelectData;

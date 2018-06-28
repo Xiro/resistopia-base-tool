@@ -20,7 +20,7 @@ use mate\yii\widgets\ValMap;
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>
 
         <?php if (!$model->protected || $model->isNewRecord): ?>

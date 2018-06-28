@@ -6,7 +6,13 @@ $db = require(__DIR__ . '/db.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'ajaxLayout', 'selectData'],
+    'bootstrap' => ['log', 'ajaxLayout', 'selectData', function() {
+        \Yii::$container->set('yii\bootstrap\ActiveField', [
+            'inputOptions' => [
+                'autocomplete' => 'off'
+            ],
+        ]);
+    }],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -37,7 +43,14 @@ $config = [
             'class' => 'mate\yii\components\SelectData',
             'maps' => [
                 'app\models\Staff' => [
+                    'from' => 'rpn',
+                    'to' => 'nameWithRpn',
                     'orderBy' => ['forename'=> 'ASC', 'surname' => 'ASC'],
+                ],
+                'app\models\MissionStatus' => [
+                    'from' => 'id',
+                    'to' => 'name',
+                    'orderBy' => ['id'=> 'ASC'],
                 ],
                 'default' => [
                     'from' => 'id',

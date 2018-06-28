@@ -23,6 +23,7 @@ use yii\db\ActiveRecord;
  * @property integer $status_be13
  * @property integer $status_alive
  * @property integer $status_in_base
+ * @property bool $isBlocked
  * @property integer $squat_number
  * @property integer $access_key_id
  * @property integer $rank_id
@@ -36,9 +37,9 @@ use yii\db\ActiveRecord;
  * @property string $updated
  *
  * @property Mission[] $missions
- * @property Mission[] $missions0
+ * @property Mission[] $missionLeads
  * @property MissionBlock[] $missionBlocks
- * @property MissionBlock[] $missionBlocks0
+ * @property MissionBlock[] $activeMissionBlocks
  * @property MissionStaff[] $missionStaff
  * @property Mission[] $missions1
  * @property MissionStatusHistory[] $missionStatusHistories
@@ -123,6 +124,63 @@ class Staff extends ActiveRecord
         ];
     }
 
+    /**
+     * @return false|int|void
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     *
+     * @property Mission[] $missions
+     * @property Mission[] $missionLeads
+     * @property MissionBlock[] $missionBlocks
+     * @property MissionBlock[] $activeMissionBlocks
+     * @property MissionStaff[] $missionStaff
+     * @property Mission[] $missions1
+     * @property MissionStatusHistory[] $missionStatusHistories
+     * @property AccessKey $accessKey
+     * @property BaseCategory $baseCategory
+     * @property Citizenship $citizenship
+     * @property Company $company
+     * @property EyeColor $eyeColor
+     * @property Rank $rank
+     * @property SpecialFunction $specialFunction
+     * @property Team $team
+     * @property StaffBackground $staffBackground
+     * @property StaffFileMemo[] $staffFileMemos
+     * @property User[] $users
+     */
+    public function delete()
+    {
+        foreach ($this->missions as $mission) {
+            $this->unlink('missions', $mission, true);
+        }
+        foreach ($this->missionLeads as $missionLead) {
+            $missionLead->unlink('missionLead', $this);
+        }
+        foreach ($this->missionBlocks as $missionBlock) {
+            $missionBlock->delete();
+        }
+        foreach ($this->missionStatusHistories as $missionStatusHistory) {
+            $missionStatusHistory->unlink('author', $this);
+        }
+        foreach ($this->users as $user) {
+            $user->delete();
+        }
+        if($this->staffBackground) {
+            $this->staffBackground->delete();
+        }
+        foreach ($this->staffFileMemos as $staffFileMemo) {
+            $staffFileMemo->delete();
+        }
+        $this->accessKey->delete();
+
+        parent::delete();
+    }
+
+    public function getIsBlocked()
+    {
+        return 0 != $this->getActiveMissionBlocks()->count();
+    }
+
     public function getName()
     {
         return $this->forename . ' ' . ($this->nickname ? '"' . $this->nickname . '" ' : '') . $this->surname;
@@ -136,15 +194,7 @@ class Staff extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMissions()
-    {
-        return $this->hasMany(Mission::className(), ['created_by' => 'rpn']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMissions0()
+    public function getMissionLeads()
     {
         return $this->hasMany(Mission::className(), ['mission_lead_rpn' => 'rpn']);
     }
@@ -154,15 +204,19 @@ class Staff extends ActiveRecord
      */
     public function getMissionBlocks()
     {
-        return $this->hasMany(MissionBlock::className(), ['blocked_staff_member' => 'rpn']);
+        return $this->hasMany(MissionBlock::className(), ['blocked_staff_member_rpn' => 'rpn']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMissionBlocks0()
+    public function getActiveMissionBlocks()
     {
-        return $this->hasMany(MissionBlock::className(), ['blocked_by' => 'rpn']);
+        return $this->getMissionBlocks()->where([
+            'or',
+            ['>=', 'unblock_time', date('c')],
+            ['unblock_time' => null]
+        ]);
     }
 
     /**
@@ -176,7 +230,7 @@ class Staff extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMissions1()
+    public function getMissions()
     {
         return $this->hasMany(Mission::className(), ['id' => 'mission_id'])->viaTable('mission_staff', ['staff_rpn' => 'rpn']);
     }

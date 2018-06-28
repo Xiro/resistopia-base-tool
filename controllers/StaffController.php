@@ -8,6 +8,7 @@ use Yii;
 use app\models\Staff;
 use app\models\forms\StaffForm;
 use app\models\search\StaffSearch;
+use yii\db\ActiveQuery;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -43,6 +44,17 @@ class StaffController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function beforeAction($action)
+    {
+        $referToActions = [
+            'index',
+        ];
+        if (in_array($action->id, $referToActions)) {
+            Yii::$app->user->setReturnUrl(Yii::$app->request->url);
+        }
+        return parent::beforeAction($action);
     }
 
     /**
@@ -91,8 +103,35 @@ class StaffController extends Controller
 
         return $this->renderPartial('_table-form-body', [
             'dataProvider' => $dataProvider,
-            "modelName"   => "TeamForm",
+            "modelName"    => "TeamForm",
             'exclude'      => ['team']
+        ]);
+    }
+
+    /**
+     * (for ajax use) search and render a table form body
+     * @param string $missionId
+     * @return string
+     */
+    public function actionSearchMissionForm($missionId = null)
+    {
+        $searchModel = new StaffSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if ($missionId) {
+            /** @var ActiveQuery $query */
+            $query = $dataProvider->query;
+            $query->joinWith('missions')
+                ->andWhere([
+                    'or',
+                    ['!=', 'mission.id', $missionId],
+                    ['mission.id' => null]
+                ]);
+        }
+
+        return $this->renderPartial('_table-form-body', [
+            'dataProvider' => $dataProvider,
+            "modelName"    => "MissionForm",
+            'exclude'      => ['callsign']
         ]);
     }
 
@@ -163,7 +202,7 @@ class StaffController extends Controller
         $post = Yii::$app->request->post();
         $accessKey->load($post);
         if ($post && $accessKey->save()) {
-            return $this->redirect(['index']);
+            return $this->goBack(['index']);
         }
 
         return $this->render('grant-rights', [

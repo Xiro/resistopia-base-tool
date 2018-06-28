@@ -18,9 +18,9 @@ body {
 
   .navbar-nav > li > a, .navbar-text {
     border-right: 1px solid @brand-primary;
-    border-left: none!important;
+    border-left: none !important;
     &:first-child {
-      border-left: 1px solid @brand-primary!important;
+      border-left: 1px solid @brand-primary !important;
     }
   }
 
@@ -66,10 +66,12 @@ h1, h2, h3, h4, h5, h6 {
     font-family: @font-family-base;
   }
 }
+
 .h1, .h2, .h3,
 h1, h2, h3 {
   margin-bottom: 33px;
 }
+
 .h4, .h5, .h6,
 h4, h5, h6 {
   margin-bottom: 15px;
@@ -87,6 +89,18 @@ hr {
     background: darken(@main-color, 30%);
     color: lighten(@main-color, 10%);
     border-color: lighten(@main-color, 10%);
+  }
+}
+
+.custom-alert(@main-color) {
+  background: darken(@main-color, 30%);
+  border-color: @main-color;
+  color: @main-color;
+  &:hover, &:focus, &:active {
+    background: darken(@main-color, 30%);
+    border-color: @main-color;
+    color: @main-color;
+    cursor: default;
   }
 }
 
@@ -127,19 +141,38 @@ hr {
   .custom-button(@brand-danger)
 }
 
+.alert-success {
+  .custom-button(@brand-success)
+}
+
+.alert-primary {
+  .custom-button(@brand-primary)
+}
+
+.alert-info {
+  .custom-button(@brand-info)
+}
+
+.alert-warning {
+  .custom-button(@brand-warning)
+}
+
+.alert-danger {
+  .custom-button(@brand-danger)
+}
+
 .alert-boxes {
-  background: #000!important;
+  background: #000 !important;
 
   .alert {
     background: fade(#000, 90%);
-    color: @brand-primary!important;
+    color: @brand-primary !important;
 
     @darken-alert-border: 20%;
-    border: 1px solid @brand-primary!important;
-    border-bottom: 3px solid darken(@brand-primary, @darken-alert-border)!important;
+    border: 1px solid @brand-primary !important;
+    border-bottom: 3px solid darken(@brand-primary, @darken-alert-border) !important;
   }
 }
-
 
 .checkbox input[type=checkbox] {
   -webkit-appearance: initial;
@@ -261,9 +294,9 @@ ul.pagination {
   > li > a:active,
   > li > a:focus,
   > li > a:hover {
-    color: lighten(@brand-primary, 15%)!important;
-    background: darken(@brand-primary, 25%)!important;
-    border-color: @brand-primary!important;
+    color: lighten(@brand-primary, 15%) !important;
+    background: darken(@brand-primary, 25%) !important;
+    border-color: @brand-primary !important;
   }
   > li.disabled > a {
     color: darken(@brand-primary, 10%);
@@ -337,6 +370,24 @@ table {
       width: 35px;
       text-align: center;
     }
+    .operation {
+      min-width: 110px;
+    }
+    .mission_type {
+      min-width: 100px;
+    }
+    .mission_status {
+      min-width: 65px;
+    }
+    .time_atf {
+      width: 55px;
+    }
+    .time_lst, .time_ete {
+      width: 135px;
+    }
+    .callsign {
+      max-width: 125px;
+    }
     td.started {
       white-space: nowrap;
     }
@@ -345,6 +396,14 @@ table {
     }
     .call-sign {
       min-width: 50px;
+    }
+  }
+
+  .action-status-buttons {
+    padding: 0 !important;
+    .btn {
+      width: 100%;
+      border: none;
     }
   }
 
@@ -382,6 +441,26 @@ table {
 
 body.layout-blank {
   padding-top: 0;
+}
+
+.btn-auto-reload {
+  margin-right: 12px;
+  font-size: 22px;
+  cursor: pointer;
+  color: darken(@brand-primary, 5%);
+  &.active {
+    color: lighten(@brand-primary, 5%);
+  }
+}
+
+.no-tables {
+  display: flex;
+  align-items: center;
+  height: 300px;
+  height: 50vh;
+  .row {
+    width: 100%;
+  }
 }
 
 .pre-event-select-character {

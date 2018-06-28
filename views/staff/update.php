@@ -15,38 +15,57 @@ $this->params['breadcrumbs'][] = 'Update';
         <h1>
             <?= Html::encode($this->title) ?>
             <span class="heading-btn-group pull-right">
-                <?= Html::a(
-                    Html::button(
-                        'Add File Memo',
-                        ["class" => "btn btn-primary"]
-                    ),
-                    [
-                        'staff-file-memo/create',
-                        'id' => $model->rpn
-                    ]
-                ) ?>
-                <?= Html::a(
-                    Html::button(
-                        'Edit Rights',
-                        ["class" => "btn btn-primary"]
-                    ),
-                    [
-                        'staff/grant-rights',
-                        'id' => $model->rpn
-                    ]
-                ) ?>
-                <?= Html::a(
-                    Html::button(
-                        $model->staffBackground ? 'Update Background' : 'Add Background',
-                        ["class" => "btn btn-primary"]
-                    ),
-                    [
-                        $model->staffBackground ? 'staff-background/update' : 'staff-background/create',
-                        'id' => $model->rpn
-                    ]
-                ) ?>
-            </span>
         </h1>
+        <?= Html::a(
+            Html::button(
+                'Add File Memo',
+                ["class" => "btn btn-default"]
+            ),
+            [
+                'staff-file-memo/create',
+                'id' => $model->rpn
+            ]
+        ) ?>
+        <?= Html::a(
+            Html::button(
+                'Edit Rights',
+                ["class" => "btn btn-default"]
+            ),
+            [
+                'staff/grant-rights',
+                'id' => $model->rpn
+            ]
+        ) ?>
+        <?= Html::a(
+            Html::button(
+                $model->staffBackground ? 'Update Background' : 'Add Background',
+                ["class" => "btn btn-default"]
+            ),
+            [
+                $model->staffBackground ? 'staff-background/update' : 'staff-background/create',
+                'id' => $model->rpn
+            ]
+        ) ?>
+        <?php if ($model->isBlocked): ?>
+            <?= Html::a(
+                Html::button(
+                    'Lift Mission Block',
+                    ["class" => "btn btn-default"]
+                ),
+                ['mission-block/lift', 'id' => $model->rpn],
+                ['title' => 'Lift Mission Block']
+            ) ?>
+        <?php else: ?>
+            <?= Html::a(
+                Html::button(
+                    'Add Mission Block',
+                    ["class" => "btn btn-default"]
+                ),
+                ['mission-block/create', 'id' => $model->rpn],
+                ['title' => 'Add Mission Block']
+            ) ?>
+        <?php endif; ?>
+        </span>
 
         <?= $this->render("_form", [
             "model" => $model,

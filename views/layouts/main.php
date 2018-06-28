@@ -78,7 +78,19 @@ AppAsset::register($this);
 
 //    $navItems[] = ['label' => 'Mission Control', 'url' => ['mission/control']];
 //    $navItems[] = ['label' => 'Mission Calls', 'url' => ['mission-call/index']];
-//    $navItems[] = ['label' => 'Missions', 'url' => ['mission/index']];
+
+    $missionItems = [];
+    Access::addNavItem(['label' => 'Mission Control', 'url' => ['mission/control']], $missionItems);
+    Access::addNavItem(['label' => 'Archive', 'url' => ['mission/archive']], $missionItems);
+    Access::addNavItem(['label' => 'Templates', 'url' => ['mission/templates']], $missionItems);
+    Access::addNavItem(['label' => 'Planned', 'url' => ['mission/planned']], $missionItems);
+    Access::addNavItem(['label' => 'Called', 'url' => ['mission/called']], $missionItems);
+    Access::addNavItem(['label' => 'Active', 'url' => ['mission/active']], $missionItems);
+    Access::addNavItem(['label' => 'Show All', 'url' => ['mission/index']], $missionItems);
+    if(!empty($missionItems)) {
+        $navItems[] = ['label' => 'Missions', 'items' => $missionItems];
+    }
+
     Access::addNavItem(['label' => 'Staff', 'url' => ['staff/index']], $navItems);
     Access::addNavItem(['label' => 'Teams', 'url' => ['team/index']], $navItems);
 

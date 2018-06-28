@@ -66,7 +66,7 @@ class StaffBackgroundController extends Controller
         $model->rpn = $id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['staff/index']);
+            return $this->goBack(['staff/index']);
         }
 
         return $this->render('create', ["model" => $model]);
@@ -84,7 +84,7 @@ class StaffBackgroundController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['staff/index']);
+            return $this->goBack(['staff/index']);
         }
 
         return $this->render('update', ["model" => $model]);

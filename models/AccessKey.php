@@ -41,6 +41,21 @@ class AccessKey extends ActiveRecord
         $this->access_key = (int) $this->access_key;
     }
 
+    public function delete()
+    {
+        foreach ($this->accessMasks as $accessMask) {
+            $this->unlink('accessMasks', $accessMask, true);
+        }
+        foreach ($this->users as $user) {
+            $user->unlink('accessKey', $this);
+        }
+        foreach ($this->staff as $staff) {
+            $staff->unlink('accessKey', $this);
+        }
+
+        parent::delete();
+    }
+
     /**
      * @inheritdoc
      */

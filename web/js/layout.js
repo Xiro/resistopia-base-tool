@@ -70,6 +70,48 @@ $(document).ready(function () {
     // input masks
 
     $('.mask-date').mask('00.00.0000', {placeholder: 'dd.mm.yyyy'}).addClass('has-content');
+    $('.mask-datetime').mask('00.00.0000 00:00', {placeholder: 'dd.mm.yyyy HH:ii'}).addClass('has-content');
+    $('.mask-duration').mask('00:00', {placeholder: 'HH:MM', reverse: true}).addClass('has-content');
+
+    // reload button
+
+    var ContentReloadHandle = new function() {
+        var handle = this;
+        handle.timer = null;
+        handle.target = $('.reload-target');
+        handle.url = location.href;
+
+        handle.start = function () {
+            if(handle.target.length === 0) {
+                console.error('No reload target found');
+            }
+            $.get(handle.url).success(function (html) {
+                handle.target.html(html);
+            });
+            handle.timer = setTimeout(handle.start, 5000);
+        };
+
+        handle.stop = function () {
+            if(handle.timer) {
+                clearTimeout(handle.timer);
+            }
+        };
+    };
+
+    if($('.btn-auto-reload.active').length !== 0) {
+        ContentReloadHandle.start();
+    }
+    $('.btn-auto-reload').click(function () {
+        var btn = $(this);
+
+        if(btn.is('.active')) {
+            btn.removeClass('active');
+            ContentReloadHandle.stop();
+        } else {
+            btn.addClass('active');
+            ContentReloadHandle.start();
+        }
+    });
 
     // checkbox groups
 

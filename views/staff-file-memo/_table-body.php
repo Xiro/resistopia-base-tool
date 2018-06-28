@@ -39,6 +39,11 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?= $model->author ? $model->author->name : "None" ?>
             </td>
         <?php endif; ?>
+        <?php if (!in_array("access_bit", $exclude)): ?>
+            <td class="author_name">
+                <?= $model->access_bit_id ? $model->accessBit->name : "None" ?>
+            </td>
+        <?php endif; ?>
         <?php if (!in_array("created", $exclude)): ?>
             <td class="created">
                 <?= date('d.m.Y H:i:s', strtotime($model->created)) ?>

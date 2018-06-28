@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\AccessRule;
 use Yii;
 use app\models\AccessSecurityArea;
 use app\models\search\AccessSecurityAreaSearch;
@@ -23,10 +24,13 @@ class AccessSecurityAreaController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => AccessRule::class
+                ],
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['§'],
                     ],
                 ],
             ],

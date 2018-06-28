@@ -1,6 +1,7 @@
 <?php
 
 use app\helpers\Html;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -17,11 +18,18 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::encode($this->title) ?>
 
             <span class="heading-btn-group pull-right">
-            <?= Html::a(
-                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create User',
-                ["create"],
-                ["class" => "btn btn-default"]
-            ); ?>
+                <?php if (User::find()->where(['approved' => 0])->count() && Yii::$app->controller->action->id != 'approve'): ?>
+                    <?= Html::a(
+                        'Approve Users',
+                        ["user/approve"],
+                        ["class" => "btn btn-default"]
+                    ); ?>
+                <?php endif; ?>
+                <?= Html::a(
+                    "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create User',
+                    ["create"],
+                    ["class" => "btn btn-default"]
+                ); ?>
             </span>
         </h1>
 

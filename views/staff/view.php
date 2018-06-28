@@ -30,6 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
         </span>
     </h1>
 
+    <?php if ($model->isBlocked): ?>
+        <div class="text-center row">
+            <div class="alert alert-danger col-lg-4 col-lg-offset-4 col-sm-6 col-sm-offset-3">
+                <?= Glyphicon::alert() ?>
+                &nbsp;BLOCKED FROM MISSIONS&nbsp;
+                <?= Glyphicon::alert() ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <h4>Personal Information</h4>
 
     <?php
@@ -120,6 +130,31 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         <?php endforeach; ?>
     </div>
+
+    <?php if ($model->getMissionBlocks()->count() > 0 && Access::to('mission-block/view')): ?>
+        <div class="model-details-section">
+            <h3>
+                Mission Blocks
+                <?php if ($model->isBlocked): ?>
+                <span class="heading-btn-group pull-right">
+                    <?= Html::a(
+                            'Lift Block',
+                            ['mission-block/lift', 'id' => $model->rpn],
+                            ['class' => 'btn btn-default']
+                    ) ?>
+                </span>
+                <?php endif; ?>
+            </h3>
+
+            <?= $this->render('../mission-block/_table', [
+                'dataProvider' => new ActiveDataProvider([
+                    'query'      => $model->getMissionBlocks()->orderBy(['created' => 'ASC']),
+                    'pagination' => false,
+                ]),
+                'exclude'      => ['blocked_staff_member'],
+            ]) ?>
+        </div>
+    <?php endif; ?>
 
     <?php if ($model->getStaffFileMemos()->count() > 0 && Access::to('staff-file-memo/view')): ?>
         <div class="model-details-section">

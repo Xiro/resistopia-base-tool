@@ -24,16 +24,16 @@ use mate\yii\widgets\SelectData;
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'forename')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+            <?= $form->field($model, 'forename')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'surname')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+            <?= $form->field($model, 'surname')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'nickname')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+            <?= $form->field($model, 'nickname')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-sm-6">
             <?= $form->field($model, 'gender', [
@@ -79,7 +79,7 @@ use mate\yii\widgets\SelectData;
             ])->label('Eye Color') ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'profession')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+            <?= $form->field($model, 'profession')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
 
@@ -194,7 +194,7 @@ use mate\yii\widgets\SelectData;
             <?= $form->field($model, 'status_it')->checkbox()->label('Is IT') ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'callsign')->textInput(['maxlength' => true, 'autocomplete' => 'off']) ?>
+            <?= $form->field($model, 'callsign')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
 

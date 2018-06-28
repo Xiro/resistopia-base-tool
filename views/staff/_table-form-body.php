@@ -36,12 +36,14 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?= $staff->team_id ? $staff->team->name : null ?>
             </td>
         <?php endif; ?>
-        <?php if (!in_array("callsign", $exclude)): ?>
-            <td class="callsign">
-                <?= $staff->callsign ?>
-            </td>
-        <?php endif; ?>
         <td class="actions">
+            <?php if (!in_array("action-view", $exclude)): ?>
+                <?= Html::a(
+                    Glyphicon::eye_open(),
+                    ['staff/view', 'id' => $staff->rpn],
+                    ["class" => "ajax-dialog", "data-size" => "lg"]
+                ) ?>
+            <?php endif; ?>
             <?= Glyphicon::arrow_right(["class" => "list-btn add-row"]) ?>
             <?= Glyphicon::remove(["class" => "assigned-btn remove-row"]) ?>
             <?= Html::checkbox("{$modelName}[staffSelect][]", $checked, [

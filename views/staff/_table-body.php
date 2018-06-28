@@ -1,12 +1,13 @@
 <?php
 /* @var $dataProvider \yii\data\ActiveDataProvider */
+
 /* @var $exclude array */
 
 use app\helpers\Html;
 use mate\yii\widgets\Glyphicon;
 
 $pagination = $dataProvider->pagination;
-if($pagination) {
+if ($pagination) {
     $pagination->totalCount = $dataProvider->totalCount;
 }
 $exclude = !isset($exclude) ? array() : $exclude;
@@ -67,17 +68,35 @@ $exclude = !isset($exclude) ? array() : $exclude;
                         ['staff/update', 'id' => $model->rpn]
                     ) ?>
                 <?php endif; ?>
-                <?php if (!in_array("action-grant-rights", $exclude)): ?>
-                    <?= Html::a(
-                        Glyphicon::lock(),
-                        ['staff/grant-rights', 'id' => $model->rpn]
-                    ) ?>
-                <?php endif; ?>
                 <?php if (!in_array("action-add-file-memo", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::file(),
-                        ['staff-file-memo/create', 'id' => $model->rpn]
+                        ['staff-file-memo/create', 'id' => $model->rpn],
+                        ['title' => 'Add File Memo']
                     ) ?>
+                <?php endif; ?>
+                <?php if (!in_array("action-grant-rights", $exclude)): ?>
+                    <?= Html::a(
+                        Glyphicon::lock(),
+                        ['staff/grant-rights', 'id' => $model->rpn],
+                        ['title' => 'Grant Rights']
+                    ) ?>
+                <?php endif; ?>
+                <?php if (!in_array("action-mission-block", $exclude)): ?>
+                    <?php if ($model->isBlocked): ?>
+                        <?= Html::a(
+                            Glyphicon::ok_sign(),
+                            ['mission-block/lift', 'id' => $model->rpn],
+                            ['title' => 'Lift Mission Block']
+                        ) ?>
+                    <?php else: ?>
+                        <?= Html::a(
+                            Glyphicon::ban_circle(),
+                            ['mission-block/create', 'id' => $model->rpn],
+                            ['title' => 'Add Mission Block']
+                        ) ?>
+                    <?php endif; ?>
+
                 <?php endif; ?>
                 <?php if (!in_array("action-delete", $exclude)): ?>
                     <?= Html::a(

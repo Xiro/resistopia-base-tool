@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use mate\yii\components\SelectData;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -59,5 +60,15 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionClearCache()
+    {
+        /** @var SelectData $selectData */
+        $selectData = Yii::$app->selectData;
+        $selectData->clear();
+
+        Yii::$app->session->addFlash('success', 'Cache Cleared');
+        return $this->goBack();
     }
 }
