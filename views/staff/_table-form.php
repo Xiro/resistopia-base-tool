@@ -22,7 +22,7 @@ use app\assets\page\StaffSelectFormAsset;
 
 $searchUrl = !isset($searchUrl) ? Url::to(["staff/search-form"]) : $searchUrl;
 $exclude = !isset($exclude) ? array() : $exclude;
-$modelName = (new ReflectionClass($model))->getShortName();
+$modelName = (new ReflectionClass($staff))->getShortName();
 /** @var \mate\yii\components\SelectData $selectData */
 $selectData = Yii::$app->selectData;
 
@@ -41,24 +41,24 @@ StaffSelectFormAsset::register($this);
             <thead>
                 <?php $excludeSearchParams = []; ?>
                 <tr class="animated-label">
-                    <?php $model = $searchModel ?>
+                    <?php $staff = $searchModel ?>
                     <?php if (!in_array("rpn", $exclude)): ?>
                         <?php $excludeSearchParams[] = "rpn"; ?>
                         <th class="rpn">
-                            <?= $form->field($model, 'rpn')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($staff, 'rpn')->textInput(['maxlength' => true]) ?>
                         </th>
                     <?php endif; ?>
                     <?php if (!in_array("name", $exclude)): ?>
                         <?php $excludeSearchParams[] = "name"; ?>
                         <th class="name">
-                            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($staff, 'name')->textInput(['maxlength' => true]) ?>
                         </th>
                     <?php endif; ?>
                     <?php if (!in_array("team", $exclude)): ?>
                         <?php $excludeSearchParams[] = "team"; ?>
                         <th class="team">
-                            <?= $form->field($model, 'team_id', [
-                                'labelOptions' => ['class' => ($model->team_id ? "move" : "")]
+                            <?= $form->field($staff, 'team_id', [
+                                'labelOptions' => ['class' => ($staff->team_id ? "move" : "")]
                             ])->widget(Select2::class, [
                                 'showToggleAll' => false,
                                 'data'          => $selectData->fromModel(Team::class, null, null),

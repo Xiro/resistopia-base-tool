@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 use app\models\Staff;
+use app\models\StaffBackground;
 use Yii;
 use app\models\forms\StaffForm;
 use yii\filters\AccessControl;
@@ -18,8 +19,8 @@ class CharacterRegistrationController extends Controller
     {
         return [
             'access' => [
-                'class'      => AccessControl::class,
-                'rules'      => [
+                'class' => AccessControl::class,
+                'rules' => [
                     [
                         'allow' => true,
                     ],
@@ -33,14 +34,19 @@ class CharacterRegistrationController extends Controller
         $this->layout = 'blank';
     }
 
+    public function actionIndex()
+    {
+        return $this->redirect(['select']);
+    }
+
     /**
      * @return string|\yii\web\Response
      */
     public function actionSelect()
     {
         $model = new Staff();
-        if($model->load(Yii::$app->request->post())) {
-            if(Staff::findOne($model->rpn)) {
+        if ($model->load(Yii::$app->request->post())) {
+            if (Staff::findOne($model->rpn)) {
                 return $this->redirect(['update', 'id' => $model->rpn]);
             } else {
                 $model->addError('rpn', 'Rpn could not be found');
@@ -56,13 +62,25 @@ class CharacterRegistrationController extends Controller
      */
     public function actionCreate()
     {
-        $model = new StaffForm();
+        $staff = new StaffForm();
+        $background = new StaffBackground();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['finish', 'id' => $model->rpn]);
+        $post = Yii::$app->request->post();
+        if (
+            $background->load($post)
+            && $staff->load($post)
+            && $staff->save()
+        ) {
+            $background->rpn = $staff->rpn;
+            if ($background->save()) {
+                return $this->redirect(['finish', 'id' => $staff->rpn]);
+            }
         }
 
-        return $this->render('create', ["model" => $model]);
+        return $this->render('create', [
+            "staff"      => $staff,
+            "background" => $background
+        ]);
     }
 
     /**
@@ -71,13 +89,25 @@ class CharacterRegistrationController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = StaffForm::findOne($id);
+        $staff = StaffForm::findOne($id);
+        $background = $staff->staffBackground ? $staff->staffBackground : new StaffBackground();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['finish', 'id' => $model->rpn]);
+        $post = Yii::$app->request->post();
+        if (
+            $background->load($post)
+            && $staff->load($post)
+            && $staff->save()
+        ) {
+            $background->rpn = $staff->rpn;
+            if ($background->save()) {
+                return $this->redirect(['finish', 'id' => $staff->rpn]);
+            }
         }
 
-        return $this->render('update', ["model" => $model]);
+        return $this->render('update', [
+            "staff"      => $staff,
+            "background" => $background,
+        ]);
     }
 
     /**
