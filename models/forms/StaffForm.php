@@ -3,8 +3,10 @@
 namespace app\models\forms;
 
 use app\models\AccessKey;
+use app\models\AccessMask;
 use app\models\Staff;
 use mate\yii\models\form\UpdateDynamicToOneTrait;
+use yii\helpers\ArrayHelper;
 
 /**
  * StaffForm represents the form for the model `app\models\Staff`.
@@ -18,6 +20,7 @@ class StaffForm extends Staff
     public $status_be13 = true;
     public $status_it = true;
     public $status_in_base = true;
+    public $accessMasks = [];
 
     /**
      * {@inheritdoc}
@@ -25,6 +28,7 @@ class StaffForm extends Staff
     public function rules()
     {
         return array_merge(parent::rules(), [
+            [['accessMasks'], 'safe'],
             [['date_of_birth'], 'validateDate'],
         ]);
     }
@@ -39,6 +43,12 @@ class StaffForm extends Staff
     public function afterFind()
     {
         $this->date_of_birth = date('d.m.Y', strtotime($this->date_of_birth));
+
+        $existingMasks = $this->accessKey->accessMasks;
+        $existingMaskIds = ArrayHelper::getColumn($existingMasks, "id");
+        $impliedMasks = $this->getImpliedAccessMasks();
+        $impliedMaskIds = ArrayHelper::getColumn($impliedMasks, 'id');
+        $this->accessMasks = array_diff($existingMaskIds, $impliedMaskIds);
     }
 
     public function createRpn()
@@ -52,6 +62,18 @@ class StaffForm extends Staff
             $alreadyExists = 0 < self::find()->where(["rpn" => $rpn])->count();
         } while ($alreadyExists);
         return $rpn;
+    }
+
+    protected function getImpliedAccessMasks()
+    {
+        $accessMasks = [];
+        if ($this->base_category_id && $this->baseCategory->accessMask) {
+            $accessMasks[] = $this->baseCategory->accessMask;
+        }
+        if ($this->rank_id && $this->rank->accessMask) {
+            $accessMasks[] = $this->rank->accessMask;
+        }
+        return $accessMasks;
     }
 
     /**
@@ -78,12 +100,9 @@ class StaffForm extends Staff
 
         $this->date_of_birth = implode("-", array_reverse(explode(".", $this->date_of_birth)));
 
-        $accessMasks = [];
-        if ($this->base_category_id && $this->baseCategory->accessMask) {
-            $accessMasks[] = $this->baseCategory->accessMask;
-        }
-        if ($this->rank_id && $this->rank->accessMask) {
-            $accessMasks[] = $this->rank->accessMask;
+        $accessMasks = $this->getImpliedAccessMasks();
+        foreach ($this->accessMasks as $accessMaskId) {
+            $accessMasks[] = AccessMask::findOne($accessMaskId);
         }
         $this->accessKey->changeAccessMasks($accessMasks);
 

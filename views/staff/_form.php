@@ -195,13 +195,24 @@ use mate\yii\widgets\SelectData;
         </div>
         <div class="col-sm-6">
             <?= $form->field($model, 'callsign')->textInput(['maxlength' => true]) ?>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-sm-6">
-        </div>
-        <div class="col-sm-6">
+            <?php if (\app\components\Access::to('staff/grant-rights')): ?>
+                <?= $form->field($model, 'accessMasks', [
+                    'labelOptions' => ['class' => ($model->accessMasks ? 'move' : '')]
+                ])->widget(Select2::class, [
+                    'showToggleAll' => false,
+                    'data'          => SelectData::fromModel(app\models\AccessMask::class),
+                    'options'       => [
+                        'placeholder' => '',
+                    ],
+                    'pluginOptions' => [
+                        'allowClear'    => true,
+                        'tags'          => true,
+                        'multiple'      => true,
+                        'closeOnSelect' => false,
+                    ],
+                ])->label('Access Masks') ?>
+            <?php endif; ?>
         </div>
     </div>
 

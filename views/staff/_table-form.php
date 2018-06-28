@@ -22,7 +22,7 @@ use app\assets\page\StaffSelectFormAsset;
 
 $searchUrl = !isset($searchUrl) ? Url::to(["staff/search-form"]) : $searchUrl;
 $exclude = !isset($exclude) ? array() : $exclude;
-$modelName = (new ReflectionClass($staff))->getShortName();
+$modelName = (new ReflectionClass(new \app\models\Staff()))->getShortName();
 /** @var \mate\yii\components\SelectData $selectData */
 $selectData = Yii::$app->selectData;
 
