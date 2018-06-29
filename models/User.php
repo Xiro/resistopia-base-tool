@@ -16,6 +16,7 @@ use yii\web\IdentityInterface;
  * @property string $auth_key
  * @property integer $access_key_id
  * @property integer $approved;
+ * @property integer $is_admin
  * @property string $created
  * @property string $updated
  *

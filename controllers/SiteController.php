@@ -61,27 +61,32 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $crud = [
-//            'Missions' => 'mission',
-        ];
-        $crudNames = ['view', 'create', 'update', 'delete'];
-        foreach ($crud as $categoryName => $controller) {
-            $category = new AccessCategory();
-            $category->name = $categoryName;
-            $category->order = AccessCategory::find()->count() + 1;
-            $category->save();
-
-            $bitOrder = AccessRight::find()->count();
-            foreach ($crudNames as $crudName) {
-                $bitOrder++;
-                $bit = new AccessRight();
-                $bit->key = $controller . '/' . $crudName;
-                $bit->name = ucfirst($crudName) . ' ' . ucfirst($controller);
-                $bit->order = $bitOrder;
-                $bit->access_category_id = $category->id;
-                $bit->save();
-            }
-        }
+//        $crud = [
+//        ];
+//        $crudNames = ['view', 'create', 'update', 'delete'];
+//        foreach ($crud as $categoryName => $controller) {
+//            $category = new AccessCategory();
+//            $category->name = $categoryName;
+//            $category->order = AccessCategory::find()->count() + 1;
+//            $category->save();
+//
+//            $controllerParts = explode("-", $controller);
+//            foreach ($controllerParts as $key => $controllerPart) {
+//                $controllerParts[$key] = ucfirst($controllerPart);
+//            }
+//            $controllerName = implode(' ', $controllerParts);
+//
+//            $bitOrder = AccessRight::find()->count();
+//            foreach ($crudNames as $crudName) {
+//                $bitOrder++;
+//                $bit = new AccessRight();
+//                $bit->key = $controller . '/' . $crudName;
+//                $bit->name = ucfirst($crudName) . ' ' . ucfirst($controllerName);
+//                $bit->order = $bitOrder;
+//                $bit->access_category_id = $category->id;
+//                $bit->save();
+//            }
+//        }
         return $this->render('index');
     }
 

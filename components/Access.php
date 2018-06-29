@@ -44,6 +44,10 @@ class Access extends Component
             return $allowGuest;
         }
 
+        if($user->is_admin == 1) {
+            return true;
+        }
+
         $keyParts = explode("/", $key);
         if(isset($keyParts[1]) && isset(self::$actionAliases[$keyParts[1]])) {
             $keyParts[1] = self::$actionAliases[$keyParts[1]];

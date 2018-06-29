@@ -3,6 +3,7 @@
 use app\helpers\Html;
 use app\models\AccessCategory;
 use app\models\AccessRight;
+use app\components\Access;
 
 /* @var $this yii\web\View */
 /* @var $form \yii\bootstrap\ActiveForm */
@@ -23,9 +24,18 @@ $accessCategories = AccessCategory::find()->orderBy('order')->all();
         $checkboxName = $reflect->getShortName() . "[$rightsField][]";
         $colCount = 0;
         ?>
-        <?php foreach ($accessCategories
-
-        as $accessCategory): ?>
+        <?php foreach ($accessCategories as $accessCategory): ?>
+        <?php
+        $accessOptions = [];
+        foreach ($accessCategory->accessRights as $accessRight) {
+            if (Access::to($accessRight->key)) {
+                $accessOptions[] = $accessRight;
+            }
+        }
+        if (count($accessOptions) === 0) {
+            continue;
+        }
+        ?>
         <?php if ($colCount === 3): ?>
     </div>
     <div class="row">
@@ -42,7 +52,7 @@ $accessCategories = AccessCategory::find()->orderBy('order')->all();
                 </h3>
             </div>
             <div class="form-group">
-                <?php foreach ($accessCategory->accessRights as $accessRight): ?>
+                <?php foreach ($accessOptions as $accessRight): ?>
                     <div class="checkbox">
                         <label>
                             <input type="checkbox"
