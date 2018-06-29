@@ -2,6 +2,7 @@
 
 namespace app\components;
 
+use app\models\AccessKey;
 use app\models\AccessRight;
 use mate\yii\widgets\SelectData;
 use yii\base\Component;
@@ -25,9 +26,9 @@ class Access extends Component
      */
     public static function to($key, $default = true, $allowGuest = false)
     {
-        static $bits = false;
-        if ($bits === false) {
-            $bits = SelectData::fromModel(
+        static $rights = false;
+        if ($rights === false) {
+            $rights = SelectData::fromModel(
                 AccessRight::class,
                 "key",
                 "id"
@@ -49,12 +50,12 @@ class Access extends Component
             $key = implode('/', $keyParts);
         }
 
-        if (!isset($bits[$key])) {
+        if (!isset($rights[$key])) {
             return $default;
         }
 
-        $accessKey = $user->accessKey->access_key;
-        return (bool)((1 << $bits[$key] - 1) & $accessKey);
+        $accessList = AccessKey::findAccessList($user->access_key_id);
+        return isset($accessList[$key]);
     }
 
     /**

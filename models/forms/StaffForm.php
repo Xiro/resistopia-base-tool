@@ -85,7 +85,6 @@ class StaffForm extends Staff
             $this->rpn = $this->createRpn();
 
             $accessKey = new AccessKey();
-            $accessKey->access_key = 0;
             $accessKey->save();
             $this->access_key_id = $accessKey->id;
         }

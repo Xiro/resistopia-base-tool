@@ -87,10 +87,7 @@ class SiteController extends Controller
 
     public function actionClearCache()
     {
-        /** @var SelectData $selectData */
-        $selectData = Yii::$app->selectData;
-        $selectData->clear();
-
+        Yii::$app->cache->flush();
         Yii::$app->session->addFlash('success', 'Cache Cleared');
         return $this->goBack();
     }

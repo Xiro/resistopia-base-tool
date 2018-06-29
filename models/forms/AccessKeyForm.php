@@ -3,11 +3,15 @@
 namespace app\models\forms;
 
 use app\models\AccessKey;
+use app\models\AccessRight;
+use mate\yii\models\form\UpdateToManyTrait;
 
 class AccessKeyForm extends AccessKey
 {
 
-    public $accessRights = [];
+    use UpdateToManyTrait;
+
+    public $accessRightsSelect = [];
 
     /**
      * {@inheritdoc}
@@ -15,8 +19,13 @@ class AccessKeyForm extends AccessKey
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['accessRights'], 'safe'],
+            [['accessRightsSelect'], 'safe'],
         ]);
+    }
+
+    public function afterFind()
+    {
+        $this->accessRightsSelect = $this->accessList;
     }
 
     /**
@@ -24,11 +33,13 @@ class AccessKeyForm extends AccessKey
      */
     public function save($runValidation = true, $attributeNames = null)
     {
-        $this->access_key = (float) 0;
-        foreach ($this->accessRights as $bitPos) {
-            $this->access_key |= 1 << $bitPos - 1;
+        $isSaved = parent::save($runValidation, $attributeNames);
+        if($isSaved) {
+            $individualRights = array_diff($this->accessRightsSelect, $this->getAccessListOfMasks());
+            $this->updateToMany('accessRights', AccessRight::class, $individualRights);
         }
-        return parent::save($runValidation, $attributeNames);
+        $this->clearAccessListCache();
+        return $isSaved;
     }
 
 }

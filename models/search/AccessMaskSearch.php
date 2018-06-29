@@ -63,8 +63,7 @@ class AccessMaskSearch extends AccessMask
             'protected' => $this->protected,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'access_key', $this->access_key]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

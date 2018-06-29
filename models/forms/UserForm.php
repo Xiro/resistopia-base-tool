@@ -58,7 +58,6 @@ class UserForm extends User
                 $this->access_key_id = $this->staff->access_key_id;
             } else {
                 $addAccessKey = new AccessKey();
-                $addAccessKey->access_key = 0;
                 $addAccessKey->save();
                 $this->access_key_id = $addAccessKey->id;
             }

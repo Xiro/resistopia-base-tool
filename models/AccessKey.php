@@ -10,35 +10,24 @@ use yii\helpers\ArrayHelper;
  * This is the model class for table "access_key".
  *
  * @property integer $id
- * @property string $access_key
+ * @property array $accessList
  *
+ * @property AccessRight[] $accessRights
  * @property AccessMask[] $accessMasks
  * @property Staff[] $staff
  * @property User[] $users
  */
 class AccessKey extends ActiveRecord
 {
+
+    const CACHE_KEY_ACCESS_LIST = "AccessList:";
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'access_key';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-//            [['access_key'], 'required'],
-        ];
-    }
-
-    public function afterFind()
-    {
-        $this->access_key = (int) $this->access_key;
     }
 
     public function delete()
@@ -63,35 +52,7 @@ class AccessKey extends ActiveRecord
     {
         return [
             'id'         => 'ID',
-            'access_key' => 'Access Key',
         ];
-    }
-
-    public function addAccessMask(AccessMask $addMask)
-    {
-        $this->link("accessMasks", $addMask);
-        $this->addMaskKey($addMask->access_key);
-    }
-
-    public function addMaskKey($addKey)
-    {
-        $this->access_key |= $addKey;
-        $this->save();
-    }
-
-    public function removeAccessMask(AccessMask $removeMask)
-    {
-        $this->unlink('accessMasks', $removeMask, true);
-        $this->removeMaskKey($removeMask->access_key);
-    }
-
-    public function removeMaskKey($removeKey)
-    {
-        $this->access_key = $this->access_key ^ ($removeKey & $this->access_key);
-        foreach ($this->accessMasks as $otherMask) {
-            $this->access_key |= $otherMask->access_key;
-        }
-        $this->save();
     }
 
     public function changeAccessMasks($newAccessMasks)
@@ -105,13 +66,61 @@ class AccessKey extends ActiveRecord
 
         $removeMasks = array_diff_key($existingMasks, $newAccessMasks);
         foreach ($removeMasks as $removeMask) {
-            $this->removeAccessMask($removeMask);
+            $this->unlink('accessMasks', $removeMask, true);
         }
 
         $addMasks = array_diff_key($newAccessMasks, $existingMasks);
         foreach ($addMasks as $addMask) {
-            $this->addAccessMask($addMask);
+            $this->link("accessMasks", $addMask);
         }
+    }
+
+    public function getAccessList()
+    {
+        $accessList = ArrayHelper::map($this->accessRights, 'key', 'id');
+        $accessList = array_merge($accessList, $this->getAccessListOfMasks());
+        return $accessList;
+    }
+
+    public function getAccessListOfMasks()
+    {
+        $accessList = [];
+        foreach ($this->accessMasks as $accessMask) {
+            $accessList = array_merge($accessList, $accessMask->accessList);
+        }
+        return $accessList;
+    }
+
+    /**
+     * @param $accessKeyId
+     * @return array|mixed
+     */
+    public static function findAccessList($accessKeyId) {
+        /** @var ActiveRecord|string $modelClass */
+        $cacheKey = self::CACHE_KEY_ACCESS_LIST . $accessKeyId;
+        $cache = Yii::$app->cache;
+        if(false === ($accessList = $cache->get($cacheKey))) {
+            $model = self::findOne($accessKeyId);
+            if(!$model) {
+                throw new \RuntimeException('Access Key with ID ' . $accessKeyId . ' not found');
+            }
+            $accessList = $model->getAccessList();
+            Yii::$app->cache->set($cacheKey, $accessList);
+        }
+        return $accessList;
+    }
+
+    public function clearAccessListCache()
+    {
+        Yii::$app->cache->delete(self::CACHE_KEY_ACCESS_LIST . $this->id);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccessRights()
+    {
+        return $this->hasMany(AccessRight::class, ['id' => 'access_right_id'])->viaTable('access_key_right', ['access_key_id' => 'id']);
     }
 
     /**

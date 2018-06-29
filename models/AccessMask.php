@@ -2,23 +2,25 @@
 
 namespace app\models;
 
-use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "access_mask".
  *
  * @property integer $id
  * @property string $name
- * @property string $access_key
  * @property integer $protected
+ * @property array $accessList
  *
+ * @property AccessRight[] $accessRights
  * @property BaseCategory[] $baseCategories
  * @property Rank[] $ranks
  * @property AccessKey[] $accessKeys
  */
 class AccessMask extends ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -33,7 +35,7 @@ class AccessMask extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'access_key'], 'required'],
+            [['name'], 'required'],
             [['protected'], 'integer'],
             [['name'], 'string', 'max' => 50],
         ];
@@ -47,14 +49,22 @@ class AccessMask extends ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'access_key' => 'Access Key',
             'protected' => 'Protected',
         ];
     }
 
-    public function afterFind()
+    public function getAccessList()
     {
-        $this->access_key = (int) $this->access_key;
+        $accessList = ArrayHelper::map($this->accessRights, 'key', 'id');
+        return $accessList;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccessRights()
+    {
+        return $this->hasMany(AccessRight::class, ['id' => 'access_right_id'])->viaTable('access_mask_right', ['access_mask_id' => 'id']);
     }
 
     /**

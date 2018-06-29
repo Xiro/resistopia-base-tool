@@ -3,6 +3,8 @@
 namespace app\models\forms;
 
 use app\models\AccessMask;
+use app\models\AccessRight;
+use mate\yii\models\form\UpdateToManyTrait;
 
 /**
  * AccessMaskForm represents the form for the model `app\models\AccessMask`.
@@ -10,7 +12,9 @@ use app\models\AccessMask;
 class AccessMaskForm extends AccessMask
 {
 
-    public $accessRights = [];
+    use UpdateToManyTrait;
+
+    public $accessRightsSelect = [];
 
     /**
      * {@inheritdoc}
@@ -18,8 +22,13 @@ class AccessMaskForm extends AccessMask
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['accessRights'], 'safe'],
+            [['accessRightsSelect'], 'safe'],
         ]);
+    }
+
+    public function afterFind()
+    {
+        $this->accessRightsSelect = $this->accessList;
     }
 
     /**
@@ -27,16 +36,11 @@ class AccessMaskForm extends AccessMask
      */
     public function save($runValidation = true, $attributeNames = null)
     {
-        $oldKey = $this->access_key;
-        $this->access_key = 0;
-        foreach ($this->accessRights as $bitPos) {
-            $this->access_key |= 1 << $bitPos - 1;
-        }
         $isSaved = parent::save($runValidation, $attributeNames);
         if($isSaved) {
+            $this->updateToMany('accessRights', AccessRight::class, $this->accessRightsSelect);
             foreach ($this->accessKeys as $accessKey) {
-                $accessKey->removeMaskKey($oldKey);
-                $accessKey->addMaskKey($this->access_key);
+                $accessKey->clearAccessListCache();
             }
         }
         return $isSaved;
