@@ -4,13 +4,13 @@ use app\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel app\models\search\AccessBitSearch */
+/* @var $searchModel app\models\search\AccessRightSearch */
 
-$this->title = 'Access Bits';
+$this->title = 'Access Rights';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="access-bit-index">
+<div class="access-right-index">
     <div class="container">
 
         <h1>
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <span class="heading-btn-group pull-right">
             <?= Html::a(
-                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Access Bit',
+                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Access Right',
                 ["create"],
                 ["class" => "btn btn-default"]
             ); ?>

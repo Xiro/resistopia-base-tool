@@ -3,7 +3,7 @@
 namespace app\helpers;
 
 use app\components\Access;
-use app\models\AccessBit;
+use app\models\AccessRight;
 use mate\yii\widgets\SelectData;
 
 class Html extends \yii\helpers\Html

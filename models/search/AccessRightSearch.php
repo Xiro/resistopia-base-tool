@@ -5,12 +5,12 @@ namespace app\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\AccessBit;
+use app\models\AccessRight;
 
 /**
- * AccessBitSearch represents the model behind the search form about `app\models\AccessBit`.
+ * AccessRightSearch represents the model behind the search form about `app\models\AccessRight`.
  */
-class AccessBitSearch extends AccessBit
+class AccessRightSearch extends AccessRight
 {
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ class AccessBitSearch extends AccessBit
     public function rules()
     {
         return [
-            [['bit_pos', 'order', 'access_category_id'], 'integer'],
+            [['id', 'order', 'access_category_id'], 'integer'],
             [['key', 'name', 'comment'], 'safe'],
         ];
     }
@@ -41,7 +41,7 @@ class AccessBitSearch extends AccessBit
      */
     public function search($params)
     {
-        $query = AccessBit::find();
+        $query = AccessRight::find();
         $query->joinWith("accessCategory");
 
         // add conditions that should always apply here
@@ -60,7 +60,7 @@ class AccessBitSearch extends AccessBit
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'bit_pos' => $this->bit_pos,
+            'id' => $this->id,
             'order' => $this->order,
             'access_category_id' => $this->access_category_id,
         ]);

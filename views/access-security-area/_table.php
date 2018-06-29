@@ -47,16 +47,16 @@ if ($searchModel) {
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                 </th>
             <?php endif; ?>
-            <?php if (!in_array("accessBitPos", $exclude)): ?>
-                <?php $excludeSearchParams[] = "access_bit_pos"; ?>
-                <th class="accessBitPos">
-                    <?= $form->field($model, 'access_bit_pos', [
-                        'labelOptions' => ['class' => ($model->access_bit_pos ? 'move' : '')]
+            <?php if (!in_array("access-right", $exclude)): ?>
+                <?php $excludeSearchParams[] = "access_right_id"; ?>
+                <th class="access-right">
+                    <?= $form->field($model, 'access_right_id', [
+                        'labelOptions' => ['class' => ($model->access_right_id ? 'move' : '')]
                     ])->widget(Select2::class, [
                         'showToggleAll' => false,
                         'data'          => SelectData::fromModel(
-                                 app\models\AccessBit::class,
-                                 'bit_pos', 
+                                 app\models\AccessRight::class,
+                                 'id',
                                  'name'
                              ),
                         'options'       => [
@@ -65,7 +65,7 @@ if ($searchModel) {
                         'pluginOptions' => [
                             'allowClear' => true,
                         ],
-                    ])->label('Access Bit Pos') ?>
+                    ])->label('Access Right') ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
@@ -88,8 +88,8 @@ if ($searchModel) {
             <?php if (!in_array("name", $exclude)): ?>
                 <th class="name"><?= 'Name' ?></th>
             <?php endif; ?>
-            <?php if (!in_array("accessBitPos", $exclude)): ?>
-                <th class="accessBitPos"><?= 'Access Bit Pos' ?></th>
+            <?php if (!in_array("access-right", $exclude)): ?>
+                <th class="access-right"><?= 'Access Right' ?></th>
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th></th>

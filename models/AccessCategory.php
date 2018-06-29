@@ -12,7 +12,7 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property integer $order
  *
- * @property AccessBit[] $accessBits
+ * @property AccessRight[] $accessRights
  */
 class AccessCategory extends ActiveRecord
 {
@@ -51,17 +51,17 @@ class AccessCategory extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAccessBits()
+    public function getAccessRights()
     {
-        return $this->hasMany(AccessBit::className(), ['access_category_id' => 'id']);
+        return $this->hasMany(AccessRight::className(), ['access_category_id' => 'id']);
     }
 
-    public function getAccessBitsCheckboxList()
+    public function getAccessRightsCheckboxList()
     {
-        $accessBits = $this->getAccessBits()->asArray()->all();
+        $accessRights = $this->getAccessRights()->asArray()->all();
         $checkboxList = array_combine(
-            array_column($accessBits, "bit_pos"),
-            array_column($accessBits, "name")
+            array_column($accessRights, "id"),
+            array_column($accessRights, "name")
         );
         return $checkboxList;
     }

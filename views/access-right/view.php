@@ -4,20 +4,20 @@ use app\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\AccessBit */
+/* @var $model app\models\AccessRight */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Access Bits', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Access Rights', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="access-bit-view">
+<div class="access-right-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= DetailView::widget([
         'model'      => $model,
         'attributes' => [
-            'bit_pos',
+            'id',
             'key',
             'name',
             'comment:ntext',
@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->bit_pos], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['confirm-delete', 'id' => $model->bit_pos], ['class' => 'btn btn-danger']) ?>
+        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['confirm-delete', 'id' => $model->id], ['class' => 'btn btn-danger']) ?>
     </p>
 
 </div>

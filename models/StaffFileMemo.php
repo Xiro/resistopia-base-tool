@@ -11,13 +11,13 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property string $title
  * @property string $file_memo
- * @property integer $access_bit_id
+ * @property integer $access_right_id
  * @property string $rpn
  * @property string $author_rpn
  * @property string $created
  * @property string $updated
  *
- * @property AccessBit $accessBit
+ * @property AccessRight $accessRight
  * @property Staff $staff
  * @property Staff $author
  */
@@ -39,11 +39,11 @@ class StaffFileMemo extends ActiveRecord
         return [
             [['title', 'file_memo', 'rpn', 'author_rpn'], 'required'],
             [['file_memo'], 'string'],
-            [['access_bit_id'], 'integer'],
+            [['access_right_id'], 'integer'],
             [['created', 'updated'], 'safe'],
             [['title'], 'string', 'max' => 50],
             [['rpn', 'author_rpn'], 'string', 'max' => 8],
-            [['access_bit_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessBit::className(), 'targetAttribute' => ['access_bit_id' => 'bit_pos']],
+            [['access_right_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessRight::className(), 'targetAttribute' => ['access_right_id' => 'id']],
             [['rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['rpn' => 'rpn']],
             [['author_rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['author_rpn' => 'rpn']],
         ];
@@ -58,7 +58,7 @@ class StaffFileMemo extends ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'file_memo' => 'File Memo',
-            'access_bit_id' => 'Access Bit ID',
+            'access_right_id' => 'Access Right ID',
             'rpn' => 'Rpn',
             'author_rpn' => 'Author Rpn',
             'created' => 'Created',
@@ -69,9 +69,9 @@ class StaffFileMemo extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAccessBit()
+    public function getAccessRight()
     {
-        return $this->hasOne(AccessBit::className(), ['bit_pos' => 'access_bit_id']);
+        return $this->hasOne(AccessRight::className(), ['id' => 'access_right_id']);
     }
 
     /**

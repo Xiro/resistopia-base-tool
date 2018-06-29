@@ -2,14 +2,14 @@
 
 namespace app\models\forms;
 
-use app\models\AccessBit;
+use app\models\AccessRight;
 use app\models\AccessCategory;
 use mate\yii\models\form\UpdateDynamicToOneTrait;
 
 /**
- * AccessBitForm represents the form for the model `app\models\AccessBit`.
+ * AccessRightForm represents the form for the model `app\models\AccessRight`.
  */
-class AccessBitForm extends AccessBit
+class AccessRightForm extends AccessRight
 {
 
     use UpdateDynamicToOneTrait;

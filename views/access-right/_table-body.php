@@ -14,9 +14,9 @@ $exclude = !isset($exclude) ? array() : $exclude;
 <tbody data-page="<?= $pagination ? $pagination->page + 1 : 0 ?>"
        data-page-size="<?= $pagination ? $pagination->pageSize : 0 ?>"
        data-page-count="<?= $pagination ? $pagination->pageCount : 0 ?>">
-<?php /** @var $model \app\models\AccessBit */ ?>
+<?php /** @var $model \app\models\AccessRight */ ?>
 <?php foreach ($dataProvider->getModels() as $model): ?>
-    <tr class="ui-sortable-handle" data-key="<?= $model->bit_pos ?>">
+    <tr class="ui-sortable-handle" data-key="<?= $model->id ?>">
         <?php if (!in_array("order", $exclude)): ?>
             <td class="order order-content">
                 <?= $model->order; ?>
@@ -47,7 +47,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?php if (!in_array("action-update", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::pencil(),
-                        ['access-bit/update', 'id' => $model->bit_pos]
+                        ['access-right/update', 'id' => $model->id]
                     ) ?>
                 <?php endif; ?>
             </td>

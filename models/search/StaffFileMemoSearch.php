@@ -22,7 +22,7 @@ class StaffFileMemoSearch extends StaffFileMemo
     public function rules()
     {
         return [
-            [['id', 'access_bit_id'], 'integer'],
+            [['id', 'access_right_id'], 'integer'],
             [['title', 'file_memo', 'rpn', 'staff_name', 'author_rpn', 'author_name', 'created', 'updated'], 'safe'],
         ];
     }
@@ -64,7 +64,7 @@ class StaffFileMemoSearch extends StaffFileMemo
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'access_bit_id' => $this->access_bit_id,
+            'access_right_id' => $this->access_right_id,
             'created' => $this->created,
             'updated' => $this->updated,
         ]);

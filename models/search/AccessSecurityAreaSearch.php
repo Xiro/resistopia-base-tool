@@ -18,7 +18,7 @@ class AccessSecurityAreaSearch extends AccessSecurityArea
     public function rules()
     {
         return [
-            [['id', 'access_bit_pos'], 'integer'],
+            [['id', 'access_right_id'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -60,7 +60,7 @@ class AccessSecurityAreaSearch extends AccessSecurityArea
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'access_bit_pos' => $this->access_bit_pos,
+            'access_right_id' => $this->access_right_id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

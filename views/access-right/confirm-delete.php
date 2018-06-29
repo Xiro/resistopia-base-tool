@@ -3,13 +3,13 @@
 use app\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\AccessBit */
+/* @var $model app\models\AccessRight */
 
-$this->title = 'Delete Access Bit';
-$this->params['breadcrumbs'][] = ['label' => 'Access Bits', 'url' => ['index']];
+$this->title = 'Delete Access Right';
+$this->params['breadcrumbs'][] = ['label' => 'Access Rights', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="access-bit-confirm-delete">
+<div class="access-right-confirm-delete">
 
     <div class="container-fluid padding-large-vertical">
 

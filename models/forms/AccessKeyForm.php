@@ -7,7 +7,7 @@ use app\models\AccessKey;
 class AccessKeyForm extends AccessKey
 {
 
-    public $accessBits = [];
+    public $accessRights = [];
 
     /**
      * {@inheritdoc}
@@ -15,7 +15,7 @@ class AccessKeyForm extends AccessKey
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['accessBits'], 'safe'],
+            [['accessRights'], 'safe'],
         ]);
     }
 
@@ -24,8 +24,8 @@ class AccessKeyForm extends AccessKey
      */
     public function save($runValidation = true, $attributeNames = null)
     {
-        $this->access_key = 0;
-        foreach ($this->accessBits as $bitPos) {
+        $this->access_key = (float) 0;
+        foreach ($this->accessRights as $bitPos) {
             $this->access_key |= 1 << $bitPos - 1;
         }
         return parent::save($runValidation, $attributeNames);

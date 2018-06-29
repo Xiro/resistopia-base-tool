@@ -6,16 +6,16 @@ use kartik\select2\Select2;
 use mate\yii\widgets\SelectData;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\forms\AccessBitForm */
+/* @var $model app\models\forms\AccessRightForm */
 /* @var $form yii\bootstrap\ActiveForm */
 ?>
 
-<div class="access-bit-form">
+<div class="access-right-form">
 
     <?php $form = ActiveForm::begin([
         "options"     => ["class" => "animated-label"],
         "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
-        "id"          => 'access-bit-form'
+        "id"          => 'access-right-form'
     ]); ?>
 
     <div class="row">

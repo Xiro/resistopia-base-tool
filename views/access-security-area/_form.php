@@ -22,13 +22,13 @@ use mate\yii\widgets\SelectData;
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'access_bit_pos', [
-                'labelOptions' => ['class' => ($model->access_bit_pos ? 'move' : '')]
+            <?= $form->field($model, 'access_right_id', [
+                'labelOptions' => ['class' => ($model->access_right_id ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
                 'data'          => SelectData::fromModel(
-                         app\models\AccessBit::class,
-                         'bit_pos', 
+                         app\models\AccessRight::class,
+                         'id',
                          'name'
                      ),
                 'options'       => [
@@ -37,7 +37,7 @@ use mate\yii\widgets\SelectData;
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label('Access Bit Pos') ?>
+            ])->label('Access Right') ?>
         </div>
     </div>
 

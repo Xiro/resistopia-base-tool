@@ -10,9 +10,9 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property string $name
- * @property integer $access_bit_pos
+ * @property integer $access_right_id
  *
- * @property AccessBit $accessBitPos
+ * @property AccessRight $accessRight
  */
 class AccessSecurityArea extends ActiveRecord
 {
@@ -30,10 +30,10 @@ class AccessSecurityArea extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'access_bit_pos'], 'required'],
-            [['access_bit_pos'], 'integer'],
+            [['name', 'access_right_id'], 'required'],
+            [['access_right_id'], 'integer'],
             [['name'], 'string', 'max' => 50],
-            [['access_bit_pos'], 'exist', 'skipOnError' => true, 'targetClass' => AccessBit::className(), 'targetAttribute' => ['access_bit_pos' => 'bit_pos']],
+            [['access_right_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessRight::className(), 'targetAttribute' => ['access_right_id' => 'id']],
         ];
     }
 
@@ -45,15 +45,15 @@ class AccessSecurityArea extends ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'access_bit_pos' => 'Access Right',
+            'access_right_id' => 'Access Right ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAccessBitPos()
+    public function getAccessRight()
     {
-        return $this->hasOne(AccessBit::className(), ['bit_pos' => 'access_bit_pos']);
+        return $this->hasOne(AccessRight::className(), ['id' => 'access_right_id']);
     }
 }

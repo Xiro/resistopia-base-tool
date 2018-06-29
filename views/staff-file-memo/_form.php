@@ -22,13 +22,13 @@ use yii\helpers\ArrayHelper;
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'access_bit_id', [
-                'labelOptions' => ['class' => ($model->access_bit_id ? 'move' : '')]
+            <?= $form->field($model, 'access_right_id', [
+                'labelOptions' => ['class' => ($model->access_right_id ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
                 'data'          => ArrayHelper::map(
-                    app\models\AccessBit::find()->where(['like', 'key', 'security-level/%', false])->all(),
-                    'bit_pos',
+                    app\models\AccessRight::find()->where(['like', 'key', 'security-level/%', false])->all(),
+                    'id',
                     'name'
                 ),
                 'options'       => [

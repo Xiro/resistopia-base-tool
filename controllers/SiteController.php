@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\AccessRight;
+use app\models\AccessCategory;
 use mate\yii\components\SelectData;
 use Yii;
 use yii\filters\AccessControl;
@@ -27,8 +29,8 @@ class SiteController extends Controller
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
+            'verbs'  => [
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -42,11 +44,11 @@ class SiteController extends Controller
     public function actions()
     {
         return [
-            'error' => [
+            'error'   => [
                 'class' => 'yii\web\ErrorAction',
             ],
             'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
+                'class'           => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
@@ -59,6 +61,27 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $crud = [
+//            'Missions' => 'mission',
+        ];
+        $crudNames = ['view', 'create', 'update', 'delete'];
+        foreach ($crud as $categoryName => $controller) {
+            $category = new AccessCategory();
+            $category->name = $categoryName;
+            $category->order = AccessCategory::find()->count() + 1;
+            $category->save();
+
+            $bitOrder = AccessRight::find()->count();
+            foreach ($crudNames as $crudName) {
+                $bitOrder++;
+                $bit = new AccessRight();
+                $bit->key = $controller . '/' . $crudName;
+                $bit->name = ucfirst($crudName) . ' ' . ucfirst($controller);
+                $bit->order = $bitOrder;
+                $bit->access_category_id = $category->id;
+                $bit->save();
+            }
+        }
         return $this->render('index');
     }
 

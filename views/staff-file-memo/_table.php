@@ -59,10 +59,10 @@ if ($searchModel) {
                     <?= $form->field($model, 'author_name')->textInput(['maxlength' => true])->label('Author') ?>
                 </th>
             <?php endif; ?>
-            <?php if (!in_array("access_bit", $exclude)): ?>
-                <?php $excludeSearchParams[] = "access_bit"; ?>
+            <?php if (!in_array("access_right", $exclude)): ?>
+                <?php $excludeSearchParams[] = "access_right"; ?>
                 <th class="author_name">
-                    <?= $form->field($model, 'access_bit_id')->textInput(['maxlength' => true])->label('Security Level') ?>
+                    <?= $form->field($model, 'access_right_id')->textInput(['maxlength' => true])->label('Security Level') ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("created", $exclude)): ?>
@@ -103,8 +103,8 @@ if ($searchModel) {
             <?php if (!in_array("author_name", $exclude)): ?>
                 <th class="author_name"><?= 'Author' ?></th>
             <?php endif; ?>
-            <?php if (!in_array("access_bit", $exclude)): ?>
-                <th class="access_bit"><?= 'Security Level' ?></th>
+            <?php if (!in_array("access_right", $exclude)): ?>
+                <th class="access_right"><?= 'Security Level' ?></th>
             <?php endif; ?>
             <?php if (!in_array("created", $exclude)): ?>
                 <th class="created"><?= 'Created' ?></th>

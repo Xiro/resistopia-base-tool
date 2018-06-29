@@ -56,7 +56,7 @@ AppAsset::register($this);
     $navItems = [];
 
     $accessItems = [];
-    Access::addNavItem(['label' => 'Rights', 'url' => ['access-bit/index']], $accessItems);
+    Access::addNavItem(['label' => 'Rights', 'url' => ['access-right/index']], $accessItems);
     Access::addNavItem(['label' => 'Masks', 'url' => ['access-mask/index']], $accessItems);
     Access::addNavItem(['label' => 'Security Areas', 'url' => ['access-security-area/index']], $accessItems);
     Access::addNavItem(['label' => 'Categories', 'url' => ['access-category/index']], $accessItems);

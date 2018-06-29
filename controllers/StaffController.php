@@ -202,7 +202,7 @@ class StaffController extends Controller
         $post = Yii::$app->request->post();
         $accessKey->load($post);
         if ($post && $accessKey->save()) {
-            return $this->goBack(['index']);
+//            return $this->goBack(['index']);
         }
 
         return $this->render('grant-rights', [

@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
     $memoInfo = [];
     $memoInfo["Staff"] = $model->staff->name;
     $memoInfo["Created"] = date("d.m.Y H:i", strtotime($model->created));
-    $memoInfo["Security Level"] = $model->access_bit_id ? $model->accessBit->name : '';
+    $memoInfo["Security Level"] = $model->access_right_id ? $model->accessRight->name : '';
 
     $memoInfo["Author"] = $model->author->name;
     $memoInfo["Updated"] = date("d.m.Y H:i", strtotime($model->updated));

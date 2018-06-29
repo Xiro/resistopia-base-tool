@@ -6,9 +6,9 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "access_bit".
+ * This is the model class for table "access_right".
  *
- * @property integer $bit_pos
+ * @property integer $id
  * @property string $key
  * @property string $name
  * @property string $comment
@@ -17,15 +17,16 @@ use yii\db\ActiveRecord;
  *
  * @property AccessCategory $accessCategory
  * @property AccessSecurityArea[] $accessSecurityAreas
+ * @property StaffFileMemo[] $staffFileMemos
  */
-class AccessBit extends ActiveRecord
+class AccessRight extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'access_bit';
+        return 'access_right';
     }
 
     /**
@@ -36,7 +37,7 @@ class AccessBit extends ActiveRecord
         return [
             [['name', 'access_category_id'], 'required'],
             [['comment'], 'string'],
-            [['order'], 'integer'],
+            [['order', 'access_category_id'], 'integer'],
             [['key', 'name'], 'string', 'max' => 50],
             [['key'], 'unique'],
             [['access_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessCategory::className(), 'targetAttribute' => ['access_category_id' => 'id']],
@@ -49,7 +50,7 @@ class AccessBit extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'bit_pos' => 'Bit Pos',
+            'id' => 'ID',
             'key' => 'Key',
             'name' => 'Name',
             'comment' => 'Comment',
@@ -60,7 +61,7 @@ class AccessBit extends ActiveRecord
 
     public function isInKey($accessKey)
     {
-        return (bool) ($accessKey & (1 << $this->bit_pos - 1));
+        return (bool) ($accessKey & (1 << $this->id - 1));
     }
 
     /**
@@ -76,7 +77,14 @@ class AccessBit extends ActiveRecord
      */
     public function getAccessSecurityAreas()
     {
-        return $this->hasMany(AccessSecurityArea::className(), ['access_bit_pos' => 'bit_pos']);
+        return $this->hasMany(AccessSecurityArea::className(), ['access_right_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStaffFileMemos()
+    {
+        return $this->hasMany(StaffFileMemo::className(), ['access_right_id' => 'id']);
+    }
 }

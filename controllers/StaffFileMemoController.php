@@ -83,7 +83,7 @@ class StaffFileMemoController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        if ($model->access_bit_id && !Access::to($model->accessBit->key)) {
+        if ($model->access_right_id && !Access::to($model->accessRight->key)) {
             return $this->render('../site/error', [
                 'name'    => '#403 Forbidden',
                 'message' => 'You are not allowed to access this entry.'
@@ -121,7 +121,7 @@ class StaffFileMemoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if ($model->access_bit_id && !Access::to($model->accessBit->key)) {
+        if ($model->access_right_id && !Access::to($model->accessRight->key)) {
             return $this->render('../site/error', [
                 'name'    => '#403 Forbidden',
                 'message' => 'You are not allowed to access this entry.'

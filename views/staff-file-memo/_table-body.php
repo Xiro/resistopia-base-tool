@@ -19,7 +19,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
 <?php /** @var $model \app\models\StaffFileMemo */ ?>
 <?php foreach ($dataProvider->getModels() as $model): ?>
     <?php
-    if ($model->access_bit_id && !Access::to($model->accessBit->key)) {
+    if ($model->access_right_id && !Access::to($model->accessRight->key)) {
         continue;
     }
     ?>
@@ -39,9 +39,9 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?= $model->author ? $model->author->name : "None" ?>
             </td>
         <?php endif; ?>
-        <?php if (!in_array("access_bit", $exclude)): ?>
-            <td class="author_name">
-                <?= $model->access_bit_id ? $model->accessBit->name : "None" ?>
+        <?php if (!in_array("access_right", $exclude)): ?>
+            <td class="access_right">
+                <?= $model->access_right_id ? $model->accessRight->name : "None" ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("created", $exclude)): ?>

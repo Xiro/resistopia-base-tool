@@ -22,7 +22,7 @@ $this->title = "Grant Rights to " . $model->nameWithRpn;
         "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
     ]); ?>
 
-    <?= $this->render('../access-bit/_checkboxes', [
+    <?= $this->render('../access-right/_checkboxes', [
         'form'      => $form,
         'model'     => $accessKey,
     ]) ?>

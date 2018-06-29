@@ -10,7 +10,7 @@ use app\models\AccessMask;
 class AccessMaskForm extends AccessMask
 {
 
-    public $accessBits = [];
+    public $accessRights = [];
 
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class AccessMaskForm extends AccessMask
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['accessBits'], 'safe'],
+            [['accessRights'], 'safe'],
         ]);
     }
 
@@ -29,7 +29,7 @@ class AccessMaskForm extends AccessMask
     {
         $oldKey = $this->access_key;
         $this->access_key = 0;
-        foreach ($this->accessBits as $bitPos) {
+        foreach ($this->accessRights as $bitPos) {
             $this->access_key |= 1 << $bitPos - 1;
         }
         $isSaved = parent::save($runValidation, $attributeNames);

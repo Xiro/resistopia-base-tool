@@ -22,9 +22,9 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?= $model->name ?>
             </td>
         <?php endif; ?>
-        <?php if (!in_array("accessBitPos", $exclude)): ?>
-            <td class="accessBitPos">
-                <?= $model->accessBitPos ? $model->accessBitPos->name : "None" ?>
+        <?php if (!in_array("access-right", $exclude)): ?>
+            <td class="access-right">
+                <?= $model->accessRight ? $model->accessRight->name : "None" ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("actions", $exclude)): ?>

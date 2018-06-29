@@ -4,18 +4,18 @@ namespace app\controllers;
 
 use app\components\AccessRule;
 use Yii;
-use app\models\AccessBit;
-use app\models\forms\AccessBitForm;
-use app\models\search\AccessBitSearch;
+use app\models\AccessRight;
+use app\models\forms\AccessRightForm;
+use app\models\search\AccessRightSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * AccessBitController implements the CRUD actions for AccessBit model.
+ * AccessRightController implements the CRUD actions for AccessRight model.
  */
-class AccessBitController extends Controller
+class AccessRightController extends Controller
 {
     /**
      * @inheritdoc
@@ -45,12 +45,12 @@ class AccessBitController extends Controller
     }
 
     /**
-     * Lists all AccessBit models.
+     * Lists all AccessRight models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new AccessBitSearch();
+        $searchModel = new AccessRightSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->setSort([
             'defaultOrder' => ['order' => SORT_ASC]
@@ -69,7 +69,7 @@ class AccessBitController extends Controller
      */
     public function actionSearch()
     {
-        $searchModel = new AccessBitSearch();
+        $searchModel = new AccessRightSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderPartial('_table-body', [
@@ -78,7 +78,7 @@ class AccessBitController extends Controller
     }
 
     /**
-     * Displays a single AccessBit model.
+     * Displays a single AccessRight model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -90,31 +90,31 @@ class AccessBitController extends Controller
     }
 
     /**
-     * Creates a new AccessBit model.
+     * Creates a new AccessRight model.
      * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new AccessBitForm();
+        $model = new AccessRightForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if(Yii::$app->request->post('submit') == "continue") {
-                $model = new AccessBitForm();
+                $model = new AccessRightForm();
             } else {
                 return $this->redirect(['index']);
             }
         }
 
         if($model->order === null) {
-            $model->order = AccessBit::find()->count() + 1;
+            $model->order = AccessRight::find()->count() + 1;
         }
 
         return $this->render('create', ["model" => $model]);
     }
 
     /**
-     * Updates an existing AccessBit model.
+     * Updates an existing AccessRight model.
      * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -122,7 +122,7 @@ class AccessBitController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = AccessBitForm::findOne($id);
+        $model = AccessRightForm::findOne($id);
         if ($model === null) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
@@ -159,7 +159,7 @@ class AccessBitController extends Controller
     }
 
     /**
-     * Deletes an existing AccessBit model.
+     * Deletes an existing AccessRight model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -173,7 +173,7 @@ class AccessBitController extends Controller
     }
 
     /**
-     * Deletes an existing AccessBit model.
+     * Deletes an existing AccessRight model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -187,15 +187,15 @@ class AccessBitController extends Controller
     }
 
     /**
-     * Finds the AccessBit model based on its primary key value.
+     * Finds the AccessRight model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return AccessBit the loaded model
+     * @return AccessRight the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = AccessBit::findOne($id)) !== null) {
+        if (($model = AccessRight::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

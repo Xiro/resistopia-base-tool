@@ -2,7 +2,7 @@
 
 namespace app\components;
 
-use app\models\AccessBit;
+use app\models\AccessRight;
 use mate\yii\widgets\SelectData;
 use yii\base\Component;
 
@@ -28,9 +28,9 @@ class Access extends Component
         static $bits = false;
         if ($bits === false) {
             $bits = SelectData::fromModel(
-                AccessBit::class,
+                AccessRight::class,
                 "key",
-                "bit_pos"
+                "id"
             );
         }
 

@@ -35,7 +35,7 @@ use mate\yii\widgets\ValMap;
         <?php endif; ?>
     </div>
 
-    <?= $this->render('../access-bit/_checkboxes', [
+    <?= $this->render('../access-right/_checkboxes', [
         'form'      => $form,
         'model'     => $model,
     ]) ?>
