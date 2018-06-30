@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use app\components\AccessRule;
-use app\components\SpeedTest;
 use app\models\forms\AccessKeyForm;
 use Yii;
 use app\models\Staff;

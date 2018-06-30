@@ -88,11 +88,17 @@ class AccessMaskController extends Controller
     /**
      * Creates a new AccessMask model.
      * If creation is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id = null)
     {
         $model = new AccessMaskForm();
+
+        if ($id) {
+            $templateMask = $this->findModel($id);
+            $model->accessRightsSelect += $templateMask->accessList;
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -105,14 +111,20 @@ class AccessMaskController extends Controller
      * Updates an existing AccessMask model.
      * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
+     * @param integer $templateId
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $templateId = null)
     {
         $model = AccessMaskForm::findOne($id);
         if ($model === null) {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($templateId) {
+            $templateMask = $this->findModel($templateId);
+            $model->accessRightsSelect += $templateMask->accessList;
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
