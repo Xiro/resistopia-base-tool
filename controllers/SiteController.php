@@ -65,6 +65,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+//        // This is for quickly creating CRUD access rights
 //        $crud = [
 //        ];
 //        $crudNames = ['view', 'create', 'update', 'delete'];
@@ -91,6 +92,7 @@ class SiteController extends Controller
 //                $bit->save();
 //            }
 //        }
+//        Yii::$app->cache->flush();
         return $this->render('index');
     }
 

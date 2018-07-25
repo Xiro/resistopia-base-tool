@@ -16,6 +16,7 @@ class AccessRule extends \yii\filters\AccessRule
      */
     protected function matchRole($user)
     {
+//        return true;
         if (empty($this->roles)) {
             return true;
         }

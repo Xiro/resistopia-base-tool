@@ -3,13 +3,13 @@
 use app\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\MedicineCheckup */
+/* @var $model app\models\MedicineDrug */
 
-$this->title = 'Eingangsuntersuchung löschen';
-$this->params['breadcrumbs'][] = ['label' => 'Medicine Checkups', 'url' => ['index']];
+$this->title = 'Delete Medicine Drug';
+$this->params['breadcrumbs'][] = ['label' => 'Medicine Drugs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="medicine-checkup-confirm-delete">
+<div class="medicine-drug-confirm-delete">
 
     <div class="container-fluid padding-large-vertical">
 
@@ -17,12 +17,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="text-large">
             <p class="padding-large-vertical">
-                <?= 'Bist du sicher, dass du diesen Bericht löschen willst?' ?>
+                <?= 'Are you sure you want to delete this entry?' ?>
             </p>
             <div class="row">
                 <div class="col-md-6">
                     <?= Html::a(
-                        'Ja',
+                        'Yes',
                         ["delete", "id" => $model->id],
                         [
                             "class" => "btn btn-default btn-block",
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-6">
                     <?= Html::a(
-                        'Nein',
+                        'No',
                         ["index"],
                         ["class" => "btn btn-default btn-block"]
                     ) ?>

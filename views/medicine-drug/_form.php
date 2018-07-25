@@ -6,11 +6,11 @@ use kartik\select2\Select2;
 use mate\yii\widgets\ValMap;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Operation */
+/* @var $model app\models\MedicineDrug */
 /* @var $form yii\bootstrap\ActiveForm */
 ?>
 
-<div class="operation-form">
+<div class="medicine-drug-form">
 
     <?php $form = ActiveForm::begin([
         "options"     => ["class" => "animated-label"],
@@ -22,13 +22,7 @@ use mate\yii\widgets\ValMap;
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <?= $form->field($model, 'created')->textInput() ?>
+            <?= $form->field($model, 'order')->textInput() ?>
         </div>
     </div>
 

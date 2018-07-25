@@ -7,7 +7,7 @@ use kartik\select2\Select2;
 
 /** @var string $key */
 /** @var ActiveForm $form */
-/** @var MedicineCheckupInjury $injury */
+/** @var \app\models\MedicineTreatmentInjury $injury */
 ?>
 
 <?= $form->field($injury, 'id', [
@@ -15,8 +15,8 @@ use kartik\select2\Select2;
         'class' => 'hidden',
     ],
 ])->hiddenInput([
-    'id'   => "MedicineCheckupForm_injuriesData_{$key}_id",
-    'name' => "MedicineCheckupForm[injuriesData][{$key}][id]",
+    'id'   => "MedicineTreatmentForm_injuriesData_{$key}_id",
+    'name' => "MedicineTreatmentForm[injuriesData][{$key}][id]",
 ])->label(false) ?>
 
 <?= $form->field($injury, 'x', [
@@ -24,8 +24,8 @@ use kartik\select2\Select2;
         'class' => 'hidden input-x',
     ],
 ])->hiddenInput([
-    'id'    => "MedicineCheckupForm_injuriesData_{$key}_x",
-    'name'  => "MedicineCheckupForm[injuriesData][{$key}][x]",
+    'id'    => "MedicineTreatmentForm_injuriesData_{$key}_x",
+    'name'  => "MedicineTreatmentForm[injuriesData][{$key}][x]",
     'class' => "x-input"
 ])->label(false) ?>
 
@@ -34,12 +34,12 @@ use kartik\select2\Select2;
         'class' => 'hidden input-y',
     ],
 ])->hiddenInput([
-    'id'    => "MedicineCheckupForm_injuriesData_{$key}_y",
-    'name'  => "MedicineCheckupForm[injuriesData][{$key}][y]",
+    'id'    => "MedicineTreatmentForm_injuriesData_{$key}_y",
+    'name'  => "MedicineTreatmentForm[injuriesData][{$key}][y]",
     'class' => "y-input"
 ])->label(false) ?>
 
-<div class="col-sm-6">
+<div class="col-sm-4">
     <div class="form-group">
         <?= $form->field($injury, 'injury', [
             'labelOptions' => ['class' => 'move']
@@ -52,8 +52,8 @@ use kartik\select2\Select2;
             'Sonstiges'   => 'Sonstiges',
         ], [
             'showToggleAll' => false,
-            'id'            => "MedicineCheckupForm_injuriesData_{$key}_injury",
-            'name'          => "MedicineCheckupForm[injuriesData][$key][injury]",
+            'id'            => "MedicineTreatmentForm_injuriesData_{$key}_injury",
+            'name'          => "MedicineTreatmentForm[injuriesData][$key][injury]",
             'class'         => 'form-control input-injury',
             'clientOptions' => [
                 'id' => "injuriesData_{$key}_injury",
@@ -62,15 +62,28 @@ use kartik\select2\Select2;
     </div>
 </div>
 
-<div class="col-sm-6">
+<div class="col-sm-4">
+    <div class="form-group">
+        <?= $form->field($injury, 'operation', [
+            'options' => [
+                'class' => '',
+            ],
+        ])->textInput([
+            'id'   => "MedicineTreatmentForm_injuriesData_{$key}_operation",
+            'name' => "MedicineTreatmentForm[injuriesData][$key][operation]",
+        ]); ?>
+    </div>
+</div>
+
+<div class="col-sm-4">
     <div class="input-group form-group">
         <?= $form->field($injury, 'annotation', [
             'options' => [
                 'class' => '',
             ],
         ])->textInput([
-            'id'   => "MedicineCheckupForm_injuriesData_{$key}_annotation",
-            'name' => "MedicineCheckupForm[injuriesData][$key][annotation]",
+            'id'   => "MedicineTreatmentForm_injuriesData_{$key}_annotation",
+            'name' => "MedicineTreatmentForm[injuriesData][$key][annotation]",
         ]); ?>
         <span class="input-group-btn">
     <?= Html::button(

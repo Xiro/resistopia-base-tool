@@ -7,7 +7,7 @@ jQuery.fn.outerHTML = function (s) {
 function setupInjuriesAfterActiveForm() {
     $(document).ready(function () {
 
-        var form = $("#medicine-checkup-form");
+        var form = $("#medicine-form");
         var injuryRowsContainer = $(".injury-rows");
         var injuryRowCount = injuryRowsContainer.find(".injury-row").length - 1; // minus template
 
@@ -63,13 +63,13 @@ function setupInjuriesAfterActiveForm() {
             newRow.find('.input-x input').val(relativeX);
             newRow.find('.input-y input').val(relativeY);
 
-            // $.each(defaultValidators, function () {
-            //     var validation = $.extend(true, {}, this); // clone default object
-            //     validation.container = validation.container.replace(/__id__/g, key);
-            //     validation.input = validation.input.replace(/__id__/g, key);
-            //     validation.id += '-' + key;
-            //     form.yiiActiveForm("add", validation);
-            // });
+            $.each(defaultValidators, function () {
+                var validation = $.extend(true, {}, this); // clone default object
+                validation.container = validation.container.replace(/__id__/g, key);
+                validation.input = validation.input.replace(/__id__/g, key);
+                validation.id += '-' + key;
+                form.yiiActiveForm("add", validation);
+            });
 
             injuryRowsContainer.append(newRow);
             injuryRowCount++;
@@ -101,12 +101,12 @@ function setupInjuriesAfterActiveForm() {
                 row.find(".remove-injury-row").click(function (e) {
                     e.preventDefault();
                     var key = row.data("key");
-                    // var formAttributes = form.data("yiiActiveForm").attributes;
-                    // $.each(formAttributes, function (i, data) {
-                    //     if (typeof data !== "undefined" && data.id.indexOf(key) !== -1) {
-                    //         delete formAttributes[i];
-                    //     }
-                    // });
+                    var formAttributes = form.data("yiiActiveForm").attributes;
+                    $.each(formAttributes, function (i, data) {
+                        if (typeof data !== "undefined" && data.id.indexOf(key) !== -1) {
+                            delete formAttributes[i];
+                        }
+                    });
                     injuryImage.find('.injury-mark[data-key="' + row.attr('data-mark') + '"]').remove();
                     row.remove();
                     updateMarkOrder();
@@ -119,6 +119,88 @@ function setupInjuriesAfterActiveForm() {
 
         injuryImage.click(function (e) {
             addInjuryRow(e);
+        });
+
+    });
+}
+
+function setupMedicationsAfterActiveForm() {
+    $(document).ready(function () {
+        var form = $("#medicine-form");
+        var medicationRowsContainer = $(".medication-rows");
+        var newMedicationButton = $("button.new-medication-row");
+        var medicationRowCount = medicationRowsContainer.find(".medication-row").length - 1; // minus template
+
+        var medicationTemplate = medicationRowsContainer.find(".medication-row-template");
+        var medicationTemplateHtml = medicationTemplate.outerHTML();
+        medicationTemplate.remove();
+
+        // reset form validation
+        var defaultValidators = [];
+        var formAttributes = form.data("yiiActiveForm").attributes;
+        $.each(formAttributes, function (i, data) {
+            if (typeof data !== "undefined" && data.id.indexOf("medicinetreatmentmedication") !== -1) {
+                if (data.input.indexOf("__id__") !== -1) {
+                    defaultValidators.push(data);
+                    delete formAttributes[i];
+                } else {
+                    var key = $(data.container).parents("[data-key]").data("key");
+                    data.id += "-" + key;
+                }
+            }
+        });
+
+        function addMedicationRow() {
+            var key = 'new' + medicationRowCount;
+            var newRow = $(medicationTemplateHtml.replace(/__id__/g, key))
+                .removeClass("medication-row-template")
+                .data("key", key)
+                .show();
+
+            $.each(defaultValidators, function () {
+                var validation = $.extend(true, {}, this); // clone default object
+                validation.container = validation.container.replace(/__id__/g, key);
+                validation.input = validation.input.replace(/__id__/g, key);
+                validation.id += '-' + key;
+                form.yiiActiveForm("add", validation);
+            });
+
+            medicationRowsContainer.append(newRow);
+            medicationRowCount++;
+
+            newRow.find('.select-location').select2();
+            newRow.find('.select-drug').select2({
+                tags: true
+            });
+            newRow.find('.select2-container').addClass('select2-container--krajee');
+
+            setupAnimatedFormLabels(medicationRowsContainer);
+            setupRemoveButton(newRow);
+        }
+
+        function setupRemoveButton(rows) {
+            rows = typeof rows === "undefined" ? medicationRowsContainer.find(".medication-row") : rows;
+            rows.each(function () {
+                var row = $(this);
+                row.find(".remove-medication-row").click(function (e) {
+                    e.preventDefault();
+                    var key = row.data("key");
+                    var formAttributes = form.data("yiiActiveForm").attributes;
+                    $.each(formAttributes, function (i, data) {
+                        if (typeof data !== "undefined" && data.id.indexOf(key) !== -1) {
+                            delete formAttributes[i];
+                        }
+                    });
+                    row.remove();
+                });
+            });
+        }
+
+        setupRemoveButton();
+
+        newMedicationButton.on("click", function (e) {
+            e.preventDefault();
+            addMedicationRow();
         });
 
     });

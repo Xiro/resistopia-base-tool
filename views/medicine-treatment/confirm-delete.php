@@ -3,13 +3,13 @@
 use app\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\MedicineCheckup */
+/* @var $model app\models\MedicineTreatment */
 
-$this->title = 'Eingangsuntersuchung löschen';
-$this->params['breadcrumbs'][] = ['label' => 'Medicine Checkups', 'url' => ['index']];
+$this->title = 'Behandlungsprotokoll löschen';
+$this->params['breadcrumbs'][] = ['label' => 'Medicine Treatments', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="medicine-checkup-confirm-delete">
+<div class="medicine-treatment-confirm-delete">
 
     <div class="container-fluid padding-large-vertical">
 
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="text-large">
             <p class="padding-large-vertical">
-                <?= 'Bist du sicher, dass du diesen Bericht löschen willst?' ?>
+                <?= 'Bist du sicher, dass du dieses Behandlungsprotokoll löschen möchtest?' ?>
             </p>
             <div class="row">
                 <div class="col-md-6">

@@ -53,9 +53,9 @@ class MedicineTreatmentInjury extends ActiveRecord
             'treatment_id' => 'Treatment ID',
             'x' => 'X',
             'y' => 'Y',
-            'injury' => 'Injury',
+            'injury' => 'Verletzung',
             'operation' => 'Operation',
-            'annotation' => 'Annotation',
+            'annotation' => 'Anmerkung',
         ];
     }
 

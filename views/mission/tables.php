@@ -2,7 +2,7 @@
 
 use app\helpers\Html;
 use yii\data\ActiveDataProvider;
-use app\widgets\Glyphicon;
+use mate\yii\widgets\Glyphicon;
 
 /* @var $this yii\web\View */
 /* @var $tables \yii\db\ActiveQuery[] */

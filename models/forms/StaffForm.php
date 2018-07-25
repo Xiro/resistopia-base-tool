@@ -100,6 +100,7 @@ class StaffForm extends Staff
         $this->date_of_birth = implode("-", array_reverse(explode(".", $this->date_of_birth)));
 
         $accessMasks = $this->getImpliedAccessMasks();
+        $this->accessMasks = !is_array($this->accessMasks) ? [] : $this->accessMasks;
         foreach ($this->accessMasks as $accessMaskId) {
             $accessMasks[] = AccessMask::findOne($accessMaskId);
         }

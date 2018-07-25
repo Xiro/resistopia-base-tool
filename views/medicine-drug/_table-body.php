@@ -14,17 +14,17 @@ $exclude = !isset($exclude) ? array() : $exclude;
 <tbody data-page="<?= $pagination ? $pagination->page + 1 : 0 ?>"
        data-page-size="<?= $pagination ? $pagination->pageSize : 0 ?>"
        data-page-count="<?= $pagination ? $pagination->pageCount : 0 ?>">
-<?php /** @var $model \app\models\Operation */ ?>
+<?php /** @var $model \app\models\MedicineDrug */ ?>
 <?php foreach ($dataProvider->getModels() as $model): ?>
-    <tr data-key="<?= $model->id ?>">
+    <tr class="ui-sortable-handle" data-key="<?= $model->id ?>">
+        <?php if (!in_array("order", $exclude)): ?>
+            <td class="order order-content">
+                <?= $model->order; ?>
+            </td>
+        <?php endif; ?>
         <?php if (!in_array("name", $exclude)): ?>
             <td class="name">
                 <?= $model->name ?>
-            </td>
-        <?php endif; ?>
-        <?php if (!in_array("created", $exclude)): ?>
-            <td class="created">
-                <?= $model->created ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("actions", $exclude)): ?>
@@ -32,20 +32,20 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?php if (!in_array("action-view", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::eye_open(),
-                        ['operation/view', 'id' => $model->id],
+                        ['medicine-drug/view', 'id' => $model->id],
                         ["class" => "ajax-dialog", "data-size" => "lg"]
                     ) ?>
                 <?php endif; ?>
                 <?php if (!in_array("action-update", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::pencil(),
-                        ['operation/update', 'id' => $model->id]
+                        ['medicine-drug/update', 'id' => $model->id]
                     ) ?>
                 <?php endif; ?>
                 <?php if (!in_array("action-delete", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::trash(),
-                        ['operation/confirm-delete', 'id' => $model->id],
+                        ['medicine-drug/confirm-delete', 'id' => $model->id],
                         ["class" => "ajax-dialog", "data-size" => "sm"]
                     ) ?>
                 <?php endif; ?>

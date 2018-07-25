@@ -9,10 +9,12 @@ use yii\db\ActiveRecord;
  * This is the model class for table "medicine_treatment_medication".
  *
  * @property integer $id
- * @property integer $drug_id
+ * @property integer $treatment_id
  * @property string $location
+ * @property integer $drug_id
  *
  * @property MedicineDrug $drug
+ * @property MedicineTreatment $treatment
  */
 class MedicineTreatmentMedication extends ActiveRecord
 {
@@ -30,10 +32,11 @@ class MedicineTreatmentMedication extends ActiveRecord
     public function rules()
     {
         return [
-            [['drug_id', 'location'], 'required'],
-            [['drug_id'], 'integer'],
+            [['treatment_id', 'location'], 'required'],
+            [['treatment_id'], 'integer'],
             [['location'], 'string'],
             [['drug_id'], 'exist', 'skipOnError' => true, 'targetClass' => MedicineDrug::className(), 'targetAttribute' => ['drug_id' => 'id']],
+            [['treatment_id'], 'exist', 'skipOnError' => true, 'targetClass' => MedicineTreatment::className(), 'targetAttribute' => ['treatment_id' => 'id']],
         ];
     }
 
@@ -44,8 +47,9 @@ class MedicineTreatmentMedication extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'drug_id' => 'Drug ID',
-            'location' => 'Location',
+            'treatment_id' => 'Treatment ID',
+            'location' => 'Behandlung',
+            'drug_id' => 'Medikament',
         ];
     }
 
@@ -55,5 +59,13 @@ class MedicineTreatmentMedication extends ActiveRecord
     public function getDrug()
     {
         return $this->hasOne(MedicineDrug::className(), ['id' => 'drug_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTreatment()
+    {
+        return $this->hasOne(MedicineTreatment::className(), ['id' => 'treatment_id']);
     }
 }

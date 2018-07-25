@@ -72,6 +72,8 @@ AppAsset::register($this);
     Access::addNavItem(['label' => 'Ranks', 'url' => ['rank/index']], $adminItems);
     Access::addNavItem(['label' => 'Special Functions', 'url' => ['special-function/index']], $adminItems);
     Access::addNavItem(['label' => 'Users', 'url' => ['user/index']], $adminItems);
+    Access::addNavItem(['label' => 'Drugs', 'url' => ['medicine-drug/index']], $adminItems);
+    Access::addNavItem(['label' => 'Clear Cache', 'url' => ['site/clear-cache']], $adminItems);
     if(!empty($adminItems)) {
         $navItems[] = ['label' => 'Admin', 'items' => $adminItems];
     }

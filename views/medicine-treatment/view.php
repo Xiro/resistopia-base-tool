@@ -5,15 +5,15 @@ use app\assets\page\MedicineFormAsset;
 use mate\yii\widgets\Glyphicon;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\MedicineCheckup */
+/* @var $model app\models\MedicineTreatment */
 
-$this->title = "A38 " . $model->patient->name;
-$this->params['breadcrumbs'][] = ['label' => 'Medicine Checkups', 'url' => ['index']];
+$this->title = "Behandlung " . $model->patient->name;
+$this->params['breadcrumbs'][] = ['label' => 'Medicine Treatments', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 MedicineFormAsset::register($this);
 ?>
-<div class="medicine-checkup-view container-fluid">
+<div class="medicine-treatment-view container-fluid">
 
     <h1>
         <?= Html::encode($this->title) ?>
@@ -77,6 +77,8 @@ MedicineFormAsset::register($this);
                 <p><?= nl2br($model->aftercare) ?></p>
             <?php endif; ?>
 
+            <b>Einsatztauglichkeit:</b> <?= ucfirst($model->operational_fitness) ?>
+
             <h4>Vitalwerte</h4>
 
             <?php
@@ -103,21 +105,16 @@ MedicineFormAsset::register($this);
                 <?php endforeach; ?>
             </div>
 
-            <h4>Weitere Informationen</h4>
+            <h4>Behandlung</h4>
 
             <?php
-            $other = [];
-            $other["Ernährungszustand"] = $model->nutrition;
-            $other["Psychich Auffällig"] = $model->psyche;
-            $other["Hautbild"] = $model->complexion ? $model->complexion : 'Nicht gemessen';
-            $other["Impfungen"] = $model->vaccinations ? $model->vaccinations : 'Keine bekannt';
-            $other["Vorerkrankungen/Infektionen/Allergien"] = $model->conditions ? $model->conditions : 'Keine bekannt';
-            $other["Medikamenten-/Drogenkonsum"] = $model->drug_use ? $model->drug_use : 'Keine bekannt';
-            $other["Sonstige Anmerkungen"] = $model->other ? $model->other : 'Keine';
+            $treatment = [];
+            $treatment["Vorbehandlung"] = $model->pretreatment;
+            $treatment["Medi Foam"] = $model->medi_foam;
             ?>
-            <div class="model-details row other-info">
-                <?php foreach ($other as $label => $value): ?>
-                    <div class="col-md-12">
+            <div class="model-details row treatment-info">
+                <?php foreach ($treatment as $label => $value): ?>
+                    <div class="col-md-6">
                         <div class="row">
                             <div class="col-sm-12 detail-label" style="text-align: left;padding-top: 8px">
                                 <?= $label ?>
@@ -129,6 +126,17 @@ MedicineFormAsset::register($this);
                     </div>
                 <?php endforeach; ?>
             </div>
+
+            <?php if ($model->getMedications()->count()): ?>
+                <h4>Medikation</h4>
+
+                <p>
+                    <?php foreach ($model->medications as $medication): ?>
+                        - <?= $medication->drug->name . ", " . lcfirst($medication->location) ?>
+                        <br>
+                    <?php endforeach; ?>
+                </p>
+            <?php endif; ?>
 
         </div>
     </div>

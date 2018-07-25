@@ -30,7 +30,8 @@ use yii\db\ActiveRecord;
  *
  * @property Staff $author
  * @property Staff $patient
- * @property MedicineTreatmentInjury[] $medicineTreatmentInjuries
+ * @property MedicineTreatmentInjury[] $injuries
+ * @property MedicineTreatmentMedication[] $medications
  */
 class MedicineTreatment extends ActiveRecord
 {
@@ -66,25 +67,36 @@ class MedicineTreatment extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'author_rpn' => 'Author Rpn',
-            'patient_rpn' => 'Patient Rpn',
-            'impairment' => 'Impairment',
-            'aftercare' => 'Aftercare',
-            'operational_fitness' => 'Operational Fitness',
-            'breathing' => 'Breathing',
-            'breathing_details' => 'Breathing Details',
-            'pupils' => 'Pupils',
-            'pulse' => 'Pulse',
-            'temperature' => 'Temperature',
-            'blood_pressure_systolic' => 'Blood Pressure Systolic',
-            'blood_pressure_diastolic' => 'Blood Pressure Diastolic',
-            'psyche' => 'Psyche',
-            'pretreatment' => 'Pretreatment',
+            'author_rpn' => 'Behandelnder Arzt',
+            'patient_rpn' => 'Patient',
+            'impairment' => 'Dauerhafte Beeinträchtigung',
+            'aftercare' => 'Notwendige Nachbehandlung',
+            'operational_fitness' => 'Einsatztauglichkeit',
+            'breathing' => 'Atmung',
+            'breathing_details' => 'Atmung (Details)',
+            'pupils' => 'Pupillen',
+            'pulse' => 'Puls',
+            'temperature' => 'Temperatur',
+            'blood_pressure_systolic' => 'Blutdruck Sys.',
+            'blood_pressure_diastolic' => 'Blutdruck Dia.',
+            'psyche' => 'Psychisch Auffällig',
+            'pretreatment' => 'Vorbehandlung',
             'medi_foam' => 'Medi Foam',
-            'annotation' => 'Annotation',
-            'created' => 'Created',
-            'updated' => 'Updated',
+            'annotation' => 'Sonstige Anmerkungen',
+            'created' => 'Erstellt',
+            'updated' => 'Bearbeitet',
         ];
+    }
+
+    public function delete()
+    {
+        foreach ($this->injuries as $injury) {
+            $injury->delete();
+        }
+        foreach ($this->medications as $medication) {
+            $medication->delete();
+        }
+        return parent::delete();
     }
 
     /**
@@ -106,8 +118,16 @@ class MedicineTreatment extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMedicineTreatmentInjuries()
+    public function getInjuries()
     {
         return $this->hasMany(MedicineTreatmentInjury::className(), ['treatment_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMedications()
+    {
+        return $this->hasMany(MedicineTreatmentMedication::className(), ['treatment_id' => 'id']);
     }
 }

@@ -124,13 +124,17 @@ class m180724_184542_medicine extends Migration
         $this->execute("
         CREATE TABLE `medicine_treatment_medication` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
-            `drug_id` INT(11) NOT NULL,
+            `treatment_id` INT(11) NOT NULL,
             `location` ENUM('Stationär','Im Feld') NOT NULL COLLATE 'utf8_bin',
+            `drug_id` INT(11) NOT NULL,
             PRIMARY KEY (`id`),
             INDEX `FK_medicine_treatment_medication_medicine_drug` (`drug_id`),
-            CONSTRAINT `FK_medicine_treatment_medication_medicine_drug` FOREIGN KEY (`drug_id`) REFERENCES `medicine_drug` (`id`)
+            INDEX `FK_medicine_treatment_medication_medicine_treatment` (`treatment_id`),
+            CONSTRAINT `FK_medicine_treatment_medication_medicine_drug` FOREIGN KEY (`drug_id`) REFERENCES `medicine_drug` (`id`),
+            CONSTRAINT `FK_medicine_treatment_medication_medicine_treatment` FOREIGN KEY (`treatment_id`) REFERENCES `medicine_treatment` (`id`)
         )
         COLLATE='utf8_bin'
+        ENGINE=InnoDB
         ;
         ");
     }

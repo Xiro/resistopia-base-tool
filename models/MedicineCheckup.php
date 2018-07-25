@@ -79,7 +79,6 @@ class MedicineCheckup extends ActiveRecord
             'temperature' => 'Temperatur',
             'blood_pressure_systolic' => 'Blutdruck Sys.',
             'blood_pressure_diastolic' => 'Blutdruck Dia.',
-            'nutrition' => 'Ernährungszustand',
             'psyche' => 'Psychisch Auffällig',
             'complexion' => 'Hautbild',
             'vaccinations' => 'Bekannte Impfungen',
@@ -89,6 +88,14 @@ class MedicineCheckup extends ActiveRecord
             'created' => 'Erstellt',
             'updated' => 'Bearbeitet',
         ];
+    }
+
+    public function delete()
+    {
+        foreach ($this->injuries as $injury) {
+            $injury->delete();
+        }
+        return parent::delete();
     }
 
     /**

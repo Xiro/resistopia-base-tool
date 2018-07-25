@@ -12,7 +12,7 @@ use mate\yii\models\form\UpdateToManyTrait;
 class MedicineCheckupForm extends MedicineCheckup
 {
 
-     use UpdateToManyTrait;
+    use UpdateToManyTrait;
 
     public $injuriesData;
 
@@ -57,12 +57,6 @@ class MedicineCheckupForm extends MedicineCheckup
                 if ($injuryModel->save()) {
                     $injuryIds[] = $injuryModel->id;
                 }
-//                echo '<pre>';
-//                echo print_r([
-//                    $injuryModel->getAttributes(),
-//                    $injuryModel->errors
-//                ]);
-//                echo '</pre>';
             } elseif ($injuryData instanceof MedicineCheckupInjury) {
                 if ($injuryData->save()) {
                     $injuryIds[] = $injuryData->id;
