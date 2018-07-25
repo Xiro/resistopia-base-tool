@@ -1,0 +1,28 @@
+@import "bootstrap/variables";
+
+.injury-select-img {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+
+.injury-mark {
+  @mark-size: 32px;
+  @mark-color: lighten(@brand-primary, 25%);
+  position: absolute;
+  color: @mark-color;
+  font-size: @mark-size;
+  line-height: @mark-size;
+  height: @mark-size;
+  margin-left: -@mark-size / 2;
+  margin-top: -@mark-size / 2;
+
+  .badge {
+    color: @mark-color;
+    background: transparent;
+    font-size: 18px;
+    position: absolute;
+    bottom: -12px;
+    right: -11px;
+  }
+}

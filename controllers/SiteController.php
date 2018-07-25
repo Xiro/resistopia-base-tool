@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\AccessRule;
 use app\models\AccessRight;
 use app\models\AccessCategory;
 use mate\yii\components\SelectData;
@@ -22,6 +23,9 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::class
+                ],
                 'rules' => [
                     [
                         'allow' => true,

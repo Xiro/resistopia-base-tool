@@ -76,8 +76,12 @@ AppAsset::register($this);
         $navItems[] = ['label' => 'Admin', 'items' => $adminItems];
     }
 
-//    $navItems[] = ['label' => 'Mission Control', 'url' => ['mission/control']];
-//    $navItems[] = ['label' => 'Mission Calls', 'url' => ['mission-call/index']];
+    $medicinItems = [];
+    Access::addNavItem(['label' => 'Eingangsuntersuchung A38', 'url' => ['medicine-checkup/index']], $medicinItems);
+    Access::addNavItem(['label' => 'Behandlung', 'url' => ['medicine-treatment/index']], $medicinItems);
+    if(!empty($medicinItems)) {
+        $navItems[] = ['label' => 'Medicine', 'items' => $medicinItems];
+    }
 
     $missionItems = [];
     Access::addNavItem(['label' => 'Mission Control', 'url' => ['mission/control']], $missionItems);
