@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\components\AccessRule;
 use app\models\forms\LoginForm;
+use app\models\forms\UserRequestForm;
 use Yii;
 use app\models\User;
 use app\models\forms\UserForm;
@@ -94,7 +95,7 @@ class UserController extends Controller
     public function actionRequest()
     {
         $this->layout = "login";
-        $model = new UserForm();
+        $model = new UserRequestForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->addFlash('success', 'Your account has been requested. Please ask for approval at the CIC human resources department.');
