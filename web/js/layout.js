@@ -58,6 +58,13 @@ $(document).ready(function () {
 
     setupContent($("body"));
 
+    $('.table-search-form').each(function () {
+        var targetTable = $($(this).data('target-table'));
+        targetTable.on('update', function () {
+            setupContent($(this));
+        });
+    });
+
     $(document).ready(function(){
         $('.dropdown-toggle').dropdown()
     });
