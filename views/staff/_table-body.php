@@ -33,6 +33,11 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?= $model->team_id ? $model->team->name : null ?>
             </td>
         <?php endif; ?>
+        <?php if (!in_array("rank", $exclude)): ?>
+            <td class="rank">
+                <?= $model->rank_id ? $model->rank->short_name : null ?>
+            </td>
+        <?php endif; ?>
         <?php if (!in_array("base_category", $exclude)): ?>
             <td class="base_category">
                 <?= $model->base_category_id ? $model->baseCategory->name : null ?>

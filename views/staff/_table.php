@@ -4,11 +4,11 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use app\models\search\StaffSearch;
 use kartik\select2\Select2;
-use mate\yii\widgets\ValMap;
 use mate\yii\assets\TableSearchAsset;
 use app\models\BaseCategory;
 use app\models\SpecialFunction;
 use app\models\Team;
+use app\models\Rank;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -67,6 +67,23 @@ if ($searchModel) {
                     ])->widget(Select2::class, [
                         'showToggleAll' => false,
                         'data'          => $selectData->fromModel(Team::class, null, null),
+                        'options'       => [
+                            'placeholder' => ''
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]) ?>
+                </th>
+            <?php endif; ?>
+            <?php if (!in_array("rank", $exclude)): ?>
+                <?php $excludeSearchParams[] = "rank"; ?>
+                <th class="rank">
+                    <?= $form->field($model, 'rank_id', [
+                        'labelOptions' => ['class' => ($model->rank_id ? "move" : "")]
+                    ])->widget(Select2::class, [
+                        'showToggleAll' => false,
+                        'data'          => $selectData->fromModel(Rank::class, null, 'short_name'),
                         'options'       => [
                             'placeholder' => ''
                         ],
@@ -147,6 +164,9 @@ if ($searchModel) {
             <?php endif; ?>
             <?php if (!in_array("team", $exclude)): ?>
                 <th class="team"><?= 'Team' ?></th>
+            <?php endif; ?>
+            <?php if (!in_array("rank", $exclude)): ?>
+                <th class="rank"><?= 'Rank' ?></th>
             <?php endif; ?>
             <?php if (!in_array("base_category", $exclude)): ?>
                 <th class="base_category"><?= 'Base Category' ?></th>

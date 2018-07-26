@@ -47,6 +47,11 @@ $config = [
                     'to' => 'nameWithRpn',
                     'orderBy' => ['forename'=> 'ASC', 'surname' => 'ASC'],
                 ],
+                'app\models\Rank' => [
+                    'from' => 'id',
+                    'to' => 'name',
+                    'orderBy' => ['order'=> 'ASC'],
+                ],
                 'app\models\MissionStatus' => [
                     'from' => 'id',
                     'to' => 'name',
