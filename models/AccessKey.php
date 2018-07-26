@@ -30,6 +30,18 @@ class AccessKey extends ActiveRecord
         return 'access_key';
     }
 
+    public function init(){
+        $this->on(self::EVENT_AFTER_INSERT, [$this, 'refreshCache']);
+        $this->on(self::EVENT_AFTER_UPDATE, [$this, 'refreshCache']);
+        $this->on(self::EVENT_AFTER_DELETE, [$this, 'refreshCache']);
+    }
+
+    public function refreshCache()
+    {
+        $cacheKey = self::CACHE_KEY_ACCESS_LIST . $this->id;
+        Yii::$app->cache->delete($cacheKey);
+    }
+
     public function delete()
     {
         foreach ($this->accessMasks as $accessMask) {
@@ -55,6 +67,7 @@ class AccessKey extends ActiveRecord
         ];
     }
 
+
     public function changeAccessMasks($newAccessMasks)
     {
         $newMaskIds = ArrayHelper::getColumn($newAccessMasks, "id");
@@ -73,6 +86,7 @@ class AccessKey extends ActiveRecord
         foreach ($addMasks as $addMask) {
             $this->link("accessMasks", $addMask);
         }
+        $this->refreshCache();
     }
 
     public function getAccessList()
