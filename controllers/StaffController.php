@@ -155,6 +155,10 @@ class StaffController extends Controller
     public function actionCreate()
     {
         $model = new StaffForm();
+        $model->status_alive = true;
+        $model->status_be13 = true;
+        $model->status_it = true;
+        $model->status_in_base = true;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);

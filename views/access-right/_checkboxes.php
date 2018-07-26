@@ -47,6 +47,7 @@ $accessCategories = AccessCategory::find()->orderBy('order')->all();
                 <h3 class="checkbox">
                     <label style="font-size: 24px">
                         <input type="checkbox" class="group-control-checkbox">
+                        <span class="cr" style="font-size: 18px"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                         <?= $accessCategory->name ?>
                     </label>
                 </h3>
@@ -60,6 +61,7 @@ $accessCategories = AccessCategory::find()->orderBy('order')->all();
                                    value="<?= $accessRight->id ?>"
                                 <?= isset($selectedRights[$accessRight->id]) ? 'checked' : '' ?>
                             >
+                            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                             <?= $accessRight->name ?>
                         </label>
                     </div>

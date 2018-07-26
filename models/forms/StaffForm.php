@@ -16,10 +16,6 @@ class StaffForm extends Staff
 
     use UpdateDynamicToOneTrait;
 
-    public $status_alive = true;
-    public $status_be13 = true;
-    public $status_it = true;
-    public $status_in_base = true;
     public $accessMasks = [];
 
     /**

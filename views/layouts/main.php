@@ -36,7 +36,7 @@ AppAsset::register($this);
     <?php
     $staff = AccessRule::activeStaff(false);
     NavBar::begin([
-        'brandLabel' => $staff ? $staff->name . ' (' . $staff->rpn . ')' : '',
+        'brandLabel' => '',
         'brandUrl' => false,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -47,8 +47,9 @@ AppAsset::register($this);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-left'],
             'items'   => [
-//                ['label' => $staff->name, 'url' => false],
-                ['label' => 'Logout', 'url' => ['user/logout']],
+                ['label' => $staff->nameWithRpn, 'items'   => [
+                    ['label' => 'Logout', 'url' => ['user/logout']],
+                ]],
             ],
         ]);
     }
