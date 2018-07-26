@@ -26,7 +26,6 @@ class Access extends Component
      */
     public static function to($key, $default = true, $allowGuest = false)
     {
-//        return true;
         static $rights = false;
         if ($rights === false) {
             $rights = SelectData::fromModel(
