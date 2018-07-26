@@ -41,28 +41,6 @@ if ($searchModel) {
         <?php $excludeSearchParams = []; ?>
         <tr class="animated-label">
             <?php $model = $searchModel ?>
-            <?php if (!in_array("author", $exclude)): ?>
-                <?php $excludeSearchParams[] = "author"; ?>
-                <th class="author">
-                    <?= $form->field($model, 'author', [
-                        'labelOptions' => ['class' => ($model->author ? 'move' : '')]
-                    ])->widget(Select2::class, [
-                        'showToggleAll' => false,
-                        'data'          => SelectData::fromModel(
-                            app\models\Staff::class,
-                            'rpn',
-                            'nameWithRpn',
-                            true
-                        ),
-                        'options'       => [
-                            'placeholder' => '',
-                        ],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                        ],
-                    ])->label('Arzt') ?>
-                </th>
-            <?php endif; ?>
             <?php if (!in_array("patient", $exclude)): ?>
                 <?php $excludeSearchParams[] = "patient"; ?>
                 <th class="patient">
@@ -83,6 +61,28 @@ if ($searchModel) {
                             'allowClear' => true,
                         ],
                     ])->label('Patient') ?>
+                </th>
+            <?php endif; ?>
+            <?php if (!in_array("author", $exclude)): ?>
+                <?php $excludeSearchParams[] = "author"; ?>
+                <th class="author">
+                    <?= $form->field($model, 'author', [
+                        'labelOptions' => ['class' => ($model->author ? 'move' : '')]
+                    ])->widget(Select2::class, [
+                        'showToggleAll' => false,
+                        'data'          => SelectData::fromModel(
+                            app\models\Staff::class,
+                            'rpn',
+                            'nameWithRpn',
+                            true
+                        ),
+                        'options'       => [
+                            'placeholder' => '',
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                        ],
+                    ])->label('Arzt') ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("created", $exclude)): ?>

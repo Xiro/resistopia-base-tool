@@ -17,14 +17,14 @@ $exclude = !isset($exclude) ? array() : $exclude;
 <?php /** @var $model \app\models\MedicineTreatment */ ?>
 <?php foreach ($dataProvider->getModels() as $model): ?>
     <tr data-key="<?= $model->id ?>">
-        <?php if (!in_array("author", $exclude)): ?>
-            <td class="author">
-                <?= $model->author_rpn ? $model->author->nameWithRpn : "None" ?>
-            </td>
-        <?php endif; ?>
         <?php if (!in_array("patient", $exclude)): ?>
             <td class="patient">
                 <?= $model->patient_rpn ? $model->patient->nameWithRpn : "None" ?>
+            </td>
+        <?php endif; ?>
+        <?php if (!in_array("author", $exclude)): ?>
+            <td class="author">
+                <?= $model->author_rpn ? $model->author->nameWithRpn : "None" ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("created", $exclude)): ?>

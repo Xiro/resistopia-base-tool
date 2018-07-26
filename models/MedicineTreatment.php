@@ -27,8 +27,10 @@ use yii\db\ActiveRecord;
  * @property string $annotation
  * @property string $created
  * @property string $updated
+ * @property integer $mission_block_id
  *
  * @property Staff $author
+ * @property MissionBlock $missionBlock
  * @property Staff $patient
  * @property MedicineTreatmentInjury[] $injuries
  * @property MedicineTreatmentMedication[] $medications
@@ -56,6 +58,7 @@ class MedicineTreatment extends ActiveRecord
             [['author_rpn', 'patient_rpn'], 'string', 'max' => 8],
             [['breathing_details'], 'string', 'max' => 255],
             [['author_rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['author_rpn' => 'rpn']],
+            [['mission_block_id'], 'exist', 'skipOnError' => true, 'targetClass' => MissionBlock::className(), 'targetAttribute' => ['mission_block_id' => 'id']],
             [['patient_rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['patient_rpn' => 'rpn']],
         ];
     }
@@ -85,6 +88,7 @@ class MedicineTreatment extends ActiveRecord
             'annotation' => 'Sonstige Anmerkungen',
             'created' => 'Erstellt',
             'updated' => 'Bearbeitet',
+            'mission_block_id' => 'Missionsblock',
         ];
     }
 
@@ -105,6 +109,14 @@ class MedicineTreatment extends ActiveRecord
     public function getAuthor()
     {
         return $this->hasOne(Staff::className(), ['rpn' => 'author_rpn']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMissionBlock()
+    {
+        return $this->hasOne(MissionBlock::className(), ['id' => 'mission_block_id']);
     }
 
     /**

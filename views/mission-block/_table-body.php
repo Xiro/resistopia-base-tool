@@ -29,7 +29,11 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php endif; ?>
         <?php if (!in_array("blocked_by", $exclude)): ?>
             <td class="blocked_by">
-                <?= $model->blocked_by_rpn ? $model->blockedBy->nameWithRpn : "None" ?>
+                <?= $model->blocked_by_rpn ? $model->blockedBy->nameWithRpn . ' ' . Html::a(
+                        Glyphicon::eye_open(),
+                        ['staff/view', 'id' => $model->blocked_by_rpn],
+                        ["class" => "ajax-dialog"]
+                    ) : "None" ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("created", $exclude)): ?>

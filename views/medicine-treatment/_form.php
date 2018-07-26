@@ -65,7 +65,30 @@ MedicineFormAsset::register($this);
                 'data'          => ['tauglich' => 'Tauglich', 'eingeschränkt tauglich' => 'Eingeschränkt tauglich', 'gesperrt' => 'Gesperrt',],
             ]) ?>
         </div>
+        <div class="col-sm-6">
+            <div id="mission-block-time" class="<?= $model->operational_fitness == "gesperrt" ? '' : 'hidden' ?>">
+                <?= $form->field($model, 'mission_block_time', [
+                    'options'      => ['class' => "form-group date-picker"],
+                    'labelOptions' => ['class' => ($model->mission_block_time ? "move" : "")]
+                ])->widget(\dosamigos\datetimepicker\DateTimePicker::className(), [
+                    'size'           => 'sm',
+                    'template'       => '{input}',
+                    'pickButtonIcon' => 'glyphicon glyphicon-time',
+                    'clientOptions'  => [
+                        'type'       => 'TYPE_BUTTON',
+                        'startView'  => 1,
+                        'minView'    => 0,
+                        'maxView'    => 1,
+                        'autoclose'  => true,
+                        'linkFormat' => 'HH:ii P', // if inline = true
+                        // 'format' => 'HH:ii P', // if inline = false
+                    ]
+                ])->label('Gesperrt bis'); ?>
+            </div>
+        </div>
     </div>
+
+    <?php $this->registerJs("activateMissionBlockTrigger()") ?>
 
     <h4>Verletzungen</h4>
 

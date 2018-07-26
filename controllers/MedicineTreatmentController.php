@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\AccessRule;
+use app\models\MissionBlock;
 use Yii;
 use app\models\MedicineTreatment;
 use app\models\forms\MedicineTreatmentForm;
@@ -32,7 +33,7 @@ class MedicineTreatmentController extends Controller
                     ],
                 ],
             ],
-            'verbs' => [
+            'verbs'  => [
                 'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
@@ -51,7 +52,7 @@ class MedicineTreatmentController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -92,11 +93,16 @@ class MedicineTreatmentController extends Controller
         $model = new MedicineTreatmentForm();
         $model->author_rpn = AccessRule::activeStaff()->rpn;
 
+        $missionBlock = new MissionBlock();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
 
-        return $this->render('create', ["model" => $model]);
+        return $this->render('create', [
+            "model" => $model,
+            $missionBlock,
+        ]);
     }
 
     /**

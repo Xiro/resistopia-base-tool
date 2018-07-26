@@ -5,6 +5,8 @@ namespace app\models\forms;
 use app\models\MedicineTreatment;
 use app\models\MedicineTreatmentInjury;
 use app\models\MedicineTreatmentMedication;
+use app\models\MissionBlock;
+use mate\yii\models\form\UpdateDynamicToOneTrait;
 use mate\yii\models\form\UpdateToManyTrait;
 
 /**
@@ -14,9 +16,11 @@ class MedicineTreatmentForm extends MedicineTreatment
 {
 
     use UpdateToManyTrait;
+    use UpdateDynamicToOneTrait;
 
     public $injuriesData;
     public $medicationData;
+    public $mission_block_time;
 
     /**
      * {@inheritdoc}
@@ -31,7 +35,9 @@ class MedicineTreatmentForm extends MedicineTreatment
      */
     public function afterFind()
     {
-
+        if($this->mission_block_id) {
+            $this->mission_block_time = date('Y-m-d H:i', strtotime($this->missionBlock->unblock_time));
+        }
     }
 
     /**
@@ -40,7 +46,7 @@ class MedicineTreatmentForm extends MedicineTreatment
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['injuriesData', 'medicationData'], 'safe']
+            [['injuriesData', 'medicationData', 'mission_block_time'], 'safe']
         ]);
     }
 
@@ -129,6 +135,20 @@ class MedicineTreatmentForm extends MedicineTreatment
 
         $this->updateToMany("injuries", MedicineTreatmentInjury::class, $this->saveInjuries());
         $this->updateToMany("medications", MedicineTreatmentMedication::class, $this->saveMedications());
+
+        $missionBlock = $this->mission_block_id ? $this->missionBlock : new MissionBlock();
+        if(!empty($this->mission_block_time)) {
+            $missionBlock->unblock_time = $this->mission_block_time;
+            $missionBlock->blocked_staff_member_rpn = $this->patient_rpn;
+            $missionBlock->blocked_by_rpn = $this->author_rpn;
+            $missionBlock->save();
+            $this->mission_block_id = $missionBlock->id;
+            parent::save($runValidation, $attributeNames);
+        } elseif($this->mission_block_id) {
+            $this->mission_block_id = null;
+            parent::save($runValidation, $attributeNames);
+            $missionBlock->delete();
+        }
 
         return true;
     }

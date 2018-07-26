@@ -4,6 +4,21 @@ jQuery.fn.outerHTML = function (s) {
         : jQuery("<p>").append(this.eq(0).clone()).html();
 };
 
+function activateMissionBlockTrigger() {
+    $(document).ready(function () {
+        var missionBlockTimeContainer = $('#mission-block-time');
+        $('#medicinetreatmentform-operational_fitness').on('change', function () {
+            console.log($(this).val());
+            if($(this).val() === "gesperrt") {
+                missionBlockTimeContainer.removeClass('hidden');
+            } else {
+                missionBlockTimeContainer.addClass('hidden');
+                missionBlockTimeContainer.find('input').val('');
+            }
+        });
+    });
+}
+
 function setupInjuriesAfterActiveForm() {
     $(document).ready(function () {
 
