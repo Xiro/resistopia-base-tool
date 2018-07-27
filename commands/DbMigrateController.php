@@ -10,6 +10,7 @@ namespace app\commands;
 use app\models\AccessKey;
 use app\models\forms\StaffForm;
 use app\models\Staff;
+use app\models\Team;
 use Yii;
 use yii\console\Controller;
 
@@ -416,16 +417,17 @@ INSERT IGNORE INTO `access_mask_right` (`access_mask_id`, `access_right_id`) VAL
 -- Exportiere Daten aus Tabelle cic_new.base_category: ~10 rows (ungefähr)
 /*!40000 ALTER TABLE `base_category` DISABLE KEYS */;
 INSERT IGNORE INTO `base_category` (`id`, `name`, `access_mask_id`, `order`) VALUES
-	(3, 'Kämpfer', 10, 1),
-	(4, 'Basis Forschung', 2, 6),
-	(5, 'Basis Medizin', 3, 3),
-	(6, 'Basis Sicherheit', 5, 5),
-	(7, 'Basis Technik', 4, 4),
-	(8, 'Stab', 1, 2),
-	(9, 'Council of Humanity', 6, 7),
-	(10, 'T.A.O.', 7, 8),
-	(11, 'GDA', 9, 10),
-	(12, 'TacRec', 8, 9);
+	(1, 'Kämpfer', 10, 1),
+	(2, 'Basis Forschung', 2, 6),
+	(3, 'Basis Medizin', 3, 3),
+	(4, 'Basis Sicherheit', 5, 5),
+	(5, 'Basis Technik', 4, 4),
+	(6, 'Stab', 1, 2),
+	(7, 'Council of Humanity', 6, 7),
+	(8, 'T.A.O.', 7, 8),
+	(9, 'GDA', 9, 10),
+	(10, 'TacRec', 8, 9);
+	(11, 'Sonstiges', null, 11);
 /*!40000 ALTER TABLE `base_category` ENABLE KEYS */;
 
 -- Exportiere Daten aus Tabelle cic_new.rank: ~28 rows (ungefähr)
@@ -474,7 +476,7 @@ INSERT IGNORE INTO `rank` (`id`, `name`, `short_name`, `access_mask_id`, `order`
         /** @var Staff[] $staffs */
         $staffs = Staff::find()->all();
         foreach ($staffs as $staff) {
-            if($staff->access_key_id) {
+            if ($staff->access_key_id) {
                 continue;
             }
             $accessKey = new AccessKey();
@@ -494,7 +496,7 @@ INSERT IGNORE INTO `rank` (`id`, `name`, `short_name`, `access_mask_id`, `order`
             } catch (\Exception $e) {
                 $exceptions++;
             }
-            if(!$saved) {
+            if (!$saved) {
                 $errors++;
             } else {
                 $success++;
@@ -503,8 +505,191 @@ INSERT IGNORE INTO `rank` (`id`, `name`, `short_name`, `access_mask_id`, `order`
         echo "Done. $errors Errors ($exceptions Exceptions) and $success successful\n";
     }
 
+    public function actionMigrateTeams()
+    {
+        $oldTeams = $this->queryAll("
+        SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.tbl_team.Name as team FROM resi_new.tbl_staff
+            LEFT JOIN resi_new.tbl_teamsquatstaffassigned ON resi_new.tbl_staff.Rpn = resi_new.tbl_teamsquatstaffassigned.RPN
+            LEFT JOIN resi_new.tbl_team ON resi_new.tbl_team.TeamID = resi_new.tbl_teamsquatstaffassigned.TeamID;
+        ");
+
+        $teamNames = array_flip(array_flip(array_filter(array_column($oldTeams, 'team'))));
+        $total = count($teamNames);
+        $current = 0;
+        $teamIds = [];
+        echo "Get Team IDs $current/$total";
+        foreach ($teamNames as $teamName) {
+            $current++;
+            echo "\rGet Team IDs $current/$total";
+            if ($teamName == null || $teamName == 'keins') {
+                continue;
+            }
+            $team = Team::findOne(['name' => $teamName]);
+            if ($team) {
+                $teamIds[$teamName] = $team->id;
+            }
+        }
+        echo "\n";
+
+        $total = count($oldTeams);
+        $current = 0;
+        echo "Add Staff Team $current/$total";
+        foreach ($oldTeams as $oldTeam) {
+            $current++;
+            echo "\rAdd Staff Team $current/$total";
+            $staff = Staff::findOne($oldTeam['rpn']);
+            if ($staff->team_id === null && $staff && isset($teamIds[$oldTeam['team']])) {
+                $staff->team_id = $teamIds[$oldTeam['team']];
+                $staff->save();
+            }
+        }
+        echo "\nDone.";
+    }
+
+    public function actionCheckAllAssocs()
+    {
+        $tableOptions = [
+            "Special Category" => [
+                "tbl_specialcategory",
+                "Specialcategory",
+                "SpecialcategoryID",
+                "special_function",
+                "special_function_id",
+                null
+            ],
+            "Ranks"            => [
+                "tbl_rank",
+                "Rank",
+                "RankID",
+                "rank",
+                "rank_id",
+                null
+            ],
+            "Base Category"    => [
+                "tbl_basecategory",
+                "Basecategory",
+                "BasecategoryID",
+                "base_category",
+                "base_category_id",
+                null
+            ],
+            "Eye Color"    => [
+                "tbl_eyecolor",
+                "Eyecolor",
+                "EyecolorID",
+                "eye_color",
+                "eye_color_id",
+                null
+            ],
+            "Blood Type"    => [
+                "tbl_bloodtype",
+                "Bloodtype",
+                "BloodtypeID",
+                "blood_type",
+                "blood_type_id",
+                null
+            ],
+            "Citizenship"            => [
+                "",
+                "",
+                "",
+                "citizenship",
+                "citizenship_id",
+                "
+                SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.tbl_staff.Citizenship as name FROM resi_new.tbl_staff;
+                "
+            ],
+            "Companies"            => [
+                "",
+                "",
+                "",
+                "company",
+                "company_id",
+                "
+                SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.tbl_staff.Company as name FROM resi_new.tbl_staff;
+                "
+            ],
+            "Teams"            => [
+                "",
+                "",
+                "",
+                "team",
+                "team_id",
+                "
+                SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.tbl_team.Name as name FROM resi_new.tbl_staff
+                    LEFT JOIN resi_new.tbl_teamsquatstaffassigned ON resi_new.tbl_staff.Rpn = resi_new.tbl_teamsquatstaffassigned.RPN
+                    LEFT JOIN resi_new.tbl_team ON resi_new.tbl_team.TeamID = resi_new.tbl_teamsquatstaffassigned.TeamID;
+                "
+            ],
+        ];
+
+        foreach ($tableOptions as $name => $tableOptionsSet) {
+            echo "\nChecking $name\n";
+            $this->actionCheckStaffAssoc(
+                $tableOptionsSet[0],
+                $tableOptionsSet[1],
+                $tableOptionsSet[2],
+                $tableOptionsSet[3],
+                $tableOptionsSet[4],
+                $tableOptionsSet[5]
+            );
+            echo "\n";
+        }
+    }
+
+    public function actionCheckStaffAssoc($table, $foreignKey, $primaryKey, $newTable, $newForeignKey, $resiQuery = null)
+    {
+        if ($resiQuery) {
+            $oldEntries = $this->queryAll($resiQuery);
+        } else {
+            $oldEntries = $this->queryAll("
+            SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.$table.Name as name FROM resi_new.tbl_staff
+              LEFT JOIN resi_new.$table ON resi_new.tbl_staff.$foreignKey = resi_new.$table.$primaryKey;
+            ");
+        }
+
+        $newEntries = $this->queryAll("
+        SELECT rpn, $newTable.name as name FROM staff 
+          LEFT JOIN $newTable ON staff.$newForeignKey = $newTable.id;
+        ");
+        /** @var Staff[] $staffs */
+
+        $oldEntries = array_combine(
+            array_column($oldEntries, "rpn"),
+            array_column($oldEntries, "name")
+        );
+        ksort($oldEntries);
+
+        foreach ($oldEntries as $rpn => $name) {
+            if (in_array($name, ['keins', 'kein', 'keine', 'n/a', 'k.a.', ''])) {
+                $oldEntries[$rpn] = null;
+            }
+        }
+
+        $newEntries = array_combine(
+            array_column($newEntries, "rpn"),
+            array_column($newEntries, "name")
+        );
+        ksort($newEntries);
+
+        $diff = array_diff($oldEntries, $newEntries);
+
+        echo "Count: " . count($newEntries) . " new and " . count($oldEntries) . " old\n";
+        echo count($diff) . " different";
+        if (!empty($diff)) {
+            echo "\nDIFFERENCES FOUND!\n";
+            echo print_r($diff);
+            echo "\n";
+        }
+    }
+
+    protected function queryAll($sql, $params = [])
+    {
+        return Yii::$app->db->createCommand($sql)->bindValues($params)->queryAll(\PDO::FETCH_ASSOC);
+    }
+
     protected function execute($sql, $params = [])
     {
-        Yii::$app->db->createCommand($sql)->bindValues($params)->execute();
+        return Yii::$app->db->createCommand($sql)->bindValues($params)->execute();
     }
 }
