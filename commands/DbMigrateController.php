@@ -751,37 +751,41 @@ INSERT IGNORE INTO `rank` (`id`, `name`, `short_name`, `access_mask_id`, `order`
         $checkModels = $modelClass::find()->all();
         /** @var ActiveRecord[] $compareModels */
         $compareModels = $modelClass::find()->all();
-        $compareModelsIds = ArrayHelper::getColumn($compareModels, 'id');
-        $compareModels = array_combine(
-            $compareModelsIds,
-            $compareModels
+        $compareValues = array_combine(
+            ArrayHelper::getColumn($compareModels, 'id'),
+            ArrayHelper::getColumn($compareModels, 'name')
         );
-
-        /** @var ActiveRecord $newModel */
-        $newModel = new $modelClass();
-        $normalized = 0;
-        if($newModel->hasAttribute('name')) {
-            foreach ($checkModels as $checkModel) {
-                /** @var ActiveRecord $compareModel */
-                while (list($key, $compareModel) = each($compareModels)) {
-                    if($checkModel->id == $compareModel->id || strtolower($checkModel->name) != strtolower($compareModel->name)) {
-                        continue;
-                    }
-                    if($this->verbose) {
-                        echo "Found equal entries: " . $checkModel->name . " (ID: " . $checkModel->id . ") will replace " . $compareModel->name . " (ID: " . $compareModel->id . ")\n";
-                    }
-                    Staff::updateAll(
-                        [$newForeignKey => $checkModel->id],
-                        [$newForeignKey => $compareModel->id]
-                    );
-                    $compareModel->delete();
-                    echo "Remove " . $compareModel->id . "\n";
-                    unset($compareModels[$compareModel->id]);
-                    $normalized++;
+        $processEntries = [];
+        foreach ($checkModels as $checkModel) {
+            $found = [];
+            foreach ($compareValues as $id => $name) {
+                if(strtolower($name) == strtolower($checkModel->name)) {
+                    $found[] = $id;
                 }
             }
+            if(count($found) > 1) {
+                $processEntries[] = $found;
+            }
+        }
+        $processed = [];
+        $normalized = 0;
+        foreach ($processEntries as $process) {
+            if(!empty(array_intersect($processed, $process))) {
+                continue;
+            }
+            $processed += $process;
+            $normalized += count($process);
+            $useId = $process[0];
+            unset($process[0]);
+            $replaceIds = $process;
+            Staff::updateAll(
+                [$newForeignKey => $useId],
+                [$newForeignKey => $replaceIds]
+            );
+            $modelClass::deleteAll(['id' => $process]);
         }
         echo "$normalized entries of $newTable have been normalized\n";
+
 
         echo "Count: " . count($newEntries) . " new and " . count($oldEntries) . " old\n";
         $diffCount = count($diff);
