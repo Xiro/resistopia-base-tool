@@ -8,14 +8,116 @@
 namespace app\commands;
 
 use app\models\AccessKey;
+use app\models\BaseCategory;
+use app\models\BloodType;
+use app\models\Citizenship;
+use app\models\Company;
+use app\models\EyeColor;
 use app\models\forms\StaffForm;
+use app\models\Rank;
+use app\models\SpecialFunction;
 use app\models\Staff;
 use app\models\Team;
 use Yii;
 use yii\console\Controller;
+use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 class DbMigrateController extends Controller
 {
+
+    public $verbose;
+
+    public static $associationParams = [
+        "special_category" => [
+            "tbl_specialcategory",
+            "Specialcategory",
+            "SpecialcategoryID",
+            "special_function",
+            "special_function_id",
+            SpecialFunction::class,
+            null
+        ],
+        "rank"             => [
+            "tbl_rank",
+            "Rank",
+            "RankID",
+            "rank",
+            "rank_id",
+            Rank::class,
+            null
+        ],
+        "base_category"    => [
+            "tbl_basecategory",
+            "Basecategory",
+            "BasecategoryID",
+            "base_category",
+            "base_category_id",
+            BaseCategory::class,
+            null
+        ],
+        "eye_color"        => [
+            "tbl_eyecolor",
+            "Eyecolor",
+            "EyecolorID",
+            "eye_color",
+            "eye_color_id",
+            EyeColor::class,
+            null
+        ],
+        "blood_type"       => [
+            "tbl_bloodtype",
+            "Bloodtype",
+            "BloodtypeID",
+            "blood_type",
+            "blood_type_id",
+            BloodType::class,
+            null
+        ],
+        "citizenship"      => [
+            "",
+            "",
+            "",
+            "citizenship",
+            "citizenship_id",
+            Citizenship::class,
+            "
+                SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.tbl_staff.Citizenship as name FROM resi_new.tbl_staff;
+                "
+        ],
+        "company"          => [
+            "",
+            "",
+            "",
+            "company",
+            "company_id",
+            Company::class,
+            "
+                SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.tbl_staff.Company as name FROM resi_new.tbl_staff;
+                "
+        ],
+        "team"             => [
+            "",
+            "",
+            "",
+            "team",
+            "team_id",
+            Team::class,
+            "
+                SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.tbl_team.Name as name FROM resi_new.tbl_staff
+                    LEFT JOIN resi_new.tbl_teamsquatstaffassigned ON resi_new.tbl_staff.Rpn = resi_new.tbl_teamsquatstaffassigned.RPN
+                    LEFT JOIN resi_new.tbl_team ON resi_new.tbl_team.TeamID = resi_new.tbl_teamsquatstaffassigned.TeamID;
+                "
+        ],
+    ];
+
+    public function options($actionID)
+    {
+        return [
+            'verbose'
+        ];
+    }
+
     /**
      * This command echoes what you have entered as the message.
      */
@@ -548,138 +650,152 @@ INSERT IGNORE INTO `rank` (`id`, `name`, `short_name`, `access_mask_id`, `order`
 
     public function actionCheckAllAssocs()
     {
-        $tableOptions = [
-            "Special Category" => [
-                "tbl_specialcategory",
-                "Specialcategory",
-                "SpecialcategoryID",
-                "special_function",
-                "special_function_id",
-                null
-            ],
-            "Ranks"            => [
-                "tbl_rank",
-                "Rank",
-                "RankID",
-                "rank",
-                "rank_id",
-                null
-            ],
-            "Base Category"    => [
-                "tbl_basecategory",
-                "Basecategory",
-                "BasecategoryID",
-                "base_category",
-                "base_category_id",
-                null
-            ],
-            "Eye Color"    => [
-                "tbl_eyecolor",
-                "Eyecolor",
-                "EyecolorID",
-                "eye_color",
-                "eye_color_id",
-                null
-            ],
-            "Blood Type"    => [
-                "tbl_bloodtype",
-                "Bloodtype",
-                "BloodtypeID",
-                "blood_type",
-                "blood_type_id",
-                null
-            ],
-            "Citizenship"            => [
-                "",
-                "",
-                "",
-                "citizenship",
-                "citizenship_id",
-                "
-                SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.tbl_staff.Citizenship as name FROM resi_new.tbl_staff;
-                "
-            ],
-            "Companies"            => [
-                "",
-                "",
-                "",
-                "company",
-                "company_id",
-                "
-                SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.tbl_staff.Company as name FROM resi_new.tbl_staff;
-                "
-            ],
-            "Teams"            => [
-                "",
-                "",
-                "",
-                "team",
-                "team_id",
-                "
-                SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.tbl_team.Name as name FROM resi_new.tbl_staff
-                    LEFT JOIN resi_new.tbl_teamsquatstaffassigned ON resi_new.tbl_staff.Rpn = resi_new.tbl_teamsquatstaffassigned.RPN
-                    LEFT JOIN resi_new.tbl_team ON resi_new.tbl_team.TeamID = resi_new.tbl_teamsquatstaffassigned.TeamID;
-                "
-            ],
-        ];
-
-        foreach ($tableOptions as $name => $tableOptionsSet) {
-            echo "\nChecking $name\n";
-            $this->actionCheckStaffAssoc(
-                $tableOptionsSet[0],
-                $tableOptionsSet[1],
-                $tableOptionsSet[2],
-                $tableOptionsSet[3],
-                $tableOptionsSet[4],
-                $tableOptionsSet[5]
-            );
-            echo "\n";
+        foreach (self::$associationParams as $table => $tableOptionsSet) {
+            $this->actionCheckAssoc($table);
         }
     }
 
-    public function actionCheckStaffAssoc($table, $foreignKey, $primaryKey, $newTable, $newForeignKey, $resiQuery = null)
+    public function actionCheckAssoc($table)
     {
-        if ($resiQuery) {
-            $oldEntries = $this->queryAll($resiQuery);
-        } else {
-            $oldEntries = $this->queryAll("
-            SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.$table.Name as name FROM resi_new.tbl_staff
-              LEFT JOIN resi_new.$table ON resi_new.tbl_staff.$foreignKey = resi_new.$table.$primaryKey;
-            ");
+        if (!isset(self::$associationParams[$table])) {
+            echo "No association options found for table $table";
+            return false;
         }
-
-        $newEntries = $this->queryAll("
-        SELECT rpn, $newTable.name as name FROM staff 
-          LEFT JOIN $newTable ON staff.$newForeignKey = $newTable.id;
-        ");
-        /** @var Staff[] $staffs */
-
-        $oldEntries = array_combine(
-            array_column($oldEntries, "rpn"),
-            array_column($oldEntries, "name")
+        $assocOptions = self::$associationParams[$table];
+        echo "\nChecking $table\n";
+        $this->checkStaffAssoc(
+            $assocOptions[0],
+            $assocOptions[1],
+            $assocOptions[2],
+            $assocOptions[3],
+            $assocOptions[4],
+            $assocOptions[5],
+            $assocOptions[6]
         );
-        ksort($oldEntries);
+        echo "\n";
+        return null;
+    }
 
-        foreach ($oldEntries as $rpn => $name) {
-            if (in_array($name, ['keins', 'kein', 'keine', 'n/a', 'k.a.', ''])) {
-                $oldEntries[$rpn] = null;
-            }
+    public function checkStaffAssoc($table, $foreignKey, $primaryKey, $newTable, $newForeignKey, $modelClass, $resiQuery = null)
+    {
+        if (!$resiQuery) {
+            $resiQuery = "SELECT resi_new.tbl_staff.Rpn as rpn, resi_new.$table.Name as name FROM resi_new.tbl_staff \n"
+                . "     LEFT JOIN resi_new.$table ON resi_new.tbl_staff.$foreignKey = resi_new.$table.$primaryKey;";
+        }
+        $oldEntries = $this->queryAll($resiQuery);
+
+        $newEntriesQuery = "SELECT rpn, $newTable.name as name FROM staff \n"
+            . "     LEFT JOIN $newTable ON staff.$newForeignKey = $newTable.id;";
+        $newEntries = $this->queryAll($newEntriesQuery);
+
+        if($this->verbose) {
+            echo "\nExecuted Queries:\n";
+            echo $resiQuery.  "\n";
+            echo $newEntriesQuery.  "\n\n";
         }
 
         $newEntries = array_combine(
             array_column($newEntries, "rpn"),
             array_column($newEntries, "name")
         );
+        $oldEntries = array_combine(
+            array_column($oldEntries, "rpn"),
+            array_column($oldEntries, "name")
+        );
+        foreach ($oldEntries as $rpn => $name) {
+            if (in_array($name, ['keins', 'kein', 'keine', 'n/a', 'k.a.', ''])) {
+                $oldEntries[$rpn] = null;
+            }
+        }
+        ksort($oldEntries);
         ksort($newEntries);
 
-        $diff = array_diff($oldEntries, $newEntries);
+        $diff = [];
+        $changeTo = [];
+        $fixed = 0;
+        foreach ($oldEntries as $rpn => $name) {
+            if (!array_key_exists($rpn, $newEntries)) {
+                $diff[$rpn] = "RPN does not exist in new DB";
+            }
+            if ($newEntries[$rpn] == $name) {
+                continue;
+            }
+            $diff[$rpn] = $newEntries[$rpn] . " should be " . $name;
+            $changeTo[$rpn] = $name;
+
+            /** @var ActiveRecord $modelClass */
+            /** @var ActiveRecord $newModel */
+            $newModel = new $modelClass();
+            if(!$newModel->hasAttribute('name')) {
+                continue;
+            }
+            $addModel = $modelClass::findOne(['name' => $name]);
+            if(!$addModel) {
+                $addModel = $newModel;
+                $addModel->name = $name;
+                if(!$addModel->save()) {
+                    continue;
+                }
+            }
+            $staff = Staff::findOne($rpn);
+            if ($staff) {
+                $staff->$newForeignKey = $addModel->id;
+                if ($staff->save()) {
+                    $fixed++;
+                }
+            }
+        }
+
+        echo "Checking for upper/lower-case only differences\n";
+        /** @var ActiveRecord[] $checkModels */
+        $checkModels = $modelClass::find()->all();
+        /** @var ActiveRecord[] $compareModels */
+        $compareModels = $modelClass::find()->all();
+        $compareModelsIds = ArrayHelper::getColumn($compareModels, 'id');
+        $compareModels = array_combine(
+            $compareModelsIds,
+            $compareModels
+        );
+
+        /** @var ActiveRecord $newModel */
+        $newModel = new $modelClass();
+        $normalized = 0;
+        if($newModel->hasAttribute('name')) {
+            foreach ($checkModels as $checkModel) {
+                /** @var ActiveRecord $compareModel */
+                while (list($key, $compareModel) = each($compareModels)) {
+                    if($checkModel->id == $compareModel->id || strtolower($checkModel->name) != strtolower($compareModel->name)) {
+                        continue;
+                    }
+                    if($this->verbose) {
+                        echo "Found equal entries: " . $checkModel->name . " (ID: " . $checkModel->id . ") will replace " . $compareModel->name . " (ID: " . $compareModel->id . ")\n";
+                    }
+                    Staff::updateAll(
+                        [$newForeignKey => $checkModel->id],
+                        [$newForeignKey => $compareModel->id]
+                    );
+                    $compareModel->delete();
+                    echo "Remove " . $compareModel->id . "\n";
+                    unset($compareModels[$compareModel->id]);
+                    $normalized++;
+                }
+            }
+        }
+        echo "$normalized entries of $newTable have been normalized\n";
 
         echo "Count: " . count($newEntries) . " new and " . count($oldEntries) . " old\n";
-        echo count($diff) . " different";
+        $diffCount = count($diff);
+        echo "$diffCount different";
         if (!empty($diff)) {
-            echo "\nDIFFERENCES FOUND!\n";
-            echo print_r($diff);
-            echo "\n";
+            echo "\nDIFFERENCES FOUND!";
+            if ($diffCount > 15) {
+                echo "(First 15 are shown)\n";
+                $diff = array_slice($diff, 0, 15);
+            }
+            foreach ($diff as $rpn => $message) {
+                echo "\n$rpn: $message";
+            }
+            echo "\n$fixed of $diffCount differences were fixed";
         }
     }
 
