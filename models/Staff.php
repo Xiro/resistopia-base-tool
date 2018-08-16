@@ -105,7 +105,7 @@ class Staff extends ActiveRecord
             'date_of_birth' => 'Date Of Birth',
             'profession' => 'Profession',
             'callsign' => 'Callsign',
-            'height' => 'Height',
+            'height' => 'Height (cm)',
             'status_it' => 'Status IT',
             'status_be13' => 'Status BE13',
             'status_alive' => 'Status Alive',

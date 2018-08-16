@@ -17,12 +17,14 @@ use app\assets\page\StaffSelectFormAsset;
 /* @var $selectedDataProvider yii\data\ActiveDataProvider */
 /* @var $form \yii\bootstrap\ActiveForm */
 /* @var $searchModel StaffSearch */
+/* @var $model \yii\db\ActiveRecord */
 /* @var $searchUrl string */
 /* @var $exclude array */
 
 $searchUrl = !isset($searchUrl) ? Url::to(["staff/search-form"]) : $searchUrl;
 $exclude = !isset($exclude) ? array() : $exclude;
-$modelName = (new ReflectionClass(new \app\models\Staff()))->getShortName();
+$model = $model ? $model : new \app\models\Staff();
+$modelName = (new ReflectionClass($model))->getShortName();
 /** @var \mate\yii\components\SelectData $selectData */
 $selectData = Yii::$app->selectData;
 
