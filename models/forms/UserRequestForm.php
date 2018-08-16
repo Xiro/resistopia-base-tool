@@ -17,4 +17,13 @@ class UserRequestForm extends UserForm
         ]);
     }
 
+    public function save($runValidation = true, $attributeNames = null)
+    {
+        if(YII_ENV === "dev" && $this->isNewRecord) {
+            $this->approved = 1;
+        }
+        return parent::save($runValidation, $attributeNames);
+    }
+
+
 }

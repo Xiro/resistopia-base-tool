@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use app\helpers\Html;
@@ -37,17 +38,17 @@ AppAsset::register($this);
     $staff = AccessRule::activeStaff(false);
     NavBar::begin([
         'brandLabel' => '',
-        'brandUrl' => false,
-        'options' => [
+        'brandUrl'   => false,
+        'options'    => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
 
-    if($staff) {
+    if ($staff) {
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-left'],
             'items'   => [
-                ['label' => $staff->nameWithRpn, 'items'   => [
+                ['label' => $staff->nameWithRpn, 'items' => [
                     ['label' => 'Logout', 'url' => ['user/logout']],
                 ]],
             ],
@@ -61,7 +62,7 @@ AppAsset::register($this);
     Access::addNavItem(['label' => 'Masks', 'url' => ['access-mask/index']], $accessItems);
     Access::addNavItem(['label' => 'Security Areas', 'url' => ['access-security-area/index']], $accessItems);
     Access::addNavItem(['label' => 'Categories', 'url' => ['access-category/index']], $accessItems);
-    if(!empty($accessItems)) {
+    if (!empty($accessItems)) {
         $navItems[] = ['label' => 'Access', 'items' => $accessItems];
     }
 
@@ -75,14 +76,14 @@ AppAsset::register($this);
     Access::addNavItem(['label' => 'Users', 'url' => ['user/index']], $adminItems);
     Access::addNavItem(['label' => 'Drugs', 'url' => ['medicine-drug/index']], $adminItems);
     Access::addNavItem(['label' => 'Clear Cache', 'url' => ['site/clear-cache']], $adminItems);
-    if(!empty($adminItems)) {
+    if (!empty($adminItems)) {
         $navItems[] = ['label' => 'Admin', 'items' => $adminItems];
     }
 
     $medicinItems = [];
     Access::addNavItem(['label' => 'Eingangsuntersuchung A38', 'url' => ['medicine-checkup/index']], $medicinItems);
     Access::addNavItem(['label' => 'Behandlung', 'url' => ['medicine-treatment/index']], $medicinItems);
-    if(!empty($medicinItems)) {
+    if (!empty($medicinItems)) {
         $navItems[] = ['label' => 'Medicine', 'items' => $medicinItems];
     }
 
@@ -94,7 +95,7 @@ AppAsset::register($this);
     Access::addNavItem(['label' => 'Called', 'url' => ['mission/called']], $missionItems);
     Access::addNavItem(['label' => 'Active', 'url' => ['mission/active']], $missionItems);
     Access::addNavItem(['label' => 'Show All', 'url' => ['mission/index']], $missionItems);
-    if(!empty($missionItems)) {
+    if (!empty($missionItems)) {
         $navItems[] = ['label' => 'Missions', 'items' => $missionItems];
     }
 
@@ -109,6 +110,14 @@ AppAsset::register($this);
     ?>
 
     <div class="<?= $isAjax ? "" : "container" ?>">
+
+        <?php if (YII_ENV === "dev"): ?>
+            <div class="container">
+                <div class="h4 text-center" style="margin-top: 8px; margin-bottom: -10px">
+                    Development System
+                </div>
+            </div>
+        <?php endif; ?>
         <?= $content ?>
     </div>
 </div>
