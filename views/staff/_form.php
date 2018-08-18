@@ -9,6 +9,7 @@ use mate\yii\widgets\SelectData;
 /* @var $this yii\web\View */
 /* @var $model app\models\forms\StaffForm */
 /* @var $form yii\bootstrap\ActiveForm */
+
 ?>
 
 <div class="staff-form">
@@ -20,7 +21,6 @@ use mate\yii\widgets\SelectData;
 
 
     <h3>Personal Information</h3>
-
 
     <div class="row">
         <div class="col-sm-6">

@@ -16,9 +16,36 @@ use mate\yii\widgets\SelectData;
     "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
 ]); ?>
 
+    <style>
+        .help {
+            margin-bottom: 30px;
+            margin-top: -10px;
+        }
+
+        .help tr td:first-child {
+            width: 1px;
+            font-weight: bold;
+            white-space: nowrap;
+            padding-right: 15px;
+        }
+    </style>
 
     <h3>Personal Information</h3>
 
+<?php
+$personalInfoHelp = [
+    "Date of birth:" => "Denk daran, wir sind im Jahr 2024!",
+    "Blood Type:" => "Wenn du außerhalb der Basis startest werden die Mediziner deine Blutgruppe erfassen"
+];
+?>
+    <table class="help">
+        <?php foreach ($personalInfoHelp as $label => $value): ?>
+            <tr>
+                <td><?= $label ?></td>
+                <td><?= $value ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
 
     <div class="row">
         <div class="col-sm-6">
@@ -81,9 +108,41 @@ use mate\yii\widgets\SelectData;
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($staff, 'blood_type_id', [
+                'labelOptions' => ['class' => ($staff->blood_type_id ? 'move' : '')]
+            ])->widget(Select2::class, [
+                'showToggleAll' => false,
+                'data'          => SelectData::fromModel(app\models\BloodType::class),
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ])->label('Blood Type') ?>
+        </div>
+    </div>
+
 
     <h3>Affiliation</h3>
 
+<?php
+$affiliationInfoHelp = [
+    "Company:"       => "Wenn du in der Base startest, wähle RGME 07 BE-XIII aus. Wenn du IT anreist, wähle Zivilist aus",
+    "Base Category:" => "Das Spiel in einer Basiskategorie muss OT abgesprochen sein",
+    "Rank:"          => "Wenn nicht IT erspielt, wähle alles bis Fighter Mark 2 aus. Als Teamleiter wähle Corporal oder Sergeant aus",
+];
+?>
+    <table class="help">
+        <?php foreach ($affiliationInfoHelp as $label => $value): ?>
+            <tr>
+                <td><?= $label ?></td>
+                <td><?= $value ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
 
     <div class="row">
         <div class="col-sm-6">
@@ -184,6 +243,22 @@ use mate\yii\widgets\SelectData;
 
     <h3>System</h3>
 
+    <?php
+    $systemInfoHelp = [
+        "Currently serving in BE13:" => "Auswählen, wenn du innerhalb der Basis startest",
+        "Is Alive:"                   => "Nur abwählen, wenn dein Charakter gestorben ist",
+        "Is IT:"                      => "Abwählen, wenn es sich um einen vorbereiteten Charakter handelt, den du nach dem Tod deines aktuellen Charakters spielen willst",
+        "Callsign:"                   => "Wird vom CIC vergeben, wenn du Funker bist"
+    ];
+    ?>
+    <table class="help">
+        <?php foreach ($systemInfoHelp as $label => $value): ?>
+            <tr>
+                <td><?= $label ?></td>
+                <td><?= $value ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
 
     <div class="row">
         <div class="col-sm-6">
@@ -205,6 +280,23 @@ use mate\yii\widgets\SelectData;
     </div>
 
     <h3>Background</h3>
+
+    <?php
+    $systemInfoHelp = [
+        "Career:"          => "Beschreibung deiner Karriere in der BE13",
+        "Characteristics:" => "Charakteristische Merkmale, z.B. Narben oder Tätowierungen",
+        "Personality:"     => "Persönlichkeitmerkmale",
+        "Awards:"          => "Bisher verdiente Auszeichnungen"
+    ];
+    ?>
+    <table class="help">
+        <?php foreach ($systemInfoHelp as $label => $value): ?>
+            <tr>
+                <td><?= $label ?></td>
+                <td><?= $value ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
 
     <div class="row">
         <div class="col-sm-6">
