@@ -83,6 +83,23 @@ use mate\yii\widgets\SelectData;
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($model, 'blood_type_id', [
+                'labelOptions' => ['class' => ($model->blood_type_id ? 'move' : '')]
+            ])->widget(Select2::class, [
+                'showToggleAll' => false,
+                'data'          => SelectData::fromModel(app\models\BloodType::class),
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ])->label('Blood Type') ?>
+        </div>
+    </div>
+
 
     <h3>Affiliation</h3>
 

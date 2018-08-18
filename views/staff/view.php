@@ -44,19 +44,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     $personalInfo = [];
-    $personalInfo["RPN"] = $model->rpn;
-    $personalInfo["Height"] = $model->height ? $model->height . " cm" : "n/a";
-    $personalInfo["Gender"] = $model->gender ? $model->gender : "n/a";
-
     $personalInfo["name"] = $model->getName();
+    $personalInfo["RPN"] = $model->rpn;
+
+    $personalInfo["Gender"] = $model->gender ? $model->gender : "n/a";
+    $personalInfo["Height"] = $model->height ? $model->height . " cm" : "n/a";
+
+    $personalInfo["Blood Type"] = $model->blood_type_id ? $model->bloodType->name : "n/a";
     $personalInfo["Eye Color"] = $model->eye_color_id ? $model->eyeColor->name : "n/a";
-    $personalInfo["Profession"] = $model->profession ? $model->profession : "n/a";
 
     $personalInfo["Date of Birth"] = $model->date_of_birth ? date("d.m.Y", strtotime($model->date_of_birth)) : "n/a";
+    $personalInfo["Profession"] = $model->profession ? $model->profession : "n/a";
     ?>
     <div class="model-details row personal-info">
         <?php foreach ($personalInfo as $label => $value): ?>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="row">
                     <div class="col-sm-6 detail-label">
                         <?= $label ?>
