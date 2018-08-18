@@ -49,10 +49,10 @@ $personalInfoHelp = [
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($staff, 'forename')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($staff, 'forename')->textInput(['maxlength' => true])->label("First Name*") ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($staff, 'surname')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($staff, 'surname')->textInput(['maxlength' => true])->label("Last Name*") ?>
         </div>
     </div>
 
@@ -72,7 +72,7 @@ $personalInfoHelp = [
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ]) ?>
+            ])->label("Gender*") ?>
         </div>
     </div>
 
@@ -81,7 +81,7 @@ $personalInfoHelp = [
             <?= $form->field($staff, 'date_of_birth')->textInput([
                 'class'        => 'form-control mask-date ',
                 'autocomplete' => 'off'
-            ]) ?>
+            ])->label("Date of Birth*") ?>
         </div>
         <div class="col-sm-6">
             <?= $form->field($staff, 'height')->textInput(['autocomplete' => 'off']) ?>
@@ -124,6 +124,8 @@ $personalInfoHelp = [
             ])->label('Blood Type') ?>
         </div>
     </div>
+
+    <small>* required</small>
 
 
     <h3>Affiliation</h3>
@@ -221,7 +223,7 @@ $affiliationInfoHelp = [
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label('Rank') ?>
+            ])->label('Rank*') ?>
         </div>
         <div class="col-sm-6">
             <?= $form->field($staff, 'citizenship_id', [
@@ -239,6 +241,8 @@ $affiliationInfoHelp = [
             ])->label('Citizenship') ?>
         </div>
     </div>
+
+    <small>* required</small>
 
 
     <h3>System</h3>
