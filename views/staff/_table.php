@@ -50,7 +50,10 @@ if ($searchModel) {
             <?php if (!in_array("rpn", $exclude)): ?>
                 <?php $excludeSearchParams[] = "rpn"; ?>
                 <th class="rpn">
-                    <?= $form->field($model, 'rpn')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'rpn')->textInput([
+                        'maxlength' => true,
+                        'class'     => 'form-control mask-rpn'
+                    ]) ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("name", $exclude)): ?>

@@ -1,4 +1,3 @@
-
 function ajaxActionGetHtml(actionUrl, data, callback) {
     data = typeof data === "undefined" ? [] : data;
     $.get({
@@ -65,7 +64,7 @@ $(document).ready(function () {
         });
     });
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('.dropdown-toggle').dropdown()
     });
     $('.dropdown').hover(function () {
@@ -79,17 +78,29 @@ $(document).ready(function () {
     $('.mask-date').mask('00.00.0000', {placeholder: 'dd.mm.yyyy'}).addClass('has-content');
     $('.mask-datetime').mask('00.00.0000 00:00', {placeholder: 'dd.mm.yyyy HH:ii'}).addClass('has-content');
     $('.mask-duration').mask('00:00', {placeholder: 'HH:MM', reverse: true}).addClass('has-content');
+    $('.mask-rpn').mask('AA-00000', {
+        onKeyPress: function(cep, event, currentField, options){
+            function isNumber(n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
+            }
+            if(isNumber(cep.substr(0, 1)) || isNumber(cep.substr(1, 1))) {
+                cep = "";
+            }
+            cep = cep.substr(0, 2).toUpperCase() + cep.substr(2);
+            currentField.val(cep);
+        }
+    });
 
     // reload button
 
-    var ContentReloadHandle = new function() {
+    var ContentReloadHandle = new function () {
         var handle = this;
         handle.timer = null;
         handle.target = $('.reload-target');
         handle.url = location.href;
 
         handle.start = function () {
-            if(handle.target.length === 0) {
+            if (handle.target.length === 0) {
                 console.error('No reload target found');
             }
             $.get(handle.url).success(function (html) {
@@ -99,19 +110,19 @@ $(document).ready(function () {
         };
 
         handle.stop = function () {
-            if(handle.timer) {
+            if (handle.timer) {
                 clearTimeout(handle.timer);
             }
         };
     };
 
-    if($('.btn-auto-reload.active').length !== 0) {
+    if ($('.btn-auto-reload.active').length !== 0) {
         ContentReloadHandle.start();
     }
     $('.btn-auto-reload').click(function () {
         var btn = $(this);
 
-        if(btn.is('.active')) {
+        if (btn.is('.active')) {
             btn.removeClass('active');
             ContentReloadHandle.stop();
         } else {
@@ -139,7 +150,7 @@ $(document).ready(function () {
         var checkboxGroup = $(this);
         var checkboxes = checkboxGroup.find("input[type=checkbox]:not(.group-control-checkbox)");
         var checkedCheckboxes = checkboxGroup.find("input[type=checkbox]:not(.group-control-checkbox):checked");
-        if(checkboxes.length === checkedCheckboxes.length) {
+        if (checkboxes.length === checkedCheckboxes.length) {
             var groupControlCheckbox = checkboxGroup.find(".group-control-checkbox");
             groupControlCheckbox.prop("checked", true);
         }
