@@ -61,7 +61,7 @@ class Mission extends ActiveRecord
         return [
             [['name', 'zone', 'mission_type_id', 'created_by_rpn'], 'required'],
             [['description', 'debrief_comment', 'note', 'zone'], 'string'],
-            [['slots_total', 'slots_medic', 'slots_radio', 'slots_tech', 'slots_res', 'slots_guard', 'slots_vip', 'mission_status_id', 'mission_type_id'], 'integer'],
+            [['slots_total', 'slots_medic', 'slots_radio', 'slots_tech', 'slots_res', 'slots_guard', 'slots_vip', 'mission_status_id', 'mission_type_id'], 'integer', 'max' => 2147483647],
             [['time_publish', 'time_lst', 'time_ete', 'time_atf', 'finished', 'created', 'updated'], 'safe'],
             [['name'], 'string', 'max' => 128],
             [['created_by_rpn', 'mission_lead_rpn'], 'string', 'max' => 8],

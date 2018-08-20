@@ -120,7 +120,7 @@ class MissionBlockController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         foreach ($staff->activeMissionBlocks as $model) {
-            $model->unblock_time = date('c', time() - 1);
+            $model->unblock_time = date('Y.m.d H:i', time() - 1);
             if($model->save()) {
                 Yii::$app->session->addFlash('success', 'Mission block lifted from ' . $model->blockedStaffMember->nameWithRpn);
             } else {
