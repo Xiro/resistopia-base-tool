@@ -19,7 +19,11 @@ $exclude = !isset($exclude) ? array() : $exclude;
     <tr data-key="<?= $model->id ?>">
         <?php if (!in_array("blocked_staff_member", $exclude)): ?>
             <td class="blocked_staff_member">
-                <?= $model->blocked_staff_member_rpn ? $model->blockedStaffMember->nameWithRpn : "None" ?>
+                <?= $model->blocked_staff_member_rpn ? $model->blockedStaffMember->nameWithRpn . ' ' . Html::a(
+                        Glyphicon::eye_open(),
+                        ['staff/view', 'id' => $model->blocked_staff_member_rpn],
+                        ["class" => "ajax-dialog"]
+                    ) : "None" ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("unblock_time", $exclude)): ?>

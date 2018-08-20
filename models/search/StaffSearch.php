@@ -14,6 +14,8 @@ use app\models\Staff;
 class StaffSearch extends Staff
 {
 
+    use FulltextSearchTrait;
+
     public $name;
 
     /**
@@ -94,13 +96,11 @@ class StaffSearch extends Staff
             ->andFilterWhere(['like', 'callsign', $this->callsign]);
 
         if($this->name) {
-            $nameParts = explode(' ', $this->name);
-            $query->andFilterWhere(['or',
-                ['like', 'callsign', $nameParts],
-                ['like', 'forename', $nameParts],
-                ['like', 'surname', $nameParts],
-                ['like', 'nickname', $nameParts],
-            ]);
+            $this->searchParts(
+                $query,
+                $this->name,
+                ['forename', 'surname', 'nickname']
+            );
         }
 
         return $dataProvider;

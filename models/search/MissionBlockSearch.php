@@ -13,9 +13,6 @@ use app\models\MissionBlock;
 class MissionBlockSearch extends MissionBlock
 {
 
-    public $blocked_staff_member;
-    public $blocked_by;
-
     /**
      * @inheritdoc
      */
@@ -23,7 +20,7 @@ class MissionBlockSearch extends MissionBlock
     {
         return [
             [['id'], 'integer'],
-            [['blocked_staff_member_rpn', 'blocked_by_rpn', 'blocked_staff_member', 'blocked_by', 'unblock_time', 'created'], 'safe'],
+            [['blocked_staff_member_rpn', 'blocked_by_rpn', 'unblock_time', 'created'], 'safe'],
         ];
     }
 
@@ -70,28 +67,6 @@ class MissionBlockSearch extends MissionBlock
 
         $query->andFilterWhere(['like', 'blocked_staff_member_rpn', $this->blocked_staff_member_rpn])
             ->andFilterWhere(['like', 'blocked_by_rpn', $this->blocked_by_rpn]);
-
-        if($this->blocked_staff_member) {
-            $nameParts = explode(' ', $this->blocked_staff_member);
-            $query->leftJoin('staff as blockedStaff', 'blocked_staff_member_rpn = blockedStaff.rpn');
-            $query->andFilterWhere(['or',
-                ['like', 'blockedStaff.forename', $nameParts],
-                ['like', 'blockedStaff.surname', $nameParts],
-                ['like', 'blockedStaff.nickname', $nameParts],
-                ['like', 'blockedStaff.rpn', $nameParts],
-            ]);
-        }
-
-        if($this->blocked_by) {
-            $nameParts = explode(' ', $this->blocked_by);
-            $query->leftJoin('staff as blockedBy', 'blocked_by_rpn = blockedBy.rpn');
-            $query->andFilterWhere(['or',
-                ['like', 'blockedBy.forename', $nameParts],
-                ['like', 'blockedBy.surname', $nameParts],
-                ['like', 'blockedBy.nickname', $nameParts],
-                ['like', 'blockedBy.rpn', $nameParts],
-            ]);
-        }
 
         return $dataProvider;
     }

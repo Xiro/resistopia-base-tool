@@ -13,9 +13,6 @@ use app\models\StaffFileMemo;
 class StaffFileMemoSearch extends StaffFileMemo
 {
 
-    public $staff_name;
-    public $author_name;
-
     /**
      * @inheritdoc
      */
@@ -23,7 +20,7 @@ class StaffFileMemoSearch extends StaffFileMemo
     {
         return [
             [['id', 'access_right_id'], 'integer'],
-            [['title', 'file_memo', 'rpn', 'staff_name', 'author_rpn', 'author_name', 'created', 'updated'], 'safe'],
+            [['title', 'file_memo', 'rpn', 'author_rpn', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -73,28 +70,6 @@ class StaffFileMemoSearch extends StaffFileMemo
             ->andFilterWhere(['like', 'file_memo', $this->file_memo])
             ->andFilterWhere(['like', 'rpn', $this->rpn])
             ->andFilterWhere(['like', 'author_rpn', $this->author_rpn]);
-
-        if($this->staff_name) {
-            $nameParts = explode(' ', $this->staff_name);
-            $query->joinWith('staff');
-            $query->andFilterWhere(['or',
-                ['like', 'staff.forename', $nameParts],
-                ['like', 'staff.surname', $nameParts],
-                ['like', 'staff.nickname', $nameParts],
-                ['like', 'staff.rpn', $nameParts],
-            ]);
-        }
-
-        if($this->author_name) {
-            $nameParts = explode(' ', $this->author_name);
-            $query->leftJoin('staff as author', 'author_rpn = author.rpn');
-            $query->andFilterWhere(['or',
-                ['like', 'author.forename', $nameParts],
-                ['like', 'author.surname', $nameParts],
-                ['like', 'author.nickname', $nameParts],
-                ['like', 'author.rpn', $nameParts],
-            ]);
-        }
 
         return $dataProvider;
     }

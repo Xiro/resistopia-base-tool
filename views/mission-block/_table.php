@@ -5,6 +5,7 @@ use app\models\search\MissionBlockSearch;
 use kartik\select2\Select2;
 use mate\yii\widgets\ValMap;
 use mate\yii\assets\TableSearchAsset;
+use mate\yii\widgets\SelectData;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -44,7 +45,23 @@ if ($searchModel) {
             <?php if (!in_array("blocked_staff_member", $exclude)): ?>
                 <?php $excludeSearchParams[] = "blocked_staff_member"; ?>
                 <th class="blockedStaffMemberRpn">
-                    <?= $form->field($model, 'blocked_staff_member')->textInput(['maxlength' => true])->label('Blocked Staff') ?>
+                    <?= $form->field($model, 'blocked_staff_member_rpn', [
+                        'labelOptions' => ['class' => ($model->blocked_staff_member_rpn ? 'move' : '')]
+                    ])->widget(Select2::class, [
+                        'showToggleAll' => false,
+                        'data'          => SelectData::fromModel(
+                            app\models\Staff::class,
+                            'rpn',
+                            'nameWithRpn',
+                            true
+                        ),
+                        'options'       => [
+                            'placeholder' => '',
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                        ],
+                    ])->label('Blocked Staff') ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("unblock_time", $exclude)): ?>
@@ -56,7 +73,23 @@ if ($searchModel) {
             <?php if (!in_array("blocked_by", $exclude)): ?>
                 <?php $excludeSearchParams[] = "blocked_by"; ?>
                 <th class="blocked_by">
-                    <?= $form->field($model, 'blocked_by')->textInput(['maxlength' => true])->label('Blocked By') ?>
+                    <?= $form->field($model, 'blocked_by_rpn', [
+                        'labelOptions' => ['class' => ($model->blocked_by_rpn ? 'move' : '')]
+                    ])->widget(Select2::class, [
+                        'showToggleAll' => false,
+                        'data'          => SelectData::fromModel(
+                            app\models\Staff::class,
+                            'rpn',
+                            'nameWithRpn',
+                            true
+                        ),
+                        'options'       => [
+                            'placeholder' => '',
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                        ],
+                    ])->label('Blocked By') ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("created", $exclude)): ?>

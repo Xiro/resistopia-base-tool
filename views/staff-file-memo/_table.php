@@ -49,14 +49,46 @@ if ($searchModel) {
             <?php endif; ?>
             <?php if (!in_array("staff_name", $exclude)): ?>
                 <?php $excludeSearchParams[] = "staff_name"; ?>
-                <th class="staff">
-                    <?= $form->field($model, 'staff_name')->textInput(['maxlength' => true])->label('Staff') ?>
+                <th class="staff_name">
+                    <?= $form->field($model, 'rpn', [
+                        'labelOptions' => ['class' => ($model->rpn ? 'move' : '')]
+                    ])->widget(Select2::class, [
+                        'showToggleAll' => false,
+                        'data'          => SelectData::fromModel(
+                            app\models\Staff::class,
+                            'rpn',
+                            'nameWithRpn',
+                            true
+                        ),
+                        'options'       => [
+                            'placeholder' => '',
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                        ],
+                    ])->label('Staff') ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("author_name", $exclude)): ?>
                 <?php $excludeSearchParams[] = "author_name"; ?>
                 <th class="author_name">
-                    <?= $form->field($model, 'author_name')->textInput(['maxlength' => true])->label('Author') ?>
+                    <?= $form->field($model, 'author_rpn', [
+                        'labelOptions' => ['class' => ($model->author_rpn ? 'move' : '')]
+                    ])->widget(Select2::class, [
+                        'showToggleAll' => false,
+                        'data'          => SelectData::fromModel(
+                            app\models\Staff::class,
+                            'rpn',
+                            'nameWithRpn',
+                            true
+                        ),
+                        'options'       => [
+                            'placeholder' => '',
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                        ],
+                    ])->label('Author') ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("access_right", $exclude)): ?>
