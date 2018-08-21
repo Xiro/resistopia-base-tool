@@ -91,6 +91,55 @@ $(document).ready(function () {
         }
     });
 
+    // rotating icons
+
+    $('.rotate').each(function () {
+        var element = $(this);
+        var width = element.width();
+        var height = element.height();
+        var speed = typeof element.attr('speed') !== 'undefined' ? parseInt(element.attr('speed')) : 2000;
+        console.log(speed);
+
+        element.shrink = function (callback) {
+            element.animate({
+                width: 0,
+                height: height
+            }, speed, callback);
+        };
+        element.extend = function (callback) {
+            element.animate({
+                width: width,
+                height: height
+            }, speed, callback);
+        };
+        element.flip = function() {
+            if(element.css('transform') === "matrix(-1, 0, 0, 1, 0, 0)") {
+                element.css({
+                    '-webkit-transform': '',
+                    transform: ''
+                });
+            } else {
+                element.css({
+                    '-webkit-transform': 'scaleX(-1)',
+                    transform: 'scaleX(-1)'
+                });
+            }
+        };
+
+        element.rotate = function() {
+            element.shrink(function () {
+                element.flip();
+                element.extend(function () {
+                    element.shrink(function () {
+                        element.flip();
+                        element.extend(element.rotate);
+                    });
+                });
+            });
+        };
+        element.rotate();
+    });
+
     // reload button
 
     var ContentReloadHandle = new function () {
