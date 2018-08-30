@@ -133,7 +133,10 @@ if ($searchModel) {
             <?php if (!in_array("callsign", $exclude)): ?>
                 <?php $excludeSearchParams[] = "callsign"; ?>
                 <th class="callsign">
-                    <?= $form->field($model, 'callsign')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'callsign')->textInput([
+                            'maxlength' => true,
+                            'class'     => 'form-control mask-callsign'
+                    ]) ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("status_in_base", $exclude)): ?>

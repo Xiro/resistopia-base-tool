@@ -220,7 +220,10 @@ use mate\yii\widgets\SelectData;
 
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'callsign')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'callsign')->textInput([
+                    'maxlength' => true,
+                    'class'     => 'form-control mask-callsign'
+            ]) ?>
 
             <?php if (\app\components\Access::to('staff/grant-rights')): ?>
                 <?= $form->field($model, 'accessMasks', [

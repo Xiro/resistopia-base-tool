@@ -35,7 +35,7 @@ use mate\yii\widgets\SelectData;
 <?php
 $personalInfoHelp = [
     "Date of birth:" => "Denk daran, wir sind im Jahr 2024!",
-    "Blood Type:" => "Wenn du außerhalb der Basis startest werden die Mediziner deine Blutgruppe erfassen"
+    "Blood Type:"    => "Wenn du außerhalb der Basis startest werden die Mediziner deine Blutgruppe erfassen"
 ];
 ?>
     <table class="help">
@@ -247,14 +247,14 @@ $affiliationInfoHelp = [
 
     <h3>System</h3>
 
-    <?php
-    $systemInfoHelp = [
-        "Currently serving in BE13:" => "Auswählen, wenn du innerhalb der Basis startest",
-        "Is Alive:"                   => "Nur abwählen, wenn dein Charakter gestorben ist",
-        "Is IT:"                      => "Abwählen, wenn es sich um einen vorbereiteten Charakter handelt, den du nach dem Tod deines aktuellen Charakters spielen willst",
-        "Callsign:"                   => "Wird vom CIC vergeben, wenn du Funker bist"
-    ];
-    ?>
+<?php
+$systemInfoHelp = [
+    "Currently serving in BE13:" => "Auswählen, wenn du innerhalb der Basis startest",
+    "Is Alive:"                  => "Nur abwählen, wenn dein Charakter gestorben ist",
+    "Is IT:"                     => "Abwählen, wenn es sich um einen vorbereiteten Charakter handelt, den du nach dem Tod deines aktuellen Charakters spielen willst",
+    "Callsign:"                  => "Wird vom CIC vergeben, wenn du Funker bist"
+];
+?>
     <table class="help">
         <?php foreach ($systemInfoHelp as $label => $value): ?>
             <tr>
@@ -279,20 +279,23 @@ $affiliationInfoHelp = [
             ])->label('Is IT') ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($staff, 'callsign')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($staff, 'callsign')->textInput([
+                'maxlength' => true,
+                'class'     => 'form-control mask-callsign'
+            ]) ?>
         </div>
     </div>
 
     <h3>Background</h3>
 
-    <?php
-    $systemInfoHelp = [
-        "Career:"          => "Beschreibung deiner Karriere in der BE13",
-        "Characteristics:" => "Charakteristische Merkmale, z.B. Narben oder Tätowierungen",
-        "Personality:"     => "Persönlichkeitmerkmale",
-        "Awards:"          => "Bisher verdiente Auszeichnungen"
-    ];
-    ?>
+<?php
+$systemInfoHelp = [
+    "Career:"          => "Beschreibung deiner Karriere in der BE13",
+    "Characteristics:" => "Charakteristische Merkmale, z.B. Narben oder Tätowierungen",
+    "Personality:"     => "Persönlichkeitmerkmale",
+    "Awards:"          => "Bisher verdiente Auszeichnungen"
+];
+?>
     <table class="help">
         <?php foreach ($systemInfoHelp as $label => $value): ?>
             <tr>

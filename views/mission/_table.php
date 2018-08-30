@@ -136,7 +136,9 @@ if ($searchModel) {
             <?php if (!in_array("callsign", $exclude)): ?>
                 <?php $excludeSearchParams[] = "callsign"; ?>
                 <th class="callsign">
-                    <?= $form->field($model, 'callsign')->textInput() ?>
+                    <?= $form->field($model, 'callsign')->textInput([
+                        'class'     => 'form-control mask-callsign'
+                    ]) ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("action-status-buttons", $exclude)): ?>
