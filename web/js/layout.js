@@ -93,12 +93,14 @@ $(document).ready(function () {
 
     // rotating icons
 
-    $('.rotate').each(function () {
+    $('img.rotate').each(function () {
         var element = $(this);
         var width = element.width();
         var height = element.height();
         var speed = typeof element.attr('speed') !== 'undefined' ? parseInt(element.attr('speed')) : 2000;
-        console.log(speed);
+        var images = typeof element.attr('images') !== 'undefined' ? JSON.parse(element.attr('images')) : [element.attr('src')];
+        var currentImage = 0;
+        element.attr('src', images[currentImage]);
 
         element.shrink = function (callback) {
             element.animate({
@@ -125,13 +127,22 @@ $(document).ready(function () {
                 });
             }
         };
+        element.nextImage = function() {
+            currentImage++;
+            if(typeof images[currentImage] === "undefined") {
+                currentImage = 0;
+            }
+            element.attr('src', images[currentImage]);
+        };
 
         element.rotate = function() {
             element.shrink(function () {
                 element.flip();
+                element.nextImage();
                 element.extend(function () {
                     element.shrink(function () {
                         element.flip();
+                        element.nextImage();
                         element.extend(element.rotate);
                     });
                 });

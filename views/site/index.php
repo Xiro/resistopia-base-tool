@@ -8,7 +8,7 @@ $this->title = 'Resistopia Base Tool';
 ?>
 <div class="site-index">
 
-    <?php if (YII_ENV === 'dev'): ?>
+    <?php if (YII_ENV !== 'dev'): ?>
         <div class="jumbotron text-center">
             <h1><?= $this->title ?></h1>
 
@@ -17,14 +17,9 @@ $this->title = 'Resistopia Base Tool';
         </div>
     <?php else: ?>
         <div class="content-container text-center">
-            <h1>Resistance Base Tool</h1>
-            <?= Html::img(
-                Yii::getAlias('@web/img/resistance_logo_500.png'),
-                [
-                    'class' => 'rotate',
-                    'speed' => 1500
-                ]
-            ) ?>
+            <br><br>
+            <br><br>
+            <?= $this->render('../layouts/_icon-rotation') ?>
         </div>
     <?php endif; ?>
 

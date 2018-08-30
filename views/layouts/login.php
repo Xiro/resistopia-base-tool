@@ -26,6 +26,11 @@ AppAsset::register($this);
 
 <?php $this->beginBody() ?>
 
+<div class="login-background">
+    <div class="login-background-overlay"></div>
+    <?= $this->render('_icon-rotation') ?>
+</div>
+
 <div class="container">
     <?= $content ?>
 </div>
