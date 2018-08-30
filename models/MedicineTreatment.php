@@ -17,10 +17,10 @@ use yii\db\ActiveRecord;
  * @property string $breathing
  * @property string $breathing_details
  * @property string $pupils
- * @property integer $pulse
- * @property integer $temperature
- * @property integer $blood_pressure_systolic
- * @property integer $blood_pressure_diastolic
+ * @property double $pulse
+ * @property double $temperature
+ * @property double $blood_pressure_systolic
+ * @property double $blood_pressure_diastolic
  * @property string $psyche
  * @property string $pretreatment
  * @property string $medi_foam
@@ -53,7 +53,7 @@ class MedicineTreatment extends ActiveRecord
         return [
             [['author_rpn', 'patient_rpn', 'breathing', 'pupils'], 'required'],
             [['impairment', 'aftercare', 'operational_fitness', 'breathing', 'pupils', 'psyche', 'pretreatment', 'medi_foam', 'annotation'], 'string'],
-            [['pulse', 'temperature', 'blood_pressure_systolic', 'blood_pressure_diastolic'], 'integer'],
+            [['pulse', 'temperature', 'blood_pressure_systolic', 'blood_pressure_diastolic'], 'number'],
             [['created', 'updated'], 'safe'],
             [['author_rpn', 'patient_rpn'], 'string', 'max' => 8],
             [['breathing_details'], 'string', 'max' => 255],

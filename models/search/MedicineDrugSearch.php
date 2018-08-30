@@ -12,6 +12,8 @@ use app\models\MedicineDrug;
  */
 class MedicineDrugSearch extends MedicineDrug
 {
+    use AdvancedSearchTrait;
+
     /**
      * @inheritdoc
      */
@@ -63,7 +65,9 @@ class MedicineDrugSearch extends MedicineDrug
             'order' => $this->order,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $this->searchCaseInsensitive($query, [
+            ['name', $this->name]
+        ]);
 
         return $dataProvider;
     }

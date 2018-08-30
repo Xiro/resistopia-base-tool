@@ -12,6 +12,8 @@ use app\models\Rank;
  */
 class RankSearch extends Rank
 {
+    use AdvancedSearchTrait;
+
     /**
      * @inheritdoc
      */
@@ -64,8 +66,10 @@ class RankSearch extends Rank
             'order' => $this->order,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'short_name', $this->short_name]);
+        $this->searchCaseInsensitive($query, [
+            'name'        => $this->name,
+            'short_name' => $this->short_name,
+        ]);
 
         return $dataProvider;
     }

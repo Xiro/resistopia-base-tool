@@ -12,6 +12,8 @@ use app\models\EyeColor;
  */
 class EyeColorSearch extends EyeColor
 {
+    use AdvancedSearchTrait;
+
     /**
      * @inheritdoc
      */
@@ -62,7 +64,9 @@ class EyeColorSearch extends EyeColor
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $this->searchCaseInsensitive($query, [
+            ['name', $this->name]
+        ]);
 
         return $dataProvider;
     }

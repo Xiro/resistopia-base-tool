@@ -28,7 +28,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php endif; ?>
         <?php if (!in_array("unblock_time", $exclude)): ?>
             <td class="unblock_time">
-                <?= $model->unblock_time ? date('d.m.Y H:i', strtotime($model->created)) : 'Unlimited' ?>
+                <?= $model->unblock_time ? date('d.m.Y H:i', strtotime($model->unblock_time)) : 'Unlimited' ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("blocked_by", $exclude)): ?>

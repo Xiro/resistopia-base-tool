@@ -12,6 +12,8 @@ use app\models\BaseCategory;
  */
 class BaseCategorySearch extends BaseCategory
 {
+    use AdvancedSearchTrait;
+
     /**
      * @inheritdoc
      */
@@ -64,7 +66,9 @@ class BaseCategorySearch extends BaseCategory
             'order' => $this->order,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $this->searchCaseInsensitive($query, [
+            ['name', $this->name]
+        ]);
 
         return $dataProvider;
     }

@@ -12,6 +12,8 @@ use app\models\Company;
  */
 class CompanySearch extends Company
 {
+    use AdvancedSearchTrait;
+
     /**
      * @inheritdoc
      */
@@ -62,7 +64,9 @@ class CompanySearch extends Company
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $this->searchCaseInsensitive($query, [
+            ['name', $this->name]
+        ]);
 
         return $dataProvider;
     }

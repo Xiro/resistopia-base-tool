@@ -12,6 +12,8 @@ use app\models\MedicineTreatment;
  */
 class MedicineTreatmentSearch extends MedicineTreatment
 {
+    use AdvancedSearchTrait;
+
     /**
      * @inheritdoc
      */
@@ -64,22 +66,27 @@ class MedicineTreatmentSearch extends MedicineTreatment
             'temperature' => $this->temperature,
             'blood_pressure_systolic' => $this->blood_pressure_systolic,
             'blood_pressure_diastolic' => $this->blood_pressure_diastolic,
+        ]);
+
+        $this->searchDates($query, [
             'created' => $this->created,
             'updated' => $this->updated,
         ]);
 
-        $query->andFilterWhere(['like', 'author_rpn', $this->author_rpn])
-            ->andFilterWhere(['like', 'patient_rpn', $this->patient_rpn])
-            ->andFilterWhere(['like', 'impairment', $this->impairment])
-            ->andFilterWhere(['like', 'aftercare', $this->aftercare])
-            ->andFilterWhere(['like', 'operational_fitness', $this->operational_fitness])
-            ->andFilterWhere(['like', 'breathing', $this->breathing])
-            ->andFilterWhere(['like', 'breathing_details', $this->breathing_details])
-            ->andFilterWhere(['like', 'pupils', $this->pupils])
-            ->andFilterWhere(['like', 'psyche', $this->psyche])
-            ->andFilterWhere(['like', 'pretreatment', $this->pretreatment])
-            ->andFilterWhere(['like', 'medi_foam', $this->medi_foam])
-            ->andFilterWhere(['like', 'annotation', $this->annotation]);
+        $this->searchCaseInsensitive($query, [
+            'author_rpn' => $this->author_rpn,
+            'patient_rpn' => $this->patient_rpn,
+            'impairment' => $this->impairment,
+            'aftercare' => $this->aftercare,
+            'operational_fitness' => $this->operational_fitness,
+            'breathing' => $this->breathing,
+            'breathing_details' => $this->breathing_details,
+            'pupils' => $this->pupils,
+            'psyche' => $this->psyche,
+            'pretreatment' => $this->pretreatment,
+            'medi_foam' => $this->medi_foam,
+            'annotation' => $this->annotation,
+        ]);
 
         return $dataProvider;
     }

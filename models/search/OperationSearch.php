@@ -12,6 +12,8 @@ use app\models\Operation;
  */
 class OperationSearch extends Operation
 {
+    use AdvancedSearchTrait;
+
     /**
      * @inheritdoc
      */
@@ -59,12 +61,14 @@ class OperationSearch extends Operation
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'id'      => $this->id,
             'created' => $this->created,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $this->searchCaseInsensitive($query, [
+            'name'        => $this->name,
+            'description' => $this->description,
+        ]);
 
         return $dataProvider;
     }

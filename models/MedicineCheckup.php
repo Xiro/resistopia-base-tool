@@ -16,10 +16,10 @@ use yii\db\ActiveRecord;
  * @property string $breathing
  * @property string $breathing_details
  * @property string $pupils
- * @property integer $pulse
- * @property integer $temperature
- * @property integer $blood_pressure_systolic
- * @property integer $blood_pressure_diastolic
+ * @property double $pulse
+ * @property double $temperature
+ * @property double $blood_pressure_systolic
+ * @property double $blood_pressure_diastolic
  * @property string $nutrition
  * @property string $psyche
  * @property string $complexion
@@ -52,7 +52,7 @@ class MedicineCheckup extends ActiveRecord
         return [
             [['author_rpn', 'patient_rpn', 'breathing', 'pupils', 'nutrition', 'psyche'], 'required'],
             [['impairment', 'aftercare', 'breathing', 'pupils', 'nutrition', 'psyche', 'complexion', 'vaccinations', 'conditions', 'drug_use', 'other'], 'string'],
-            [['pulse', 'temperature', 'blood_pressure_systolic', 'blood_pressure_diastolic'], 'integer'],
+            [['pulse', 'temperature', 'blood_pressure_systolic', 'blood_pressure_diastolic'], 'number'],
             [['created', 'updated'], 'safe'],
             [['author_rpn', 'patient_rpn'], 'string', 'max' => 8],
             [['breathing_details'], 'string', 'max' => 255],

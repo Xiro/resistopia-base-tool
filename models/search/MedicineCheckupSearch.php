@@ -2,6 +2,7 @@
 
 namespace app\models\search;
 
+use app\helpers\DebugSql;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -12,6 +13,7 @@ use app\models\MedicineCheckup;
  */
 class MedicineCheckupSearch extends MedicineCheckup
 {
+    use AdvancedSearchTrait;
 
     /**
      * @inheritdoc
@@ -58,6 +60,28 @@ class MedicineCheckupSearch extends MedicineCheckup
             return $dataProvider;
         }
 
+        $this->searchCaseInsensitive($query, [
+            'author_rpn' => $this->author_rpn,
+            'patient_rpn' => $this->patient_rpn,
+            'impairment' => $this->impairment,
+            'aftercare' => $this->aftercare,
+            'breathing' => $this->breathing,
+            'breathing_details' => $this->breathing_details,
+            'pupils' => $this->pupils,
+            'nutrition' => $this->nutrition,
+            'psyche' => $this->psyche,
+            'complexion' => $this->complexion,
+            'vaccinations' => $this->vaccinations,
+            'conditions' => $this->conditions,
+            'drug_use' => $this->drug_use,
+            'other' => $this->other,
+        ]);
+
+        $this->searchDates($query, [
+            'created' => $this->created,
+            'updated' => $this->updated,
+        ]);
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -65,24 +89,7 @@ class MedicineCheckupSearch extends MedicineCheckup
             'temperature' => $this->temperature,
             'blood_pressure_systolic' => $this->blood_pressure_systolic,
             'blood_pressure_diastolic' => $this->blood_pressure_diastolic,
-            'created' => $this->created,
-            'updated' => $this->updated,
         ]);
-
-        $query->andFilterWhere(['like', 'author_rpn', $this->author_rpn])
-            ->andFilterWhere(['like', 'patient_rpn', $this->patient_rpn])
-            ->andFilterWhere(['like', 'impairment', $this->impairment])
-            ->andFilterWhere(['like', 'aftercare', $this->aftercare])
-            ->andFilterWhere(['like', 'breathing', $this->breathing])
-            ->andFilterWhere(['like', 'breathing_details', $this->breathing_details])
-            ->andFilterWhere(['like', 'pupils', $this->pupils])
-            ->andFilterWhere(['like', 'nutrition', $this->nutrition])
-            ->andFilterWhere(['like', 'psyche', $this->psyche])
-            ->andFilterWhere(['like', 'complexion', $this->complexion])
-            ->andFilterWhere(['like', 'vaccinations', $this->vaccinations])
-            ->andFilterWhere(['like', 'conditions', $this->conditions])
-            ->andFilterWhere(['like', 'drug_use', $this->drug_use])
-            ->andFilterWhere(['like', 'other', $this->other]);
 
         return $dataProvider;
     }

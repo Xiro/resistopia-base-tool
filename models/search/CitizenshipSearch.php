@@ -12,6 +12,8 @@ use app\models\Citizenship;
  */
 class CitizenshipSearch extends Citizenship
 {
+    use AdvancedSearchTrait;
+
     /**
      * @inheritdoc
      */
@@ -62,7 +64,9 @@ class CitizenshipSearch extends Citizenship
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $this->searchCaseInsensitive($query, [
+            ['name', $this->name]
+        ]);
 
         return $dataProvider;
     }

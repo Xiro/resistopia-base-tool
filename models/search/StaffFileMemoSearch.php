@@ -12,6 +12,7 @@ use app\models\StaffFileMemo;
  */
 class StaffFileMemoSearch extends StaffFileMemo
 {
+    use AdvancedSearchTrait;
 
     /**
      * @inheritdoc
@@ -62,13 +63,19 @@ class StaffFileMemoSearch extends StaffFileMemo
         $query->andFilterWhere([
             'id' => $this->id,
             'access_right_id' => $this->access_right_id,
+        ]);
+
+        $this->searchDates($query, [
             'created' => $this->created,
             'updated' => $this->updated,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'file_memo', $this->file_memo])
-            ->andFilterWhere(['like', 'rpn', $this->rpn])
+        $this->searchCaseInsensitive($query, [
+            'title'        => $this->title,
+            'file_memo' => $this->file_memo,
+        ]);
+
+        $query->andFilterWhere(['like', 'rpn', $this->rpn])
             ->andFilterWhere(['like', 'author_rpn', $this->author_rpn]);
 
         return $dataProvider;

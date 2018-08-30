@@ -12,6 +12,8 @@ use app\models\User;
  */
 class UserSearch extends User
 {
+    use AdvancedSearchTrait;
+
     /**
      * @inheritdoc
      */
@@ -61,6 +63,9 @@ class UserSearch extends User
         $query->andFilterWhere([
             'id' => $this->id,
             'access_key_id' => $this->access_key_id,
+        ]);
+
+        $this->searchDates($query, [
             'created' => $this->created,
             'updated' => $this->updated,
         ]);

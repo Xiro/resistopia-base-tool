@@ -12,6 +12,9 @@ use app\models\Team;
  */
 class TeamSearch extends Team
 {
+
+    use AdvancedSearchTrait;
+
     /**
      * @inheritdoc
      */
@@ -60,13 +63,18 @@ class TeamSearch extends Team
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+        ]);
+
+        $this->searchDates($query, [
             'created' => $this->created,
             'updated' => $this->updated,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'comment', $this->comment]);
+        $this->searchCaseInsensitive($query, [
+            ['name', $this->name],
+            ['description', $this->description],
+            ['comment', $this->comment]
+        ]);
 
         return $dataProvider;
     }

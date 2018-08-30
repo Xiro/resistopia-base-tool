@@ -2,6 +2,7 @@
 
 namespace app\models\search;
 
+use app\helpers\DebugSql;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -12,6 +13,8 @@ use app\models\Mission;
  */
 class MissionSearch extends Mission
 {
+    use AdvancedSearchTrait;
+
     public $callsign;
 
     /**
@@ -61,35 +64,41 @@ class MissionSearch extends Mission
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'slots_total' => $this->slots_total,
-            'slots_medic' => $this->slots_medic,
-            'slots_radio' => $this->slots_radio,
-            'slots_tech' => $this->slots_tech,
-            'slots_res' => $this->slots_res,
-            'slots_guard' => $this->slots_guard,
-            'slots_vip' => $this->slots_vip,
+            'id'                => $this->id,
+            'slots_total'       => $this->slots_total,
+            'slots_medic'       => $this->slots_medic,
+            'slots_radio'       => $this->slots_radio,
+            'slots_tech'        => $this->slots_tech,
+            'slots_res'         => $this->slots_res,
+            'slots_guard'       => $this->slots_guard,
+            'slots_vip'         => $this->slots_vip,
             'mission_status_id' => $this->mission_status_id,
-            'operation_id' => $this->operation_id,
-            'mission_type_id' => $this->mission_type_id,
-            'time_publish' => $this->time_publish,
-            'time_lst' => $this->time_lst,
-            'time_ete' => $this->time_ete,
-            'time_atf' => $this->time_atf,
-            'finished' => $this->finished,
-            'created' => $this->created,
-            'updated' => $this->updated,
+            'operation_id'      => $this->operation_id,
+            'mission_type_id'   => $this->mission_type_id,
+            'time_atf'          => $this->time_atf,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'debrief_comment', $this->debrief_comment])
-            ->andFilterWhere(['like', 'note', $this->note])
-            ->andFilterWhere(['like', 'zone', $this->zone])
+        $this->searchDates($query, [
+            'time_publish' => $this->time_publish,
+            'time_lst'     => $this->time_lst,
+            'time_ete'     => $this->time_ete,
+            'finished'     => $this->finished,
+            'created'      => $this->created,
+            'updated'      => $this->updated,
+        ]);
+
+        $this->searchCaseInsensitive($query, [
+            'name'            => $this->name,
+            'description'     => $this->description,
+            'debrief_comment' => $this->debrief_comment,
+            'note'            => $this->note,
+        ]);
+
+        $query->andFilterWhere(['like', 'zone', $this->zone])
             ->andFilterWhere(['like', 'created_by_rpn', $this->created_by_rpn])
             ->andFilterWhere(['like', 'mission_lead_rpn', $this->mission_lead_rpn]);
 
-        if($this->callsign) {
+        if ($this->callsign) {
             $query->joinWith('staff')
                 ->andFilterWhere(['like', 'staff.callsign', $this->callsign]);
         }

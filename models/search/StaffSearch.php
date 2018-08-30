@@ -13,8 +13,7 @@ use app\models\Staff;
  */
 class StaffSearch extends Staff
 {
-
-    use FulltextSearchTrait;
+    use AdvancedSearchTrait;
 
     public $name;
 
@@ -68,7 +67,6 @@ class StaffSearch extends Staff
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'date_of_birth' => $this->date_of_birth,
             'height' => $this->height,
             'status_it' => $this->status_it,
             'status_be13' => $this->status_be13,
@@ -83,20 +81,26 @@ class StaffSearch extends Staff
             'citizenship_id' => $this->citizenship_id,
             'eye_color_id' => $this->eye_color_id,
             'team_id' => $this->team_id,
+        ]);
+
+        $this->searchDates($query, [
+            'date_of_birth' => $this->date_of_birth,
             'created' => $this->created,
             'updated' => $this->updated,
         ]);
 
-        $query->andFilterWhere(['like', 'rpn', $this->rpn])
-            ->andFilterWhere(['like', 'forename', $this->forename])
-            ->andFilterWhere(['like', 'surname', $this->surname])
-            ->andFilterWhere(['like', 'nickname', $this->nickname])
-            ->andFilterWhere(['like', 'gender', $this->gender])
-            ->andFilterWhere(['like', 'profession', $this->profession])
-            ->andFilterWhere(['like', 'callsign', $this->callsign]);
+        $this->searchCaseInsensitive($query, [
+            'rpn' => $this->rpn,
+            'forename' => $this->forename,
+            'surname' => $this->surname,
+            'nickname' => $this->nickname,
+            'gender' => $this->gender,
+            'profession' => $this->profession,
+            'callsign' => $this->callsign,
+        ]);
 
         if($this->name) {
-            $this->searchParts(
+            $this->searchFulltext(
                 $query,
                 $this->name,
                 ['forename', 'surname', 'nickname']

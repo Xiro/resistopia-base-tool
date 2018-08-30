@@ -2,6 +2,7 @@
 
 namespace app\models\search;
 
+use app\helpers\DebugSql;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -12,6 +13,7 @@ use app\models\MissionBlock;
  */
 class MissionBlockSearch extends MissionBlock
 {
+    use AdvancedSearchTrait;
 
     /**
      * @inheritdoc
@@ -61,12 +63,19 @@ class MissionBlockSearch extends MissionBlock
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'unblock_time' => $this->unblock_time,
-            'created' => $this->created,
         ]);
 
-        $query->andFilterWhere(['like', 'blocked_staff_member_rpn', $this->blocked_staff_member_rpn])
-            ->andFilterWhere(['like', 'blocked_by_rpn', $this->blocked_by_rpn]);
+        $this->searchDates($query, [
+            'unblock_time' => $this->unblock_time,
+            'created'      => $this->created,
+        ]);
+
+        $this->searchCaseInsensitive($query, [
+            'blocked_staff_member_rpn' => $this->blocked_staff_member_rpn,
+            'blocked_by_rpn'           => $this->blocked_by_rpn,
+        ]);
+
+//        DebugSql::sqlString($query);
 
         return $dataProvider;
     }

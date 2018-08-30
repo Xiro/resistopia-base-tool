@@ -12,6 +12,8 @@ use app\models\SpecialFunction;
  */
 class SpecialFunctionSearch extends SpecialFunction
 {
+    use AdvancedSearchTrait;
+
     /**
      * @inheritdoc
      */
@@ -62,8 +64,10 @@ class SpecialFunctionSearch extends SpecialFunction
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'short_name', $this->short_name]);
+        $this->searchCaseInsensitive($query, [
+            'name'        => $this->name,
+            'short_name' => $this->short_name,
+        ]);
 
         return $dataProvider;
     }
