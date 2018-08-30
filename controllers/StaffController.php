@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\components\AccessRule;
 use app\models\forms\AccessKeyForm;
+use mate\Resource\CsvResource;
 use Yii;
 use app\models\Staff;
 use app\models\forms\StaffForm;
@@ -133,6 +134,23 @@ class StaffController extends Controller
             "modelName"    => "MissionForm",
             'exclude'      => ['callsign']
         ]);
+    }
+
+    public function actionDownloadCallsigns()
+    {
+        $filePath = Yii::getAlias('@webroot/tmp/' . date('Y-m-d_H-i-s') . '_callsigns.csv');
+        fclose(fopen($filePath, 'c'));
+        $csv = new CsvResource($filePath);
+        /** @var Staff[] $staffWithCallsigns */
+        $staffWithCallsigns = Staff::find()->where(['!=', 'callsign', ''])->orderBy('callsign')->all();
+        foreach ($staffWithCallsigns as $row => $staff) {
+            $csv->setRecursive([$row, 'Callsign'], $staff->callsign);
+            $csv->setRecursive([$row, 'Rpn'], $staff->rpn);
+            $csv->setRecursive([$row, 'Name'], $staff->name);
+        }
+        $csv->write();
+        Yii::$app->response->sendFile($filePath);
+//        return $this->goBack();
     }
 
     /**
