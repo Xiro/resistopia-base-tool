@@ -8,7 +8,7 @@ $this->title = 'Resistopia Base Tool';
 ?>
 <div class="site-index">
 
-    <?php if (YII_ENV !== 'dev'): ?>
+    <?php if (YII_ENV === 'dev'): ?>
         <div class="jumbotron text-center">
             <h1><?= $this->title ?></h1>
 
@@ -23,5 +23,4 @@ $this->title = 'Resistopia Base Tool';
         </div>
     <?php endif; ?>
 
-</div>
 </div>

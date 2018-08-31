@@ -198,6 +198,14 @@ class Staff extends ActiveRecord
         return $this->name . ' (' . $this->rpn . ')';
     }
 
+    public function beforeSave($insert)
+    {
+        if(empty($this->callsign)) {
+            $this->callsign = null;
+        }
+        return parent::beforeSave($insert);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
