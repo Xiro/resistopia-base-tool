@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\behaviors\ChangeLogBehavior;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -58,6 +59,7 @@ use yii\db\ActiveRecord;
  * @property StaffBackground $staffBackground
  * @property StaffFileMemo[] $staffFileMemos
  * @property User[] $users
+ * @property Changelog[] $changes
  */
 class Staff extends ActiveRecord
 {
@@ -128,6 +130,16 @@ class Staff extends ActiveRecord
             'blood_type_id' => 'Blood Type',
             'created' => 'Created',
             'updated' => 'Updated',
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class'              => ChangeLogBehavior::class,
+                'excludedAttributes' => ['updated'],
+            ],
         ];
     }
 
@@ -367,5 +379,16 @@ class Staff extends ActiveRecord
     public function getUsers()
     {
         return $this->hasMany(User::className(), ['rpn' => 'rpn']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getChanges()
+    {
+        return Changelog::find()->where([
+            'object' => 'Staff',
+            'primary_key' => $this->rpn
+        ])->orderBy('created DESC');
     }
 }

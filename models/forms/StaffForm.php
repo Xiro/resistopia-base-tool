@@ -105,4 +105,11 @@ class StaffForm extends Staff
         return parent::save(false, $attributeNames);
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->date_of_birth = date('d.m.Y', strtotime($this->date_of_birth));
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+
 }

@@ -45,7 +45,7 @@ trait AdvancedSearchTrait
             if(empty($dateTime)) {
                 continue;
             }
-            $dateTime = date('Y-m-d H:i', strtotime($dateTime));
+            $dateTime = date('Y-m-d H:i:s', strtotime($dateTime));
             $order["ABS(TIMEDIFF($column, '$dateTime'))"] = 'ASC';
         }
         $query->orderBy($order);

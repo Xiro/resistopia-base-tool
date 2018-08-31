@@ -150,7 +150,6 @@ class StaffController extends Controller
         }
         $csv->write();
         Yii::$app->response->sendFile($filePath);
-//        return $this->goBack();
     }
 
     /**

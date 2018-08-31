@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\components\AccessRule;
 use app\models\AccessRight;
 use app\models\AccessCategory;
+use app\models\Staff;
 use mate\yii\components\SelectData;
 use Yii;
 use yii\filters\AccessControl;
@@ -65,6 +66,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $staff = new Staff();
+        echo '<pre>';
+        echo print_r($staff->getBloodType());
+        echo '</pre>';
 //        // This is for quickly creating CRUD access rights
 //        $crud = [
 //        ];

@@ -57,6 +57,11 @@ $config = [
                     'to' => 'name',
                     'orderBy' => ['id'=> 'ASC'],
                 ],
+                'app\models\User' => [
+                    'from' => 'id',
+                    'to' => 'identity',
+                    'orderBy' => ['id'=> 'ASC'],
+                ],
                 'default' => [
                     'from' => 'id',
                     'to' => 'name'

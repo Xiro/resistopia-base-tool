@@ -20,6 +20,8 @@ use yii\web\IdentityInterface;
  * @property string $created
  * @property string $updated
  *
+ * @property string $identity
+ *
  * @property AccessKey $accessKey
  * @property Staff $staff
  */
@@ -153,6 +155,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function generateAuthKey()
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentity()
+    {
+        return $this->rpn ? $this->rpn : 'API User #' . $this->id;
     }
 
     /**

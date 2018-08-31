@@ -4,6 +4,7 @@ use app\helpers\Html;
 use mate\yii\widgets\Glyphicon;
 use yii\data\ActiveDataProvider;
 use app\components\Access;
+use app\models\Changelog;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Staff */
@@ -138,11 +139,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <h3>
                 Mission Blocks
                 <?php if ($model->isBlocked): ?>
-                <span class="heading-btn-group pull-right">
+                    <span class="heading-btn-group pull-right">
                     <?= Html::a(
-                            'Lift Block',
-                            ['mission-block/lift', 'id' => $model->rpn],
-                            ['class' => 'btn btn-default']
+                        'Lift Block',
+                        ['mission-block/lift', 'id' => $model->rpn],
+                        ['class' => 'btn btn-default']
                     ) ?>
                 </span>
                 <?php endif; ?>
@@ -168,6 +169,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     'pagination' => false,
                 ]),
                 'exclude'      => ['staff_name'],
+            ]) ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($model->getChanges()->count() > 0): ?>
+        <div class="model-details-section">
+            <h4>Changelog</h4>
+
+            <?= $this->render('../changelog/_table', [
+                'dataProvider' => new ActiveDataProvider([
+                    'query' => $model->getChanges(),
+                ]),
+                'exclude'      => ['object'],
             ]) ?>
         </div>
     <?php endif; ?>
