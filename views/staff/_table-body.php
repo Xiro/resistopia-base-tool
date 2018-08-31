@@ -53,11 +53,6 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?= $model->callsign ?>
             </td>
         <?php endif; ?>
-        <?php if (!in_array("status_in_base", $exclude)): ?>
-            <td class="status_in_base">
-                <?= $model->status_in_base ? 'Yes' : 'No' ?>
-            </td>
-        <?php endif; ?>
         <?php if (!in_array("actions", $exclude)): ?>
             <td class="actions">
                 <?php if (!in_array("action-view", $exclude)): ?>

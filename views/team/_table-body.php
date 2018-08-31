@@ -24,12 +24,12 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php endif; ?>
         <?php if (!in_array("created", $exclude)): ?>
             <td class="created">
-                <?= $model->created ?>
+                <?= date('d.m.Y H:i:s', strtotime($model->created)) ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("updated", $exclude)): ?>
             <td class="updated">
-                <?= $model->updated ?>
+                <?= date('d.m.Y H:i:s', strtotime($model->updated)) ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("actions", $exclude)): ?>

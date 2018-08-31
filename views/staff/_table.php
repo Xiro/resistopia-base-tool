@@ -139,12 +139,6 @@ if ($searchModel) {
                     ]) ?>
                 </th>
             <?php endif; ?>
-            <?php if (!in_array("status_in_base", $exclude)): ?>
-                <?php $excludeSearchParams[] = "status_in_base"; ?>
-                <th class="status_in_base">
-                    <?= $form->field($model, 'status_in_base')->textInput()->label('In Base') ?>
-                </th>
-            <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th>
                     <?php $pagination = $dataProvider->pagination; ?>
@@ -182,9 +176,6 @@ if ($searchModel) {
             <?php endif; ?>
             <?php if (!in_array("callsign", $exclude)): ?>
                 <th class="callsign"><?= 'Callsign' ?></th>
-            <?php endif; ?>
-            <?php if (!in_array("status_in_base", $exclude)): ?>
-                <th class="status_in_base"><?= 'In Base' ?></th>
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th></th>

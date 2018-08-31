@@ -5,6 +5,7 @@ use app\models\search\StaffFileMemoSearch;
 use kartik\select2\Select2;
 use mate\yii\widgets\SelectData;
 use mate\yii\assets\TableSearchAsset;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -93,8 +94,23 @@ if ($searchModel) {
             <?php endif; ?>
             <?php if (!in_array("access_right", $exclude)): ?>
                 <?php $excludeSearchParams[] = "access_right"; ?>
-                <th class="author_name">
-                    <?= $form->field($model, 'access_right_id')->textInput(['maxlength' => true])->label('Security Level') ?>
+                <th class="access_right">
+                    <?= $form->field($model, 'access_right_id', [
+                        'labelOptions' => ['class' => ($model->access_right_id ? 'move' : '')]
+                    ])->widget(Select2::class, [
+                        'showToggleAll' => false,
+                        'data'          => ArrayHelper::map(
+                            app\models\AccessRight::find()->where(['like', 'key', 'security-level/%', false])->all(),
+                            'id',
+                            'name'
+                        ),
+                        'options'       => [
+                            'placeholder' => '',
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                        ],
+                    ])->label('Security Level') ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("created", $exclude)): ?>
