@@ -21,6 +21,20 @@ Send an http request to ```api/auth/rpn``` with ```rpn``` and ```password``` as 
 curl -i -H "Accept:application/json" "<HOST>/api/auth/rpn" -d "rpn=<rpn>&password=<password>"
 ```
 
+To make an authenticated call, the retrieved access_token has to be send along every request
+
+This can be done by header (recommended):
+
+```
+curl <...> --header "access-token: <access token>"
+```
+
+or as a GET parameter:
+
+```
+curl <...> "<url>&access-token=m5j3jSydPVHyj_OaGvnm5mqqWaJhVJMU"
+```
+
 ### API Calls
 
 #### Staff
