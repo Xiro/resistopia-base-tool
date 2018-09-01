@@ -102,7 +102,7 @@ class User extends ActiveRecord implements IdentityInterface
         /** @var User $user */
         $user = self::find()
             ->where(['access_token' => $token])
-            ->andWhere(['>=', 'token_expire', new \yii\db\Expression('NOW()')])
+            ->andWhere(['>=', 'token_expire', date('Y-m-d H:i:s', time())])
             ->one();
         if ($user) {
             $user->token_expire = date('Y-m-d H:i:s', time() + self::TOKEN_EXPIRE_IN_SECONDS);
