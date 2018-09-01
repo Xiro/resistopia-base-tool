@@ -58,7 +58,7 @@ use yii\db\ActiveRecord;
  * @property Team $team
  * @property StaffBackground $staffBackground
  * @property StaffFileMemo[] $staffFileMemos
- * @property User[] $users
+ * @property User $user
  * @property Changelog[] $changes
  */
 class Staff extends ActiveRecord
@@ -181,8 +181,8 @@ class Staff extends ActiveRecord
         foreach ($this->missionStatusHistories as $missionStatusHistory) {
             $missionStatusHistory->unlink('author', $this);
         }
-        foreach ($this->users as $user) {
-            $user->delete();
+        if($this->user) {
+            $this->user->delete();
         }
         if($this->staffBackground) {
             $this->staffBackground->delete();
@@ -190,6 +190,7 @@ class Staff extends ActiveRecord
         foreach ($this->staffFileMemos as $staffFileMemo) {
             $staffFileMemo->delete();
         }
+
         $this->accessKey->delete();
 
         parent::delete();
@@ -376,9 +377,9 @@ class Staff extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsers()
+    public function getUser()
     {
-        return $this->hasMany(User::className(), ['rpn' => 'rpn']);
+        return $this->hasOne(User::className(), ['rpn' => 'rpn']);
     }
 
     /**

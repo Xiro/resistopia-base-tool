@@ -4,9 +4,9 @@ $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');
 
 $config = [
-    'id' => 'basic',
-    'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'ajaxLayout', 'selectData', function() {
+    'id'         => 'basic',
+    'basePath'   => dirname(__DIR__),
+    'bootstrap'  => ['log', 'ajaxLayout', 'selectData', function () {
         \Yii::$container->set('yii\bootstrap\ActiveField', [
             'inputOptions' => [
                 'autocomplete' => 'off'
@@ -14,61 +14,61 @@ $config = [
         ]);
     }],
     'components' => [
-        'request' => [
+        'request'      => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'fEztfQrJ8KPTuDZhESSK_rq6M7IIIUnJ',
         ],
-        'cache' => [
+        'cache'        => [
             'class' => 'yii\caching\FileCache',
         ],
-        'user' => [
-            'identityClass' => 'app\models\User',
+        'user'         => [
+            'identityClass'   => 'app\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => ['user/login']
+            'loginUrl'        => ['user/login']
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
+        'mailer'       => [
+            'class'            => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
-        'ajaxLayout' => [
+        'ajaxLayout'   => [
             'class' => 'app\components\AjaxLayout'
         ],
-        'selectData' => [
+        'selectData'   => [
             'class' => 'mate\yii\components\SelectData',
-            'maps' => [
-                'app\models\Staff' => [
-                    'from' => 'rpn',
-                    'to' => 'nameWithRpn',
-                    'orderBy' => ['forename'=> 'ASC', 'surname' => 'ASC'],
+            'maps'  => [
+                'app\models\Staff'         => [
+                    'from'    => 'rpn',
+                    'to'      => 'nameWithRpn',
+                    'orderBy' => ['forename' => 'ASC', 'surname' => 'ASC'],
                 ],
-                'app\models\Rank' => [
-                    'from' => 'id',
-                    'to' => 'name',
-                    'orderBy' => ['order'=> 'ASC'],
+                'app\models\Rank'          => [
+                    'from'    => 'id',
+                    'to'      => 'name',
+                    'orderBy' => ['order' => 'ASC'],
                 ],
                 'app\models\MissionStatus' => [
-                    'from' => 'id',
-                    'to' => 'name',
-                    'orderBy' => ['id'=> 'ASC'],
+                    'from'    => 'id',
+                    'to'      => 'name',
+                    'orderBy' => ['id' => 'ASC'],
                 ],
-                'app\models\User' => [
-                    'from' => 'id',
-                    'to' => 'identity',
-                    'orderBy' => ['id'=> 'ASC'],
+                'app\models\User'          => [
+                    'from'    => 'id',
+                    'to'      => 'identity',
+                    'orderBy' => ['id' => 'ASC'],
                 ],
-                'default' => [
+                'default'                  => [
                     'from' => 'id',
-                    'to' => 'name'
+                    'to'   => 'name'
                 ],
             ]
         ],
-        'db' => $db,
+        'db'           => $db,
         'urlManager'   => [
             'class'           => 'yii\web\UrlManager',
             // Disable index.php
@@ -81,42 +81,47 @@ $config = [
                 '<controller:\w+>/<action:\w+>'          => '<controller>/<action>',
                 [
                     'pattern' => '/',
-                    'route' => 'character-registration/select',
-                    'host' => 'http://charakteranmeldung-resistopia.lost-ideas.com'
+                    'route'   => 'character-registration/select',
+                    'host'    => 'http://charakteranmeldung-resistopia.lost-ideas.com'
                 ]
             ),
         ],
         'assetManager' => [
-            'class' => 'yii\web\AssetManager',
+            'class'   => 'yii\web\AssetManager',
 //            'forceCopy' => true,
             'bundles' => [
                 'yii\bootstrap\BootstrapAsset' => [
                     'basePath' => '@webroot',
-                    'baseUrl' => '@web',
-                    'css' => [
+                    'baseUrl'  => '@web',
+                    'css'      => [
                         'plugins/bootstrap/bootstrap.css'
                     ],
-                    'js' => [
+                    'js'       => [
                         'plugins/bootstrap/bootstrap.min.js'
                     ]
                 ],
             ],
         ],
     ],
-    'params' => $params,
+    'modules' => [
+        'api' => [
+            'class' => 'app\api\Module'
+        ]
+    ],
+    'params'     => $params,
 ];
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
+        'class'      => 'yii\debug\Module',
         'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
+        'class'      => 'yii\gii\Module',
         'allowedIPs' => ['127.0.0.1', '::1'],
         'generators' => [
             'model' => [
@@ -128,7 +133,7 @@ if (YII_ENV_DEV) {
             'crud'  => [
                 'class'     => 'mate\yii\generators\crud\Generator',
                 'templates' => [
-                    'default' => '@app/vendor/mate-code/yii2-mates/src/generators/crud/default',
+                    'default'  => '@app/vendor/mate-code/yii2-mates/src/generators/crud/default',
                     'sortable' => '@app/vendor/mate-code/yii2-mates/src/generators/crud/sortable',
                     'approval' => '@app/vendor/mate-code/yii2-mates/src/generators/crud/approval',
                 ]

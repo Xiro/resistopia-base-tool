@@ -4,6 +4,7 @@ namespace app\components;
 
 use app\models\AccessKey;
 use app\models\AccessRight;
+use app\models\User;
 use mate\yii\widgets\SelectData;
 use yii\base\Component;
 
@@ -16,7 +17,7 @@ class Access extends Component
     ];
 
     /**
-     * checks a users right to access a feature
+     * checks the active users right to access a feature
      * keys should usually be in the format controller/action
      * or controller/action/specification
      * @param $key
@@ -27,14 +28,6 @@ class Access extends Component
     public static function to($key, $default = true, $allowGuest = false)
     {
 //        return true;
-        static $rights = false;
-        if ($rights === false) {
-            $rights = SelectData::fromModel(
-                AccessRight::class,
-                "key",
-                "id"
-            );
-        }
 
         static $user = false;
         if ($user === false) {
@@ -43,6 +36,30 @@ class Access extends Component
 
         if (!$user) {
             return $allowGuest;
+        }
+
+        return self::ofUser($user, $key, $default = true, $allowGuest = false);
+    }
+
+    /**
+     * checks a users right to access a feature
+     * keys should usually be in the format controller/action
+     * or controller/action/specification
+     * @param User $user
+     * @param $key
+     * @param bool $default
+     * @param bool $allowGuest
+     * @return bool
+     */
+    public static function ofUser(User $user, $key, $default = true, $allowGuest = false)
+    {
+        static $rights = false;
+        if ($rights === false) {
+            $rights = SelectData::fromModel(
+                AccessRight::class,
+                "key",
+                "id"
+            );
         }
 
         if($user->is_admin == 1) {

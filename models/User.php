@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\DebugSql;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
@@ -14,6 +15,8 @@ use yii\web\IdentityInterface;
  * @property string $rpn
  * @property string $password_hash
  * @property string $auth_key
+ * @property string $access_token
+ * @property string $token_expire
  * @property integer $access_key_id
  * @property integer $approved;
  * @property integer $is_admin
@@ -27,6 +30,9 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+
+    const TOKEN_EXPIRE_IN_SECONDS = 3600;
+
     /**
      * @inheritdoc
      */
@@ -43,10 +49,11 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['password_hash', 'auth_key', 'access_key_id'], 'required'],
             [['access_key_id', 'approved'], 'integer'],
-            [['created', 'updated'], 'safe'],
+            [['created', 'updated', 'token_expire'], 'safe'],
             [['rpn'], 'string', 'max' => 8],
             [['password_hash'], 'string', 'max' => 255],
-            [['auth_key'], 'string', 'max' => 32],
+            [['auth_key', 'access_token'], 'string', 'max' => 32],
+            [['access_token'], 'unique'],
             [['auth_key'], 'unique'],
             [['rpn'], 'unique'],
             [['access_key_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessKey::class, 'targetAttribute' => ['access_key_id' => 'id']],
@@ -60,14 +67,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'rpn' => 'Rpn',
+            'id'            => 'ID',
+            'rpn'           => 'Rpn',
             'password_hash' => 'Password Hash',
-            'auth_key' => 'Auth Key',
+            'auth_key'      => 'Auth Key',
             'access_key_id' => 'Access Key',
-            'approved' => 'Approved',
-            'created' => 'Created',
-            'updated' => 'Updated',
+            'approved'      => 'Approved',
+            'created'       => 'Created',
+            'updated'       => 'Updated',
         ];
     }
 
@@ -88,12 +95,26 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @throws NotSupportedException
      * {@inheritdoc}
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        /** @var User $user */
+        $user = self::find()
+            ->where(['access_token' => $token])
+            ->andWhere(['>=', 'token_expire', new \yii\db\Expression('NOW()')])
+            ->one();
+        if ($user) {
+            $user->token_expire = date('Y-m-d H:i:s', time() + self::TOKEN_EXPIRE_IN_SECONDS);
+            $user->save();
+        }
+        return $user;
+    }
+
+    public function generateAccessToken()
+    {
+        $this->access_token = Yii::$app->security->generateRandomString();
+        $this->token_expire = date('Y-m-d H:i:s', time() + self::TOKEN_EXPIRE_IN_SECONDS);
     }
 
     /**
