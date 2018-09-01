@@ -157,4 +157,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php endif; ?>
 
+    <?php if ($model->getChanges()->count() > 0): ?>
+        <div class="model-details-section">
+            <h4>Changelog</h4>
+
+            <?= $this->render('../changelog/_table', [
+                'dataProvider' => new ActiveDataProvider([
+                    'query' => $model->getChanges(),
+                ]),
+                'exclude'      => ['object'],
+            ]) ?>
+        </div>
+    <?php endif; ?>
+
 </div>

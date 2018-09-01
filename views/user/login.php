@@ -34,7 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'class'        => 'form-control mask-rpn'
         ]) ?>
 
-        <?= $form->field($model, 'password')->passwordInput(['autocomplete' => 'off']) ?>
+        <?= $form->field($model, 'password')->passwordInput([
+                'autocomplete' => 'off'
+        ]) ?>
 
         <div class="form-group">
             <div class="row">

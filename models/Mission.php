@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\behaviors\ChangeLogBehavior;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -42,6 +43,7 @@ use yii\db\ActiveRecord;
  * @property Staff $missionLead
  * @property Staff[] $staff
  * @property MissionStatusHistory[] $missionStatusHistory
+ * @property Changelog[] $changes
  */
 class Mission extends ActiveRecord
 {
@@ -107,6 +109,16 @@ class Mission extends ActiveRecord
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class'              => ChangeLogBehavior::class,
+                'excludedAttributes' => ['updated'],
+            ],
+        ];
+    }
+
     public function delete()
     {
         foreach ($this->missionStatusHistory as $statusHistory) {
@@ -116,6 +128,18 @@ class Mission extends ActiveRecord
             $this->unlink('staff', $staff, true);
         }
         parent::delete();
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->time_atf = date('H:i:s', strtotime($this->time_atf));
+        return parent::beforeSave($insert);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->time_atf = date('H:i', strtotime($this->time_atf));
+        return parent::afterSave($insert, $changedAttributes);
     }
 
     public function getCallsigns()
@@ -181,5 +205,16 @@ class Mission extends ActiveRecord
     {
         return $this->hasMany(MissionStatusHistory::class, ['mission_id' => 'id'])
             ->orderBy('mission_status_history.created DESC');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getChanges()
+    {
+        return Changelog::find()->where([
+            'object' => 'Mission',
+            'primary_key' => $this->id
+        ])->orderBy('created DESC');
     }
 }

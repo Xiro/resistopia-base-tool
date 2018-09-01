@@ -67,9 +67,6 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $staff = new Staff();
-        echo '<pre>';
-        echo print_r($staff->getBloodType());
-        echo '</pre>';
 //        // This is for quickly creating CRUD access rights
 //        $crud = [
 //        ];
