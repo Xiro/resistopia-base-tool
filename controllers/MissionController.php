@@ -93,11 +93,13 @@ class MissionController extends Controller
     }
 
     /**
+     * @param $title
      * @param $statusNames
      * @return string
      */
     protected function renderIndexView($title, $statusNames)
     {
+        $this->actionCheckPublishMission();
         $searchModel = new MissionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -131,6 +133,7 @@ class MissionController extends Controller
      */
     public function actionSearch($statusIds = null)
     {
+        $this->actionCheckPublishMission();
         $searchModel = new MissionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if ($statusIds) {
@@ -200,6 +203,7 @@ class MissionController extends Controller
      */
     protected function renderTables($tables, $title = null, $view = 'tables')
     {
+        $this->actionCheckPublishMission();
         if (Yii::$app->request->isAjax) {
             $this->layout = false;
         }
@@ -312,6 +316,23 @@ class MissionController extends Controller
         }
         return $this->goBack();
 
+    }
+
+    /**
+     * Check for missions to automatically publish
+     */
+    public function actionCheckPublishMission()
+    {
+        $statusIds = $this->getStatusIds();
+        /** @var Mission[] $missions */
+        $missions = Mission::find()
+            ->where(['mission_status_id' => $statusIds['planing']])
+            ->andWhere(['<=','time_publish', date('Y-m-d H:i:s')])
+            ->all();
+        foreach ($missions as $mission) {
+            $mission->mission_status_id = $statusIds['openLeadercall'];
+            $mission->save();
+        }
     }
 
     /**

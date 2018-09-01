@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </h1>
 
         <div class="">
+            <?php $dataProvider->pagination = false; ?>
             <?= $this->render("_table", [
                 "dataProvider" => $dataProvider,
                 "searchModel"  => $searchModel,

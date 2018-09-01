@@ -36,8 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ["class" => "ajax-dialog", "data-size" => "lg"]
         );
     $info["Auth Key"] = $model->auth_key ? $model->auth_key : "n/a";
-    $info["Created"] = $model->created ? date("d.m.Y", strtotime($model->created)) : "n/a";
-    $info["Updated"] = $model->updated ? date("d.m.Y", strtotime($model->updated)) : "n/a";
+    $info["Access Token"] = $model->access_token ? $model->access_token : "n/a";
+    $info["Token Expires"] = $model->token_expire ? date("d.m.Y H:i", strtotime($model->token_expire)) : "n/a";
+    $info["Created"] = $model->created ? date("d.m.Y H:i", strtotime($model->created)) : "n/a";
+    $info["Updated"] = $model->updated ? date("d.m.Y H:i", strtotime($model->updated)) : "n/a";
     ?>
     <div class="model-details row personal-info">
         <?php foreach ($info as $label => $value): ?>

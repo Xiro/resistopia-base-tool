@@ -2,17 +2,25 @@
 
 use yii\helpers\Html;
 use mate\yii\widgets\Glyphicon;
+use yii\helpers\Inflector;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Changelog */
 
+$objectAsId = Inflector::camel2id($model->object);
 $this->title = $model->object . "#" . $model->primary_key;
 $this->params['breadcrumbs'][] = ['label' => 'Changelogs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="changelog-view container-fluid">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>
+        <?= Html::encode($this->title) . " " . Html::a(
+            Glyphicon::eye_open(),
+            [$objectAsId . '/view', 'id' => $model->primary_key],
+            ["class" => "ajax-dialog", "data-size" => "lg"]
+        ) ?>
+    </h1>
 
     <?php
     $info = [];
@@ -49,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row">
             <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
                 <?= $this->render('_changes-table', [
-                    'model'        => $model
+                    'model' => $model
                 ]) ?>
             </div>
         </div>
