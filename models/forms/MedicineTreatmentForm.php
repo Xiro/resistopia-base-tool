@@ -18,8 +18,8 @@ class MedicineTreatmentForm extends MedicineTreatment
     use UpdateToManyTrait;
     use UpdateDynamicToOneTrait;
 
-    public $injuriesData;
-    public $medicationData;
+    public $injuriesData = [];
+    public $medicationData = [];
     public $mission_block_time;
 
     /**

@@ -14,7 +14,7 @@ class MedicineCheckupForm extends MedicineCheckup
 
     use UpdateToManyTrait;
 
-    public $injuriesData;
+    public $injuriesData = [];
 
     /**
      * {@inheritdoc}
