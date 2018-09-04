@@ -96,9 +96,6 @@ $config = [
                     'css'      => [
                         'plugins/bootstrap/bootstrap.css'
                     ],
-                    'js'       => [
-                        'plugins/bootstrap/bootstrap.min.js'
-                    ]
                 ],
             ],
         ],

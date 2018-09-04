@@ -34,7 +34,6 @@ class AppAsset extends AssetBundle
     public $depends = [
         YiiAsset::class,
         BootstrapAsset::class,
-        BootstrapPluginAsset::class,
         FontAwesomeAsset::class,
         AnimatedLabelFormAsset::class,
         DialogAsset::class,

@@ -64,15 +64,6 @@ $(document).ready(function () {
         });
     });
 
-    $(document).ready(function () {
-        $('.dropdown-toggle').dropdown()
-    });
-    $('.dropdown').hover(function () {
-        $(this).children(".dropdown-menu").show();
-    }, function () {
-        $(this).children(".dropdown-menu").hide();
-    });
-
     // input masks
 
     function isNumber(n) {
