@@ -2,6 +2,7 @@
 
 use app\helpers\Html;
 use app\models\User;
+use mate\yii\widgets\Glyphicon;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -19,24 +20,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <span class="heading-btn-group pull-right">
                 <?= Html::a(
-                    'Callsigns',
+                    Glyphicon::download_alt() . ' Download Callsigns',
                     ["staff/download-callsigns"],
                     [
                         "class"  => "btn btn-default",
                         "target" => "_blank"
                     ]
-                ); ?>
-                <?php if (User::find()->where(['approved' => 0])->count()): ?>
-                    <?= Html::a(
-                        'Approve Users',
-                        ["user/approve"],
-                        ["class" => "btn btn-default"]
-                    ); ?>
-                <?php endif; ?>
-                <?= Html::a(
-                    'File Memos',
-                    ["staff-file-memo/index"],
-                    ["class" => "btn btn-default"]
                 ); ?>
                 <?= Html::a(
                     "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Staff',

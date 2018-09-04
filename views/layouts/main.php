@@ -61,15 +61,6 @@ AppAsset::register($this);
 
     $navItems = [];
 
-    $accessItems = [];
-    Access::addNavItem(['label' => 'Rights', 'url' => ['access-right/index']], $accessItems);
-    Access::addNavItem(['label' => 'Masks', 'url' => ['access-mask/index']], $accessItems);
-    Access::addNavItem(['label' => 'Security Areas', 'url' => ['access-security-area/index']], $accessItems);
-    Access::addNavItem(['label' => 'Categories', 'url' => ['access-category/index']], $accessItems);
-    if (!empty($accessItems)) {
-        $navItems[] = ['label' => 'Access', 'items' => $accessItems];
-    }
-
     $adminItems = [];
     Access::addNavItem(['label' => 'Base Categories', 'url' => ['base-category/index']], $adminItems);
     Access::addNavItem(['label' => 'Citizenships', 'url' => ['citizenship/index']], $adminItems);
@@ -84,27 +75,43 @@ AppAsset::register($this);
         $navItems[] = ['label' => 'Admin', 'items' => $adminItems];
     }
 
-    $medicinItems = [];
-    Access::addNavItem(['label' => 'Eingangsuntersuchung A38', 'url' => ['medicine-checkup/index']], $medicinItems);
-    Access::addNavItem(['label' => 'Behandlung', 'url' => ['medicine-treatment/index']], $medicinItems);
-    if (!empty($medicinItems)) {
-        $navItems[] = ['label' => 'Medicine', 'items' => $medicinItems];
+    $accessItems = [];
+    Access::addNavItem(['label' => 'Rights', 'url' => ['access-right/index']], $accessItems);
+    Access::addNavItem(['label' => 'Masks', 'url' => ['access-mask/index']], $accessItems);
+    Access::addNavItem(['label' => 'Security Areas', 'url' => ['access-security-area/index']], $accessItems);
+    Access::addNavItem(['label' => 'Categories', 'url' => ['access-category/index']], $accessItems);
+    if (!empty($accessItems)) {
+        $navItems[] = ['label' => 'Access', 'items' => $accessItems];
+    }
+
+    $medicineItems = [];
+    Access::addNavItem(['label' => 'Eingangsuntersuchung A38', 'url' => ['medicine-checkup/index']], $medicineItems);
+    Access::addNavItem(['label' => 'Behandlung', 'url' => ['medicine-treatment/index']], $medicineItems);
+    if (!empty($medicineItems)) {
+        $navItems[] = ['label' => 'Medicine', 'items' => $medicineItems];
     }
 
     $missionItems = [];
+    Access::addNavItem(['label' => 'Show All', 'url' => ['mission/index']], $missionItems);
     Access::addNavItem(['label' => 'Mission Control', 'url' => ['mission/control']], $missionItems);
-    Access::addNavItem(['label' => 'Archive', 'url' => ['mission/archive']], $missionItems);
-    Access::addNavItem(['label' => 'Templates', 'url' => ['mission/templates']], $missionItems);
     Access::addNavItem(['label' => 'Planned', 'url' => ['mission/planned']], $missionItems);
     Access::addNavItem(['label' => 'Called', 'url' => ['mission/called']], $missionItems);
     Access::addNavItem(['label' => 'Active', 'url' => ['mission/active']], $missionItems);
-    Access::addNavItem(['label' => 'Show All', 'url' => ['mission/index']], $missionItems);
+    Access::addNavItem(['label' => 'Archive', 'url' => ['mission/archive']], $missionItems);
+    Access::addNavItem(['label' => 'Templates', 'url' => ['mission/templates']], $missionItems);
     if (!empty($missionItems)) {
         $navItems[] = ['label' => 'Missions', 'items' => $missionItems];
     }
 
-    Access::addNavItem(['label' => 'Staff', 'url' => ['staff/index']], $navItems);
-    Access::addNavItem(['label' => 'Teams', 'url' => ['team/index']], $navItems);
+    $staffItems = [];
+    Access::addNavItem(['label' => 'Show All', 'url' => ['staff/index']], $staffItems);
+    Access::addNavItem(['label' => 'Teams', 'url' => ['team/index']], $staffItems);
+    Access::addNavItem(['label' => 'File Memos', 'url' => ['staff-file-memo/index']], $staffItems);
+    Access::addNavItem(['label' => 'Mission Blocks', 'url' => ['mission-block/index']], $staffItems);
+    Access::addNavItem(['label' => 'Approve Users', 'url' => ['user/approve']], $staffItems);
+    if (!empty($staffItems)) {
+        $navItems[] = ['label' => 'Staff', 'items' => $staffItems];
+    }
 
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
