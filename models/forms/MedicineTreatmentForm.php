@@ -21,6 +21,7 @@ class MedicineTreatmentForm extends MedicineTreatment
     public $injuriesData = [];
     public $medicationData = [];
     public $mission_block_time;
+    public $mission_block_reason;
 
     /**
      * {@inheritdoc}
@@ -37,6 +38,7 @@ class MedicineTreatmentForm extends MedicineTreatment
     {
         if($this->mission_block_id) {
             $this->mission_block_time = date('Y-m-d H:i', strtotime($this->missionBlock->unblock_time));
+            $this->mission_block_reason = $this->missionBlock->reason;
         }
     }
 
@@ -46,7 +48,7 @@ class MedicineTreatmentForm extends MedicineTreatment
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['injuriesData', 'medicationData', 'mission_block_time'], 'safe']
+            [['injuriesData', 'medicationData', 'mission_block_time', 'mission_block_reason'], 'safe']
         ]);
     }
 
@@ -139,6 +141,7 @@ class MedicineTreatmentForm extends MedicineTreatment
         $missionBlock = $this->mission_block_id ? $this->missionBlock : new MissionBlock();
         if(!empty($this->mission_block_time)) {
             $missionBlock->unblock_time = $this->mission_block_time;
+            $missionBlock->reason = $this->mission_block_reason;
             $missionBlock->blocked_staff_member_rpn = $this->patient_rpn;
             $missionBlock->blocked_by_rpn = $this->author_rpn;
             $missionBlock->save();

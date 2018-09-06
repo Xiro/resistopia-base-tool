@@ -2,11 +2,9 @@
 
 namespace app\models\search;
 
-use app\helpers\DebugSql;
-use Yii;
+use app\models\MissionBlock;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\MissionBlock;
 
 /**
  * MissionBlockSearch represents the model behind the search form about `app\models\MissionBlock`.
@@ -22,7 +20,7 @@ class MissionBlockSearch extends MissionBlock
     {
         return [
             [['id'], 'integer'],
-            [['blocked_staff_member_rpn', 'blocked_by_rpn', 'unblock_time', 'created'], 'safe'],
+            [['blocked_staff_member_rpn', 'blocked_by_rpn', 'unblock_time', 'reason', 'created'], 'safe'],
         ];
     }
 
@@ -75,7 +73,7 @@ class MissionBlockSearch extends MissionBlock
             'blocked_by_rpn'           => $this->blocked_by_rpn,
         ]);
 
-//        DebugSql::sqlString($query);
+        $this->searchFulltext($query, $this->reason, 'reason');
 
         return $dataProvider;
     }

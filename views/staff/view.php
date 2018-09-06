@@ -61,10 +61,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php foreach ($personalInfo as $label => $value): ?>
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-sm-6 detail-label">
+                    <div class="col-sm-5 detail-label">
                         <?= $label ?>
                     </div>
-                    <div class="col-sm-6 detail-value">
+                    <div class="col-sm-7 detail-value">
                         <?= $value ?>
                     </div>
                 </div>
@@ -76,27 +76,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     $affiliations = [];
-    $affiliations["Team"] = $model->team_id ? '<span style="white-space: nowrap">' . $model->team->name . " " . Html::a(
+    $affiliations["Team"] = $model->team_id ? $model->team->name . " " . Html::a(
             Glyphicon::eye_open(),
             ["team/view", "id" => $model->team_id],
             ["class" => "ajax-dialog", "data-size" => "lg"]
-        ) . '</span>' : "None";
-    $affiliations["Category"] = $model->base_category_id ? $model->baseCategory->name : "n/a";
+        ) : "None";
     $affiliations["Company"] = $model->company_id ? $model->company->name : "n/a";
 
+    $affiliations["Category"] = $model->base_category_id ? $model->baseCategory->name : "n/a";
     $affiliations["Rank"] = $model->rank_id ? $model->rank->name : "n/a";
+
     $affiliations["Speciality"] = $model->special_function_id ? $model->specialFunction->name : "n/a";
     $affiliations["Citizenship"] = $model->citizenship_id ? $model->citizenship->name : "n/a";
 
     ?>
     <div class="model-details row affiliations">
         <?php foreach ($affiliations as $label => $value): ?>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="row">
-                    <div class="col-sm-6 detail-label">
+                    <div class="col-sm-5 detail-label">
                         <?= $label ?>
                     </div>
-                    <div class="col-sm-6 detail-value">
+                    <div class="col-sm-7 detail-value">
                         <?= $value ?>
                     </div>
                 </div>

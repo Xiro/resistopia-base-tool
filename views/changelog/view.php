@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Html;
+use app\helpers\Html;
 use mate\yii\widgets\Glyphicon;
 use yii\helpers\Inflector;
 

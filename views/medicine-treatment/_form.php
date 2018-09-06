@@ -84,6 +84,8 @@ MedicineFormAsset::register($this);
                         // 'format' => 'HH:ii P', // if inline = false
                     ]
                 ])->label('Gesperrt bis'); ?>
+
+                <?= $form->field($model, 'mission_block_reason')->textarea(['rows' => 3]) ?>
             </div>
         </div>
     </div>

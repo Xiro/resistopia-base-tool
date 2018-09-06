@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property string $blocked_staff_member_rpn
  * @property string $blocked_by_rpn
  * @property string $unblock_time
+ * @property string $reason
  * @property string $created
  *
  * @property Staff $blockedStaffMember
@@ -35,6 +36,7 @@ class MissionBlock extends ActiveRecord
         return [
             [['blocked_staff_member_rpn', 'blocked_by_rpn'], 'required'],
             [['unblock_time', 'created'], 'safe'],
+            [['reason'], 'string', 'max' => 250],
             [['blocked_staff_member_rpn', 'blocked_by_rpn'], 'string', 'max' => 8],
             [['blocked_staff_member_rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['blocked_staff_member_rpn' => 'rpn']],
             [['blocked_by_rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['blocked_by_rpn' => 'rpn']],
@@ -51,6 +53,7 @@ class MissionBlock extends ActiveRecord
             'blocked_staff_member_rpn' => 'Blocked Staff Member',
             'blocked_by_rpn' => 'Blocked By',
             'unblock_time' => 'Unblock Time',
+            'reason' => 'Reason',
             'created' => 'Created',
         ];
     }

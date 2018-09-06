@@ -36,6 +36,8 @@ use mate\yii\widgets\ValMap;
                     // 'format' => 'HH:ii P', // if inline = false
                 ]
             ])->label('Unblock Time (blank for unlimited block)') ;?>
+
+            <?= $form->field($model, 'reason')->textarea(['rows' => 3]) ?>
         </div>
     </div>
 

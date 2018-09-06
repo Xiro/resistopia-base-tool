@@ -12,12 +12,13 @@ trait AdvancedSearchTrait
     /**
      * @param ActiveQuery $query
      * @param $search
-     * @param array $fields
+     * @param array|string $fields
      * @param string $separator
      * @param boolean $caseSensitive
      */
-    public function searchFulltext(ActiveQuery $query, $search, array $fields, $separator = ' ', $caseSensitive = false)
+    public function searchFulltext(ActiveQuery $query, $search, $fields, $separator = ' ', $caseSensitive = false)
     {
+        $fields = is_array($fields) ? $fields : [$fields];
         $nameParts = explode($separator, $search);
         $whereName = ['and'];
         foreach ($nameParts as $namePart) {

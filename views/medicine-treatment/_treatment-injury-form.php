@@ -87,7 +87,7 @@ use kartik\select2\Select2;
         ]); ?>
         <span class="input-group-btn">
     <?= Html::button(
-        '<span class="glyphicon glyphicon-minus"></span>',
+        '<span class="glyphicon glyphicon-remove"></span>',
         ['class' => 'btn btn-default remove-injury-row']
     ) ?>
       </span>
