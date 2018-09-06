@@ -15,6 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <h1>
             <?= Html::encode($this->title) ?>
+
+            <span class="heading-btn-group pull-right">
+            <?= Html::a(
+                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create File Memo',
+                ["create"],
+                ["class" => "btn btn-default"]
+            ); ?>
+            </span>
         </h1>
 
         <div class="">

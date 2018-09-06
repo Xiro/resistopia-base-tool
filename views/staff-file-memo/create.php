@@ -6,7 +6,7 @@ use app\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\StaffFileMemo */
 
-$this->title = 'Add File Memo for ' . $model->staff->name;
+$this->title = $model->rpn ? 'Add File Memo for ' . $model->staff->name : 'Add File Memo';
 $this->params['breadcrumbs'][] = ['label' => 'Staff File Memos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

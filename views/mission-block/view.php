@@ -31,16 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     $info = [];
-    $info["Blocked Staff"] = $model->blocked_staff_member_rpn . ' ' . Html::a(
-            Glyphicon::eye_open(),
-            ['staff/view', 'id' => $model->blocked_staff_member_rpn],
-            ["class" => "ajax-dialog", "data-size" => "lg"]
-        );
-    $info["Blocked By"] = $model->blocked_by_rpn . ' ' . Html::a(
-            Glyphicon::eye_open(),
-            ['staff/view', 'id' => $model->blocked_by_rpn],
-            ["class" => "ajax-dialog", "data-size" => "lg"]
-        );
+    $info["Blocked Staff"] = Html::staffLabel($model->blockedStaffMember);
+    $info["Blocked By"] = Html::staffLabel($model->blockedBy);
     $info["Unblock Time"] = $model->unblock_time ? date("d.m.Y H:i", strtotime($model->unblock_time)) : "n/a";
     $info["Reason"] = $model->reason ? $model->reason : "n/a";
     $info["Created"] = $model->created ? date("d.m.Y H:i", strtotime($model->created)) : "n/a";

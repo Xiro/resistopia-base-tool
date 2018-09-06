@@ -19,11 +19,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
     <tr data-key="<?= $model->id ?>">
         <?php if (!in_array("blocked_staff_member", $exclude)): ?>
             <td class="blocked_staff_member">
-                <?= $model->blocked_staff_member_rpn ? $model->blockedStaffMember->nameWithRpn . ' ' . Html::a(
-                        Glyphicon::eye_open(),
-                        ['staff/view', 'id' => $model->blocked_staff_member_rpn],
-                        ["class" => "ajax-dialog"]
-                    ) : "None" ?>
+                <?= Html::staffLabel($model->blockedStaffMember) ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("unblock_time", $exclude)): ?>
@@ -33,11 +29,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php endif; ?>
         <?php if (!in_array("blocked_by", $exclude)): ?>
             <td class="blocked_by">
-                <?= $model->blocked_by_rpn ? $model->blockedBy->nameWithRpn . ' ' . Html::a(
-                        Glyphicon::eye_open(),
-                        ['staff/view', 'id' => $model->blocked_by_rpn],
-                        ["class" => "ajax-dialog"]
-                    ) : "None" ?>
+                <?= Html::staffLabel($model->blockedBy) ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("created", $exclude)): ?>

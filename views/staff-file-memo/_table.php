@@ -42,6 +42,12 @@ if ($searchModel) {
         <?php $excludeSearchParams = []; ?>
         <tr class="animated-label">
             <?php $model = $searchModel ?>
+            <?php if (!in_array("file_memo_number", $exclude)): ?>
+                <?php $excludeSearchParams[] = "file_memo_number"; ?>
+                <th class="file_memo_number">
+                    <?= $form->field($model, 'file_memo_number')->textInput(['maxlength' => true]) ?>
+                </th>
+            <?php endif; ?>
             <?php if (!in_array("title", $exclude)): ?>
                 <?php $excludeSearchParams[] = "title"; ?>
                 <th class="title">
@@ -119,12 +125,6 @@ if ($searchModel) {
                     <?= $form->field($model, 'created')->textInput() ?>
                 </th>
             <?php endif; ?>
-            <?php if (!in_array("updated", $exclude)): ?>
-                <?php $excludeSearchParams[] = "updated"; ?>
-                <th class="updated">
-                    <?= $form->field($model, 'updated')->textInput() ?>
-                </th>
-            <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th>
                     <?php $pagination = $dataProvider->pagination; ?>
@@ -142,6 +142,9 @@ if ($searchModel) {
         </tr>
     <?php else: ?>
         <tr>
+            <?php if (!in_array("file_memo_number", $exclude)): ?>
+                <th class="file_memo_number"><?= 'File Memo Nr' ?></th>
+            <?php endif; ?>
             <?php if (!in_array("title", $exclude)): ?>
                 <th class="title"><?= 'Title' ?></th>
             <?php endif; ?>
@@ -156,9 +159,6 @@ if ($searchModel) {
             <?php endif; ?>
             <?php if (!in_array("created", $exclude)): ?>
                 <th class="created"><?= 'Created' ?></th>
-            <?php endif; ?>
-            <?php if (!in_array("updated", $exclude)): ?>
-                <th class="updated"><?= 'Updated' ?></th>
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th></th>

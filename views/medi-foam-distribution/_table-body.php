@@ -19,11 +19,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
     <tr data-key="<?= $model->id ?>">
         <?php if (!in_array("recipient_rpn", $exclude)): ?>
             <td class="recipient_rpn">
-                <?= $model->recipient_rpn ? $model->recipient->nameWithRpn . ' ' . Html::a(
-                        Glyphicon::eye_open(),
-                        ['staff/view', 'id' => $model->recipient_rpn],
-                        ["class" => "ajax-dialog"]
-                    ) : "None" ?>
+                <?= Html::staffLabel($model->recipient) ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("mk1_issued", $exclude)): ?>
@@ -38,11 +34,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php endif; ?>
         <?php if (!in_array("issued_by_rpn", $exclude)): ?>
             <td class="issued_by_rpn">
-                <?= $model->issued_by_rpn ? $model->issuedBy->nameWithRpn . ' ' . Html::a(
-                        Glyphicon::eye_open(),
-                        ['staff/view', 'id' => $model->issued_by_rpn],
-                        ["class" => "ajax-dialog"]
-                    ) : "None" ?>
+                <?= Html::staffLabel($model->issuedBy) ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("created", $exclude)): ?>

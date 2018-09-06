@@ -21,7 +21,7 @@ class StaffFileMemoSearch extends StaffFileMemo
     {
         return [
             [['id', 'access_right_id'], 'integer'],
-            [['title', 'file_memo', 'rpn', 'author_rpn', 'created', 'updated'], 'safe'],
+            [['file_memo_number', 'title', 'file_memo', 'rpn', 'author_rpn', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -61,7 +61,7 @@ class StaffFileMemoSearch extends StaffFileMemo
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'id'              => $this->id,
             'access_right_id' => $this->access_right_id,
         ]);
 
@@ -71,8 +71,9 @@ class StaffFileMemoSearch extends StaffFileMemo
         ]);
 
         $this->searchCaseInsensitive($query, [
-            'title'        => $this->title,
-            'file_memo' => $this->file_memo,
+            'title'            => $this->title,
+            'file_memo'        => $this->file_memo,
+            'file_memo_number' => $this->file_memo_number,
         ]);
 
         $query->andFilterWhere(['like', 'rpn', $this->rpn])

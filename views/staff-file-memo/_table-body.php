@@ -24,6 +24,11 @@ $exclude = !isset($exclude) ? array() : $exclude;
     }
     ?>
     <tr data-key="<?= $model->id ?>">
+        <?php if (!in_array("file_memo_number", $exclude)): ?>
+            <td class="file_memo_number">
+                <?= $model->file_memo_number ?>
+            </td>
+        <?php endif; ?>
         <?php if (!in_array("title", $exclude)): ?>
             <td class="title">
                 <?= $model->title ?>
@@ -31,12 +36,12 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php endif; ?>
         <?php if (!in_array("staff_name", $exclude)): ?>
             <td class="staff_name">
-                <?= $model->staff ? $model->staff->name : "None" ?>
+                <?= Html::staffLabel($model->staff, 'rpn') ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("author_name", $exclude)): ?>
             <td class="author_name">
-                <?= $model->author ? $model->author->name : "None" ?>
+                <?= Html::staffLabel($model->author, 'rpn') ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("access_right", $exclude)): ?>
@@ -47,11 +52,6 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php if (!in_array("created", $exclude)): ?>
             <td class="created">
                 <?= date('d.m.Y H:i:s', strtotime($model->created)) ?>
-            </td>
-        <?php endif; ?>
-        <?php if (!in_array("updated", $exclude)): ?>
-            <td class="updated">
-                <?= date('d.m.Y H:i:s', strtotime($model->updated)) ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("actions", $exclude)): ?>

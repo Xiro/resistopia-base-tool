@@ -30,17 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     $memoInfo = [];
-    $memoInfo["Staff"] = $model->staff->name;
+    $memoInfo["Staff"] = Html::staffLabel($model->staff);
     $memoInfo["Created"] = date("d.m.Y H:i", strtotime($model->created));
-    $memoInfo["Security Level"] = $model->access_right_id ? $model->accessRight->name : '';
 
-    $memoInfo["Author"] = $model->author->name;
+    $memoInfo["Author"] = Html::staffLabel($model->author);
     $memoInfo["Updated"] = date("d.m.Y H:i", strtotime($model->updated));
+
+    $memoInfo["Security Level"] = $model->access_right_id ? $model->accessRight->name : '';
     $memoInfo[""] = "";
     ?>
     <div class="model-details row file-memo-info">
         <?php foreach ($memoInfo as $label => $value): ?>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="row">
                     <div class="col-sm-6 detail-label">
                         <?= $label ?>

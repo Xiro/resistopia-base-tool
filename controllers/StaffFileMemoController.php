@@ -45,6 +45,17 @@ class StaffFileMemoController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        $referToActions = [
+            'index',
+        ];
+        if (in_array($action->id, $referToActions)) {
+            Yii::$app->user->setReturnUrl(Yii::$app->request->url);
+        }
+        return parent::beforeAction($action);
+    }
+
     /**
      * Lists all StaffFileMemo models.
      * @return mixed
@@ -98,7 +109,7 @@ class StaffFileMemoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionCreate($id)
+    public function actionCreate($id = null)
     {
         $model = new StaffFileMemo();
         $model->rpn = $id;

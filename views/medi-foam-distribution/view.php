@@ -31,16 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     $info = [];
-    $info["Empfänger"] = $model->recipient_rpn ? $model->recipient->nameWithRpn . ' ' . Html::a(
-            Glyphicon::eye_open(),
-            ['staff/view', 'id' => $model->recipient_rpn],
-            ["class" => "ajax-dialog", "data-size" => "lg"]
-        ) : 'n/a';
-    $info["Ausgegeben von"] = $model->issued_by_rpn ? $model->issuedBy->nameWithRpn . ' ' . Html::a(
-            Glyphicon::eye_open(),
-            ['staff/view', 'id' => $model->issued_by_rpn],
-            ["class" => "ajax-dialog", "data-size" => "lg"]
-        ) : 'n/a';;
+    $info["Empfänger"] = Html::staffLabel($model->recipient);
+    $info["Ausgegeben von"] = Html::staffLabel($model->issuedBy);
     $info["MK1 ausgegeben"] = $model->mk1_issued;
     $info["MK1 zurückgegeben"] = $model->mk1_returned;
     $info["Erstellt"] = $model->created ? date("d.m.Y H:i", strtotime($model->created)) : "n/a";

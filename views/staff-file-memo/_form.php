@@ -4,6 +4,7 @@ use app\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
+use mate\yii\widgets\SelectData;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\StaffFileMemo */
@@ -16,6 +17,30 @@ use yii\helpers\ArrayHelper;
         "options"     => ["class" => "animated-label"],
         "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
     ]); ?>
+
+    <?php if($model->isNewRecord && !$model->rpn): ?>
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($model, 'rpn', [
+                'labelOptions' => ['class' => ($model->rpn ? 'move' : '')]
+            ])->widget(Select2::class, [
+                'showToggleAll' => false,
+                'data'          => SelectData::fromModel(
+                    app\models\Staff::class,
+                    'rpn',
+                    'nameWithRpn',
+                    true
+                ),
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]) ?>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <div class="row">
         <div class="col-sm-6">
@@ -50,7 +75,7 @@ use yii\helpers\ArrayHelper;
     <div class="form-group">
         <?= Html::submitButton(
             $model->isNewRecord ? 'Create' : 'Update',
-            ["class" => $model->isNewRecord ? "btn btn-success" : "btn btn-primary"]
+            ["class" => "btn btn-primary"]
         ) ?>
     </div>
 
