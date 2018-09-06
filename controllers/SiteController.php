@@ -5,10 +5,12 @@ namespace app\controllers;
 use app\components\AccessRule;
 use app\models\AccessRight;
 use app\models\AccessCategory;
+use app\models\BaseCategory;
 use app\models\Staff;
 use mate\yii\components\SelectData;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Inflector;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -66,7 +68,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $staff = new Staff();
+//        $staff = new Staff();
 //        // This is for quickly creating CRUD access rights
 //        $crud = [
 //        ];

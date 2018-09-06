@@ -68,3 +68,11 @@ GET-Parameters:
 
 **Response**: Boolean if the user is permitted a specific action or not
 
+
+#### api/base-category/keys
+
+No parameters
+
+**Response**: Array of all base categories. 
+Structure BaseCategory::name => BaseCategory::key
+
