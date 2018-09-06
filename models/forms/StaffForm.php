@@ -26,16 +26,9 @@ class StaffForm extends Staff
         return array_merge(parent::rules(), [
             [['accessMasks'], 'safe'],
             [['date_of_birth'], 'date', 'format' => 'dd.MM.yyyy'],
+            [['forename', 'surname', 'nickname'], 'match', 'pattern' => '/^[a-z]{1}[a-z\-\.\,\s]*$/i'],
             [['forename', 'surname', 'nickname'], 'trim'],
-            [['forename', 'surname', 'nickname'], 'match', 'pattern' => '/^[a-zA-Z]\w*$/i'],
         ]);
-    }
-
-    public function validateDate()
-    {
-        if(1 !== preg_match('/[0-9]{2}.[0-9]{2}.[0-9]{4}/', $this->date_of_birth)) {
-            $this->addError('date_of_birth', "Date of birth must be in format dd.mm.yyyy");
-        }
     }
 
     public function afterFind()
