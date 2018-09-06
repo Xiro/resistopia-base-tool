@@ -3,6 +3,7 @@
 use app\helpers\Html;
 use app\models\User;
 use mate\yii\widgets\Glyphicon;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -19,14 +20,28 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::encode($this->title) ?>
 
             <span class="heading-btn-group pull-right">
-                <?= Html::a(
-                    Glyphicon::download_alt() . ' Download Callsigns',
-                    ["staff/download-callsigns"],
-                    [
-                        "class"  => "btn btn-default",
-                        "target" => "_blank"
-                    ]
-                ); ?>
+                <div class="animated-label">
+                    <div class="form-group">
+                        <?php
+                        echo \kartik\select2\Select2::widget([
+                            'showToggleAll' => false,
+                            'name'          => 'download',
+                            'data'          => [
+                                Url::to(['staff/download-callsigns'])     => 'Callsigns',
+                                Url::to(['staff/download-combat-medics']) => 'Combat Medics',
+                            ],
+                            'options'       => [
+                                'placeholder' => '',
+                                'class'       => 'form-control',
+                                'onchange'    => 'location = this.value;',
+                            ],
+                        ]);
+                        ?>
+                        <label for="download">
+                            <?= Glyphicon::download_alt()?> Download Table
+                        </label>
+                    </div>
+                </div>
                 <?= Html::a(
                     "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Staff',
                     ["create"],

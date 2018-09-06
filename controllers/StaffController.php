@@ -152,6 +152,28 @@ class StaffController extends Controller
         Yii::$app->response->sendFile($filePath);
     }
 
+    public function actionDownloadCombatMedics()
+    {
+        $filePath = Yii::getAlias('@webroot/tmp/' . date('Y-m-d_H-i-s') . '_combat-medics.csv');
+        fclose(fopen($filePath, 'c'));
+        $csv = new CsvResource($filePath);
+        /** @var Staff[] $combatMedics */
+        $combatMedics = Staff::find()
+            ->joinWith(['specialFunction', 'team'])
+            ->where(['special_function.name' => 'CombatMedic'])
+            ->orderBy('team.name')
+            ->all();
+        foreach ($combatMedics as $row => $staff) {
+            $csv->setRecursive([$row, 'Rpn'], $staff->rpn);
+            $csv->setRecursive([$row, 'Name'], $staff->name);
+            $csv->setRecursive([$row, 'Team'], $staff->team_id ? $staff->team->name : 'none');
+            $csv->setRecursive([$row, 'Team Size'], $staff->team_id ? $staff->team->getStaff()->count() : '');
+            $csv->setRecursive([$row, 'Alive'], $staff->status_alive ? 'Yes' : 'No');
+        }
+        $csv->write();
+        Yii::$app->response->sendFile($filePath);
+    }
+
     /**
      * Displays a single Staff model.
      * @param string $id
