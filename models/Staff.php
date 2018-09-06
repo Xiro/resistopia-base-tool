@@ -37,7 +37,9 @@ use yii\db\ActiveRecord;
  * @property integer $blood_type_id
  * @property string $created
  * @property string $updated
+ * @property integer $currentMediFoam
  *
+ * @property MediFoamDistribution[] $mediFoamDistributions
  * @property MedicineCheckup[] $medicineCheckups
  * @property MedicineTreatment[] $medicineTreatments
  * @property Mission[] $missions
@@ -219,12 +221,29 @@ class Staff extends ActiveRecord
         return parent::beforeSave($insert);
     }
 
+    public function getCurrentMediFoam()
+    {
+        $mediFoam = MediFoamDistribution::find()
+            ->select('SUM(mk1_issued) - SUM(mk1_returned) as medi_foam_current')
+            ->where(['recipient_rpn' => $this->rpn])
+            ->asArray()
+            ->one();
+        return $mediFoam ? $mediFoam['medi_foam_current'] : 0;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getMissionLeads()
     {
         return $this->hasMany(Mission::className(), ['mission_lead_rpn' => 'rpn']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMediFoamDistributions()
+    {
+        return $this->hasMany(MediFoamDistribution::className(), ['recipient_rpn' => 'rpn']);
     }
 
     /**

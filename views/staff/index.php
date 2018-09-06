@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1>
             <?= Html::encode($this->title) ?>
 
-            <span class="heading-btn-group pull-right">
+            <span class="heading-btn-group pull-right" style="margin-top: -5px;">
                 <div class="animated-label">
                     <div class="form-group">
                         <?php

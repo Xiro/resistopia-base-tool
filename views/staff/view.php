@@ -152,7 +152,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $this->render('../mission-block/_table', [
                 'dataProvider' => new ActiveDataProvider([
-                    'query'      => $model->getMissionBlocks()->orderBy(['created' => 'ASC']),
+                    'query'      => $model->getMissionBlocks()->orderBy('created DESC'),
                     'pagination' => false,
                 ]),
                 'exclude'      => ['blocked_staff_member'],
@@ -170,6 +170,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     'pagination' => false,
                 ]),
                 'exclude'      => ['staff_name'],
+            ]) ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($model->getMediFoamDistributions()->count() > 0 && Access::to('medi-foam-distribution/view')): ?>
+        <div class="model-details-section">
+            <h3>
+                Medi Foam
+                <span style="font-size: 18px">
+                    Current possession: <?= $model->currentMediFoam ?>
+                </span>
+            </h3>
+            <p>
+            </p>
+            <?= $this->render('../medi-foam-distribution/_table', [
+                'dataProvider' => new ActiveDataProvider([
+                    'query'      => $model->getMediFoamDistributions()->orderBy('created DESC'),
+                    'pagination' => false,
+                ]),
+                'exclude'      => ['recipient_rpn'],
             ]) ?>
         </div>
     <?php endif; ?>

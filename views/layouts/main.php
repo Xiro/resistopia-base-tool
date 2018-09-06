@@ -87,6 +87,7 @@ AppAsset::register($this);
     $medicineItems = [];
     Access::addNavItem(['label' => 'Eingangsuntersuchung A38', 'url' => ['medicine-checkup/index']], $medicineItems);
     Access::addNavItem(['label' => 'Behandlung', 'url' => ['medicine-treatment/index']], $medicineItems);
+    Access::addNavItem(['label' => 'Medi Foam Ausgabe', 'url' => ['medi-foam-distribution/index']], $medicineItems);
     if (!empty($medicineItems)) {
         $navItems[] = ['label' => 'Medicine', 'items' => $medicineItems];
     }
