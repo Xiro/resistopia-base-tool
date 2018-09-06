@@ -36,15 +36,15 @@ class m180906_121808_medi_foam extends Migration
         	CHANGE COLUMN `receiver_rpn` `recipient_rpn` VARCHAR(8) NOT NULL COLLATE 'utf8_bin' AFTER `id`;
         ");
         $this->execute("
-        INSERT INTO `cic_migration_test`.`access_category` (`name`, `order`) VALUES ('Medi Foam Distribution', '23');
+        INSERT INTO `access_category` (`name`, `order`) VALUES ('Medi Foam Distribution', '23');
         ");
         /** @var \app\models\AccessCategory $category */
         $category = \app\models\AccessCategory::findOne(['name' => 'Medi Foam Distribution']);
         $this->execute("
-            INSERT INTO `cic_migration_test`.`access_right` (`key`, `name`, `order`, `access_category_id`) VALUES ('medi-foam-distribution/view', 'View Medi Foam Distribution', '101', :categoryId);
-            INSERT INTO `cic_migration_test`.`access_right` (`key`, `name`, `order`, `access_category_id`) VALUES ('medi-foam-distribution/create', 'View Medi Foam Distribution', '101', :categoryId);
-            INSERT INTO `cic_migration_test`.`access_right` (`key`, `name`, `order`, `access_category_id`) VALUES ('medi-foam-distribution/update', 'View Medi Foam Distribution', '101', :categoryId);
-            INSERT INTO `cic_migration_test`.`access_right` (`key`, `name`, `order`, `access_category_id`) VALUES ('medi-foam-distribution/delete', 'View Medi Foam Distribution', '101', :categoryId);
+            INSERT INTO `access_right` (`key`, `name`, `order`, `access_category_id`) VALUES ('medi-foam-distribution/view', 'View Medi Foam Distribution', '101', :categoryId);
+            INSERT INTO `access_right` (`key`, `name`, `order`, `access_category_id`) VALUES ('medi-foam-distribution/create', 'View Medi Foam Distribution', '101', :categoryId);
+            INSERT INTO `access_right` (`key`, `name`, `order`, `access_category_id`) VALUES ('medi-foam-distribution/update', 'View Medi Foam Distribution', '101', :categoryId);
+            INSERT INTO `access_right` (`key`, `name`, `order`, `access_category_id`) VALUES ('medi-foam-distribution/delete', 'View Medi Foam Distribution', '101', :categoryId);
         ", [
             'categoryId' => $category->id
         ]);
