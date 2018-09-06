@@ -13,8 +13,6 @@ use yii\db\ActiveRecord;
  * @property string $forename
  * @property string $surname
  * @property string $nickname
- * @property string $name
- * @property string $nameWithRpn
  * @property string $gender
  * @property string $date_of_birth
  * @property string $profession
@@ -24,7 +22,6 @@ use yii\db\ActiveRecord;
  * @property integer $status_be13
  * @property integer $status_alive
  * @property integer $status_in_base
- * @property bool $isBlocked
  * @property integer $squat_number
  * @property integer $access_key_id
  * @property integer $rank_id
@@ -37,7 +34,11 @@ use yii\db\ActiveRecord;
  * @property integer $blood_type_id
  * @property string $created
  * @property string $updated
+ * @property bool $isBlocked
+ * @property string $name
+ * @property string $nameWithRpn
  * @property integer $currentMediFoam
+ * @property integer $securityLevel
  *
  * @property MediFoamDistribution[] $mediFoamDistributions
  * @property MedicineCheckup[] $medicineCheckups
@@ -198,6 +199,14 @@ class Staff extends ActiveRecord
         parent::delete();
     }
 
+    public function beforeSave($insert)
+    {
+        if(empty($this->callsign)) {
+            $this->callsign = null;
+        }
+        return parent::beforeSave($insert);
+    }
+
     public function getIsBlocked()
     {
         return 0 != $this->getActiveMissionBlocks()->count();
@@ -213,14 +222,6 @@ class Staff extends ActiveRecord
         return $this->name . ' (' . $this->rpn . ')';
     }
 
-    public function beforeSave($insert)
-    {
-        if(empty($this->callsign)) {
-            $this->callsign = null;
-        }
-        return parent::beforeSave($insert);
-    }
-
     public function getCurrentMediFoam()
     {
         $mediFoam = MediFoamDistribution::find()
@@ -229,6 +230,23 @@ class Staff extends ActiveRecord
             ->asArray()
             ->one();
         return $mediFoam ? $mediFoam['medi_foam_current'] : 0;
+    }
+
+    public function getSecurityLevel()
+    {
+        $accessList = AccessKey::findAccessList($this->access_key_id);
+        $accessList = array_flip($accessList);
+        $securityLevel = 0;
+        foreach ($accessList as $accessKey) {
+            if('security-level/' != substr($accessKey, 0, 15)) {
+                continue;
+            }
+            $foundLevel = (int) substr($accessKey, 15);
+            if($foundLevel > $securityLevel) {
+                $securityLevel = $foundLevel;
+            }
+        }
+        return $securityLevel;
     }
 
     /**

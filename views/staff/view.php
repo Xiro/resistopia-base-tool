@@ -113,11 +113,12 @@ $this->params['breadcrumbs'][] = $this->title;
     $systemInfo["Alive"] = $model->status_alive ? "Yes" : "No";
     $systemInfo["Created"] = date("d.m.Y H:i", strtotime($model->created));
 
-    $systemInfo["In Base"] = $model->status_in_base ? "Yes" : "No";
-    $systemInfo["Is IT"] = $model->status_it ? "Yes" : "No";
+    $systemInfo["Security"] = "Level " . $model->securityLevel;
+    $systemInfo["In BE13"] = $model->status_be13 ? "Yes" : "No";
     $systemInfo["Last Update"] = date("d.m.Y H:i", strtotime($model->updated));
 
-    $systemInfo["In BE13"] = $model->status_be13 ? "Yes" : "No";
+    $systemInfo["In Base"] = $model->status_in_base ? "Yes" : "No";
+    $systemInfo["Is IT"] = $model->status_it ? "Yes" : "No";
 
     ?>
     <div class="model-details row affiliations">
