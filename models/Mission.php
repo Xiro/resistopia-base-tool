@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\DebugSql;
 use app\models\behaviors\ChangeLogBehavior;
 use Yii;
 use yii\db\ActiveRecord;
@@ -145,7 +146,11 @@ class Mission extends ActiveRecord
     public function getCallsigns()
     {
         return array_column(
-            $this->getStaff()->where(['!=', 'callsign', ['', null]])->asArray()->all(),
+            $this->getStaff()->where([
+                'or',
+                ['!=', 'callsign', ''],
+                ['!=', 'callsign', null],
+            ])->asArray()->all(),
             'callsign'
         );
     }

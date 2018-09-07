@@ -222,6 +222,11 @@ class MissionController extends Controller
         ]);
     }
 
+    public function actionGate()
+    {
+
+    }
+
     /**
      * Displays a single Mission model.
      * @param integer $id

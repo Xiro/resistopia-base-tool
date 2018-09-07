@@ -88,12 +88,13 @@ class MissionForm extends Mission
     public function save($runValidation = true, $attributeNames = null)
     {
         $this->mission_lead_rpn = $this->mission_lead_rpn ? $this->mission_lead_rpn : null;
+
+        $this->updateToOne('operation');
+
         $isSaved = parent::save($runValidation, $attributeNames);
         if (!$isSaved) {
             return false;
         }
-
-        $this->updateToOne('operation');
 
         if($this->mission_lead_rpn) {
             $this->staffSelect = $this->staffSelect === false ? [] : $this->staffSelect;
