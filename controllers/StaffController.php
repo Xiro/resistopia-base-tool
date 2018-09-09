@@ -117,22 +117,13 @@ class StaffController extends Controller
     public function actionSearchMissionForm($missionId = null)
     {
         $searchModel = new StaffSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        if ($missionId) {
-            /** @var ActiveQuery $query */
-            $query = $dataProvider->query;
-            $query->joinWith('missions')
-                ->andWhere([
-                    'or',
-                    ['!=', 'mission.id', $missionId],
-                    ['mission.id' => null]
-                ]);
-        }
+        $dataProvider = $searchModel->searchMissionForm(Yii::$app->request->queryParams, $missionId);
 
         return $this->renderPartial('_table-form-body', [
             'dataProvider' => $dataProvider,
             "modelName"    => "MissionForm",
-            'exclude'      => ['callsign']
+            'exclude'      => ['callsign'],
+            'actionEnableValidators' => $searchModel->getMissionActionEnableValidators(),
         ]);
     }
 

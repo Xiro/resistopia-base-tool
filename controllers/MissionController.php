@@ -12,6 +12,7 @@ use app\models\search\MissionSearch;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -51,6 +52,7 @@ class MissionController extends Controller
     {
         $referToActions = [
             'index',
+            'index-lead',
             'templates',
             'archive',
             'control',
@@ -240,6 +242,19 @@ class MissionController extends Controller
     }
 
     /**
+     * @return string
+     */
+    public function actionIndexLead()
+    {
+        $leadMissions = Mission::find()
+            ->where(['mission_lead_rpn' => AccessRule::activeStaff()->rpn])
+            ->all();
+        return $this->render('index-lead', [
+            'models' => $leadMissions
+        ]);
+    }
+
+    /**
      * Creates a new Mission model.
      * If creation is successful, the browser will be redirected to the 'index' page.
      * @param integer $id mission ID of template to load from
@@ -272,6 +287,20 @@ class MissionController extends Controller
     public function actionUpdate($id)
     {
         return $this->processUpdate($id, 'update');
+    }
+
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdateCrew($id)
+    {
+        $model = $this->findModel($id);
+        if($model->mission_lead_rpn != AccessRule::activeStaff()->rpn) {
+            throw new ForbiddenHttpException('You are not allowed to access this page');
+        }
+        return $this->processUpdate($id, 'update-crew');
     }
 
     /**

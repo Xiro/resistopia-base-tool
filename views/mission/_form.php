@@ -207,29 +207,9 @@ use yii\data\ActiveDataProvider;
         </div>
     </div>
 
-    <?php
-    $staffQuery = $model->isNewRecord ? Staff::find()->joinWith('team') : Staff::find()
-        ->joinWith('team')
-        ->joinWith('missions')
-        ->where($model->isNewRecord ? [] : [
-            'or',
-            ['!=', 'mission.id', $model->id],
-            ['mission.id' => null]
-        ]);
-    ?>
-    <?= $this->render('../staff/_table-form', [
-        'selectableDataProvider' => new ActiveDataProvider([
-            'query' => $staffQuery,
-        ]),
-        'selectedDataProvider'   => new ActiveDataProvider([
-            'query' => $model->getStaff()->joinWith('team'),
-        ]),
-        'form'                   => $form,
-        'model'                  => $model,
-        'searchUrl'              => Url::to(['staff/search-mission-form', 'missionId' => $model->id]),
-        'searchModel'            => new StaffSearch(),
-        'exclude'                => ['callsign'],
-
+    <?= $this->render('_staff-form', [
+        'form'  => $form,
+        'model' => $model,
     ]) ?>
 
     <div class="form-group">

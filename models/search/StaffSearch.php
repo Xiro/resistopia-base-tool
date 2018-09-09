@@ -7,6 +7,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Staff;
+use yii\db\ActiveQuery;
 
 /**
  * StaffSearch represents the model behind the search form about `app\models\Staff`.
@@ -67,39 +68,39 @@ class StaffSearch extends Staff
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'height' => $this->height,
-            'status_it' => $this->status_it,
-            'status_be13' => $this->status_be13,
-            'status_alive' => $this->status_alive,
-            'status_in_base' => $this->status_in_base,
-            'squat_number' => $this->squat_number,
-            'access_key_id' => $this->access_key_id,
-            'rank_id' => $this->rank_id,
-            'base_category_id' => $this->base_category_id,
+            'height'              => $this->height,
+            'status_it'           => $this->status_it,
+            'status_be13'         => $this->status_be13,
+            'status_alive'        => $this->status_alive,
+            'status_in_base'      => $this->status_in_base,
+            'squat_number'        => $this->squat_number,
+            'access_key_id'       => $this->access_key_id,
+            'rank_id'             => $this->rank_id,
+            'base_category_id'    => $this->base_category_id,
             'special_function_id' => $this->special_function_id,
-            'company_id' => $this->company_id,
-            'citizenship_id' => $this->citizenship_id,
-            'eye_color_id' => $this->eye_color_id,
-            'team_id' => $this->team_id,
+            'company_id'          => $this->company_id,
+            'citizenship_id'      => $this->citizenship_id,
+            'eye_color_id'        => $this->eye_color_id,
+            'team_id'             => $this->team_id,
         ]);
 
         $this->searchDates($query, [
             'date_of_birth' => $this->date_of_birth,
-            'created' => $this->created,
-            'updated' => $this->updated,
+            'created'       => $this->created,
+            'updated'       => $this->updated,
         ]);
 
         $this->searchCaseInsensitive($query, [
-            'rpn' => $this->rpn,
-            'forename' => $this->forename,
-            'surname' => $this->surname,
-            'nickname' => $this->nickname,
-            'gender' => $this->gender,
+            'rpn'        => $this->rpn,
+            'forename'   => $this->forename,
+            'surname'    => $this->surname,
+            'nickname'   => $this->nickname,
+            'gender'     => $this->gender,
             'profession' => $this->profession,
-            'callsign' => $this->callsign,
+            'callsign'   => $this->callsign,
         ]);
 
-        if($this->name) {
+        if ($this->name) {
             $this->searchFulltext(
                 $query,
                 $this->name,
@@ -108,5 +109,49 @@ class StaffSearch extends Staff
         }
 
         return $dataProvider;
+    }
+
+    /**
+     * @param $params
+     * @param null $missionId
+     * @return ActiveDataProvider
+     */
+    public function searchMissionForm($params, $missionId = null)
+    {
+        $dataProvider = $this->search($params);
+
+        if ($missionId) {
+            /** @var ActiveQuery $query */
+            $query = $dataProvider->query;
+            $query->joinWith('missions')
+                ->andWhere([
+                    'or',
+                    ['!=', 'mission.id', $missionId],
+                    ['mission.id' => null]
+                ]);
+        }
+
+        return $dataProvider;
+    }
+
+    public function getMissionActionEnableValidators()
+    {
+        return [
+            function (Staff $staff) {
+                return !$staff->status_alive ? 'Dead' : true;
+            },
+//            function (Staff $staff) {
+//                return !$staff->status_it ? 'OT' : true;
+//            },
+            function (Staff $staff) {
+                return $staff->isBlocked ? 'Blocked' : true;
+            },
+            function (Staff $staff) {
+                return !$staff->status_in_base ? 'On Mission' : true;
+            },
+//            function (Staff $staff) {
+//                return !$staff->status_be13 ? 'Not BE13' : true;
+//            },
+        ];
     }
 }

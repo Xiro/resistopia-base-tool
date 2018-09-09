@@ -19,12 +19,14 @@ use app\assets\page\StaffSelectFormAsset;
 /* @var $searchModel StaffSearch */
 /* @var $model \yii\db\ActiveRecord */
 /* @var $searchUrl string */
+/* @var $actionEnableValidators array */
 /* @var $exclude array */
 
 $searchUrl = !isset($searchUrl) ? Url::to(["staff/search-form"]) : $searchUrl;
 $exclude = !isset($exclude) ? array() : $exclude;
 $model = $model ? $model : new \app\models\Staff();
 $modelName = (new ReflectionClass($model))->getShortName();
+$actionEnableValidators = !isset($actionEnableValidators) ? [] : $actionEnableValidators;
 /** @var \mate\yii\components\SelectData $selectData */
 $selectData = Yii::$app->selectData;
 
@@ -95,7 +97,8 @@ StaffSelectFormAsset::register($this);
             <?= $this->render("_table-form-body", [
                 "dataProvider" => $selectableDataProvider,
                 "modelName"   => $modelName,
-                "exclude"      => $exclude
+                "exclude"      => $exclude,
+                "actionEnableValidators" => $actionEnableValidators,
             ]); ?>
         </table>
     </div>
@@ -126,6 +129,7 @@ StaffSelectFormAsset::register($this);
                 "modelName"   => $modelName,
                 "exclude"      => $exclude,
                 "checked"     => true,
+                "actionEnableValidators" => $actionEnableValidators,
             ]); ?>
         </table>
     </div>
