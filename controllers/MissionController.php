@@ -224,6 +224,25 @@ class MissionController extends Controller
         ]);
     }
 
+    public function actionScreen()
+    {
+        $this->layout = Yii::$app->request->isAjax ? false : 'blank';
+
+        $tables = ['planing', 'openLeadercall', 'openCrewcall', 'ready', 'active'];
+
+        $statusIds = $this->getStatusIds();
+        $tableQueries = [];
+        foreach ($tables as $statusName) {
+            $tableQueries[] = Mission::find()->where([
+                'mission_status_id' => $statusIds[$statusName]
+            ]);
+        }
+
+        return $this->render('screen', [
+            'tableQueries' => $tableQueries
+        ]);
+    }
+
     public function actionGate()
     {
 
