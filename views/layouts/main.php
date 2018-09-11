@@ -12,6 +12,7 @@ use app\assets\AppAsset;
 use app\components\AccessRule;
 use app\components\Access;
 use mate\yii\widgets\AlertBoxes;
+use app\models\Mission;
 
 $isAjax = Yii::$app->request->isAjax;
 AppAsset::register($this);
@@ -100,6 +101,14 @@ AppAsset::register($this);
     Access::addNavItem(['label' => 'Active', 'url' => ['mission/active']], $missionItems);
     Access::addNavItem(['label' => 'Archive', 'url' => ['mission/archive']], $missionItems);
     Access::addNavItem(['label' => 'Templates', 'url' => ['mission/templates']], $missionItems);
+    Access::addNavItem(['label' => 'Gate', 'url' => ['mission/gate']], $missionItems);
+    if(AccessRule::activeStaff()) {
+        $statusIds = \app\models\MissionStatus::getStatusIds();
+        $leadMissionsCount = Mission::find()->where(['mission_lead_rpn' => AccessRule::activeStaff()->rpn])->count();
+        if ($leadMissionsCount) {
+            Access::addNavItem(['label' => 'Missions lead by me', 'url' => ['mission/index-lead']], $missionItems);
+        }
+    }
     if (!empty($missionItems)) {
         $navItems[] = ['label' => 'Missions', 'items' => $missionItems];
     }

@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\AccessRule;
+use app\models\forms\MissionGateForm;
 use app\models\MissionStatus;
 use mate\yii\widgets\SelectData;
 use Yii;
@@ -243,9 +244,34 @@ class MissionController extends Controller
         ]);
     }
 
-    public function actionGate()
+    public function actionGate($id = null)
     {
-
+        $statusIds = $this->getStatusIds();
+        $model = null;
+        if ($id) {
+            $model = MissionGateForm::findOne([
+                'mission_lead_rpn'  => $id,
+                'mission_status_id' => [
+                    $statusIds['ready'],
+                    $statusIds['active'],
+                    $statusIds['back'],
+                ],
+            ]);
+        }
+        if (!$model) {
+            $model = new MissionGateForm();
+            $model->mission_lead_rpn = $id;
+        }
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()) {
+                Yii::$app->session->addFlash('success', 'Mission saved');
+            } else {
+                Yii::$app->session->addFlash('error', 'Failed to save mission');
+            }
+        }
+        return $this->render('gate', [
+            'model' => $model
+        ]);
     }
 
     /**
@@ -316,7 +342,7 @@ class MissionController extends Controller
     public function actionUpdateCrew($id)
     {
         $model = $this->findModel($id);
-        if($model->mission_lead_rpn != AccessRule::activeStaff()->rpn) {
+        if ($model->mission_lead_rpn != AccessRule::activeStaff()->rpn) {
             throw new ForbiddenHttpException('You are not allowed to access this page');
         }
         return $this->processUpdate($id, 'update-crew');
@@ -380,7 +406,7 @@ class MissionController extends Controller
         /** @var Mission[] $missions */
         $missions = Mission::find()
             ->where(['mission_status_id' => $statusIds['planing']])
-            ->andWhere(['<=','time_publish', date('Y-m-d H:i:s')])
+            ->andWhere(['<=', 'time_publish', date('Y-m-d H:i:s')])
             ->all();
         foreach ($missions as $mission) {
             $mission->mission_status_id = $statusIds['openLeadercall'];
@@ -437,7 +463,7 @@ class MissionController extends Controller
      */
     protected function getStatusIds()
     {
-        return SelectData::fromModel(MissionStatus::class, 'name', 'id');
+        return MissionStatus::getStatusIds();
     }
 
 }

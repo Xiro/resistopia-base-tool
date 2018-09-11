@@ -26,7 +26,7 @@ class StaffForm extends Staff
         return array_merge(parent::rules(), [
             [['accessMasks'], 'safe'],
             [['date_of_birth'], 'date', 'format' => 'dd.MM.yyyy'],
-            [['forename', 'surname', 'nickname'], 'match', 'pattern' => '/^[a-z]{1}[a-z\-\.\,\s]*$/i'],
+            [['forename', 'surname', 'nickname'], 'match', 'pattern' => "/^[a-z]{1}[a-z\-\.\,\'\säÄöÖüÜß]*$/i"],
             [['forename', 'surname', 'nickname'], 'trim'],
         ]);
     }

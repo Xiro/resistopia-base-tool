@@ -1,1 +1,7 @@
-.table-form .assigned-btn,.table-form .list-btn{cursor:pointer}.table-form .table-form-selectable .assigned-btn,.table-form .table-form-selected .list-btn{display:none}
+.table-form .assigned-btn, .table-form .list-btn {
+    cursor: pointer
+}
+
+.table-form .table-form-selectable .assigned-btn, .table-form .table-form-selected .list-btn {
+    display: none
+}

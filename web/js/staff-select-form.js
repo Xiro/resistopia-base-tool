@@ -10,6 +10,9 @@ $.fn.tableFormSelect = function() {
             row = row.clone();
             selectionList.find("tbody").append(row);
             row.find(".table-form-select-checkbox").attr("checked", true);
+            if(typeof setupContent === "function") {
+                setupContent(row);
+            }
         }
     }
 

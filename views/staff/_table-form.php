@@ -34,16 +34,17 @@ TableSearchAsset::register($this);
 StaffSelectFormAsset::register($this);
 ?>
 <div id="staff-search-form"
-      action="<?= $searchUrl ?>"
-      class="animated-label table-search-form"
-      data-target-table="#staff-search-table">
+     action="<?= $searchUrl ?>"
+     class="animated-label table-search-form"
+     data-target-table="#staff-search-table">
 </div>
 
 <div class="row table-form">
     <div class="col-sm-6">
         <table class="table table-bordered staff-table table-form-selectable" id="staff-search-table">
             <thead>
-                <?php $excludeSearchParams = []; ?>
+            <?php $excludeSearchParams = []; ?>
+            <?php if ($searchModel): ?>
                 <tr class="animated-label">
                     <?php $staff = $searchModel ?>
                     <?php if (!in_array("rpn", $exclude)): ?>
@@ -93,11 +94,28 @@ StaffSelectFormAsset::register($this);
                         <?= Glyphicon::arrow_right(["class" => "list-btn add-all-rows"]) ?>
                     </th>
                 </tr>
+            <?php else: ?>
+                <?php if (!in_array("rpn", $exclude)): ?>
+                    <th class="rpn"><?= 'RPN' ?></th>
+                <?php endif; ?>
+                <?php if (!in_array("name", $exclude)): ?>
+                    <th class="name"><?= 'Name' ?></th>
+                <?php endif; ?>
+                <?php if (!in_array("team", $exclude)): ?>
+                    <th class="team"><?= 'Team' ?></th>
+                <?php endif; ?>
+                <th class="actions text-right" style="padding: 8px!important">
+                    <input type="hidden" name="page" value="<?= $selectableDataProvider->pagination->page ?>">
+                    <input type="hidden" name="per-page" value="<?= $selectableDataProvider->pagination->pageSize ?>">
+
+                    <?= Glyphicon::arrow_right(["class" => "list-btn add-all-rows"]) ?>
+                </th>
+            <?php endif; ?>
             </thead>
             <?= $this->render("_table-form-body", [
-                "dataProvider" => $selectableDataProvider,
-                "modelName"   => $modelName,
-                "exclude"      => $exclude,
+                "dataProvider"           => $selectableDataProvider,
+                "modelName"              => $modelName,
+                "exclude"                => $exclude,
                 "actionEnableValidators" => $actionEnableValidators,
             ]); ?>
         </table>
@@ -125,10 +143,10 @@ StaffSelectFormAsset::register($this);
             $selectedDataProvider->setPagination(false);
             ?>
             <?= $this->render("_table-form-body", [
-                "dataProvider" => $selectedDataProvider,
-                "modelName"   => $modelName,
-                "exclude"      => $exclude,
-                "checked"     => true,
+                "dataProvider"           => $selectedDataProvider,
+                "modelName"              => $modelName,
+                "exclude"                => $exclude,
+                "checked"                => true,
                 "actionEnableValidators" => $actionEnableValidators,
             ]); ?>
         </table>

@@ -72,6 +72,7 @@ class MissionForm extends Mission
                 }"
             ],
             ['time_atf', 'validateDuration'],
+            ['mission_lead_rpn', 'validateUniqueMissionLead'],
         ]);
     }
 
@@ -79,6 +80,30 @@ class MissionForm extends Mission
     {
         if (1 !== preg_match('/[0-9]{1,2}:[0-9]{2}/', $this->$attribute)) {
             $this->addError($attribute, $this->getAttributeLabel($attribute) . " must be in format HH:MM");
+        }
+    }
+
+    public function validateUniqueMissionLead($attribute, $params)
+    {
+        $statusIds = MissionStatus::getStatusIds();
+        $lockStatusIds = [
+            $statusIds['planing'],
+            $statusIds['openLeadercall'],
+            $statusIds['openCrewcall'],
+            $statusIds['ready'],
+            $statusIds['active'],
+            $statusIds['back'],
+        ];
+        $otherLeadMissionsQuery = Mission::find()
+            ->where(['mission_status_id' => $lockStatusIds])
+            ->andWhere(['mission_lead_rpn' => $this->$attribute]);
+        if($this->id) {
+            $otherLeadMissionsQuery->andWhere(['!=', 'id', $this->id]);
+        }
+        if (in_array($this->mission_status_id, $lockStatusIds) && $otherLeadMissionsQuery->count() > 0) {
+            $missions = $otherLeadMissionsQuery->asArray()->all();
+            $missionNames = array_column($missions, 'name');
+            $this->addError($attribute, "Mission Lead already assigned to another mission (". implode(', ', $missionNames) .")");
         }
     }
 
@@ -96,13 +121,13 @@ class MissionForm extends Mission
             return false;
         }
 
-        if($this->mission_lead_rpn) {
+        if ($this->mission_lead_rpn) {
             $this->staffSelect = $this->staffSelect === false ? [] : $this->staffSelect;
-            if(!in_array($this->mission_lead_rpn, $this->staffSelect)) {
+            if (!in_array($this->mission_lead_rpn, $this->staffSelect)) {
                 $this->staffSelect[] = $this->mission_lead_rpn;
             }
         }
-        if($this->staffSelect !== false) {
+        if ($this->staffSelect !== false) {
             $this->updateToMany("staff", Staff::class, $this->staffSelect, true, 'rpn');
         }
 

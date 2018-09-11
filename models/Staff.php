@@ -141,7 +141,10 @@ class Staff extends ActiveRecord
         return [
             [
                 'class'              => ChangeLogBehavior::class,
-                'excludedAttributes' => ['updated'],
+                'excludedAttributes' => [
+                    'updated',
+                    'status_in_base'
+                ],
             ],
         ];
     }

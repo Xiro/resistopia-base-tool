@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use mate\yii\widgets\SelectData;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -39,9 +40,18 @@ class MissionStatus extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id'   => 'ID',
             'name' => 'Name',
         ];
+    }
+
+    public static function getStatusIds()
+    {
+        return SelectData::fromModel(
+            MissionStatus::class,
+            'name',
+            'id'
+        );
     }
 
     /**
