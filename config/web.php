@@ -6,7 +6,7 @@ $db = require(__DIR__ . '/db.php');
 $config = [
     'id'         => 'basic',
     'basePath'   => dirname(__DIR__),
-    'bootstrap'  => ['log', 'ajaxLayout', 'selectData', function () {
+    'bootstrap'  => ['log', 'ajaxLayout', 'lock', 'selectData', function () {
         \Yii::$container->set('yii\bootstrap\ActiveField', [
             'inputOptions' => [
                 'autocomplete' => 'off'
@@ -38,6 +38,9 @@ $config = [
         ],
         'ajaxLayout'   => [
             'class' => 'app\components\AjaxLayout'
+        ],
+        'lock'   => [
+            'class' => 'app\components\Lock'
         ],
         'selectData'   => [
             'class' => 'mate\yii\components\SelectData',

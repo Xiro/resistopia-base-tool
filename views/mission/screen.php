@@ -3,12 +3,15 @@
 use app\helpers\Html;
 use yii\data\ActiveDataProvider;
 use mate\yii\widgets\Glyphicon;
+use app\assets\plugins\TickerAsset;
 
 /* @var $this yii\web\View */
 /* @var $tableQueries \yii\db\ActiveQuery[] */
 
 $this->title = 'Mission Screen';
 $this->params['breadcrumbs'][] = $this->title;
+
+TickerAsset::register($this);
 
 ?>
 <?php if (!Yii::$app->request->isAjax): ?>
@@ -105,8 +108,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td><?= $model->slots_guard ?></td>
                             <td><?= $model->slots_vip ?></td>
                             <td><?= $model->mission_status_id ? $model->missionStatus->name : 'n/a' ?></td>
-                            <td class="time_lst"><?= $model->time_lst ? date('H:i d.m.Y', strtotime($model->time_lst)) : 'n/a' ?></td>
-                            <td class="time_ete"><?= $model->time_ete ? date('H:i d.m.Y', strtotime($model->time_ete)) : 'n/a' ?></td>
+                            <td class="time_lst" style="min-width: 130px"><?= $model->time_lst ? date('H:i d.m.Y', strtotime($model->time_lst)) : 'n/a' ?></td>
+                            <td class="time_ete" style="min-width: 130px"><?= $model->time_ete ? date('H:i d.m.Y', strtotime($model->time_ete)) : 'n/a' ?></td>
                             <td class="time_atf"><?= $model->time_atf ? date('H:i', strtotime($model->time_atf)) : 'n/a' ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -127,6 +130,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <b>ETE - Estimated Time of Execution:</b> Time the mission is executed in the field<br>
                 <b>ATF - Accepted Time Favor:</b> Longest time period the mission should take<br>
             </div>
+        </div>
+        <div class="ticker" data-refresh="<?= \yii\helpers\Url::to(['ticker/active-messages']) ?>">
+
         </div>
     </div>
 </div>

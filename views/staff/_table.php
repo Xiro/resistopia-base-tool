@@ -52,7 +52,7 @@ if ($searchModel) {
                 <th class="rpn">
                     <?= $form->field($model, 'rpn')->textInput([
                         'maxlength' => true,
-                        'class'     => 'form-control mask-rpn'
+                        'class'     => 'form-control sergeant'
                     ]) ?>
                 </th>
             <?php endif; ?>
