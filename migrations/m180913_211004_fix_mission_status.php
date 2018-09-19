@@ -2,6 +2,7 @@
 
 use yii\db\Migration;
 use app\models\MissionStatus;
+use app\models\MissionStatusHistory;
 use app\models\Mission;
 
 /**
@@ -32,6 +33,10 @@ class m180913_211004_fix_mission_status extends Migration
                     continue;
                 }
                 Mission::updateAll(
+                    ['mission_status_id' => $firstModel->id],
+                    ['mission_status_id' => $model->id]
+                );
+                MissionStatusHistory::updateAll(
                     ['mission_status_id' => $firstModel->id],
                     ['mission_status_id' => $model->id]
                 );
