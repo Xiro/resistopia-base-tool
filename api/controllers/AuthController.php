@@ -9,14 +9,14 @@ use yii\rest\Controller;
 class AuthController extends Controller
 {
 
-    public function actionRpn()
+    public function actionSid()
     {
         $request = \Yii::$app->request;
-        $rpn = $request->post('rpn');
-        if(!$rpn) {
-            return JsonResponse::error('Missing POST parameter rpn');
+        $sid = $request->post('sid');
+        if(!$sid) {
+            return JsonResponse::error('Missing POST parameter sid');
         }
-        return $this->authByIdentifier('rpn', $rpn);
+        return $this->authByIdentifier('sid', $sid);
     }
 
     public function actionKey()

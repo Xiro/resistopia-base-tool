@@ -33,10 +33,10 @@ class StaffController extends Controller
         return $behaviors;
     }
 
-    public function actionView($rpn)
+    public function actionView($sid)
     {
         $staff = Staff::find()
-            ->where(['rpn' => $rpn])
+            ->where(['sid' => $sid])
             ->joinWith([
                 'missionBlocks',
                 'baseCategory',
@@ -56,9 +56,9 @@ class StaffController extends Controller
         return JsonResponse::success('Found', ['data' => $staff]);
     }
 
-    public function actionAccessList($rpn)
+    public function actionAccessList($sid)
     {
-        $staff = Staff::findOne($rpn);
+        $staff = Staff::findOne($sid);
         if (!$staff || !$staff->accessKey) {
             return JsonResponse::error('Not found');
         }
@@ -66,11 +66,11 @@ class StaffController extends Controller
         return JsonResponse::success('Access list found', ['data' => $accessList]);
     }
 
-    public function actionHasAccess($rpn, $accessKey)
+    public function actionHasAccess($sid, $accessKey)
     {
-        $staff = Staff::findOne($rpn);
+        $staff = Staff::findOne($sid);
         if (!$staff) {
-            return JsonResponse::error('Rpn not found');
+            return JsonResponse::error('SID not found');
         }
         if (!$staff->user) {
             return JsonResponse::error('Staff does not have a login');

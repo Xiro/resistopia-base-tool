@@ -15,10 +15,10 @@ curl -i -H "Accept:application/json" "<HOST>/api/auth/key" -d "key=<auth key>&pa
 
 ##### Authentification via staff user:
 
-Send an http request to ```api/auth/rpn``` with ```rpn``` and ```password``` as POST parameters to get your access token:
+Send an http request to ```api/auth/sid``` with ```sid``` and ```password``` as POST parameters to get your access token:
 
 ```
-curl -i -H "Accept:application/json" "<HOST>/api/auth/rpn" -d "rpn=<rpn>&password=<password>"
+curl -i -H "Accept:application/json" "<HOST>/api/auth/sid" -d "sid=<sid>&password=<password>"
 ```
 
 To make an authenticated call, the retrieved access_token has to be send along every request
@@ -43,7 +43,7 @@ curl <...> "<url>&access-token=m5j3jSydPVHyj_OaGvnm5mqqWaJhVJMU"
 
 GET-Parameters:
 
-- **rpn**: Staff RPN
+- **sid**: Staff SID
 
 **Response**: Detailed information about the requested staff entry  
 
@@ -53,7 +53,7 @@ GET-Parameters:
 
 GET-Parameters:
 
-- **rpn**: Staff RPN
+- **sid**: Staff SID
 
 **Response**: List of all access keys the user has access rights to  
 
@@ -63,7 +63,7 @@ GET-Parameters:
 
 GET-Parameters:
 
-- **rpn**: Staff RPN
+- **sid**: Staff SID
 - **accessKey**: Key of access right to read, first part or whole
 
 **Response**: Boolean if the user is permitted a specific action or not
