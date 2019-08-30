@@ -42,7 +42,7 @@ class MedicineMigrateController extends Controller
                 $errors++;
                 continue;
             } else {
-                $checkup->author_rpn = $author->rpn;
+                $checkup->author_rpn = $author->sid;
             }
 
             // patient rpn

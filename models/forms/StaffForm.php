@@ -42,17 +42,17 @@ class StaffForm extends Staff
         $this->accessMasks = array_diff($existingMaskIds, $impliedMaskIds);
     }
 
-    public function createRpn()
+    public function createSid()
     {
         do {
-            $rpn = "";
-            $rpn .= strtoupper(substr($this->forename, 0, 1));
-            $rpn .= strtoupper(substr($this->surname, 0, 1));
-            $rpn .= "-";
-            $rpn .= rand(10000, 99999);
-            $alreadyExists = 0 < self::find()->where(["rpn" => $rpn])->count();
+            $sid = "";
+            $sid .= strtoupper(substr($this->forename, 0, 1));
+            $sid .= strtoupper(substr($this->surname, 0, 1));
+            $sid .= "-";
+            $sid .= rand(10000, 99999);
+            $alreadyExists = 0 < self::find()->where(["sid" => $sid])->count();
         } while ($alreadyExists);
-        return $rpn;
+        return $sid;
     }
 
     protected function getImpliedAccessMasks()
@@ -73,7 +73,7 @@ class StaffForm extends Staff
     public function save($runValidation = true, $attributeNames = null)
     {
         if ($this->getIsNewRecord()) {
-            $this->rpn = $this->createRpn();
+            $this->sid = $this->createSid();
 
             $accessKey = new AccessKey();
             $accessKey->save();

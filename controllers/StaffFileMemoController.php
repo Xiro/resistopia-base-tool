@@ -113,7 +113,7 @@ class StaffFileMemoController extends Controller
     {
         $model = new StaffFileMemo();
         $model->rpn = $id;
-        $model->author_rpn = AccessRule::activeStaff()->rpn;
+        $model->author_rpn = AccessRule::activeStaff()->sid;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->goBack(['index']);

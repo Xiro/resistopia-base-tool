@@ -36,10 +36,10 @@ $exclude = !isset($exclude) ? array() : $exclude;
             <td class="user">
                 <?php
                 if ($model->user_id && $model->user && $model->user->rpn) {
-                    echo $model->user->staff->rpn . " ";
+                    echo $model->user->staff->sid . " ";
                     echo Html::a(
                         Glyphicon::eye_open(),
-                        ['staff/view', 'id' => $model->user->staff->rpn],
+                        ['staff/view', 'id' => $model->user->staff->sid],
                         ["class" => "ajax-dialog", "data-size" => "lg"]
                     );
                 }

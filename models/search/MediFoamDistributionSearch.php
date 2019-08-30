@@ -19,7 +19,7 @@ class MediFoamDistributionSearch extends MediFoamDistribution
     {
         return [
             [['id', 'mk1_issued', 'mk1_returned'], 'integer'],
-            [['recipient_rpn', 'issued_by_rpn', 'created'], 'safe'],
+            [['recipient_sid', 'issued_by_sid', 'created'], 'safe'],
         ];
     }
 
@@ -65,8 +65,8 @@ class MediFoamDistributionSearch extends MediFoamDistribution
             'created' => $this->created,
         ]);
 
-        $query->andFilterWhere(['like', 'recipient_rpn', $this->recipient_rpn])
-            ->andFilterWhere(['like', 'issued_by_rpn', $this->issued_by_rpn]);
+        $query->andFilterWhere(['like', 'recipient_sid', $this->recipient_sid])
+            ->andFilterWhere(['like', 'issued_by_sid', $this->issued_by_sid]);
 
         return $dataProvider;
     }

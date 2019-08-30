@@ -20,12 +20,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <span class="pull-right">
         <?= Html::a(
             'Update',
-            ['update', 'id' => $model->rpn],
+            ['update', 'id' => $model->sid],
             ['class' => 'btn btn-primary']
         ) ?>
         <?= Html::a(
             'Delete',
-            ['confirm-delete', 'id' => $model->rpn],
+            ['confirm-delete', 'id' => $model->sid],
             ['class' => 'btn btn-danger ajax-dialog', "data-size" => "sm"]
         ) ?>
         </span>
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     $personalInfo = [];
     $personalInfo["name"] = $model->getName();
-    $personalInfo["RPN"] = $model->rpn;
+    $personalInfo["RPN"] = $model->sid;
 
     $personalInfo["Gender"] = $model->gender ? $model->gender : "n/a";
     $personalInfo["Height"] = $model->height ? $model->height . " cm" : "n/a";
@@ -144,7 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <span class="heading-btn-group pull-right">
                     <?= Html::a(
                         'Lift Block',
-                        ['mission-block/lift', 'id' => $model->rpn],
+                        ['mission-block/lift', 'id' => $model->sid],
                         ['class' => 'btn btn-default']
                     ) ?>
                 </span>

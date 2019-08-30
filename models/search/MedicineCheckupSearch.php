@@ -22,7 +22,7 @@ class MedicineCheckupSearch extends MedicineCheckup
     {
         return [
             [['id', 'pulse', 'temperature', 'blood_pressure_systolic', 'blood_pressure_diastolic'], 'integer'],
-            [['author_rpn', 'patient_rpn', 'impairment', 'aftercare', 'breathing', 'breathing_details', 'pupils', 'nutrition', 'psyche', 'complexion', 'vaccinations', 'conditions', 'drug_use', 'other', 'created', 'updated'], 'safe'],
+            [['author_sid', 'patient_sid', 'impairment', 'aftercare', 'breathing', 'breathing_details', 'pupils', 'nutrition', 'psyche', 'complexion', 'vaccinations', 'conditions', 'drug_use', 'other', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -61,8 +61,8 @@ class MedicineCheckupSearch extends MedicineCheckup
         }
 
         $this->searchCaseInsensitive($query, [
-            'author_rpn' => $this->author_rpn,
-            'patient_rpn' => $this->patient_rpn,
+            'author_sid' => $this->author_sid,
+            'patient_sid' => $this->patient_sid,
             'impairment' => $this->impairment,
             'aftercare' => $this->aftercare,
             'breathing' => $this->breathing,

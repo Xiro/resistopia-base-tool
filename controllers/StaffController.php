@@ -136,7 +136,7 @@ class StaffController extends Controller
         $staffWithCallsigns = Staff::find()->where(['!=', 'callsign', ''])->orderBy('callsign')->all();
         foreach ($staffWithCallsigns as $row => $staff) {
             $csv->setRecursive([$row, 'Callsign'], $staff->callsign);
-            $csv->setRecursive([$row, 'Rpn'], $staff->rpn);
+            $csv->setRecursive([$row, 'Rpn'], $staff->sid);
             $csv->setRecursive([$row, 'Name'], $staff->name);
         }
         $csv->write();
@@ -155,7 +155,7 @@ class StaffController extends Controller
             ->orderBy('team.name')
             ->all();
         foreach ($combatMedics as $row => $staff) {
-            $csv->setRecursive([$row, 'Rpn'], $staff->rpn);
+            $csv->setRecursive([$row, 'Rpn'], $staff->sid);
             $csv->setRecursive([$row, 'Name'], $staff->name);
             $csv->setRecursive([$row, 'Team'], $staff->team_id ? $staff->team->name : 'none');
             $csv->setRecursive([$row, 'Team Size'], $staff->team_id ? $staff->team->getStaff()->count() : '');

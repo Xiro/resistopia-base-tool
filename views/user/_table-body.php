@@ -19,7 +19,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
     <tr data-key="<?= $model->id ?>">
         <?php if (!in_array("rpn", $exclude)): ?>
             <td class="rpn">
-                <?= $model->rpn ? $model->rpn . ' (' . $model->staff->getName() . ')' : "None" ?>
+                <?= $model->sid ? $model->sid . ' (' . $model->staff->getName() . ')' : "None" ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("created", $exclude)): ?>

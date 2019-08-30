@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "staff_background".
  *
  * @property integer $id
- * @property string $rpn
+ * @property string $sid
  * @property string $story_before
  * @property string $story_during
  * @property string $story_after
@@ -20,7 +20,7 @@ use yii\db\ActiveRecord;
  * @property string $created
  * @property string $updated
  *
- * @property Staff $rpn0
+ * @property Staff $staff
  */
 class StaffBackground extends ActiveRecord
 {
@@ -38,12 +38,12 @@ class StaffBackground extends ActiveRecord
     public function rules()
     {
         return [
-            [['rpn'], 'required'],
+            [['sid'], 'required'],
             [['story_before', 'story_during', 'story_after', 'career', 'characteristics', 'personality', 'awards'], 'string'],
             [['created', 'updated'], 'safe'],
-            [['rpn'], 'string', 'max' => 8],
-            [['rpn'], 'unique'],
-            [['rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['rpn' => 'rpn']],
+            [['sid'], 'string', 'max' => 8],
+            [['sid'], 'unique'],
+            [['sid'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['sid' => 'sid']],
         ];
     }
 
@@ -54,7 +54,7 @@ class StaffBackground extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'rpn' => 'Rpn',
+            'sid' => 'SID',
             'story_before' => 'Story before the invasion',
             'story_during' => 'Story during the invasion',
             'story_after' => 'Story after the invasion',
@@ -70,8 +70,8 @@ class StaffBackground extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRpn0()
+    public function getStaff()
     {
-        return $this->hasOne(Staff::className(), ['rpn' => 'rpn']);
+        return $this->hasOne(Staff::className(), ['sid' => 'sid']);
     }
 }

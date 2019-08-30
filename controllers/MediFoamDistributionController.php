@@ -92,7 +92,7 @@ class MediFoamDistributionController extends Controller
     public function actionCreate()
     {
         $model = new MediFoamDistribution();
-        $model->issued_by_rpn = AccessRule::activeStaff()->rpn;
+        $model->issued_by_rpn = AccessRule::activeStaff()->sid;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);

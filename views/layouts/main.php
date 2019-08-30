@@ -105,7 +105,7 @@ AppAsset::register($this);
     Access::addNavItem(['label' => 'Gate', 'url' => ['mission/gate']], $missionItems);
     if(AccessRule::activeStaff()) {
         $statusIds = \app\models\MissionStatus::getStatusIds();
-        $leadMissionsCount = Mission::find()->where(['mission_lead_rpn' => AccessRule::activeStaff()->rpn])->count();
+        $leadMissionsCount = Mission::find()->where(['mission_lead_rpn' => AccessRule::activeStaff()->sid])->count();
         if ($leadMissionsCount) {
             Access::addNavItem(['label' => 'Missions lead by me', 'url' => ['mission/index-lead']], $missionItems);
         }

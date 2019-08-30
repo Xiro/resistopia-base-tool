@@ -28,9 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
     $info["Primary Key"] = $model->primary_key ? $model->primary_key : "n/a";
     $info["Type"] = $model->type ? $model->type : "n/a";
 
-    $info["User"] = $model->user_id && $model->user ? $model->user->staff->rpn . " " . Html::a(
+    $info["User"] = $model->user_id && $model->user ? $model->user->staff->sid . " " . Html::a(
             Glyphicon::eye_open(),
-            ['staff/view', 'id' => $model->user->staff->rpn],
+            ['staff/view', 'id' => $model->user->staff->sid],
             ["class" => "ajax-dialog", "data-size" => "lg"]
         ) : "n/a";
     $info["Time"] = $model->created ? date('d.m.Y H:i', strtotime($model->created)) : "n/a";

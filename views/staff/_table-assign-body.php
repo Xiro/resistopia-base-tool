@@ -21,10 +21,10 @@ $exclude = !isset($exclude) ? array() : $exclude;
        data-page-count="<?= $pagination ? $pagination->pageCount : null ?>">
 <?php /** @var $staff \app\models\Staff */ ?>
 <?php foreach ($dataProvider->getModels() as $staff): ?>
-    <tr data-key="<?= $staff->rpn ?>">
+    <tr data-key="<?= $staff->sid ?>">
         <?php if (!in_array("rpn", $exclude)): ?>
             <td class="rpn">
-                <?= $staff->rpn ?>
+                <?= $staff->sid ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("name", $exclude)): ?>
@@ -41,14 +41,14 @@ $exclude = !isset($exclude) ? array() : $exclude;
             <?php if (!in_array("action-view", $exclude)): ?>
                 <?= Html::a(
                     Glyphicon::eye_open(),
-                    ['staff/view', 'id' => $staff->rpn],
+                    ['staff/view', 'id' => $staff->sid],
                     ["class" => "ajax-dialog", "data-size" => "lg"]
                 ) ?>
             <?php endif; ?>
             <?= Glyphicon::arrow_right(["class" => "list-btn add-row add-right"]) ?>
             <?= Glyphicon::arrow_left(["class" => "assigned-btn add-row add-left"]) ?>
             <?= Html::checkbox("{$modelName}[staffAssign][]", $checked, [
-                "value" => $staff->rpn,
+                "value" => $staff->sid,
                 "class" => " table-form-select-checkbox hidden"
             ]); ?>
         </td>

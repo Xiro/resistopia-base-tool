@@ -26,8 +26,8 @@ use yii\db\ActiveRecord;
  * @property integer $mission_status_id
  * @property integer $operation_id
  * @property integer $mission_type_id
- * @property string $created_by_rpn
- * @property string $mission_lead_rpn
+ * @property string $created_by_sid
+ * @property string $mission_lead_sid
  * @property string $time_publish
  * @property string $time_lst
  * @property string $time_ete
@@ -62,17 +62,17 @@ class Mission extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'zone', 'mission_type_id', 'created_by_rpn'], 'required'],
+            [['name', 'zone', 'mission_type_id', 'created_by_sid'], 'required'],
             [['description', 'debrief_comment', 'note', 'zone'], 'string'],
             [['slots_total', 'slots_medic', 'slots_radio', 'slots_tech', 'slots_res', 'slots_guard', 'slots_vip', 'mission_status_id', 'mission_type_id'], 'integer', 'max' => 2147483647],
             [['time_publish', 'time_lst', 'time_ete', 'time_atf', 'finished', 'created', 'updated'], 'safe'],
             [['name'], 'string', 'max' => 128],
-            [['created_by_rpn', 'mission_lead_rpn'], 'string', 'max' => 8],
+            [['created_by_sid', 'mission_lead_sid'], 'string', 'max' => 8],
             [['mission_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => MissionStatus::class, 'targetAttribute' => ['mission_status_id' => 'id']],
             [['mission_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => MissionType::class, 'targetAttribute' => ['mission_type_id' => 'id']],
             [['operation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Operation::class, 'targetAttribute' => ['operation_id' => 'id']],
-            [['created_by_rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::class, 'targetAttribute' => ['created_by_rpn' => 'rpn']],
-            [['mission_lead_rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::class, 'targetAttribute' => ['mission_lead_rpn' => 'rpn']],
+            [['created_by_sid'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::class, 'targetAttribute' => ['created_by_sid' => 'sid']],
+            [['mission_lead_sid'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::class, 'targetAttribute' => ['mission_lead_sid' => 'sid']],
         ];
     }
 
@@ -98,8 +98,8 @@ class Mission extends ActiveRecord
             'mission_status_id' => 'Mission Status',
             'operation_id' => 'Operation',
             'mission_type_id' => 'Type',
-            'created_by_rpn' => 'Created By',
-            'mission_lead_rpn' => 'Mission Lead',
+            'created_by_sid' => 'Created By',
+            'mission_lead_sid' => 'Mission Lead',
             'time_publish' => 'Time Publish',
             'time_lst' => 'LST',
             'time_ete' => 'ETE',
@@ -184,7 +184,7 @@ class Mission extends ActiveRecord
      */
     public function getCreatedBy()
     {
-        return $this->hasOne(Staff::class, ['rpn' => 'created_by_rpn']);
+        return $this->hasOne(Staff::class, ['sid' => 'created_by_sid']);
     }
 
     /**
@@ -192,7 +192,7 @@ class Mission extends ActiveRecord
      */
     public function getMissionLead()
     {
-        return $this->hasOne(Staff::class, ['rpn' => 'mission_lead_rpn']);
+        return $this->hasOne(Staff::class, ['sid' => 'mission_lead_sid']);
     }
 
     /**
@@ -200,7 +200,7 @@ class Mission extends ActiveRecord
      */
     public function getStaff()
     {
-        return $this->hasMany(Staff::class, ['rpn' => 'staff_rpn'])->viaTable('mission_staff', ['mission_id' => 'id']);
+        return $this->hasMany(Staff::class, ['sid' => 'staff_sid'])->viaTable('mission_staff', ['mission_id' => 'id']);
     }
 
     /**

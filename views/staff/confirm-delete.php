@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-md-6">
                     <?= Html::a(
                         'Yes',
-                        ["delete", "id" => $model->rpn],
+                        ["delete", "id" => $model->sid],
                         [
                             "class" => "btn btn-default btn-block",
                             "data" => ["method" => "post"]

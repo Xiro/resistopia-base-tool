@@ -30,9 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     $info = [];
-    $info["RPN"] = $model->rpn . ' ' . Html::a(
+    $info["RPN"] = $model->sid . ' ' . Html::a(
             Glyphicon::eye_open(),
-            ['staff/view', 'id' => $model->rpn],
+            ['staff/view', 'id' => $model->sid],
             ["class" => "ajax-dialog", "data-size" => "lg"]
         );
     $info["Auth Key"] = $model->auth_key ? $model->auth_key : "n/a";

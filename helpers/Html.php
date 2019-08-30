@@ -50,7 +50,7 @@ class Html extends \yii\helpers\Html
         }
         return $staff->$labelAttribute . ' ' . Html::a(
             Glyphicon::eye_open(),
-            ['staff/view', 'id' => $staff->rpn],
+            ['staff/view', 'id' => $staff->sid],
             ["class" => "ajax-dialog", "data-size" => "lg"]
         );
     }

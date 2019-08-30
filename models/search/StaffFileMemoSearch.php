@@ -21,7 +21,7 @@ class StaffFileMemoSearch extends StaffFileMemo
     {
         return [
             [['id', 'access_right_id'], 'integer'],
-            [['file_memo_number', 'title', 'file_memo', 'rpn', 'author_rpn', 'created', 'updated'], 'safe'],
+            [['file_memo_number', 'title', 'file_memo', 'sid', 'author_sid', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -76,8 +76,8 @@ class StaffFileMemoSearch extends StaffFileMemo
             'file_memo_number' => $this->file_memo_number,
         ]);
 
-        $query->andFilterWhere(['like', 'rpn', $this->rpn])
-            ->andFilterWhere(['like', 'author_rpn', $this->author_rpn]);
+        $query->andFilterWhere(['like', 'sid', $this->sid])
+            ->andFilterWhere(['like', 'author_sid', $this->author_sid]);
 
         return $dataProvider;
     }

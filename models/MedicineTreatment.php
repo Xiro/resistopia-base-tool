@@ -9,8 +9,8 @@ use yii\db\ActiveRecord;
  * This is the model class for table "medicine_treatment".
  *
  * @property integer $id
- * @property string $author_rpn
- * @property string $patient_rpn
+ * @property string $author_sid
+ * @property string $patient_sid
  * @property string $impairment
  * @property string $aftercare
  * @property string $operational_fitness
@@ -51,15 +51,15 @@ class MedicineTreatment extends ActiveRecord
     public function rules()
     {
         return [
-            [['author_rpn', 'patient_rpn', 'breathing', 'pupils'], 'required'],
+            [['author_sid', 'patient_sid', 'breathing', 'pupils'], 'required'],
             [['impairment', 'aftercare', 'operational_fitness', 'breathing', 'pupils', 'psyche', 'pretreatment', 'medi_foam', 'annotation'], 'string'],
             [['pulse', 'temperature', 'blood_pressure_systolic', 'blood_pressure_diastolic'], 'number'],
             [['created', 'updated'], 'safe'],
-            [['author_rpn', 'patient_rpn'], 'string', 'max' => 8],
+            [['author_sid', 'patient_sid'], 'string', 'max' => 8],
             [['breathing_details'], 'string', 'max' => 255],
-            [['author_rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['author_rpn' => 'rpn']],
+            [['author_sid'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['author_sid' => 'sid']],
             [['mission_block_id'], 'exist', 'skipOnError' => true, 'targetClass' => MissionBlock::className(), 'targetAttribute' => ['mission_block_id' => 'id']],
-            [['patient_rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['patient_rpn' => 'rpn']],
+            [['patient_sid'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['patient_sid' => 'sid']],
         ];
     }
 
@@ -70,8 +70,8 @@ class MedicineTreatment extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'author_rpn' => 'Behandelnder Arzt',
-            'patient_rpn' => 'Patient',
+            'author_sid' => 'Behandelnder Arzt',
+            'patient_sid' => 'Patient',
             'impairment' => 'Dauerhafte Beeinträchtigung',
             'aftercare' => 'Notwendige Nachbehandlung',
             'operational_fitness' => 'Einsatztauglichkeit',
@@ -108,7 +108,7 @@ class MedicineTreatment extends ActiveRecord
      */
     public function getAuthor()
     {
-        return $this->hasOne(Staff::className(), ['rpn' => 'author_rpn']);
+        return $this->hasOne(Staff::className(), ['sid' => 'author_sid']);
     }
 
     /**
@@ -124,7 +124,7 @@ class MedicineTreatment extends ActiveRecord
      */
     public function getPatient()
     {
-        return $this->hasOne(Staff::className(), ['rpn' => 'patient_rpn']);
+        return $this->hasOne(Staff::className(), ['sid' => 'patient_sid']);
     }
 
     /**

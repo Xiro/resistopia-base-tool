@@ -33,11 +33,11 @@ class MissionGateForm extends Mission
             return false;
         }
         $missionStaff = $this->getStaff()->all();
-        $missionStaff = array_combine(ArrayHelper::getColumn($missionStaff, 'rpn'), $missionStaff);
+        $missionStaff = array_combine(ArrayHelper::getColumn($missionStaff, 'sid'), $missionStaff);
 
-        $onMissionRpns = array_flip($this->staffAssign);
-        $inBase = array_diff_key($missionStaff, $onMissionRpns);
-        $onMission = array_intersect_key($missionStaff, $onMissionRpns);
+        $onMissionSids = array_flip($this->staffAssign);
+        $inBase = array_diff_key($missionStaff, $onMissionSids);
+        $onMission = array_intersect_key($missionStaff, $onMissionSids);
 
         $errors = [];
         /** @var Staff $staff */
@@ -60,7 +60,7 @@ class MissionGateForm extends Mission
         }
 //        echo '<pre>';
 //        echo print_r([
-//            $onMissionRpns,
+//            $onMissionSids,
 //            array_keys($missionStaff),
 //            'In Base',
 //            array_keys($inBase),

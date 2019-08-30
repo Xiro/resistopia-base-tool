@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "staff".
  *
- * @property string $rpn
+ * @property string $sid
  * @property string $forename
  * @property string $surname
  * @property string $nickname
@@ -36,7 +36,7 @@ use yii\db\ActiveRecord;
  * @property string $updated
  * @property bool $isBlocked
  * @property string $name
- * @property string $nameWithRpn
+ * @property string $nameWithSid
  * @property integer $currentMediFoam
  * @property integer $securityLevel
  *
@@ -81,14 +81,14 @@ class Staff extends ActiveRecord
     public function rules()
     {
         return [
-            [['rpn', 'forename', 'surname', 'gender', 'date_of_birth', 'access_key_id', 'rank_id'], 'required'],
+            [['sid', 'forename', 'surname', 'gender', 'date_of_birth', 'access_key_id', 'rank_id'], 'required'],
             [['gender'], 'string'],
             [['date_of_birth', 'created', 'updated'], 'safe'],
             [['height', 'status_it', 'status_be13', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'base_category_id', 'special_function_id', 'eye_color_id', 'blood_type_id'], 'integer'],
-            [['rpn'], 'string', 'max' => 8],
+            [['sid'], 'string', 'max' => 8],
             [['forename', 'surname', 'nickname', 'profession'], 'string', 'max' => 128],
             [['callsign'], 'string', 'max' => 5],
-            [['rpn'], 'unique'],
+            [['sid'], 'unique'],
             [['callsign'], 'unique'],
             [['access_key_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessKey::className(), 'targetAttribute' => ['access_key_id' => 'id']],
             [['base_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => BaseCategory::className(), 'targetAttribute' => ['base_category_id' => 'id']],
@@ -108,7 +108,7 @@ class Staff extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'rpn' => 'RPN',
+            'sid' => 'SID',
             'forename' => 'Forename',
             'surname' => 'Surname',
             'nickname' => 'Nickname',
@@ -220,16 +220,16 @@ class Staff extends ActiveRecord
         return $this->forename . ' ' . ($this->nickname ? '"' . $this->nickname . '" ' : '') . $this->surname;
     }
 
-    public function getNameWithRpn()
+    public function getNameWithSid()
     {
-        return $this->name . ' (' . $this->rpn . ')';
+        return $this->name . ' (' . $this->sid . ')';
     }
 
     public function getCurrentMediFoam()
     {
         $mediFoam = MediFoamDistribution::find()
             ->select('SUM(mk1_issued) - SUM(mk1_returned) as medi_foam_current')
-            ->where(['recipient_rpn' => $this->rpn])
+            ->where(['recipient_sid' => $this->sid])
             ->asArray()
             ->one();
         return $mediFoam ? $mediFoam['medi_foam_current'] : 0;
@@ -257,14 +257,14 @@ class Staff extends ActiveRecord
      */
     public function getMissionLeads()
     {
-        return $this->hasMany(Mission::className(), ['mission_lead_rpn' => 'rpn']);
+        return $this->hasMany(Mission::className(), ['mission_lead_sid' => 'sid']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getMediFoamDistributions()
     {
-        return $this->hasMany(MediFoamDistribution::className(), ['recipient_rpn' => 'rpn']);
+        return $this->hasMany(MediFoamDistribution::className(), ['recipient_sid' => 'sid']);
     }
 
     /**
@@ -272,14 +272,14 @@ class Staff extends ActiveRecord
      */
     public function getMedicineCheckups()
     {
-        return $this->hasMany(MedicineCheckup::className(), ['patient_rpn' => 'rpn']);
+        return $this->hasMany(MedicineCheckup::className(), ['patient_sid' => 'sid']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getMedicineTreatments()
     {
-        return $this->hasMany(MedicineTreatment::className(), ['patient_rpn' => 'rpn']);
+        return $this->hasMany(MedicineTreatment::className(), ['patient_sid' => 'sid']);
     }
 
     /**
@@ -287,7 +287,7 @@ class Staff extends ActiveRecord
      */
     public function getMissionBlocks()
     {
-        return $this->hasMany(MissionBlock::className(), ['blocked_staff_member_rpn' => 'rpn']);
+        return $this->hasMany(MissionBlock::className(), ['blocked_staff_member_sid' => 'sid']);
     }
 
     /**
@@ -307,7 +307,7 @@ class Staff extends ActiveRecord
      */
     public function getMissionStaff()
     {
-        return $this->hasMany(MissionStaff::className(), ['staff_rpn' => 'rpn']);
+        return $this->hasMany(MissionStaff::className(), ['staff_sid' => 'sid']);
     }
 
     /**
@@ -315,7 +315,7 @@ class Staff extends ActiveRecord
      */
     public function getMissions()
     {
-        return $this->hasMany(Mission::className(), ['id' => 'mission_id'])->viaTable('mission_staff', ['staff_rpn' => 'rpn']);
+        return $this->hasMany(Mission::className(), ['id' => 'mission_id'])->viaTable('mission_staff', ['staff_sid' => 'sid']);
     }
 
     /**
@@ -331,7 +331,7 @@ class Staff extends ActiveRecord
      */
     public function getMissionStatusHistories()
     {
-        return $this->hasMany(MissionStatusHistory::className(), ['author_rpn' => 'rpn']);
+        return $this->hasMany(MissionStatusHistory::className(), ['author_sid' => 'sid']);
     }
 
     /**
@@ -403,7 +403,7 @@ class Staff extends ActiveRecord
      */
     public function getStaffBackground()
     {
-        return $this->hasOne(StaffBackground::className(), ['rpn' => 'rpn']);
+        return $this->hasOne(StaffBackground::className(), ['sid' => 'sid']);
     }
 
     /**
@@ -411,7 +411,7 @@ class Staff extends ActiveRecord
      */
     public function getStaffFileMemos()
     {
-        return $this->hasMany(StaffFileMemo::className(), ['rpn' => 'rpn']);
+        return $this->hasMany(StaffFileMemo::className(), ['sid' => 'sid']);
     }
 
     /**
@@ -419,7 +419,7 @@ class Staff extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['rpn' => 'rpn']);
+        return $this->hasOne(User::className(), ['sid' => 'sid']);
     }
 
     /**
@@ -429,7 +429,7 @@ class Staff extends ActiveRecord
     {
         return Changelog::find()->where([
             'object' => 'Staff',
-            'primary_key' => $this->rpn
+            'primary_key' => $this->sid
         ])->orderBy('created DESC');
     }
 }

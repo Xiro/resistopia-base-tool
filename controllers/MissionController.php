@@ -292,7 +292,7 @@ class MissionController extends Controller
     public function actionIndexLead()
     {
         $leadMissions = Mission::find()
-            ->where(['mission_lead_rpn' => AccessRule::activeStaff()->rpn])
+            ->where(['mission_lead_rpn' => AccessRule::activeStaff()->sid])
             ->all();
         return $this->render('index-lead', [
             'models' => $leadMissions
@@ -308,7 +308,7 @@ class MissionController extends Controller
     public function actionCreate($id = null)
     {
         $model = new MissionForm();
-        $model->created_by_rpn = AccessRule::activeStaff()->rpn;
+        $model->created_by_rpn = AccessRule::activeStaff()->sid;
 
         if ($id) {
             $templateData = $this->findModel($id)->getAttributes();
@@ -342,7 +342,7 @@ class MissionController extends Controller
     public function actionUpdateCrew($id)
     {
         $model = $this->findModel($id);
-        if ($model->mission_lead_rpn != AccessRule::activeStaff()->rpn) {
+        if ($model->mission_lead_rpn != AccessRule::activeStaff()->sid) {
             throw new ForbiddenHttpException('You are not allowed to access this page');
         }
         return $this->processUpdate($id, 'update-crew');

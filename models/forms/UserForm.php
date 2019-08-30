@@ -54,7 +54,7 @@ class UserForm extends User
     public function save($runValidation = true, $attributeNames = null)
     {
         if($this->isNewRecord) {
-            if($this->rpn) {
+            if($this->sid) {
                 $this->access_key_id = $this->staff->access_key_id;
             } else {
                 $addAccessKey = new AccessKey();

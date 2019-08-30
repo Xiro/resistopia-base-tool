@@ -34,12 +34,12 @@ if($isEmpty) {
     <span class="heading-btn-group pull-right">
         <?= Html::a(
             'Update Background',
-            ['staff-background/update', 'id' => $model->rpn],
+            ['staff-background/update', 'id' => $model->sid],
             ['class' => 'btn btn-primary']
         ) ?>
         <?= Html::a(
             'Delete Background',
-            ['staff-background/confirm-delete', 'id' => $model->rpn],
+            ['staff-background/confirm-delete', 'id' => $model->sid],
             ['class' => 'btn btn-danger']
         ) ?>
     </span>

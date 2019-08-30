@@ -18,11 +18,11 @@ use mate\yii\widgets\SelectData;
         "fieldConfig" => ["template" => "{input}\n{label}\n{hint}\n{error}"],
     ]); ?>
 
-    <?php if($model->isNewRecord && !$model->rpn): ?>
+    <?php if($model->isNewRecord && !$model->sid): ?>
     <div class="row">
         <div class="col-sm-6">
             <?= $form->field($model, 'rpn', [
-                'labelOptions' => ['class' => ($model->rpn ? 'move' : '')]
+                'labelOptions' => ['class' => ($model->sid ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
                 'data'          => SelectData::fromModel(

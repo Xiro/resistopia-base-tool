@@ -20,7 +20,7 @@ class MissionBlockSearch extends MissionBlock
     {
         return [
             [['id'], 'integer'],
-            [['blocked_staff_member_rpn', 'blocked_by_rpn', 'unblock_time', 'reason', 'created'], 'safe'],
+            [['blocked_staff_member_sid', 'blocked_by_sid', 'unblock_time', 'reason', 'created'], 'safe'],
         ];
     }
 
@@ -69,8 +69,8 @@ class MissionBlockSearch extends MissionBlock
         ]);
 
         $this->searchCaseInsensitive($query, [
-            'blocked_staff_member_rpn' => $this->blocked_staff_member_rpn,
-            'blocked_by_rpn'           => $this->blocked_by_rpn,
+            'blocked_staff_member_sid' => $this->blocked_staff_member_sid,
+            'blocked_by_sid'           => $this->blocked_by_sid,
         ]);
 
         $this->searchFulltext($query, $this->reason, 'reason');

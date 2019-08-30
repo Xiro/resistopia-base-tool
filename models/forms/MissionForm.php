@@ -72,7 +72,7 @@ class MissionForm extends Mission
                 }"
             ],
             ['time_atf', 'validateDuration'],
-            ['mission_lead_rpn', 'validateUniqueMissionLead'],
+            ['mission_lead_sid', 'validateUniqueMissionLead'],
         ]);
     }
 
@@ -96,7 +96,7 @@ class MissionForm extends Mission
         ];
         $otherLeadMissionsQuery = Mission::find()
             ->where(['mission_status_id' => $lockStatusIds])
-            ->andWhere(['mission_lead_rpn' => $this->$attribute]);
+            ->andWhere(['mission_lead_sid' => $this->$attribute]);
         if($this->id) {
             $otherLeadMissionsQuery->andWhere(['!=', 'id', $this->id]);
         }
@@ -112,7 +112,7 @@ class MissionForm extends Mission
      */
     public function save($runValidation = true, $attributeNames = null)
     {
-        $this->mission_lead_rpn = $this->mission_lead_rpn ? $this->mission_lead_rpn : null;
+        $this->mission_lead_sid = $this->mission_lead_sid ? $this->mission_lead_sid : null;
 
         $this->updateToOne('operation');
 
@@ -121,14 +121,14 @@ class MissionForm extends Mission
             return false;
         }
 
-        if ($this->mission_lead_rpn) {
+        if ($this->mission_lead_sid) {
             $this->staffSelect = $this->staffSelect === false ? [] : $this->staffSelect;
-            if (!in_array($this->mission_lead_rpn, $this->staffSelect)) {
-                $this->staffSelect[] = $this->mission_lead_rpn;
+            if (!in_array($this->mission_lead_sid, $this->staffSelect)) {
+                $this->staffSelect[] = $this->mission_lead_sid;
             }
         }
         if ($this->staffSelect !== false) {
-            $this->updateToMany("staff", Staff::class, $this->staffSelect, true, 'rpn');
+            $this->updateToMany("staff", Staff::class, $this->staffSelect, true, 'sid');
         }
 
         /** @var MissionStatusHistory $lastStatus */
@@ -137,7 +137,7 @@ class MissionForm extends Mission
             $newStatus = new MissionStatusHistory();
             $newStatus->mission_status_id = $this->mission_status_id;
             $newStatus->mission_id = $this->id;
-            $newStatus->author_rpn = AccessRule::activeStaff()->rpn;
+            $newStatus->author_sid = AccessRule::activeStaff()->sid;
             if (!$newStatus->save()) {
                 return false;
             }

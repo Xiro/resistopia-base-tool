@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model \app\models\Staff */
 
-$this->title = 'Your RPN: ' . $model->rpn;
+$this->title = 'Your RPN: ' . $model->sid;
 ?>
 <div class="pre-event-select-character">
 
@@ -15,7 +15,7 @@ $this->title = 'Your RPN: ' . $model->rpn;
             <h1><?= $this->title ?></h1>
 
             <p class="text-large">
-                <b>Important!</b><br> Remember your RPN <?= $model->rpn ?>, you will need it during the event or if you want to make more changes before the event.<br>
+                <b>Important!</b><br> Remember your RPN <?= $model->sid ?>, you will need it during the event or if you want to make more changes before the event.<br>
                 If you want to change any information during the event, visit the CIC.
             </p>
 
@@ -28,7 +28,7 @@ $this->title = 'Your RPN: ' . $model->rpn;
                             'Go back, I forgot something',
                             ['class' => 'btn btn-default']
                         ),
-                        ['character-registration/update', 'id' => $model->rpn]
+                        ['character-registration/update', 'id' => $model->sid]
                     ); ?>
                 </div>
             </div>

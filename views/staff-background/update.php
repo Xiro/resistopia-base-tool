@@ -7,7 +7,7 @@ use app\helpers\Html;
 
 $this->title = 'Update Staff Background';
 $this->params['breadcrumbs'][] = ['label' => 'Staff Backgrounds', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->rpn, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->sid, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="staff-background-update">

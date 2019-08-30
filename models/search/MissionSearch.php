@@ -24,7 +24,7 @@ class MissionSearch extends Mission
     {
         return [
             [['id', 'slots_total', 'slots_medic', 'slots_radio', 'slots_tech', 'slots_res', 'slots_guard', 'slots_vip', 'mission_status_id', 'operation_id', 'mission_type_id'], 'integer'],
-            [['name', 'description', 'debrief_comment', 'note', 'zone', 'callsign', 'created_by_rpn', 'mission_lead_rpn', 'time_publish', 'time_lst', 'time_ete', 'time_atf', 'finished', 'created', 'updated'], 'safe'],
+            [['name', 'description', 'debrief_comment', 'note', 'zone', 'callsign', 'created_by_sid', 'mission_lead_sid', 'time_publish', 'time_lst', 'time_ete', 'time_atf', 'finished', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -95,8 +95,8 @@ class MissionSearch extends Mission
         ]);
 
         $query->andFilterWhere(['like', 'zone', $this->zone])
-            ->andFilterWhere(['like', 'created_by_rpn', $this->created_by_rpn])
-            ->andFilterWhere(['like', 'mission_lead_rpn', $this->mission_lead_rpn]);
+            ->andFilterWhere(['like', 'created_by_sid', $this->created_by_sid])
+            ->andFilterWhere(['like', 'mission_lead_sid', $this->mission_lead_sid]);
 
         if ($this->callsign) {
             $query->joinWith('staff')

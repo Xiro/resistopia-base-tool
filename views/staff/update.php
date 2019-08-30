@@ -5,9 +5,9 @@ use app\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\forms\StaffForm */
 
-$this->title = $model->rpn . " (" . $model->getName() . ")";
+$this->title = $model->sid . " (" . $model->getName() . ")";
 $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->rpn, 'url' => ['view', 'id' => $model->rpn]];
+$this->params['breadcrumbs'][] = ['label' => $model->sid, 'url' => ['view', 'id' => $model->sid]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="staff-update">
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = 'Update';
             ),
             [
                 'staff-file-memo/create',
-                'id' => $model->rpn
+                'id' => $model->sid
             ]
         ) ?>
         <?= Html::a(
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = 'Update';
             ),
             [
                 'staff/grant-rights',
-                'id' => $model->rpn
+                'id' => $model->sid
             ]
         ) ?>
         <?= Html::a(
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = 'Update';
             ),
             [
                 $model->staffBackground ? 'staff-background/update' : 'staff-background/create',
-                'id' => $model->rpn
+                'id' => $model->sid
             ]
         ) ?>
         <?php if ($model->isBlocked): ?>
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = 'Update';
                     'Lift Mission Block',
                     ["class" => "btn btn-default"]
                 ),
-                ['mission-block/lift', 'id' => $model->rpn],
+                ['mission-block/lift', 'id' => $model->sid],
                 ['title' => 'Lift Mission Block']
             ) ?>
         <?php else: ?>
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = 'Update';
                     'Add Mission Block',
                     ["class" => "btn btn-default"]
                 ),
-                ['mission-block/create', 'id' => $model->rpn],
+                ['mission-block/create', 'id' => $model->sid],
                 ['title' => 'Add Mission Block']
             ) ?>
         <?php endif; ?>

@@ -17,10 +17,10 @@ $exclude = !isset($exclude) ? array() : $exclude;
        data-page-count="<?= $pagination ? $pagination->pageCount : 0 ?>">
 <?php /** @var $model \app\models\Staff */ ?>
 <?php foreach ($dataProvider->getModels() as $model): ?>
-    <tr data-key="<?= $model->rpn ?>">
+    <tr data-key="<?= $model->sid ?>">
         <?php if (!in_array("rpn", $exclude)): ?>
             <td class="rpn">
-                <?= $model->rpn ?>
+                <?= $model->sid ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("name", $exclude)): ?>
@@ -58,27 +58,27 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?php if (!in_array("action-view", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::eye_open(),
-                        ['staff/view', 'id' => $model->rpn],
+                        ['staff/view', 'id' => $model->sid],
                         ["class" => "ajax-dialog", "data-size" => "lg"]
                     ) ?>
                 <?php endif; ?>
                 <?php if (!in_array("action-update", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::pencil(),
-                        ['staff/update', 'id' => $model->rpn]
+                        ['staff/update', 'id' => $model->sid]
                     ) ?>
                 <?php endif; ?>
                 <?php if (!in_array("action-add-file-memo", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::file(),
-                        ['staff-file-memo/create', 'id' => $model->rpn],
+                        ['staff-file-memo/create', 'id' => $model->sid],
                         ['title' => 'Add File Memo']
                     ) ?>
                 <?php endif; ?>
                 <?php if (!in_array("action-grant-rights", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::lock(),
-                        ['staff/grant-rights', 'id' => $model->rpn],
+                        ['staff/grant-rights', 'id' => $model->sid],
                         ['title' => 'Grant Rights']
                     ) ?>
                 <?php endif; ?>
@@ -86,13 +86,13 @@ $exclude = !isset($exclude) ? array() : $exclude;
                     <?php if ($model->isBlocked): ?>
                         <?= Html::a(
                             Glyphicon::ok_sign(),
-                            ['mission-block/lift', 'id' => $model->rpn],
+                            ['mission-block/lift', 'id' => $model->sid],
                             ['title' => 'Lift Mission Block']
                         ) ?>
                     <?php else: ?>
                         <?= Html::a(
                             Glyphicon::ban_circle(),
-                            ['mission-block/create', 'id' => $model->rpn],
+                            ['mission-block/create', 'id' => $model->sid],
                             ['title' => 'Add Mission Block']
                         ) ?>
                     <?php endif; ?>
@@ -101,7 +101,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?php if (!in_array("action-delete", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::trash(),
-                        ['staff/confirm-delete', 'id' => $model->rpn],
+                        ['staff/confirm-delete', 'id' => $model->sid],
                         ["class" => "ajax-dialog", "data-size" => "sm"]
                     ) ?>
                 <?php endif; ?>

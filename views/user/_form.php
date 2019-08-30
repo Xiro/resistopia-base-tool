@@ -22,7 +22,7 @@ use yii\helpers\ArrayHelper;
         <?php if ($model->isNewRecord && !$model->approved): ?>
             <div class="col-sm-12">
                 <?= $form->field($model, 'rpn', [
-                    'labelOptions' => ['class' => ($model->rpn ? 'move' : '')]
+                    'labelOptions' => ['class' => ($model->sid ? 'move' : '')]
                 ])->widget(Select2::class, [
                     'showToggleAll' => false,
                     'data'          => ArrayHelper::map(
@@ -44,7 +44,7 @@ use yii\helpers\ArrayHelper;
         <?php else: ?>
             <div class="col-sm-6">
                 <?= $form->field($model, 'rpn', [
-                    'labelOptions' => ['class' => ($model->rpn ? 'move' : '')]
+                    'labelOptions' => ['class' => ($model->sid ? 'move' : '')]
                 ])->widget(Select2::class, [
                     'showToggleAll' => false,
                     'data'          => SelectData::fromModel(

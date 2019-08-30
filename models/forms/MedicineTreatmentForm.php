@@ -142,8 +142,8 @@ class MedicineTreatmentForm extends MedicineTreatment
         if(!empty($this->mission_block_time)) {
             $missionBlock->unblock_time = $this->mission_block_time;
             $missionBlock->reason = $this->mission_block_reason;
-            $missionBlock->blocked_staff_member_rpn = $this->patient_rpn;
-            $missionBlock->blocked_by_rpn = $this->author_rpn;
+            $missionBlock->blocked_staff_member_sid = $this->patient_sid;
+            $missionBlock->blocked_by_sid = $this->author_sid;
             $missionBlock->save();
             $this->mission_block_id = $missionBlock->id;
             parent::save($runValidation, $attributeNames);

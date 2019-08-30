@@ -21,7 +21,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'access_key_id'], 'integer'],
-            [['rpn', 'password_hash', 'auth_key', 'created', 'updated'], 'safe'],
+            [['sid', 'password_hash', 'auth_key', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -70,7 +70,7 @@ class UserSearch extends User
             'updated' => $this->updated,
         ]);
 
-        $query->andFilterWhere(['like', 'rpn', $this->rpn])
+        $query->andFilterWhere(['like', 'sid', $this->sid])
             ->andFilterWhere(['like', 'password_hash', $this->password_hash])
             ->andFilterWhere(['like', 'auth_key', $this->auth_key]);
 

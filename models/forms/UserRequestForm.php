@@ -13,7 +13,7 @@ class UserRequestForm extends UserForm
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['rpn'], 'required'],
+            [['sid'], 'required'],
         ]);
     }
 

@@ -14,7 +14,7 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
-    public $rpn;
+    public $sid;
     public $password;
     public $rememberMe = true;
 
@@ -28,10 +28,10 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['rpn', 'password'], 'required'],
+            [['sid', 'password'], 'required'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
-            ['rpn', 'validateApproval'],
+            ['sid', 'validateApproval'],
         ];
     }
 
@@ -48,7 +48,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect RPN or password.');
+                $this->addError($attribute, 'Incorrect SID or password.');
             }
         }
     }
@@ -84,7 +84,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByRpn($this->rpn);
+            $this->_user = User::findBySid($this->sid);
         }
 
         return $this->_user;

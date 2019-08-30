@@ -9,8 +9,8 @@ use yii\db\ActiveRecord;
  * This is the model class for table "mission_block".
  *
  * @property integer $id
- * @property string $blocked_staff_member_rpn
- * @property string $blocked_by_rpn
+ * @property string $blocked_staff_member_sid
+ * @property string $blocked_by_sid
  * @property string $unblock_time
  * @property string $reason
  * @property string $created
@@ -34,12 +34,12 @@ class MissionBlock extends ActiveRecord
     public function rules()
     {
         return [
-            [['blocked_staff_member_rpn', 'blocked_by_rpn'], 'required'],
+            [['blocked_staff_member_sid', 'blocked_by_sid'], 'required'],
             [['unblock_time', 'created'], 'safe'],
             [['reason'], 'string', 'max' => 250],
-            [['blocked_staff_member_rpn', 'blocked_by_rpn'], 'string', 'max' => 8],
-            [['blocked_staff_member_rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['blocked_staff_member_rpn' => 'rpn']],
-            [['blocked_by_rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['blocked_by_rpn' => 'rpn']],
+            [['blocked_staff_member_sid', 'blocked_by_sid'], 'string', 'max' => 8],
+            [['blocked_staff_member_sid'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['blocked_staff_member_sid' => 'sid']],
+            [['blocked_by_sid'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['blocked_by_sid' => 'sid']],
         ];
     }
 
@@ -50,8 +50,8 @@ class MissionBlock extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'blocked_staff_member_rpn' => 'Blocked Staff Member',
-            'blocked_by_rpn' => 'Blocked By',
+            'blocked_staff_member_sid' => 'Blocked Staff Member',
+            'blocked_by_sid' => 'Blocked By',
             'unblock_time' => 'Unblock Time',
             'reason' => 'Reason',
             'created' => 'Created',
@@ -63,7 +63,7 @@ class MissionBlock extends ActiveRecord
      */
     public function getBlockedStaffMember()
     {
-        return $this->hasOne(Staff::className(), ['rpn' => 'blocked_staff_member_rpn']);
+        return $this->hasOne(Staff::className(), ['sid' => 'blocked_staff_member_sid']);
     }
 
     /**
@@ -71,6 +71,6 @@ class MissionBlock extends ActiveRecord
      */
     public function getBlockedBy()
     {
-        return $this->hasOne(Staff::className(), ['rpn' => 'blocked_by_rpn']);
+        return $this->hasOne(Staff::className(), ['sid' => 'blocked_by_sid']);
     }
 }

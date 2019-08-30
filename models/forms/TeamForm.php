@@ -52,7 +52,7 @@ class TeamForm extends Team
             parent::save($runValidation, $attributeNames);
         }
 
-        $this->updateToMany("staff", Staff::class, $this->staffSelect, false, 'rpn');
+        $this->updateToMany("staff", Staff::class, $this->staffSelect, false, 'sid');
 
         return parent::save($runValidation, $attributeNames);
     }

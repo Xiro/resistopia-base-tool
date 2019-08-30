@@ -46,8 +46,8 @@ class CharacterRegistrationController extends Controller
     {
         $model = new Staff();
         if ($model->load(Yii::$app->request->post())) {
-            if (Staff::findOne($model->rpn)) {
-                return $this->redirect(['update', 'id' => $model->rpn]);
+            if (Staff::findOne($model->sid)) {
+                return $this->redirect(['update', 'id' => $model->sid]);
             } else {
                 $model->addError('rpn', 'Rpn could not be found');
             }
@@ -71,9 +71,9 @@ class CharacterRegistrationController extends Controller
             && $staff->load($post)
             && $staff->save()
         ) {
-            $background->rpn = $staff->rpn;
+            $background->rpn = $staff->sid;
             if ($background->save()) {
-                return $this->redirect(['finish', 'id' => $staff->rpn]);
+                return $this->redirect(['finish', 'id' => $staff->sid]);
             }
         }
 
@@ -98,9 +98,9 @@ class CharacterRegistrationController extends Controller
             && $staff->load($post)
             && $staff->save()
         ) {
-            $background->rpn = $staff->rpn;
+            $background->rpn = $staff->sid;
             if ($background->save()) {
-                return $this->redirect(['finish', 'id' => $staff->rpn]);
+                return $this->redirect(['finish', 'id' => $staff->sid]);
             }
         }
 

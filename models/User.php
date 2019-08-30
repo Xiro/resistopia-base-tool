@@ -12,7 +12,7 @@ use yii\web\IdentityInterface;
  * This is the model class for table "user".
  *
  * @property integer $id
- * @property string $rpn
+ * @property string $sid
  * @property string $password_hash
  * @property string $auth_key
  * @property string $access_token
@@ -50,14 +50,14 @@ class User extends ActiveRecord implements IdentityInterface
             [['password_hash', 'auth_key', 'access_key_id'], 'required'],
             [['access_key_id', 'approved'], 'integer'],
             [['created', 'updated', 'token_expire'], 'safe'],
-            [['rpn'], 'string', 'max' => 8],
+            [['sid'], 'string', 'max' => 8],
             [['password_hash'], 'string', 'max' => 255],
             [['auth_key', 'access_token'], 'string', 'max' => 32],
             [['access_token'], 'unique'],
             [['auth_key'], 'unique'],
-            [['rpn'], 'unique'],
+            [['sid'], 'unique'],
             [['access_key_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessKey::class, 'targetAttribute' => ['access_key_id' => 'id']],
-            [['rpn'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::class, 'targetAttribute' => ['rpn' => 'rpn']],
+            [['sid'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::class, 'targetAttribute' => ['sid' => 'sid']],
         ];
     }
 
@@ -68,7 +68,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id'            => 'ID',
-            'rpn'           => 'Rpn',
+            'sid'           => 'SID',
             'password_hash' => 'Password Hash',
             'auth_key'      => 'Auth Key',
             'access_key_id' => 'Access Key',
@@ -89,9 +89,9 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public static function findByRpn($rpn)
+    public static function findBySid($sid)
     {
-        return static::findOne(['rpn' => $rpn]);
+        return static::findOne(['sid' => $sid]);
     }
 
     /**
@@ -183,7 +183,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getIdentity()
     {
-        return $this->rpn ? $this->rpn : 'API User #' . $this->id;
+        return $this->sid ? $this->sid : 'API User #' . $this->id;
     }
 
     /**
@@ -191,6 +191,6 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getStaff()
     {
-        return $this->hasOne(Staff::class, ['rpn' => 'rpn']);
+        return $this->hasOne(Staff::class, ['sid' => 'sid']);
     }
 }

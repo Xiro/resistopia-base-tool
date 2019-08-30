@@ -97,8 +97,8 @@ class MissionBlockController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         $model = new MissionBlock();
-        $model->blocked_staff_member_rpn = $staff->rpn;
-        $model->blocked_by_rpn = AccessRule::activeStaff()->rpn;
+        $model->blocked_staff_member_rpn = $staff->sid;
+        $model->blocked_by_rpn = AccessRule::activeStaff()->sid;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->addFlash('success', $staff->nameWithRpn . ' is now blocked for missions');

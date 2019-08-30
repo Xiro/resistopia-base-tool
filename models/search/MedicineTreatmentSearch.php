@@ -21,7 +21,7 @@ class MedicineTreatmentSearch extends MedicineTreatment
     {
         return [
             [['id', 'pulse', 'temperature', 'blood_pressure_systolic', 'blood_pressure_diastolic'], 'integer'],
-            [['author_rpn', 'patient_rpn', 'impairment', 'aftercare', 'operational_fitness', 'breathing', 'breathing_details', 'pupils', 'psyche', 'pretreatment', 'medi_foam', 'annotation', 'created', 'updated'], 'safe'],
+            [['author_sid', 'patient_sid', 'impairment', 'aftercare', 'operational_fitness', 'breathing', 'breathing_details', 'pupils', 'psyche', 'pretreatment', 'medi_foam', 'annotation', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -74,8 +74,8 @@ class MedicineTreatmentSearch extends MedicineTreatment
         ]);
 
         $this->searchCaseInsensitive($query, [
-            'author_rpn' => $this->author_rpn,
-            'patient_rpn' => $this->patient_rpn,
+            'author_sid' => $this->author_sid,
+            'patient_sid' => $this->patient_sid,
             'impairment' => $this->impairment,
             'aftercare' => $this->aftercare,
             'operational_fitness' => $this->operational_fitness,
