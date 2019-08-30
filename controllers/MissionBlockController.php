@@ -97,11 +97,11 @@ class MissionBlockController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         $model = new MissionBlock();
-        $model->blocked_staff_member_rpn = $staff->sid;
-        $model->blocked_by_rpn = AccessRule::activeStaff()->sid;
+        $model->blocked_staff_member_sid = $staff->sid;
+        $model->blocked_by_sid = AccessRule::activeStaff()->sid;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->addFlash('success', $staff->nameWithRpn . ' is now blocked for missions');
+            Yii::$app->session->addFlash('success', $staff->nameWithSid . ' is now blocked for missions');
             return $this->redirect(['staff/index']);
         }
 
@@ -122,7 +122,7 @@ class MissionBlockController extends Controller
         foreach ($staff->activeMissionBlocks as $model) {
             $model->unblock_time = date('Y.m.d H:i', time() - 1);
             if($model->save()) {
-                Yii::$app->session->addFlash('success', 'Mission block lifted from ' . $model->blockedStaffMember->nameWithRpn);
+                Yii::$app->session->addFlash('success', 'Mission block lifted from ' . $model->blockedStaffMember->nameWithSid);
             } else {
                 Yii::$app->session->addFlash('error', 'Error lifting the mission block');
             }

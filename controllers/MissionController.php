@@ -250,7 +250,7 @@ class MissionController extends Controller
         $model = null;
         if ($id) {
             $model = MissionGateForm::findOne([
-                'mission_lead_rpn'  => $id,
+                'mission_lead_sid'  => $id,
                 'mission_status_id' => [
                     $statusIds['ready'],
                     $statusIds['active'],
@@ -260,7 +260,7 @@ class MissionController extends Controller
         }
         if (!$model) {
             $model = new MissionGateForm();
-            $model->mission_lead_rpn = $id;
+            $model->mission_lead_sid = $id;
         }
         if ($model->load(Yii::$app->request->post())) {
             if($model->save()) {
@@ -292,7 +292,7 @@ class MissionController extends Controller
     public function actionIndexLead()
     {
         $leadMissions = Mission::find()
-            ->where(['mission_lead_rpn' => AccessRule::activeStaff()->sid])
+            ->where(['mission_lead_sid' => AccessRule::activeStaff()->sid])
             ->all();
         return $this->render('index-lead', [
             'models' => $leadMissions
@@ -308,7 +308,7 @@ class MissionController extends Controller
     public function actionCreate($id = null)
     {
         $model = new MissionForm();
-        $model->created_by_rpn = AccessRule::activeStaff()->sid;
+        $model->created_by_sid = AccessRule::activeStaff()->sid;
 
         if ($id) {
             $templateData = $this->findModel($id)->getAttributes();
@@ -342,7 +342,7 @@ class MissionController extends Controller
     public function actionUpdateCrew($id)
     {
         $model = $this->findModel($id);
-        if ($model->mission_lead_rpn != AccessRule::activeStaff()->sid) {
+        if ($model->mission_lead_sid != AccessRule::activeStaff()->sid) {
             throw new ForbiddenHttpException('You are not allowed to access this page');
         }
         return $this->processUpdate($id, 'update-crew');

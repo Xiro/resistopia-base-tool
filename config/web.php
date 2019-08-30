@@ -46,8 +46,8 @@ $config = [
             'class' => 'mate\yii\components\SelectData',
             'maps'  => [
                 'app\models\Staff'         => [
-                    'from'    => 'rpn',
-                    'to'      => 'nameWithRpn',
+                    'from'    => 'sid',
+                    'to'      => 'nameWithSid',
                     'orderBy' => ['forename' => 'ASC', 'surname' => 'ASC'],
                 ],
                 'app\models\Rank'          => [

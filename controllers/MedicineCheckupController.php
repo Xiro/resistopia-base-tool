@@ -90,7 +90,7 @@ class MedicineCheckupController extends Controller
     public function actionCreate()
     {
         $model = new MedicineCheckupForm();
-        $model->author_rpn = AccessRule::activeStaff()->sid;
+        $model->author_sid = AccessRule::activeStaff()->sid;
 
         if ($model->load(Yii::$app->request->post())
             && $model->save()

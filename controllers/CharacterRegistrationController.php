@@ -49,7 +49,7 @@ class CharacterRegistrationController extends Controller
             if (Staff::findOne($model->sid)) {
                 return $this->redirect(['update', 'id' => $model->sid]);
             } else {
-                $model->addError('rpn', 'Rpn could not be found');
+                $model->addError('sid', 'SID could not be found');
             }
         }
         return $this->render('select', [
@@ -71,7 +71,7 @@ class CharacterRegistrationController extends Controller
             && $staff->load($post)
             && $staff->save()
         ) {
-            $background->rpn = $staff->sid;
+            $background->sid = $staff->sid;
             if ($background->save()) {
                 return $this->redirect(['finish', 'id' => $staff->sid]);
             }
@@ -98,7 +98,7 @@ class CharacterRegistrationController extends Controller
             && $staff->load($post)
             && $staff->save()
         ) {
-            $background->rpn = $staff->sid;
+            $background->sid = $staff->sid;
             if ($background->save()) {
                 return $this->redirect(['finish', 'id' => $staff->sid]);
             }

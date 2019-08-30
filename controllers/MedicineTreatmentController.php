@@ -91,7 +91,7 @@ class MedicineTreatmentController extends Controller
     public function actionCreate()
     {
         $model = new MedicineTreatmentForm();
-        $model->author_rpn = AccessRule::activeStaff()->sid;
+        $model->author_sid = AccessRule::activeStaff()->sid;
 
         $missionBlock = new MissionBlock();
 

@@ -63,7 +63,7 @@ class StaffBackgroundController extends Controller
     public function actionCreate($id)
     {
         $model = new StaffBackground();
-        $model->rpn = $id;
+        $model->sid = $id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->goBack(['staff/index']);
@@ -127,7 +127,7 @@ class StaffBackgroundController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = StaffBackground::findOne(['rpn' => $id])) !== null) {
+        if (($model = StaffBackground::findOne(['sid' => $id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

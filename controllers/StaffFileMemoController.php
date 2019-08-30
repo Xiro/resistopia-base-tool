@@ -112,8 +112,8 @@ class StaffFileMemoController extends Controller
     public function actionCreate($id = null)
     {
         $model = new StaffFileMemo();
-        $model->rpn = $id;
-        $model->author_rpn = AccessRule::activeStaff()->sid;
+        $model->sid = $id;
+        $model->author_sid = AccessRule::activeStaff()->sid;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->goBack(['index']);
