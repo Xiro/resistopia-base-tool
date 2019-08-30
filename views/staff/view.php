@@ -9,7 +9,7 @@ use app\models\Changelog;
 /* @var $this yii\web\View */
 /* @var $model app\models\Staff */
 
-$this->title = $model->nameWithRpn;
+$this->title = $model->nameWithSid;
 $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     $personalInfo = [];
     $personalInfo["name"] = $model->getName();
-    $personalInfo["RPN"] = $model->sid;
+    $personalInfo["SID"] = $model->sid;
 
     $personalInfo["Gender"] = $model->gender ? $model->gender : "n/a";
     $personalInfo["Height"] = $model->height ? $model->height . " cm" : "n/a";
@@ -190,7 +190,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'query'      => $model->getMediFoamDistributions()->orderBy('created DESC'),
                     'pagination' => false,
                 ]),
-                'exclude'      => ['recipient_rpn'],
+                'exclude'      => ['recipient_sid'],
             ]) ?>
         </div>
     <?php endif; ?>

@@ -18,8 +18,8 @@ $exclude = !isset($exclude) ? array() : $exclude;
 <?php /** @var $model \app\models\Staff */ ?>
 <?php foreach ($dataProvider->getModels() as $model): ?>
     <tr data-key="<?= $model->sid ?>">
-        <?php if (!in_array("rpn", $exclude)): ?>
-            <td class="rpn">
+        <?php if (!in_array("sid", $exclude)): ?>
+            <td class="sid">
                 <?= $model->sid ?>
             </td>
         <?php endif; ?>

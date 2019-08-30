@@ -25,14 +25,14 @@ MedicineFormAsset::register($this);
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'patient_rpn', [
-                'labelOptions' => ['class' => ($model->patient_rpn ? 'move' : '')]
+            <?= $form->field($model, 'patient_sid', [
+                'labelOptions' => ['class' => ($model->patient_sid ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
                 'data'          => SelectData::fromModel(
                     app\models\Staff::class,
-                    'rpn',
-                    'nameWithRpn',
+                    'sid',
+                    'nameWithSid',
                     true
                 ),
                 'options'       => [

@@ -7,7 +7,7 @@ use mate\yii\widgets\Glyphicon;
 /* @var $this yii\web\View */
 /* @var $model app\models\MissionBlock */
 
-$this->title = "Block of " . $model->blocked_staff_member_rpn;
+$this->title = "Block of " . $model->blocked_staff_member_sid;
 $this->params['breadcrumbs'][] = ['label' => 'Mission Blocks', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

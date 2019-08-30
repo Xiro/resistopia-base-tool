@@ -21,17 +21,17 @@ use yii\helpers\ArrayHelper;
     <div class="row">
         <?php if ($model->isNewRecord && !$model->approved): ?>
             <div class="col-sm-12">
-                <?= $form->field($model, 'rpn', [
+                <?= $form->field($model, 'sid', [
                     'labelOptions' => ['class' => ($model->sid ? 'move' : '')]
                 ])->widget(Select2::class, [
                     'showToggleAll' => false,
                     'data'          => ArrayHelper::map(
                         \app\models\Staff::find()
-                            ->leftJoin('user', 'user.rpn = staff.rpn')
-                            ->where(['user.rpn' => null])
+                            ->leftJoin('user', 'user.sid = staff.sid')
+                            ->where(['user.sid' => null])
                             ->all(),
-                        'rpn',
-                        'nameWithRpn'
+                        'sid',
+                        'nameWithSid'
                     ),
                     'options'       => [
                         'placeholder' => '',
@@ -39,18 +39,18 @@ use yii\helpers\ArrayHelper;
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
-                ])->label('Rpn') ?>
+                ])->label('SID') ?>
             </div>
         <?php else: ?>
             <div class="col-sm-6">
-                <?= $form->field($model, 'rpn', [
+                <?= $form->field($model, 'sid', [
                     'labelOptions' => ['class' => ($model->sid ? 'move' : '')]
                 ])->widget(Select2::class, [
                     'showToggleAll' => false,
                     'data'          => SelectData::fromModel(
                         \app\models\Staff::class,
-                        "rpn",
-                        "nameWithRpn",
+                        "sid",
+                        "nameWithSid",
                         true
                     ),
                     'options'       => [
@@ -59,7 +59,7 @@ use yii\helpers\ArrayHelper;
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
-                ])->label('Rpn') ?>
+                ])->label('SID') ?>
             </div>
             <div class="col-sm-6">
                 <?= $form->field($model, 'approved', [

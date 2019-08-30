@@ -24,8 +24,8 @@ $exclude = !isset($exclude) ? array() : $exclude;
 <?php /** @var $staff \app\models\Staff */ ?>
 <?php foreach ($dataProvider->getModels() as $staff): ?>
     <tr data-key="<?= $staff->sid ?>">
-        <?php if (!in_array("rpn", $exclude)): ?>
-            <td class="rpn">
+        <?php if (!in_array("sid", $exclude)): ?>
+            <td class="sid">
                 <?= $staff->sid ?>
             </td>
         <?php endif; ?>

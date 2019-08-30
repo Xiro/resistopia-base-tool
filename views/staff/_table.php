@@ -47,10 +47,10 @@ if ($searchModel) {
         <?php $excludeSearchParams = []; ?>
         <tr class="animated-label">
             <?php $model = $searchModel ?>
-            <?php if (!in_array("rpn", $exclude)): ?>
-                <?php $excludeSearchParams[] = "rpn"; ?>
-                <th class="rpn">
-                    <?= $form->field($model, 'rpn')->textInput([
+            <?php if (!in_array("sid", $exclude)): ?>
+                <?php $excludeSearchParams[] = "sid"; ?>
+                <th class="sid">
+                    <?= $form->field($model, 'sid')->textInput([
                         'maxlength' => true,
                         'class'     => 'form-control sergeant'
                     ]) ?>
@@ -156,8 +156,8 @@ if ($searchModel) {
         </tr>
     <?php else: ?>
         <tr>
-            <?php if (!in_array("rpn", $exclude)): ?>
-                <th class="rpn"><?= 'RPN' ?></th>
+            <?php if (!in_array("sid", $exclude)): ?>
+                <th class="sid"><?= 'SID' ?></th>
             <?php endif; ?>
             <?php if (!in_array("name", $exclude)): ?>
                 <th class="name"><?= 'Name' ?></th>

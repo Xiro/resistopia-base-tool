@@ -7,7 +7,7 @@ use mate\yii\widgets\Glyphicon;
 /* @var $this yii\web\View */
 /* @var $model app\models\MediFoamDistribution */
 
-$this->title = "Ausgabe an " . $model->recipient_rpn;
+$this->title = "Ausgabe an " . $model->recipient_sid;
 $this->params['breadcrumbs'][] = ['label' => 'Medi Foam Distributions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

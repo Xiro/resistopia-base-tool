@@ -19,12 +19,12 @@ $exclude = !isset($exclude) ? array() : $exclude;
     <tr data-key="<?= $model->id ?>">
         <?php if (!in_array("patient", $exclude)): ?>
             <td class="patient">
-                <?= $model->patient_rpn ? $model->patient->nameWithRpn : "None" ?>
+                <?= $model->patient_sid ? $model->patient->nameWithSid : "None" ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("author", $exclude)): ?>
             <td class="author">
-                <?= $model->author_rpn ? $model->author->nameWithRpn : "None" ?>
+                <?= $model->author_sid ? $model->author->nameWithSid : "None" ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("created", $exclude)): ?>

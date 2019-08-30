@@ -26,8 +26,8 @@ StaffAssignFormAsset::register($this);
     <div class="col-sm-6">
         <table class="table table-bordered staff-table table-form-selectable" id="staff-search-table">
             <thead>
-                <?php if (!in_array("rpn", $exclude)): ?>
-                    <th class="rpn"><?= 'RPN' ?></th>
+                <?php if (!in_array("sid", $exclude)): ?>
+                    <th class="sid"><?= 'SID' ?></th>
                 <?php endif; ?>
                 <?php if (!in_array("name", $exclude)): ?>
                     <th class="name"><?= 'Name' ?></th>
@@ -51,8 +51,8 @@ StaffAssignFormAsset::register($this);
         <table class="table table-bordered staff-table table-form-selected">
             <thead>
             <tr>
-                <?php if (!in_array("rpn", $exclude)): ?>
-                    <th class="rpn"><?= 'RPN' ?></th>
+                <?php if (!in_array("sid", $exclude)): ?>
+                    <th class="sid"><?= 'SID' ?></th>
                 <?php endif; ?>
                 <?php if (!in_array("name", $exclude)): ?>
                     <th class="name"><?= 'Name' ?></th>

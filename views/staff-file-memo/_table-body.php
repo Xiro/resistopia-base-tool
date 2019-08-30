@@ -36,12 +36,12 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php endif; ?>
         <?php if (!in_array("staff_name", $exclude)): ?>
             <td class="staff_name">
-                <?= Html::staffLabel($model->staff, 'rpn') ?>
+                <?= Html::staffLabel($model->staff, 'sid') ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("author_name", $exclude)): ?>
             <td class="author_name">
-                <?= Html::staffLabel($model->author, 'rpn') ?>
+                <?= Html::staffLabel($model->author, 'sid') ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("access_right", $exclude)): ?>

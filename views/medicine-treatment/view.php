@@ -19,7 +19,7 @@ MedicineFormAsset::register($this);
         <?= Html::encode($this->title) ?>
         <?= Html::a(
             Glyphicon::eye_open(),
-            ['staff/view', 'id' => $model->patient_rpn],
+            ['staff/view', 'id' => $model->patient_sid],
             [
                 'style' => 'font-size:22px',
                 'class' => 'ajax-dialog',

@@ -47,12 +47,12 @@ StaffSelectFormAsset::register($this);
             <?php if ($searchModel): ?>
                 <tr class="animated-label">
                     <?php $staff = $searchModel ?>
-                    <?php if (!in_array("rpn", $exclude)): ?>
-                        <?php $excludeSearchParams[] = "rpn"; ?>
-                        <th class="rpn">
-                            <?= $form->field($staff, 'rpn')->textInput([
+                    <?php if (!in_array("sid", $exclude)): ?>
+                        <?php $excludeSearchParams[] = "sid"; ?>
+                        <th class="sid">
+                            <?= $form->field($staff, 'sid')->textInput([
                                 'maxlength' => true,
-                                'class'     => 'form-control mask-rpn'
+                                'class'     => 'form-control mask-sid'
                             ]) ?>
                         </th>
                     <?php endif; ?>
@@ -95,8 +95,8 @@ StaffSelectFormAsset::register($this);
                     </th>
                 </tr>
             <?php else: ?>
-                <?php if (!in_array("rpn", $exclude)): ?>
-                    <th class="rpn"><?= 'RPN' ?></th>
+                <?php if (!in_array("sid", $exclude)): ?>
+                    <th class="sid"><?= 'SID' ?></th>
                 <?php endif; ?>
                 <?php if (!in_array("name", $exclude)): ?>
                     <th class="name"><?= 'Name' ?></th>
@@ -125,8 +125,8 @@ StaffSelectFormAsset::register($this);
         <table class="table table-bordered staff-table table-form-selected">
             <thead>
             <tr>
-                <?php if (!in_array("rpn", $exclude)): ?>
-                    <th class="rpn"><?= 'RPN' ?></th>
+                <?php if (!in_array("sid", $exclude)): ?>
+                    <th class="sid"><?= 'SID' ?></th>
                 <?php endif; ?>
                 <?php if (!in_array("name", $exclude)): ?>
                     <th class="name"><?= 'Name' ?></th>

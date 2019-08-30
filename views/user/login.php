@@ -28,10 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'fieldConfig' => ['template' => "{input}\n{label}\n{hint}\n{error}"],
         ]); ?>
 
-        <?= $form->field($model, 'rpn')->textInput([
+        <?= $form->field($model, 'sid')->textInput([
             'maxlength'    => true,
             'autocomplete' => 'off',
-            'class'        => 'form-control mask-rpn'
+            'class'        => 'form-control mask-sid'
         ]) ?>
 
         <?= $form->field($model, 'password')->passwordInput([

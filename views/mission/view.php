@@ -39,10 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
     $info["Operation"] = $model->operation_id ? $model->operation->name : "none";
     $info["Status"] = $model->mission_status_id ? $model->missionStatus->name : "n/a";
 
-    $info["Created by"] = $model->created_by_rpn ? $model->createdBy->nameWithRpn : "n/a";
+    $info["Created by"] = $model->created_by_sid ? $model->createdBy->nameWithSid : "n/a";
     $info["Zone"] = $model->zone;
 
-    $info["Mission Lead"] = $model->mission_lead_rpn ? $model->missionLead->nameWithRpn : "n/a";
+    $info["Mission Lead"] = $model->mission_lead_sid ? $model->missionLead->nameWithSid : "n/a";
     $info["Callsign"] = implode(", ", $model->callsigns);
 
     ?>

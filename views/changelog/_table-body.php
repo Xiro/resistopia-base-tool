@@ -35,7 +35,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php if (!in_array("user", $exclude)): ?>
             <td class="user">
                 <?php
-                if ($model->user_id && $model->user && $model->user->rpn) {
+                if ($model->user_id && $model->user && $model->user->sid) {
                     echo $model->user->staff->sid . " ";
                     echo Html::a(
                         Glyphicon::eye_open(),

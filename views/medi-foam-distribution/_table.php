@@ -41,10 +41,10 @@ if ($searchModel) {
         <?php $excludeSearchParams = []; ?>
         <tr class="animated-label">
             <?php $model = $searchModel ?>
-            <?php if (!in_array("recipient_rpn", $exclude)): ?>
-                <?php $excludeSearchParams[] = "recipient_rpn"; ?>
-                <th class="recipient_rpn">
-                    <?= $form->field($model, 'recipient_rpn')->textInput(['maxlength' => true]) ?>
+            <?php if (!in_array("recipient_sid", $exclude)): ?>
+                <?php $excludeSearchParams[] = "recipient_sid"; ?>
+                <th class="recipient_sid">
+                    <?= $form->field($model, 'recipient_sid')->textInput(['maxlength' => true]) ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("mk1_issued", $exclude)): ?>
@@ -59,10 +59,10 @@ if ($searchModel) {
                     <?= $form->field($model, 'mk1_returned')->textInput() ?>
                 </th>
             <?php endif; ?>
-            <?php if (!in_array("issued_by_rpn", $exclude)): ?>
-                <?php $excludeSearchParams[] = "issued_by_rpn"; ?>
-                <th class="issued_by_rpn">
-                    <?= $form->field($model, 'issued_by_rpn')->textInput(['maxlength' => true]) ?>
+            <?php if (!in_array("issued_by_sid", $exclude)): ?>
+                <?php $excludeSearchParams[] = "issued_by_sid"; ?>
+                <th class="issued_by_sid">
+                    <?= $form->field($model, 'issued_by_sid')->textInput(['maxlength' => true]) ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("created", $exclude)): ?>
@@ -88,8 +88,8 @@ if ($searchModel) {
         </tr>
     <?php else: ?>
         <tr>
-            <?php if (!in_array("recipient_rpn", $exclude)): ?>
-                <th class="recipient_rpn"><?= 'Empfänger' ?></th>
+            <?php if (!in_array("recipient_sid", $exclude)): ?>
+                <th class="recipient_sid"><?= 'Empfänger' ?></th>
             <?php endif; ?>
             <?php if (!in_array("mk1_issued", $exclude)): ?>
                 <th class="mk1_issued"><?= 'Mk1 ausgegeben' ?></th>
@@ -97,8 +97,8 @@ if ($searchModel) {
             <?php if (!in_array("mk1_returned", $exclude)): ?>
                 <th class="mk1_returned"><?= 'Mk1 zurückgegeben' ?></th>
             <?php endif; ?>
-            <?php if (!in_array("issued_by_rpn", $exclude)): ?>
-                <th class="issued_by_rpn"><?= 'Ausgegeben von' ?></th>
+            <?php if (!in_array("issued_by_sid", $exclude)): ?>
+                <th class="issued_by_sid"><?= 'Ausgegeben von' ?></th>
             <?php endif; ?>
             <?php if (!in_array("created", $exclude)): ?>
                 <th class="created"><?= 'Erstellt' ?></th>

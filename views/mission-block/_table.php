@@ -44,15 +44,15 @@ if ($searchModel) {
             <?php $model = $searchModel ?>
             <?php if (!in_array("blocked_staff_member", $exclude)): ?>
                 <?php $excludeSearchParams[] = "blocked_staff_member"; ?>
-                <th class="blockedStaffMemberRpn">
-                    <?= $form->field($model, 'blocked_staff_member_rpn', [
-                        'labelOptions' => ['class' => ($model->blocked_staff_member_rpn ? 'move' : '')]
+                <th class="blockedStaffMemberSid">
+                    <?= $form->field($model, 'blocked_staff_member_sid', [
+                        'labelOptions' => ['class' => ($model->blocked_staff_member_sid ? 'move' : '')]
                     ])->widget(Select2::class, [
                         'showToggleAll' => false,
                         'data'          => SelectData::fromModel(
                             app\models\Staff::class,
-                            'rpn',
-                            'nameWithRpn',
+                            'sid',
+                            'nameWithSid',
                             true
                         ),
                         'options'       => [
@@ -73,14 +73,14 @@ if ($searchModel) {
             <?php if (!in_array("blocked_by", $exclude)): ?>
                 <?php $excludeSearchParams[] = "blocked_by"; ?>
                 <th class="blocked_by">
-                    <?= $form->field($model, 'blocked_by_rpn', [
-                        'labelOptions' => ['class' => ($model->blocked_by_rpn ? 'move' : '')]
+                    <?= $form->field($model, 'blocked_by_sid', [
+                        'labelOptions' => ['class' => ($model->blocked_by_sid ? 'move' : '')]
                     ])->widget(Select2::class, [
                         'showToggleAll' => false,
                         'data'          => SelectData::fromModel(
                             app\models\Staff::class,
-                            'rpn',
-                            'nameWithRpn',
+                            'sid',
+                            'nameWithSid',
                             true
                         ),
                         'options'       => [

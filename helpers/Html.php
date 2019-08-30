@@ -43,7 +43,7 @@ class Html extends \yii\helpers\Html
      * @param string $emptyLabel
      * @return string
      */
-    public static function staffLabel($staff, $labelAttribute = 'nameWithRpn', $emptyLabel = 'n/a')
+    public static function staffLabel($staff, $labelAttribute = 'nameWithSid', $emptyLabel = 'n/a')
     {
         if(!$staff instanceof Staff) {
             return $emptyLabel;

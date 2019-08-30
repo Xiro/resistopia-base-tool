@@ -33,8 +33,8 @@ GateAsset::register($this);
 
         <div class="row">
             <div class="col-sm-6">
-                <?= $form->field($model, 'mission_lead_rpn')->textInput([
-                    'class' => 'form-control mask-rpn',
+                <?= $form->field($model, 'mission_lead_sid')->textInput([
+                    'class' => 'form-control mask-sid',
                     'data'  => [
                         'load' => Url::to(['mission/gate'])
                     ]
@@ -112,7 +112,7 @@ GateAsset::register($this);
                 ) ?>
             </div>
 
-        <?php elseif ($model->mission_lead_rpn): ?>
+        <?php elseif ($model->mission_lead_sid): ?>
 
             <h2>Mission not found</h2>
 
@@ -120,7 +120,7 @@ GateAsset::register($this);
                 Possible reasons:
                 <ul>
                     <li>The mission status is not ready, active or back</li>
-                    <li>The scanned RPN does not belong to the mission leader</li>
+                    <li>The scanned SID does not belong to the mission leader</li>
                 </ul>
             </p>
 

@@ -191,8 +191,8 @@ use yii\data\ActiveDataProvider;
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'mission_lead_rpn', [
-                'labelOptions' => ['class' => ($model->mission_lead_rpn ? 'move' : '')]
+            <?= $form->field($model, 'mission_lead_sid', [
+                'labelOptions' => ['class' => ($model->mission_lead_sid ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
                 'data'          => SelectData::fromModel(Staff::class, null, null, true),

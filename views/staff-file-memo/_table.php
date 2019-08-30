@@ -57,14 +57,14 @@ if ($searchModel) {
             <?php if (!in_array("staff_name", $exclude)): ?>
                 <?php $excludeSearchParams[] = "staff_name"; ?>
                 <th class="staff_name">
-                    <?= $form->field($model, 'rpn', [
-                        'labelOptions' => ['class' => ($model->rpn ? 'move' : '')]
+                    <?= $form->field($model, 'sid', [
+                        'labelOptions' => ['class' => ($model->sid ? 'move' : '')]
                     ])->widget(Select2::class, [
                         'showToggleAll' => false,
                         'data'          => SelectData::fromModel(
                             app\models\Staff::class,
-                            'rpn',
-                            'nameWithRpn',
+                            'sid',
+                            'nameWithSid',
                             true
                         ),
                         'options'       => [
@@ -79,14 +79,14 @@ if ($searchModel) {
             <?php if (!in_array("author_name", $exclude)): ?>
                 <?php $excludeSearchParams[] = "author_name"; ?>
                 <th class="author_name">
-                    <?= $form->field($model, 'author_rpn', [
-                        'labelOptions' => ['class' => ($model->author_rpn ? 'move' : '')]
+                    <?= $form->field($model, 'author_sid', [
+                        'labelOptions' => ['class' => ($model->author_sid ? 'move' : '')]
                     ])->widget(Select2::class, [
                         'showToggleAll' => false,
                         'data'          => SelectData::fromModel(
                             app\models\Staff::class,
-                            'rpn',
-                            'nameWithRpn',
+                            'sid',
+                            'nameWithSid',
                             true
                         ),
                         'options'       => [

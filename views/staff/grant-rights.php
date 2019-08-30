@@ -10,7 +10,7 @@ use mate\yii\widgets\ValMap;
 /* @var $model app\models\Staff */
 /* @var $form yii\bootstrap\ActiveForm */
 
-$this->title = "Grant Rights to " . $model->nameWithRpn;
+$this->title = "Grant Rights to " . $model->nameWithSid;
 ?>
 
 <div class="staff-grant-rights-form">

@@ -17,8 +17,8 @@ $exclude = !isset($exclude) ? array() : $exclude;
 <?php /** @var $model \app\models\User */ ?>
 <?php foreach ($dataProvider->getModels() as $model): ?>
     <tr data-key="<?= $model->id ?>">
-        <?php if (!in_array("rpn", $exclude)): ?>
-            <td class="rpn">
+        <?php if (!in_array("sid", $exclude)): ?>
+            <td class="sid">
                 <?= $model->sid ? $model->sid . ' (' . $model->staff->getName() . ')' : "None" ?>
             </td>
         <?php endif; ?>

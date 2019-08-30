@@ -17,8 +17,8 @@ $exclude = !isset($exclude) ? array() : $exclude;
 <?php /** @var $model \app\models\MediFoamDistribution */ ?>
 <?php foreach ($dataProvider->getModels() as $model): ?>
     <tr data-key="<?= $model->id ?>">
-        <?php if (!in_array("recipient_rpn", $exclude)): ?>
-            <td class="recipient_rpn">
+        <?php if (!in_array("recipient_sid", $exclude)): ?>
+            <td class="recipient_sid">
                 <?= Html::staffLabel($model->recipient) ?>
             </td>
         <?php endif; ?>
@@ -32,8 +32,8 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?= $model->mk1_returned ?>
             </td>
         <?php endif; ?>
-        <?php if (!in_array("issued_by_rpn", $exclude)): ?>
-            <td class="issued_by_rpn">
+        <?php if (!in_array("issued_by_sid", $exclude)): ?>
+            <td class="issued_by_sid">
                 <?= Html::staffLabel($model->issuedBy) ?>
             </td>
         <?php endif; ?>

@@ -20,10 +20,10 @@ $this->title = 'Character Registration';
             ]); ?>
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-2 col-md-3 col-md-offset-3">
-                    <?= $form->field($model, 'rpn')->textInput([
+                    <?= $form->field($model, 'sid')->textInput([
                         'maxlength' => true,
-                        'class'     => 'form-control mask-rpn'
-                    ])->label('Enter RPN') ?>
+                        'class'     => 'form-control mask-sid'
+                    ])->label('Enter SID') ?>
                 </div>
                 <div class="col-sm-4 col-md-3">
                     <?= Html::submitButton(

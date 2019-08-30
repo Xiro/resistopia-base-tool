@@ -21,14 +21,14 @@ use mate\yii\widgets\SelectData;
     <?php if($model->isNewRecord && !$model->sid): ?>
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'rpn', [
+            <?= $form->field($model, 'sid', [
                 'labelOptions' => ['class' => ($model->sid ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
                 'data'          => SelectData::fromModel(
                     app\models\Staff::class,
-                    'rpn',
-                    'nameWithRpn',
+                    'sid',
+                    'nameWithSid',
                     true
                 ),
                 'options'       => [

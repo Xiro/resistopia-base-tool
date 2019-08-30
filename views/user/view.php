@@ -6,7 +6,7 @@ use mate\yii\widgets\Glyphicon;
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 
-$this->title = "User " . $model->rpn;
+$this->title = "User " . $model->sid;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     $info = [];
-    $info["RPN"] = $model->sid . ' ' . Html::a(
+    $info["SID"] = $model->sid . ' ' . Html::a(
             Glyphicon::eye_open(),
             ['staff/view', 'id' => $model->sid],
             ["class" => "ajax-dialog", "data-size" => "lg"]

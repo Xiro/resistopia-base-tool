@@ -41,17 +41,17 @@ if ($searchModel) {
         <?php $excludeSearchParams = []; ?>
         <tr class="animated-label">
             <?php $model = $searchModel ?>
-            <?php if (!in_array("rpn", $exclude)): ?>
-                <?php $excludeSearchParams[] = "rpn"; ?>
-                <th class="rpn">
-                    <?= $form->field($model, 'rpn', [
-                        'labelOptions' => ['class' => ($model->rpn ? 'move' : '')]
+            <?php if (!in_array("sid", $exclude)): ?>
+                <?php $excludeSearchParams[] = "sid"; ?>
+                <th class="sid">
+                    <?= $form->field($model, 'sid', [
+                        'labelOptions' => ['class' => ($model->sid ? 'move' : '')]
                     ])->widget(Select2::class, [
                         'showToggleAll' => false,
                         'data'          => SelectData::fromModel(
                                 app\models\Staff::class,
-                                 'rpn', 
-                                 'rpn'
+                                 'sid', 
+                                 'sid'
                              ),
                         'options'       => [
                             'placeholder' => '',
@@ -59,7 +59,7 @@ if ($searchModel) {
                         'pluginOptions' => [
                             'allowClear' => true,
                         ],
-                    ])->label('Rpn') ?>
+                    ])->label('SID') ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("created", $exclude)): ?>
@@ -91,8 +91,8 @@ if ($searchModel) {
         </tr>
     <?php else: ?>
         <tr>
-            <?php if (!in_array("rpn", $exclude)): ?>
-                <th class="rpn"><?= 'Rpn' ?></th>
+            <?php if (!in_array("sid", $exclude)): ?>
+                <th class="sid"><?= 'SID' ?></th>
             <?php endif; ?>
             <?php if (!in_array("created", $exclude)): ?>
                 <th class="created"><?= 'Created' ?></th>

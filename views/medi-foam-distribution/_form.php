@@ -20,14 +20,14 @@ use mate\yii\widgets\SelectData;
 
     <div class="row">
         <div class="col-sm-4">
-            <?= $form->field($model, 'recipient_rpn', [
-                'labelOptions' => ['class' => ($model->recipient_rpn ? 'move' : '')]
+            <?= $form->field($model, 'recipient_sid', [
+                'labelOptions' => ['class' => ($model->recipient_sid ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
                 'data'          => SelectData::fromModel(
                     app\models\Staff::class,
-                    'rpn',
-                    'nameWithRpn',
+                    'sid',
+                    'nameWithSid',
                     true
                 ),
                 'options'       => [

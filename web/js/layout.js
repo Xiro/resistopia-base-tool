@@ -72,7 +72,7 @@ $(document).ready(function () {
     $('.mask-date').mask('00.00.0000', {placeholder: 'dd.mm.yyyy'}).addClass('has-content');
     $('.mask-datetime').mask('00.00.0000 00:00', {placeholder: 'dd.mm.yyyy HH:ii'}).addClass('has-content');
     $('.mask-duration').mask('00:00', {placeholder: 'HH:MM', reverse: true}).addClass('has-content');
-    $('.mask-rpn').mask('AA-00000', {
+    $('.mask-sid').mask('AA-00000', {
         onKeyPress: function(cep, event, currentField, options){
             if(isNumber(cep.substr(0, 1)) || isNumber(cep.substr(1, 1))) {
                 cep = "";

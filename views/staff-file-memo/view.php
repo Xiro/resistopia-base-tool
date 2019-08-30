@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\StaffFileMemo */
 
-$this->title = 'File Memo of ' . $model->rpn;
+$this->title = 'File Memo of ' . $model->sid;
 $this->params['breadcrumbs'][] = ['label' => 'Staff File Memos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
