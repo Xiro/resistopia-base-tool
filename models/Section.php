@@ -11,6 +11,9 @@ use yii\helpers\Inflector;
  *
  * @property integer $id
  * @property string $name
+ * @property string $section
+ * @property string $department
+ * @property string $group
  * @property string $key
  * @property integer $access_mask_id
  * @property integer $order
@@ -34,9 +37,9 @@ class Section extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['section', 'department', 'group', 'key'], 'required'],
             [['access_mask_id', 'order'], 'integer'],
-            [['name', 'key'], 'string', 'max' => 50],
+            [['section', 'department', 'group', 'key'], 'string', 'max' => 50],
             [['access_mask_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessMask::className(), 'targetAttribute' => ['access_mask_id' => 'id']],
         ];
     }
@@ -48,19 +51,28 @@ class Section extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'section' => 'Section',
+            'department' => 'Department',
+            'group' => 'Group',
             'key' => 'Key',
             'access_mask_id' => 'Access Mask ID',
             'order' => 'Order',
         ];
     }
 
-    public function beforeSave($insert)
+    public function save($runValidation = true, $attributeNames = null)
     {
         if($this->isNewRecord) {
-            $this->key = Inflector::camel2id(Inflector::camelize($this->name));
+            $this->key = Inflector::camel2id(Inflector::camelize($this->section)) . "_";
+            $this->key .= Inflector::camel2id(Inflector::camelize(str_replace("&", "and", $this->department)));
         }
-        return parent::beforeSave($insert);
+        return parent::save($runValidation, $attributeNames);
+    }
+
+
+    public function getName()
+    {
+        return $this->section . " - " . $this->department;
     }
 
     /**

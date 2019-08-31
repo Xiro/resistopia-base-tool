@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\AccessRule;
+use app\models\AccessMask;
 use app\models\AccessRight;
 use app\models\AccessCategory;
 use app\models\Section;
@@ -25,11 +26,11 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class'      => AccessControl::className(),
                 'ruleConfig' => [
                     'class' => AccessRule::class
                 ],
-                'rules' => [
+                'rules'      => [
                     [
                         'allow' => true,
                         'roles' => ['@'],
@@ -97,6 +98,7 @@ class SiteController extends Controller
 //            }
 //        }
 //        Yii::$app->cache->flush();
+
         return $this->render('index');
     }
 

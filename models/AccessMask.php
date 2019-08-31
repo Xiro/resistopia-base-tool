@@ -53,6 +53,22 @@ class AccessMask extends ActiveRecord
         ];
     }
 
+    public function delete()
+    {
+        $maskRights = $this->accessRights;
+        /** @var AccessRight $maskRight */
+        foreach ($maskRights as $maskRight) {
+            $this->unlink('accessRights', $maskRight, true);
+        }
+        $accessKeys = $this->accessKeys;
+        /** @var AccessKey $accessKey */
+        foreach ($accessKeys as $accessKey) {
+            $accessKey->removeAccessMask($this);
+        }
+        return parent::delete();
+    }
+
+
     public function getAccessList()
     {
         $accessList = ArrayHelper::map($this->accessRights, 'key', 'id');

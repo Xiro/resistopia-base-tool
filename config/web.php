@@ -39,7 +39,7 @@ $config = [
         'ajaxLayout'   => [
             'class' => 'app\components\AjaxLayout'
         ],
-        'lock'   => [
+        'lock'         => [
             'class' => 'app\components\Lock'
         ],
         'selectData'   => [
@@ -54,6 +54,12 @@ $config = [
                     'from'    => 'id',
                     'to'      => 'name',
                     'orderBy' => ['order' => 'ASC'],
+                ],
+                'app\models\Section'       => [
+                    'from'      => 'id',
+                    'to'        => 'name',
+                    'orderBy'   => ['group' => "ASC", 'order' => 'ASC'],
+                    'useModels' => true,
                 ],
                 'app\models\MissionStatus' => [
                     'from'    => 'id',
@@ -103,7 +109,7 @@ $config = [
             ],
         ],
     ],
-    'modules' => [
+    'modules'    => [
         'api' => [
             'class' => 'app\api\Module'
         ]

@@ -89,6 +89,12 @@ class AccessKey extends ActiveRecord
         $this->refreshCache();
     }
 
+    public function removeAccessMask($removeMask)
+    {
+        $this->unlink('accessMasks', $removeMask, true);
+        $this->refreshCache();
+    }
+
     public function getAccessList()
     {
         $accessList = ArrayHelper::map($this->accessRights, 'key', 'id');

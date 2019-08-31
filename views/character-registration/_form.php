@@ -206,7 +206,7 @@ $affiliationInfoHelp = [
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label('section') ?>
+            ])->label('Section') ?>
         </div>
     </div>
 

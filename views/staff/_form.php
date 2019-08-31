@@ -164,7 +164,7 @@ use mate\yii\widgets\SelectData;
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label('section') ?>
+            ])->label('Section') ?>
         </div>
     </div>
 
