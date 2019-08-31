@@ -278,6 +278,17 @@ $systemInfoHelp = [
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($model, 'registered')->textInput([
+                'class'        => 'form-control mask-date ',
+                'autocomplete' => 'off'
+            ]) ?>
+        </div>
+        <div class="col-sm-6">
+        </div>
+    </div>
+
     <h3>Background</h3>
 
 <?php

@@ -25,15 +25,30 @@ class StaffForm extends Staff
     {
         return array_merge(parent::rules(), [
             [['accessMasks'], 'safe'],
-            [['date_of_birth'], 'date', 'format' => 'dd.MM.yyyy'],
+            [['date_of_birth', 'registered'], 'date', 'format' => 'dd.MM.yyyy'],
+            [['registered'], 'validateITDate'],
             [['forename', 'surname', 'nickname'], 'match', 'pattern' => "/^[a-z]{1}[a-z\-\.\,\'\säÄöÖüÜß]*$/i"],
             [['forename', 'surname', 'nickname'], 'trim'],
         ]);
     }
 
+    public function validateITDate($attribute)
+    {
+        $minDate = strtotime("2021-04-10");
+        $maxDate = strtotime("2021-12-31");
+        $date = strtotime($this->getAttribute($attribute));
+        if($date < $minDate) {
+            $this->addError($attribute, "Date must be after " . date("d.m.Y", $minDate));
+        }
+        if($date > $maxDate) {
+            $this->addError($attribute, "Date must be before " . date("d.m.Y", $maxDate));
+        }
+    }
+
     public function afterFind()
     {
-        $this->date_of_birth = date('d.m.Y', strtotime($this->date_of_birth));
+        $this->date_of_birth = $this->date_of_birth ? date('d.m.Y', strtotime($this->date_of_birth)) : null;
+        $this->registered = $this->registered ? date('d.m.Y', strtotime($this->registered)) : null;
 
         $existingMasks = $this->accessKey->accessMasks;
         $existingMaskIds = ArrayHelper::getColumn($existingMasks, "id");
@@ -88,7 +103,8 @@ class StaffForm extends Staff
             return false;
         }
 
-        $this->date_of_birth = implode("-", array_reverse(explode(".", $this->date_of_birth)));
+        $this->date_of_birth = $this->date_of_birth ? implode("-", array_reverse(explode(".", $this->date_of_birth))) : null;
+        $this->registered = $this->registered ? implode("-", array_reverse(explode(".", $this->registered))) : null;
 
         $accessMasks = $this->getImpliedAccessMasks();
         $this->accessMasks = !is_array($this->accessMasks) ? [] : $this->accessMasks;
@@ -102,7 +118,8 @@ class StaffForm extends Staff
 
     public function afterSave($insert, $changedAttributes)
     {
-        $this->date_of_birth = date('d.m.Y', strtotime($this->date_of_birth));
+        $this->date_of_birth = $this->date_of_birth ? date('d.m.Y', strtotime($this->date_of_birth)) : null;
+        $this->registered = $this->registered ? date('d.m.Y', strtotime($this->registered)) : null;
         parent::afterSave($insert, $changedAttributes);
     }
 

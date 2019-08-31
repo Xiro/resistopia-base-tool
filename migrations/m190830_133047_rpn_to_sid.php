@@ -75,6 +75,11 @@ class m190830_133047_rpn_to_sid extends Migration
             CHANGE COLUMN `author_rpn` `author_sid` VARCHAR(8) NOT NULL COLLATE 'utf8_bin' AFTER `id`,
             CHANGE COLUMN `patient_rpn` `patient_sid` VARCHAR(8) NOT NULL COLLATE 'utf8_bin' AFTER `author_sid`;
 
+        ALTER TABLE `mission_staff`
+            ALTER `staff_rpn` DROP DEFAULT;
+        ALTER TABLE `mission_staff`
+            CHANGE COLUMN `staff_rpn` `staff_sid` VARCHAR(8) NOT NULL COLLATE 'utf8_bin' AFTER `mission_id`;
+
         ");
     }
 

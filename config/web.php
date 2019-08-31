@@ -49,6 +49,7 @@ $config = [
                     'from'    => 'sid',
                     'to'      => 'nameWithSid',
                     'orderBy' => ['forename' => 'ASC', 'surname' => 'ASC'],
+                    'useModels' => true,
                 ],
                 'app\models\Rank'          => [
                     'from'    => 'id',

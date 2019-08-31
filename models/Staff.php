@@ -30,6 +30,7 @@ use yii\db\ActiveRecord;
  * @property integer $eye_color_id
  * @property integer $team_id
  * @property integer $blood_type_id
+ * @property string $registered IT registration date
  * @property string $created
  * @property string $updated
  * @property bool $isBlocked
@@ -81,7 +82,7 @@ class Staff extends ActiveRecord
         return [
             [['sid', 'forename', 'surname', 'gender', 'date_of_birth', 'access_key_id', 'rank_id'], 'required'],
             [['gender'], 'string'],
-            [['date_of_birth', 'created', 'updated'], 'safe'],
+            [['date_of_birth', 'registered', 'created', 'updated'], 'safe'],
             [['height', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'section_id', 'special_function_id', 'eye_color_id', 'blood_type_id'], 'integer'],
             [['sid'], 'string', 'max' => 8],
             [['forename', 'surname', 'nickname', 'profession'], 'string', 'max' => 128],
@@ -127,6 +128,7 @@ class Staff extends ActiveRecord
             'eye_color_id' => 'Eye Color',
             'team_id' => 'Team',
             'blood_type_id' => 'Blood Type',
+            'registered' => 'Registered',
             'created' => 'Created',
             'updated' => 'Updated',
         ];

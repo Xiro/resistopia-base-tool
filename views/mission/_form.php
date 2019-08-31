@@ -195,7 +195,7 @@ use yii\data\ActiveDataProvider;
                 'labelOptions' => ['class' => ($model->mission_lead_sid ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => SelectData::fromModel(Staff::class, null, null, true),
+                'data'          => SelectData::fromModel(Staff::class),
                 'options'       => [
                     'placeholder' => '',
                 ],

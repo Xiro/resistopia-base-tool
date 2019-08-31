@@ -1,9 +1,9 @@
 <?php
 
 use app\helpers\Html;
+use app\models\AccessMask;
 use yii\bootstrap\ActiveForm;
 use kartik\select2\Select2;
-use dosamigos\datetimepicker\DateTimePicker;
 use mate\yii\widgets\SelectData;
 
 /* @var $this yii\web\View */
@@ -211,6 +211,13 @@ use mate\yii\widgets\SelectData;
                     'class'     => 'form-control mask-callsign'
             ]) ?>
 
+            <?= $form->field($model, 'registered')->textInput([
+                'class'        => 'form-control mask-date ',
+                'autocomplete' => 'off'
+            ]) ?>
+        </div>
+        <div class="col-sm-6">
+
             <?php if (\app\components\Access::to('staff/grant-rights')): ?>
                 <?= $form->field($model, 'accessMasks', [
                     'labelOptions' => ['class' => ($model->accessMasks ? 'move' : '')]
@@ -228,8 +235,6 @@ use mate\yii\widgets\SelectData;
                     ],
                 ])->label('Access Masks') ?>
             <?php endif; ?>
-        </div>
-        <div class="col-sm-6">
 
             <?= $form->field($model, 'status_alive')->checkbox([
                 'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
