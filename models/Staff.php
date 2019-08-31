@@ -81,7 +81,7 @@ class Staff extends ActiveRecord
     public function rules()
     {
         return [
-            [['sid', 'forename', 'surname', 'gender', 'date_of_birth', 'access_key_id'], 'required'],
+            [['sid', 'forename', 'surname', 'gender', 'date_of_birth', 'access_key_id', 'section_id', 'resistance_cell_id'], 'required'],
             [['gender'], 'string'],
             [['date_of_birth', 'registered', 'created', 'updated'], 'safe'],
             [['height', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'section_id', 'special_function_id', 'eye_color_id', 'blood_type_id'], 'integer'],

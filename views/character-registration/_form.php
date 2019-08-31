@@ -34,7 +34,7 @@ use mate\yii\widgets\SelectData;
 
 <?php
 $personalInfoHelp = [
-    "Date of birth:" => "Denk daran, wir sind im Jahr 2024!",
+    "Date of birth:" => "Denk daran, wir sind im Jahr 2022!",
     "Blood Type:"    => "Wenn du außerhalb der Basis startest werden die Mediziner deine Blutgruppe erfassen"
 ];
 ?>
@@ -132,9 +132,10 @@ $personalInfoHelp = [
 
 <?php
 $affiliationInfoHelp = [
-    "Company:"       => "Wenn du in der Base startest, wähle RGME 07 BE-XIII aus. Wenn du IT anreist, wähle Zivilist aus",
-    "section:" => "Das Spiel in einer Sektion muss OT abgesprochen sein",
-    "Rank:"          => "Wenn nicht IT erspielt, wähle alles bis Fighter Mark 2 aus. Als Teamleiter wähle Corporal oder Sergeant aus",
+    "Resistance Cell:"    => "Wenn du in der Base startest, wähle Widerstandszelle Mahlwinkel aus.",
+    "Section:"            => "Das Spiel außerhalb der Sektion \"Combat\" muss OT abgesprochen sein",
+    "Rank:"               => "Wenn nicht IT erspielt, wähle Private aus. Als Teamleiter wähle Corporal oder Sergeant aus. Lass das Feld leer, wenn du keinen Rang hast.",
+    "Citizenship & Team:" => "In diesen Feldern können auch neue Werte eingetragen werden, das Eingabefeld ist nicht ausschließlich ein Suchfeld.",
 ];
 ?>
     <table class="help">
@@ -147,6 +148,21 @@ $affiliationInfoHelp = [
     </table>
 
     <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($staff, 'resistance_cell_id', [
+                'labelOptions' => ['class' => ($staff->resistance_cell_id ? 'move' : '')]
+            ])->widget(Select2::class, [
+                'showToggleAll' => false,
+                'data'          => SelectData::fromModel(app\models\ResistanceCell::class),
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'tags'       => true,
+                ],
+            ])->label('Resistance Cell*') ?>
+        </div>
         <div class="col-sm-6">
             <?= $form->field($staff, 'team_id', [
                 'labelOptions' => ['class' => ($staff->team_id ? 'move' : '')]
@@ -162,24 +178,23 @@ $affiliationInfoHelp = [
                 ],
             ])->label('Team') ?>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($staff, 'resistance_cell_id', [
-                'labelOptions' => ['class' => ($staff->resistance_cell_id ? 'move' : '')]
+            <?= $form->field($staff, 'section_id', [
+                'labelOptions' => ['class' => ($staff->section_id ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\ResistanceCell::class),
+                'data'          => SelectData::fromModel(app\models\Section::class),
                 'options'       => [
                     'placeholder' => '',
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
-                    'tags'       => true,
                 ],
-            ])->label('Resistance Cell') ?>
+            ])->label('Section*') ?>
         </div>
-    </div>
-
-    <div class="row">
         <div class="col-sm-6">
             <?= $form->field($staff, 'special_function_id', [
                 'labelOptions' => ['class' => ($staff->special_function_id ? 'move' : '')]
@@ -193,20 +208,6 @@ $affiliationInfoHelp = [
                     'allowClear' => true,
                 ],
             ])->label('Special Function') ?>
-        </div>
-        <div class="col-sm-6">
-            <?= $form->field($staff, 'section_id', [
-                'labelOptions' => ['class' => ($staff->section_id ? 'move' : '')]
-            ])->widget(Select2::class, [
-                'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\Section::class),
-                'options'       => [
-                    'placeholder' => '',
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ])->label('Section') ?>
         </div>
     </div>
 
@@ -223,7 +224,7 @@ $affiliationInfoHelp = [
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label('Rank*') ?>
+            ])->label('Rank') ?>
         </div>
         <div class="col-sm-6">
             <?= $form->field($staff, 'citizenship_id', [
@@ -249,10 +250,9 @@ $affiliationInfoHelp = [
 
 <?php
 $systemInfoHelp = [
-    "Currently serving in BE13:" => "Auswählen, wenn du innerhalb der Basis startest",
-    "Is Alive:"                  => "Nur abwählen, wenn dein Charakter gestorben ist",
-    "Is IT:"                     => "Abwählen, wenn es sich um einen vorbereiteten Charakter handelt, den du nach dem Tod deines aktuellen Charakters spielen willst",
-    "Callsign:"                  => "Wird vom CIC vergeben, wenn du Funker bist"
+    "Callsign:"   => "Wird vom CIC vergeben, wenn du Funker bist",
+    "Is Alive:"   => "Nur abwählen, wenn dein Charakter gestorben ist",
+    "Registered:" => "Der Tag, an dem dein Charakter zum ersten mal in einer Basis registriert wurde. Frühestes Datum ist der 26.02.2022, Spielstart ist am 15.09.202",
 ];
 ?>
     <table class="help">
@@ -266,21 +266,21 @@ $systemInfoHelp = [
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($staff, 'status_alive')->checkbox([
-                'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
-            ])->label('Is Alive') ?>
-        </div>
-        <div class="col-sm-6">
             <?= $form->field($staff, 'callsign')->textInput([
                 'maxlength' => true,
                 'class'     => 'form-control mask-callsign'
             ]) ?>
         </div>
+        <div class="col-sm-6">
+            <?= $form->field($staff, 'status_alive')->checkbox([
+                'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
+            ])->label('Is Alive') ?>
+        </div>
     </div>
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'registered')->textInput([
+            <?= $form->field($staff, 'registered')->textInput([
                 'class'        => 'form-control mask-date ',
                 'autocomplete' => 'off'
             ]) ?>
@@ -293,7 +293,7 @@ $systemInfoHelp = [
 
 <?php
 $systemInfoHelp = [
-    "Career:"          => "Beschreibung deiner Karriere in der BE13",
+    "Career:"          => "Beschreibung deiner Karriere in der Widerstandszelle Mahlwinkel",
     "Characteristics:" => "Charakteristische Merkmale, z.B. Narben oder Tätowierungen",
     "Personality:"     => "Persönlichkeitmerkmale",
     "Awards:"          => "Bisher verdiente Auszeichnungen"
