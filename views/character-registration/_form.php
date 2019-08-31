@@ -163,11 +163,11 @@ $affiliationInfoHelp = [
             ])->label('Team') ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($staff, 'company_id', [
-                'labelOptions' => ['class' => ($staff->company_id ? 'move' : '')]
+            <?= $form->field($staff, 'resistance_cell_id', [
+                'labelOptions' => ['class' => ($staff->resistance_cell_id ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\Company::class),
+                'data'          => SelectData::fromModel(app\models\ResistanceCell::class),
                 'options'       => [
                     'placeholder' => '',
                 ],
@@ -175,7 +175,7 @@ $affiliationInfoHelp = [
                     'allowClear' => true,
                     'tags'       => true,
                 ],
-            ])->label('Company') ?>
+            ])->label('Resistance Cell') ?>
         </div>
     </div>
 

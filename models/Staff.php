@@ -23,9 +23,9 @@ use yii\db\ActiveRecord;
  * @property integer $squat_number
  * @property integer $access_key_id
  * @property integer $rank_id
+ * @property integer $resistance_cell_id
  * @property integer $section_id
  * @property integer $special_function_id
- * @property integer $company_id
  * @property integer $citizenship_id
  * @property integer $eye_color_id
  * @property integer $team_id
@@ -52,9 +52,9 @@ use yii\db\ActiveRecord;
  * @property Section $section
  * @property BloodType $bloodType
  * @property Citizenship $citizenship
- * @property Company $company
  * @property EyeColor $eyeColor
  * @property Rank $rank
+ * @property ResistanceCell $resistanceCell
  * @property SpecialFunction $specialFunction
  * @property Team $team
  * @property StaffBackground $staffBackground
@@ -88,15 +88,15 @@ class Staff extends ActiveRecord
             [['callsign'], 'string', 'max' => 5],
             [['sid'], 'unique'],
             [['callsign'], 'unique'],
-            [['access_key_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessKey::className(), 'targetAttribute' => ['access_key_id' => 'id']],
-            [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => Section::className(), 'targetAttribute' => ['section_id' => 'id']],
-            [['blood_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => BloodType::className(), 'targetAttribute' => ['blood_type_id' => 'id']],
-            [['citizenship_id'], 'exist', 'skipOnError' => true, 'targetClass' => Citizenship::className(), 'targetAttribute' => ['citizenship_id' => 'id']],
-            [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'id']],
-            [['eye_color_id'], 'exist', 'skipOnError' => true, 'targetClass' => EyeColor::className(), 'targetAttribute' => ['eye_color_id' => 'id']],
-            [['rank_id'], 'exist', 'skipOnError' => true, 'targetClass' => Rank::className(), 'targetAttribute' => ['rank_id' => 'id']],
-            [['special_function_id'], 'exist', 'skipOnError' => true, 'targetClass' => SpecialFunction::className(), 'targetAttribute' => ['special_function_id' => 'id']],
-            [['team_id'], 'exist', 'skipOnError' => true, 'targetClass' => Team::className(), 'targetAttribute' => ['team_id' => 'id']],
+            [['access_key_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessKey::class, 'targetAttribute' => ['access_key_id' => 'id']],
+            [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => Section::class, 'targetAttribute' => ['section_id' => 'id']],
+            [['blood_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => BloodType::class, 'targetAttribute' => ['blood_type_id' => 'id']],
+            [['citizenship_id'], 'exist', 'skipOnError' => true, 'targetClass' => Citizenship::class, 'targetAttribute' => ['citizenship_id' => 'id']],
+            [['eye_color_id'], 'exist', 'skipOnError' => true, 'targetClass' => EyeColor::class, 'targetAttribute' => ['eye_color_id' => 'id']],
+            [['rank_id'], 'exist', 'skipOnError' => true, 'targetClass' => Rank::class, 'targetAttribute' => ['rank_id' => 'id']],
+            [['resistance_cell_id'], 'exist', 'skipOnError' => true, 'targetClass' => ResistanceCell::class, 'targetAttribute' => ['resistance_cell_id' => 'id']],
+            [['special_function_id'], 'exist', 'skipOnError' => true, 'targetClass' => SpecialFunction::class, 'targetAttribute' => ['special_function_id' => 'id']],
+            [['team_id'], 'exist', 'skipOnError' => true, 'targetClass' => Team::class, 'targetAttribute' => ['team_id' => 'id']],
         ];
     }
 
@@ -120,9 +120,9 @@ class Staff extends ActiveRecord
             'squat_number' => 'Squat Number',
             'access_key_id' => 'Access Key',
             'rank_id' => 'Rank',
-            'section_id' => 'section',
+            'resistance_cell_id' => 'Resistance Cell',
+            'section_id' => 'Section',
             'special_function_id' => 'Special Function',
-            'company_id' => 'Company',
             'citizenship_id' => 'Citizenship',
             'eye_color_id' => 'Eye Color',
             'team_id' => 'Team',
@@ -160,7 +160,6 @@ class Staff extends ActiveRecord
      * @property AccessKey $accessKey
      * @property Section $section
      * @property Citizenship $citizenship
-     * @property Company $company
      * @property EyeColor $eyeColor
      * @property Rank $rank
      * @property SpecialFunction $specialFunction
@@ -253,14 +252,14 @@ class Staff extends ActiveRecord
      */
     public function getMissionLeads()
     {
-        return $this->hasMany(Mission::className(), ['mission_lead_sid' => 'sid']);
+        return $this->hasMany(Mission::class, ['mission_lead_sid' => 'sid']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getMediFoamDistributions()
     {
-        return $this->hasMany(MediFoamDistribution::className(), ['recipient_sid' => 'sid']);
+        return $this->hasMany(MediFoamDistribution::class, ['recipient_sid' => 'sid']);
     }
 
     /**
@@ -268,14 +267,14 @@ class Staff extends ActiveRecord
      */
     public function getMedicineCheckups()
     {
-        return $this->hasMany(MedicineCheckup::className(), ['patient_sid' => 'sid']);
+        return $this->hasMany(MedicineCheckup::class, ['patient_sid' => 'sid']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getMedicineTreatments()
     {
-        return $this->hasMany(MedicineTreatment::className(), ['patient_sid' => 'sid']);
+        return $this->hasMany(MedicineTreatment::class, ['patient_sid' => 'sid']);
     }
 
     /**
@@ -283,7 +282,7 @@ class Staff extends ActiveRecord
      */
     public function getMissionBlocks()
     {
-        return $this->hasMany(MissionBlock::className(), ['blocked_staff_member_sid' => 'sid']);
+        return $this->hasMany(MissionBlock::class, ['blocked_staff_member_sid' => 'sid']);
     }
 
     /**
@@ -303,7 +302,7 @@ class Staff extends ActiveRecord
      */
     public function getMissionStaff()
     {
-        return $this->hasMany(MissionStaff::className(), ['staff_sid' => 'sid']);
+        return $this->hasMany(MissionStaff::class, ['staff_sid' => 'sid']);
     }
 
     /**
@@ -311,7 +310,7 @@ class Staff extends ActiveRecord
      */
     public function getMissions()
     {
-        return $this->hasMany(Mission::className(), ['id' => 'mission_id'])->viaTable('mission_staff', ['staff_sid' => 'sid']);
+        return $this->hasMany(Mission::class, ['id' => 'mission_id'])->viaTable('mission_staff', ['staff_sid' => 'sid']);
     }
 
     /**
@@ -319,7 +318,7 @@ class Staff extends ActiveRecord
      */
     public function getBloodType()
     {
-        return $this->hasOne(BloodType::className(), ['id' => 'blood_type_id']);
+        return $this->hasOne(BloodType::class, ['id' => 'blood_type_id']);
     }
 
     /**
@@ -327,7 +326,7 @@ class Staff extends ActiveRecord
      */
     public function getMissionStatusHistories()
     {
-        return $this->hasMany(MissionStatusHistory::className(), ['author_sid' => 'sid']);
+        return $this->hasMany(MissionStatusHistory::class, ['author_sid' => 'sid']);
     }
 
     /**
@@ -335,7 +334,7 @@ class Staff extends ActiveRecord
      */
     public function getAccessKey()
     {
-        return $this->hasOne(AccessKey::className(), ['id' => 'access_key_id']);
+        return $this->hasOne(AccessKey::class, ['id' => 'access_key_id']);
     }
 
     /**
@@ -343,7 +342,7 @@ class Staff extends ActiveRecord
      */
     public function getSection()
     {
-        return $this->hasOne(Section::className(), ['id' => 'section_id']);
+        return $this->hasOne(Section::class, ['id' => 'section_id']);
     }
 
     /**
@@ -351,15 +350,7 @@ class Staff extends ActiveRecord
      */
     public function getCitizenship()
     {
-        return $this->hasOne(Citizenship::className(), ['id' => 'citizenship_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCompany()
-    {
-        return $this->hasOne(Company::className(), ['id' => 'company_id']);
+        return $this->hasOne(Citizenship::class, ['id' => 'citizenship_id']);
     }
 
     /**
@@ -367,7 +358,7 @@ class Staff extends ActiveRecord
      */
     public function getEyeColor()
     {
-        return $this->hasOne(EyeColor::className(), ['id' => 'eye_color_id']);
+        return $this->hasOne(EyeColor::class, ['id' => 'eye_color_id']);
     }
 
     /**
@@ -375,7 +366,14 @@ class Staff extends ActiveRecord
      */
     public function getRank()
     {
-        return $this->hasOne(Rank::className(), ['id' => 'rank_id']);
+        return $this->hasOne(Rank::class, ['id' => 'rank_id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getResistanceCell()
+    {
+        return $this->hasOne(ResistanceCell::class, ['id' => 'resistance_cell_id']);
     }
 
     /**
@@ -383,7 +381,7 @@ class Staff extends ActiveRecord
      */
     public function getSpecialFunction()
     {
-        return $this->hasOne(SpecialFunction::className(), ['id' => 'special_function_id']);
+        return $this->hasOne(SpecialFunction::class, ['id' => 'special_function_id']);
     }
 
     /**
@@ -391,7 +389,7 @@ class Staff extends ActiveRecord
      */
     public function getTeam()
     {
-        return $this->hasOne(Team::className(), ['id' => 'team_id']);
+        return $this->hasOne(Team::class, ['id' => 'team_id']);
     }
 
     /**
@@ -399,7 +397,7 @@ class Staff extends ActiveRecord
      */
     public function getStaffBackground()
     {
-        return $this->hasOne(StaffBackground::className(), ['sid' => 'sid']);
+        return $this->hasOne(StaffBackground::class, ['sid' => 'sid']);
     }
 
     /**
@@ -407,7 +405,7 @@ class Staff extends ActiveRecord
      */
     public function getStaffFileMemos()
     {
-        return $this->hasMany(StaffFileMemo::className(), ['sid' => 'sid']);
+        return $this->hasMany(StaffFileMemo::class, ['sid' => 'sid']);
     }
 
     /**
@@ -415,7 +413,7 @@ class Staff extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['sid' => 'sid']);
+        return $this->hasOne(User::class, ['sid' => 'sid']);
     }
 
     /**

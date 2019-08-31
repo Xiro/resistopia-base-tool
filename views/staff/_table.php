@@ -103,14 +103,14 @@ if ($searchModel) {
                         'labelOptions' => ['class' => ($model->section_id ? "move" : "")]
                     ])->widget(Select2::class, [
                         'showToggleAll' => false,
-                        'data'          => $selectData->fromModel(Section::class),
+                        'data'          => $selectData->fromModel(Section::class, "id", "department"),
                         'options'       => [
                             'placeholder' => ''
                         ],
                         'pluginOptions' => [
                             'allowClear' => true
                         ],
-                    ]) ?>
+                    ])->label("Department") ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("special_function", $exclude)): ?>

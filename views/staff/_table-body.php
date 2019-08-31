@@ -40,7 +40,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php endif; ?>
         <?php if (!in_array("section", $exclude)): ?>
             <td class="section">
-                <?= $model->section_id ? $model->section->name : null ?>
+                <?= $model->section_id ? $model->section->department : null ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("special_function", $exclude)): ?>

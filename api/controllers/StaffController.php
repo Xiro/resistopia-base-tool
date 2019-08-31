@@ -42,7 +42,6 @@ class StaffController extends Controller
                 'section',
                 'bloodType',
                 'citizenship',
-                'company',
                 'eyeColor',
                 'rank',
                 'specialFunction',

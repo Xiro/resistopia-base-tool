@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ["team/view", "id" => $model->team_id],
             ["class" => "ajax-dialog", "data-size" => "lg"]
         ) : "None";
-    $affiliations["Company"] = $model->company_id ? $model->company->name : "n/a";
+    $affiliations["Resistance Cell"] = $model->resistance_cell_id ? $model->resistanceCell->name : "n/a";
 
     $affiliations["Category"] = $model->section_id ? $model->section->name : "n/a";
     $affiliations["Rank"] = $model->rank_id ? $model->rank->name : "n/a";

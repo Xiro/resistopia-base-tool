@@ -25,7 +25,7 @@ class StaffSearch extends Staff
     {
         return [
             [['sid', 'forename', 'surname', 'nickname', 'name', 'gender', 'date_of_birth', 'profession', 'callsign', 'created', 'updated'], 'safe'],
-            [['height', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'section_id', 'special_function_id', 'company_id', 'citizenship_id', 'eye_color_id', 'team_id'], 'integer'],
+            [['height', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'section_id', 'special_function_id', 'citizenship_id', 'eye_color_id', 'team_id'], 'integer'],
         ];
     }
 
@@ -76,7 +76,6 @@ class StaffSearch extends Staff
             'rank_id'             => $this->rank_id,
             'section_id'    => $this->section_id,
             'special_function_id' => $this->special_function_id,
-            'company_id'          => $this->company_id,
             'citizenship_id'      => $this->citizenship_id,
             'eye_color_id'        => $this->eye_color_id,
             'team_id'             => $this->team_id,

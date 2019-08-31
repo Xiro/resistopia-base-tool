@@ -81,7 +81,7 @@ class StaffForm extends Staff
         }
 
         $this->updateToOne('team');
-        $this->updateToOne('company');
+        $this->updateToOne('resistanceCell');
         $this->updateToOne('citizenship');
 
         if(!$this->validate()) {

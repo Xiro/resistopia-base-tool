@@ -65,7 +65,7 @@ AppAsset::register($this);
     $adminItems = [];
     Access::addNavItem(['label' => 'Sections', 'url' => ['section/index']], $adminItems);
     Access::addNavItem(['label' => 'Citizenships', 'url' => ['citizenship/index']], $adminItems);
-    Access::addNavItem(['label' => 'Companies', 'url' => ['company/index']], $adminItems);
+    Access::addNavItem(['label' => 'Resistance Cells', 'url' => ['resistance-cell/index']], $adminItems);
     Access::addNavItem(['label' => 'Eye Colors', 'url' => ['eye-color/index']], $adminItems);
     Access::addNavItem(['label' => 'Ranks', 'url' => ['rank/index']], $adminItems);
     Access::addNavItem(['label' => 'Special Functions', 'url' => ['special-function/index']], $adminItems);

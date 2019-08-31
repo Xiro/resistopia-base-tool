@@ -121,11 +121,11 @@ use mate\yii\widgets\SelectData;
             ])->label('Team') ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'company_id', [
-                'labelOptions' => ['class' => ($model->company_id ? 'move' : '')]
+            <?= $form->field($model, 'resistance_cell_id', [
+                'labelOptions' => ['class' => ($model->resistance_cell_id ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\Company::class),
+                'data'          => SelectData::fromModel(app\models\ResistanceCell::class),
                 'options'       => [
                     'placeholder' => '',
                 ],
@@ -133,7 +133,7 @@ use mate\yii\widgets\SelectData;
                     'allowClear' => true,
                     'tags'       => true,
                 ],
-            ])->label('Company') ?>
+            ])->label('Resistance Cell') ?>
         </div>
     </div>
 
