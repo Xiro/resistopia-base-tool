@@ -34,8 +34,8 @@ class StaffForm extends Staff
 
     public function validateITDate($attribute)
     {
-        $minDate = strtotime("2021-04-10");
-        $maxDate = strtotime("2021-12-31");
+        $minDate = strtotime("2022-02-26");
+        $maxDate = strtotime("2022-09-15");
         $date = strtotime($this->getAttribute($attribute));
         if($date < $minDate) {
             $this->addError($attribute, "Date must be after " . date("d.m.Y", $minDate));

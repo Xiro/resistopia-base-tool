@@ -36,6 +36,7 @@ use yii\db\ActiveRecord;
  * @property bool $isBlocked
  * @property string $name
  * @property string $nameWithSid
+ * @property string $fullSID
  * @property integer $currentMediFoam
  * @property integer $securityLevel
  *
@@ -80,7 +81,7 @@ class Staff extends ActiveRecord
     public function rules()
     {
         return [
-            [['sid', 'forename', 'surname', 'gender', 'date_of_birth', 'access_key_id', 'rank_id'], 'required'],
+            [['sid', 'forename', 'surname', 'gender', 'date_of_birth', 'access_key_id'], 'required'],
             [['gender'], 'string'],
             [['date_of_birth', 'registered', 'created', 'updated'], 'safe'],
             [['height', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'section_id', 'special_function_id', 'eye_color_id', 'blood_type_id'], 'integer'],
@@ -220,6 +221,20 @@ class Staff extends ActiveRecord
     public function getNameWithSid()
     {
         return $this->name . ' (' . $this->sid . ')';
+    }
+
+    public function getFullSID()
+    {
+        $cell = $this->resistanceCell;
+        if(!$cell || !$this->registered) {
+            return null;
+        }
+        $parts = [];
+        $parts[] = ($cell->latitude > 0 ? 1 : 0) . sprintf('%05d',round($cell->latitude, 2) * 100);
+        $parts[] = ($cell->longitude > 0 ? 1 : 0) . sprintf('%05d',round($cell->longitude, 2) * 100);
+        $parts[] = sprintf('%04d', round((strtotime($this->registered) - strtotime("2022-01-03")) / 60 / 60 / 24));
+        $parts[] = $this->sid;
+        return implode(".", $parts);
     }
 
     public function getCurrentMediFoam()

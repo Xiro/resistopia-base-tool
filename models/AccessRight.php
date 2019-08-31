@@ -64,6 +64,18 @@ class AccessRight extends ActiveRecord
         return (bool) ($accessKey & (1 << $this->id - 1));
     }
 
+    public function delete()
+    {
+
+        Yii::$app->db->createCommand("DELETE FROM access_key_right WHERE access_right_id = :access_right_id")
+            ->bindValue("access_right_id", $this->id)
+            ->execute();
+        Yii::$app->db->createCommand("DELETE FROM access_mask_right WHERE access_right_id = :access_right_id")
+            ->bindValue("access_right_id", $this->id)
+            ->execute();
+        return parent::delete();
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

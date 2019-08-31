@@ -147,6 +147,12 @@ class m190831_080854_base_category_to_section extends Migration
             $addSection->access_mask_id = $sectionMask->id;
             $addSection->save();
         }
+
+        $rights = \app\models\AccessRight::find()->where(['LIKE', 'key', 'base-category'])->all();
+        foreach ($rights as $right) {
+            $right->delete();
+        }
+        \app\models\AccessCategory::findOne(['name' => 'Base Categories'])->delete();
     }
 
     /**

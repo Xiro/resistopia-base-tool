@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     $personalInfo = [];
     $personalInfo["name"] = $model->getName();
-    $personalInfo["SID"] = $model->sid;
+    $personalInfo["SID"] = $model->fullSID;
 
     $personalInfo["Gender"] = $model->gender ? $model->gender : "n/a";
     $personalInfo["Height"] = $model->height ? $model->height . " cm" : "n/a";

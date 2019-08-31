@@ -24,6 +24,12 @@ class m190831_144727_company_to_resistance_cell extends Migration
                 
             DROP TABLE `company`;
         ");
+
+        $rights = \app\models\AccessRight::find()->where(['LIKE', 'key', 'company'])->all();
+        foreach ($rights as $right) {
+            $right->delete();
+        }
+        \app\models\AccessCategory::findOne(['name' => 'Companies'])->delete();
     }
 
     /**
