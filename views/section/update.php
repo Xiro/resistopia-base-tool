@@ -6,7 +6,7 @@ use app\helpers\Html;
 /* @var $model app\models\Section */
 
 $this->title = 'Update section';
-$this->params['breadcrumbs'][] = ['label' => 'Base Categories', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Sections', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

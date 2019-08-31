@@ -307,7 +307,7 @@ INSERT IGNORE INTO `access_category` (`id`, `name`, `order`) VALUES
 	(9, 'Access Masks', 9),
 	(10, 'Access Rights', 12),
 	(11, 'Security Areas', 10),
-	(12, 'Base Categories', 13),
+	(12, 'Sections', 13),
 	(13, 'Citizenships', 14),
 	(14, 'Companies', 15),
 	(15, 'Eye Colors', 16),

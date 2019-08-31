@@ -38,9 +38,9 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?= $model->rank_id ? $model->rank->short_name : null ?>
             </td>
         <?php endif; ?>
-        <?php if (!in_array("base_category", $exclude)): ?>
-            <td class="base_category">
-                <?= $model->base_category_id ? $model->section->name : null ?>
+        <?php if (!in_array("section", $exclude)): ?>
+            <td class="section">
+                <?= $model->section_id ? $model->section->name : null ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("special_function", $exclude)): ?>

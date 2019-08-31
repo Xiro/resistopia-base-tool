@@ -23,9 +23,9 @@ class m180906_152057_add_base_category_keys extends Migration
             ADD COLUMN `key` VARCHAR(50) NOT NULL AFTER `name`;
         ");
 
-        /** @var Section[] $baseCategories */
-        $baseCategories = Section::find()->all();
-        foreach ($baseCategories as $baseCategory) {
+        /** @var Section[] $sections */
+        $sections = Section::find()->all();
+        foreach ($sections as $baseCategory) {
             $baseCategory->key = Inflector::camel2id(Inflector::camelize($baseCategory->name));
             $baseCategory->save();
         }

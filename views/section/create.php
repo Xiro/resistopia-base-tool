@@ -7,7 +7,7 @@ use app\helpers\Html;
 /* @var $model app\models\Section */
 
 $this->title = 'Create section';
-$this->params['breadcrumbs'][] = ['label' => 'Base Categories', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Sections', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="section-create">

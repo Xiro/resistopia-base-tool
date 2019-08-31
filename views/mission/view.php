@@ -151,7 +151,7 @@ $this->params['breadcrumbs'][] = $this->title;
             "exclude"      => [
                 "action-delete",
                 "status_in_base",
-                'base_category'
+                'section'
             ]
         ]) ?>
 

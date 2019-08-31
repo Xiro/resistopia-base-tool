@@ -195,8 +195,8 @@ $affiliationInfoHelp = [
             ])->label('Special Function') ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($staff, 'base_category_id', [
-                'labelOptions' => ['class' => ($staff->base_category_id ? 'move' : '')]
+            <?= $form->field($staff, 'section_id', [
+                'labelOptions' => ['class' => ($staff->section_id ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
                 'data'          => SelectData::fromModel(app\models\Section::class),

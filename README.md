@@ -74,6 +74,6 @@ GET-Parameters:
 No parameters
 api/base-category/keys is deprecated and will be removed soon!
 
-**Response**: Array of all base categories. 
+**Response**: Array of all sections. 
 Structure BaseCategory::name => BaseCategory::key
 

@@ -36,8 +36,8 @@ class SectionController extends Controller
 
     public function actionKeys()
     {
-        $baseCategories = Section::find()->all();
-        $keyList = ArrayHelper::map($baseCategories, 'name', 'key');
+        $sections = Section::find()->all();
+        $keyList = ArrayHelper::map($sections, 'name', 'key');
         return JsonResponse::success('List created', ['data' => $keyList]);
     }
 

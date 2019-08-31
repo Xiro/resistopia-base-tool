@@ -6,7 +6,7 @@ use app\helpers\Html;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $searchModel app\models\search\SectionSearch */
 
-$this->title = 'Base Categories';
+$this->title = 'Sections';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

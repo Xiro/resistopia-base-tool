@@ -63,7 +63,7 @@ AppAsset::register($this);
     $navItems = [];
 
     $adminItems = [];
-    Access::addNavItem(['label' => 'Base Categories', 'url' => ['section/index']], $adminItems);
+    Access::addNavItem(['label' => 'Sections', 'url' => ['section/index']], $adminItems);
     Access::addNavItem(['label' => 'Citizenships', 'url' => ['citizenship/index']], $adminItems);
     Access::addNavItem(['label' => 'Companies', 'url' => ['company/index']], $adminItems);
     Access::addNavItem(['label' => 'Eye Colors', 'url' => ['eye-color/index']], $adminItems);
