@@ -25,7 +25,7 @@ class StaffSearch extends Staff
     {
         return [
             [['sid', 'forename', 'surname', 'nickname', 'name', 'gender', 'date_of_birth', 'profession', 'callsign', 'created', 'updated'], 'safe'],
-            [['height', 'status_it', 'status_be13', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'base_category_id', 'special_function_id', 'company_id', 'citizenship_id', 'eye_color_id', 'team_id'], 'integer'],
+            [['height', 'status_it', 'status_be13', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'section_id', 'special_function_id', 'company_id', 'citizenship_id', 'eye_color_id', 'team_id'], 'integer'],
         ];
     }
 
@@ -49,7 +49,7 @@ class StaffSearch extends Staff
     {
         $query = Staff::find();
         $query->joinWith("team");
-        $query->joinWith("baseCategory");
+        $query->joinWith("section");
         $query->joinWith("specialFunction");
 
         // add conditions that should always apply here
@@ -76,7 +76,7 @@ class StaffSearch extends Staff
             'squat_number'        => $this->squat_number,
             'access_key_id'       => $this->access_key_id,
             'rank_id'             => $this->rank_id,
-            'base_category_id'    => $this->base_category_id,
+            'section_id'    => $this->section_id,
             'special_function_id' => $this->special_function_id,
             'company_id'          => $this->company_id,
             'citizenship_id'      => $this->citizenship_id,

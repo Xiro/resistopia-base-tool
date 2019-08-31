@@ -3,13 +3,13 @@
 use app\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\BaseCategory */
+/* @var $model app\models\Section */
 
-$this->title = 'Delete Base Category';
+$this->title = 'Delete section';
 $this->params['breadcrumbs'][] = ['label' => 'Base Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="base-category-confirm-delete">
+<div class="section-confirm-delete">
 
     <div class="container-fluid padding-large-vertical">
 

@@ -69,9 +69,10 @@ GET-Parameters:
 **Response**: Boolean if the user is permitted a specific action or not
 
 
-#### api/base-category/keys
+#### api/section/keys
 
 No parameters
+api/base-category/keys is deprecated and will be removed soon!
 
 **Response**: Array of all base categories. 
 Structure BaseCategory::name => BaseCategory::key

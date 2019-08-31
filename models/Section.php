@@ -7,7 +7,7 @@ use yii\db\ActiveRecord;
 use yii\helpers\Inflector;
 
 /**
- * This is the model class for table "base_category".
+ * This is the model class for table "section".
  *
  * @property integer $id
  * @property string $name
@@ -18,14 +18,14 @@ use yii\helpers\Inflector;
  * @property AccessMask $accessMask
  * @property Staff[] $staff
  */
-class BaseCategory extends ActiveRecord
+class Section extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'base_category';
+        return 'section';
     }
 
     /**
@@ -69,7 +69,7 @@ class BaseCategory extends ActiveRecord
     public function delete()
     {
         foreach ($this->staff as $staff) {
-            $staff->unlink('baseCategory', $this);
+            $staff->unlink('section', $this);
         }
         return parent::delete();
     }
@@ -87,6 +87,6 @@ class BaseCategory extends ActiveRecord
      */
     public function getStaff()
     {
-        return $this->hasMany(Staff::className(), ['base_category_id' => 'id']);
+        return $this->hasMany(Staff::className(), ['section_id' => 'id']);
     }
 }

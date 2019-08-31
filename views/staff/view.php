@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ) : "None";
     $affiliations["Company"] = $model->company_id ? $model->company->name : "n/a";
 
-    $affiliations["Category"] = $model->base_category_id ? $model->baseCategory->name : "n/a";
+    $affiliations["Category"] = $model->section_id ? $model->section->name : "n/a";
     $affiliations["Rank"] = $model->rank_id ? $model->rank->name : "n/a";
 
     $affiliations["Speciality"] = $model->special_function_id ? $model->specialFunction->name : "n/a";

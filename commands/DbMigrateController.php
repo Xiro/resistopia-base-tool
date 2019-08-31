@@ -8,7 +8,7 @@
 namespace app\commands;
 
 use app\models\AccessKey;
-use app\models\BaseCategory;
+use app\models\Section;
 use app\models\BloodType;
 use app\models\Citizenship;
 use app\models\Company;
@@ -53,7 +53,7 @@ class DbMigrateController extends Controller
             "BasecategoryID",
             "base_category",
             "base_category_id",
-            BaseCategory::class,
+            Section::class,
             null
         ],
         "eye_color"        => [

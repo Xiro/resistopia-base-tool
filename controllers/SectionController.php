@@ -4,17 +4,17 @@ namespace app\controllers;
 
 use app\components\AccessRule;
 use Yii;
-use app\models\BaseCategory;
-use app\models\search\BaseCategorySearch;
+use app\models\Section;
+use app\models\search\SectionSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * BaseCategoryController implements the CRUD actions for BaseCategory model.
+ * SectionController implements the CRUD actions for Section model.
  */
-class BaseCategoryController extends Controller
+class SectionController extends Controller
 {
     /**
      * @inheritdoc
@@ -44,12 +44,12 @@ class BaseCategoryController extends Controller
     }
 
     /**
-     * Lists all BaseCategory models.
+     * Lists all Section models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new BaseCategorySearch();
+        $searchModel = new SectionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->setSort([
             'defaultOrder' => ['order' => SORT_ASC]
@@ -67,7 +67,7 @@ class BaseCategoryController extends Controller
      */
     public function actionSearch()
     {
-        $searchModel = new BaseCategorySearch();
+        $searchModel = new SectionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderPartial('_table-body', [
@@ -76,7 +76,7 @@ class BaseCategoryController extends Controller
     }
 
     /**
-     * Displays a single BaseCategory model.
+     * Displays a single Section model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -88,27 +88,27 @@ class BaseCategoryController extends Controller
     }
 
     /**
-     * Creates a new BaseCategory model.
+     * Creates a new Section model.
      * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new BaseCategory();
+        $model = new Section();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
 
         if($model->order === null) {
-            $model->order = BaseCategory::find()->count() + 1;
+            $model->order = Section::find()->count() + 1;
         }
 
         return $this->render('create', ["model" => $model]);
     }
 
     /**
-     * Updates an existing BaseCategory model.
+     * Updates an existing Section model.
      * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -150,7 +150,7 @@ class BaseCategoryController extends Controller
     }
 
     /**
-     * Deletes an existing BaseCategory model.
+     * Deletes an existing Section model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -164,7 +164,7 @@ class BaseCategoryController extends Controller
     }
 
     /**
-     * Deletes an existing BaseCategory model.
+     * Deletes an existing Section model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -178,15 +178,15 @@ class BaseCategoryController extends Controller
     }
 
     /**
-     * Finds the BaseCategory model based on its primary key value.
+     * Finds the Section model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return BaseCategory the loaded model
+     * @return Section the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = BaseCategory::findOne($id)) !== null) {
+        if (($model = Section::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

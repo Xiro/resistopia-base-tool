@@ -4,13 +4,13 @@ use app\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel app\models\search\BaseCategorySearch */
+/* @var $searchModel app\models\search\SectionSearch */
 
 $this->title = 'Base Categories';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="base-category-index">
+<div class="section-index">
     <div class="container">
 
         <h1>
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <span class="heading-btn-group pull-right">
             <?= Html::a(
-                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Base Category',
+                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create section',
                 ["create"],
                 ["class" => "btn btn-default"]
             ); ?>

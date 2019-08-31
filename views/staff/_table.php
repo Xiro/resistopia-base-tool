@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use app\models\search\StaffSearch;
 use kartik\select2\Select2;
 use mate\yii\assets\TableSearchAsset;
-use app\models\BaseCategory;
+use app\models\Section;
 use app\models\SpecialFunction;
 use app\models\Team;
 use app\models\Rank;
@@ -96,14 +96,14 @@ if ($searchModel) {
                     ]) ?>
                 </th>
             <?php endif; ?>
-            <?php if (!in_array("base_category", $exclude)): ?>
-                <?php $excludeSearchParams[] = "base_category"; ?>
-                <th class="base_category">
-                    <?= $form->field($model, 'base_category_id', [
-                        'labelOptions' => ['class' => ($model->base_category_id ? "move" : "")]
+            <?php if (!in_array("section", $exclude)): ?>
+                <?php $excludeSearchParams[] = "section"; ?>
+                <th class="section">
+                    <?= $form->field($model, 'section_id', [
+                        'labelOptions' => ['class' => ($model->section_id ? "move" : "")]
                     ])->widget(Select2::class, [
                         'showToggleAll' => false,
-                        'data'          => $selectData->fromModel(BaseCategory::class),
+                        'data'          => $selectData->fromModel(Section::class),
                         'options'       => [
                             'placeholder' => ''
                         ],
@@ -168,8 +168,8 @@ if ($searchModel) {
             <?php if (!in_array("rank", $exclude)): ?>
                 <th class="rank"><?= 'Rank' ?></th>
             <?php endif; ?>
-            <?php if (!in_array("base_category", $exclude)): ?>
-                <th class="base_category"><?= 'Base Category' ?></th>
+            <?php if (!in_array("section", $exclude)): ?>
+                <th class="section"><?= 'section' ?></th>
             <?php endif; ?>
             <?php if (!in_array("special_function", $exclude)): ?>
                 <th class="special_function"><?= 'Special Function' ?></th>

@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
  * @property array $accessList
  *
  * @property AccessRight[] $accessRights
- * @property BaseCategory[] $baseCategories
+ * @property Section[] $baseCategories
  * @property Rank[] $ranks
  * @property AccessKey[] $accessKeys
  */
@@ -72,7 +72,7 @@ class AccessMask extends ActiveRecord
      */
     public function getBaseCategories()
     {
-        return $this->hasMany(BaseCategory::className(), ['access_mask_id' => 'id']);
+        return $this->hasMany(Section::className(), ['access_mask_id' => 'id']);
     }
 
     /**

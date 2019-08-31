@@ -6,11 +6,11 @@ use kartik\select2\Select2;
 use mate\yii\widgets\SelectData;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\BaseCategory */
+/* @var $model app\models\Section */
 /* @var $form yii\bootstrap\ActiveForm */
 ?>
 
-<div class="base-category-form">
+<div class="section-form">
 
     <?php $form = ActiveForm::begin([
         "options"     => ["class" => "animated-label"],

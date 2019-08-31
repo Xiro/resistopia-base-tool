@@ -1,7 +1,7 @@
 <?php
 
 use yii\db\Migration;
-use app\models\BaseCategory;
+use app\models\Section;
 use yii\helpers\Inflector;
 
 /**
@@ -23,8 +23,8 @@ class m180906_152057_add_base_category_keys extends Migration
             ADD COLUMN `key` VARCHAR(50) NOT NULL AFTER `name`;
         ");
 
-        /** @var BaseCategory[] $baseCategories */
-        $baseCategories = BaseCategory::find()->all();
+        /** @var Section[] $baseCategories */
+        $baseCategories = Section::find()->all();
         foreach ($baseCategories as $baseCategory) {
             $baseCategory->key = Inflector::camel2id(Inflector::camelize($baseCategory->name));
             $baseCategory->save();

@@ -4,13 +4,13 @@ use app\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\BaseCategory */
+/* @var $model app\models\Section */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Base Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="base-category-view">
+<div class="section-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

@@ -12,7 +12,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
 <tbody data-page="<?= $pagination->page + 1 ?>"
        data-page-size="<?= $pagination->pageSize ?>"
        data-page-count="<?= $pagination->pageCount ?>">
-<?php /** @var $model \app\models\BaseCategory */ ?>
+<?php /** @var $model \app\models\Section */ ?>
 <?php foreach ($dataProvider->getModels() as $model): ?>
     <tr class="ui-sortable-handle" data-key="<?= $model->id ?>">
         <?php if (!in_array("order", $exclude)): ?>
@@ -30,20 +30,20 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?php /*if (!in_array("action-view", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::eye_open(),
-                        ['base-category/view', 'id' => $model->id],
+                        ['section/view', 'id' => $model->id],
                         ["class" => "ajax-dialog", "data-size" => "lg"]
                     ) ?>
                 <?php endif;*/ ?>
                 <?php if (!in_array("action-update", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::pencil(),
-                        ['base-category/update', 'id' => $model->id]
+                        ['section/update', 'id' => $model->id]
                     ) ?>
                 <?php endif; ?>
                 <?php if (!in_array("action-delete", $exclude)): ?>
                     <?= Html::a(
                         Glyphicon::trash(),
-                        ['base-category/confirm-delete', 'id' => $model->id],
+                        ['section/confirm-delete', 'id' => $model->id],
                         ["class" => "ajax-dialog", "data-size" => "sm"]
                     ) ?>
                 <?php endif; ?>

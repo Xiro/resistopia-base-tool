@@ -153,18 +153,18 @@ use mate\yii\widgets\SelectData;
             ])->label('Special Function') ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'base_category_id', [
-                'labelOptions' => ['class' => ($model->base_category_id ? 'move' : '')]
+            <?= $form->field($model, 'section_id', [
+                'labelOptions' => ['class' => ($model->section_id ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\BaseCategory::class),
+                'data'          => SelectData::fromModel(app\models\Section::class),
                 'options'       => [
                     'placeholder' => '',
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label('Base Category') ?>
+            ])->label('section') ?>
         </div>
     </div>
 

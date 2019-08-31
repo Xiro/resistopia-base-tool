@@ -58,8 +58,8 @@ class StaffForm extends Staff
     protected function getImpliedAccessMasks()
     {
         $accessMasks = [];
-        if ($this->base_category_id && $this->baseCategory->accessMask) {
-            $accessMasks[] = $this->baseCategory->accessMask;
+        if ($this->section_id && $this->section->accessMask) {
+            $accessMasks[] = $this->section->accessMask;
         }
         if ($this->rank_id && $this->rank->accessMask) {
             $accessMasks[] = $this->rank->accessMask;

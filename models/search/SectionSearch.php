@@ -5,12 +5,12 @@ namespace app\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\BaseCategory;
+use app\models\Section;
 
 /**
- * BaseCategorySearch represents the model behind the search form about `app\models\BaseCategory`.
+ * SectionSearch represents the model behind the search form about `app\models\Section`.
  */
-class BaseCategorySearch extends BaseCategory
+class SectionSearch extends Section
 {
     use AdvancedSearchTrait;
 
@@ -43,7 +43,7 @@ class BaseCategorySearch extends BaseCategory
      */
     public function search($params)
     {
-        $query = BaseCategory::find();
+        $query = Section::find();
 
         // add conditions that should always apply here
 

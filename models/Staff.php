@@ -25,7 +25,7 @@ use yii\db\ActiveRecord;
  * @property integer $squat_number
  * @property integer $access_key_id
  * @property integer $rank_id
- * @property integer $base_category_id
+ * @property integer $section_id
  * @property integer $special_function_id
  * @property integer $company_id
  * @property integer $citizenship_id
@@ -51,7 +51,7 @@ use yii\db\ActiveRecord;
  * @property Mission[] $missions1
  * @property MissionStatusHistory[] $missionStatusHistories
  * @property AccessKey $accessKey
- * @property BaseCategory $baseCategory
+ * @property Section $section
  * @property BloodType $bloodType
  * @property Citizenship $citizenship
  * @property Company $company
@@ -84,14 +84,14 @@ class Staff extends ActiveRecord
             [['sid', 'forename', 'surname', 'gender', 'date_of_birth', 'access_key_id', 'rank_id'], 'required'],
             [['gender'], 'string'],
             [['date_of_birth', 'created', 'updated'], 'safe'],
-            [['height', 'status_it', 'status_be13', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'base_category_id', 'special_function_id', 'eye_color_id', 'blood_type_id'], 'integer'],
+            [['height', 'status_it', 'status_be13', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'section_id', 'special_function_id', 'eye_color_id', 'blood_type_id'], 'integer'],
             [['sid'], 'string', 'max' => 8],
             [['forename', 'surname', 'nickname', 'profession'], 'string', 'max' => 128],
             [['callsign'], 'string', 'max' => 5],
             [['sid'], 'unique'],
             [['callsign'], 'unique'],
             [['access_key_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessKey::className(), 'targetAttribute' => ['access_key_id' => 'id']],
-            [['base_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => BaseCategory::className(), 'targetAttribute' => ['base_category_id' => 'id']],
+            [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => Section::className(), 'targetAttribute' => ['section_id' => 'id']],
             [['blood_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => BloodType::className(), 'targetAttribute' => ['blood_type_id' => 'id']],
             [['citizenship_id'], 'exist', 'skipOnError' => true, 'targetClass' => Citizenship::className(), 'targetAttribute' => ['citizenship_id' => 'id']],
             [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'id']],
@@ -124,7 +124,7 @@ class Staff extends ActiveRecord
             'squat_number' => 'Squat Number',
             'access_key_id' => 'Access Key',
             'rank_id' => 'Rank',
-            'base_category_id' => 'Base Category',
+            'section_id' => 'section',
             'special_function_id' => 'Special Function',
             'company_id' => 'Company',
             'citizenship_id' => 'Citizenship',
@@ -162,7 +162,7 @@ class Staff extends ActiveRecord
      * @property Mission[] $missions1
      * @property MissionStatusHistory[] $missionStatusHistories
      * @property AccessKey $accessKey
-     * @property BaseCategory $baseCategory
+     * @property Section $section
      * @property Citizenship $citizenship
      * @property Company $company
      * @property EyeColor $eyeColor
@@ -345,9 +345,9 @@ class Staff extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBaseCategory()
+    public function getSection()
     {
-        return $this->hasOne(BaseCategory::className(), ['id' => 'base_category_id']);
+        return $this->hasOne(Section::className(), ['id' => 'section_id']);
     }
 
     /**

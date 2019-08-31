@@ -40,7 +40,7 @@ $exclude = !isset($exclude) ? array() : $exclude;
         <?php endif; ?>
         <?php if (!in_array("base_category", $exclude)): ?>
             <td class="base_category">
-                <?= $model->base_category_id ? $model->baseCategory->name : null ?>
+                <?= $model->base_category_id ? $model->section->name : null ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("special_function", $exclude)): ?>

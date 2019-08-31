@@ -5,7 +5,7 @@ namespace app\controllers;
 use app\components\AccessRule;
 use app\models\AccessRight;
 use app\models\AccessCategory;
-use app\models\BaseCategory;
+use app\models\Section;
 use app\models\Staff;
 use mate\yii\components\SelectData;
 use Yii;

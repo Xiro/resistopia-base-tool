@@ -133,7 +133,7 @@ $personalInfoHelp = [
 <?php
 $affiliationInfoHelp = [
     "Company:"       => "Wenn du in der Base startest, wähle RGME 07 BE-XIII aus. Wenn du IT anreist, wähle Zivilist aus",
-    "Base Category:" => "Das Spiel in einer Basiskategorie muss OT abgesprochen sein",
+    "section:" => "Das Spiel in einer Sektion muss OT abgesprochen sein",
     "Rank:"          => "Wenn nicht IT erspielt, wähle alles bis Fighter Mark 2 aus. Als Teamleiter wähle Corporal oder Sergeant aus",
 ];
 ?>
@@ -199,14 +199,14 @@ $affiliationInfoHelp = [
                 'labelOptions' => ['class' => ($staff->base_category_id ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\BaseCategory::class),
+                'data'          => SelectData::fromModel(app\models\Section::class),
                 'options'       => [
                     'placeholder' => '',
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label('Base Category') ?>
+            ])->label('section') ?>
         </div>
     </div>
 

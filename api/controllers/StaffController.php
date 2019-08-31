@@ -39,7 +39,7 @@ class StaffController extends Controller
             ->where(['sid' => $sid])
             ->joinWith([
                 'missionBlocks',
-                'baseCategory',
+                'section',
                 'bloodType',
                 'citizenship',
                 'company',

@@ -6,7 +6,7 @@ use app\models\search\StaffSearch;
 use kartik\select2\Select2;
 use mate\yii\widgets\ValMap;
 use mate\yii\assets\TableSearchAsset;
-use app\models\BaseCategory;
+use app\models\Section;
 use app\models\SpecialFunction;
 use app\models\Team;
 use mate\yii\widgets\Glyphicon;
