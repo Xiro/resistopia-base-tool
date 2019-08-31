@@ -206,20 +206,6 @@ use mate\yii\widgets\SelectData;
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'status_be13')->checkbox([
-                'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
-            ])->label('Currently serving in in BE13') ?>
-
-            <?= $form->field($model, 'status_alive')->checkbox([
-                'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
-            ])->label('Is Alive') ?>
-
-            <?= $form->field($model, 'status_it')->checkbox([
-                'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
-            ])->label('Is IT') ?>
-
-        </div>
-        <div class="col-sm-6">
             <?= $form->field($model, 'callsign')->textInput([
                     'maxlength' => true,
                     'class'     => 'form-control mask-callsign'
@@ -242,6 +228,13 @@ use mate\yii\widgets\SelectData;
                     ],
                 ])->label('Access Masks') ?>
             <?php endif; ?>
+        </div>
+        <div class="col-sm-6">
+
+            <?= $form->field($model, 'status_alive')->checkbox([
+                'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
+            ])->label('Is Alive') ?>
+
         </div>
     </div>
 

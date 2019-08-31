@@ -266,17 +266,9 @@ $systemInfoHelp = [
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($staff, 'status_be13')->checkbox([
-                'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
-            ])->label('Currently serving in in BE13') ?>
-
             <?= $form->field($staff, 'status_alive')->checkbox([
                 'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
             ])->label('Is Alive') ?>
-
-            <?= $form->field($staff, 'status_it')->checkbox([
-                'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
-            ])->label('Is IT') ?>
         </div>
         <div class="col-sm-6">
             <?= $form->field($staff, 'callsign')->textInput([

@@ -18,8 +18,6 @@ use yii\db\ActiveRecord;
  * @property string $profession
  * @property string $callsign
  * @property integer $height
- * @property integer $status_it
- * @property integer $status_be13
  * @property integer $status_alive
  * @property integer $status_in_base
  * @property integer $squat_number
@@ -84,7 +82,7 @@ class Staff extends ActiveRecord
             [['sid', 'forename', 'surname', 'gender', 'date_of_birth', 'access_key_id', 'rank_id'], 'required'],
             [['gender'], 'string'],
             [['date_of_birth', 'created', 'updated'], 'safe'],
-            [['height', 'status_it', 'status_be13', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'section_id', 'special_function_id', 'eye_color_id', 'blood_type_id'], 'integer'],
+            [['height', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'section_id', 'special_function_id', 'eye_color_id', 'blood_type_id'], 'integer'],
             [['sid'], 'string', 'max' => 8],
             [['forename', 'surname', 'nickname', 'profession'], 'string', 'max' => 128],
             [['callsign'], 'string', 'max' => 5],
@@ -117,8 +115,6 @@ class Staff extends ActiveRecord
             'profession' => 'Profession',
             'callsign' => 'Callsign',
             'height' => 'Height (cm)',
-            'status_it' => 'Status IT',
-            'status_be13' => 'Status BE13',
             'status_alive' => 'Status Alive',
             'status_in_base' => 'Status In Base',
             'squat_number' => 'Squat Number',
