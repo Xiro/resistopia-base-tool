@@ -1,6 +1,6 @@
 <?php
 
-use app\helpers\Html;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -18,9 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <span class="heading-btn-group pull-right">
             <?= Html::a(
-                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create section',
+                "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Section',
                 ["create"],
-                ["class" => "btn btn-default"]
+                ["class" => "btn btn-success"]
             ); ?>
             </span>
         </h1>

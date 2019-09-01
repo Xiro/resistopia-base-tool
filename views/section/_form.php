@@ -1,9 +1,9 @@
 <?php
 
-use app\helpers\Html;
+use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\select2\Select2;
-use mate\yii\widgets\SelectData;
+use mate\yii\widgets\ValMap;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Section */
@@ -19,14 +19,33 @@ use mate\yii\widgets\SelectData;
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'section')->textInput(['maxlength' => true]) ?>
         </div>
+        <div class="col-sm-6">
+            <?= $form->field($model, 'department')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($model, 'group')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-sm-6">
+            <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-sm-6">
             <?= $form->field($model, 'access_mask_id', [
                 'labelOptions' => ['class' => ($model->access_mask_id ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\AccessMask::class),
+                'data'          => ValMap::model(
+                         app\models\AccessMask::class,
+                         'id', 
+                         'name'
+                     ),
                 'options'       => [
                     'placeholder' => '',
                 ],
@@ -34,6 +53,9 @@ use mate\yii\widgets\SelectData;
                     'allowClear' => true,
                 ],
             ])->label('Access Mask') ?>
+        </div>
+        <div class="col-sm-6">
+            <?= $form->field($model, 'order')->textInput() ?>
         </div>
     </div>
 
@@ -43,8 +65,6 @@ use mate\yii\widgets\SelectData;
             ["class" => $model->isNewRecord ? "btn btn-success" : "btn btn-primary"]
         ) ?>
     </div>
-
-    <?= $form->field($model, 'order')->hiddenInput()->label(false) ?>
 
     <?php ActiveForm::end(); ?>
 

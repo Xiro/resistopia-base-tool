@@ -47,16 +47,29 @@ if ($searchModel) {
                 <?php $excludeSearchParams[] = "order"; ?>
                 <th class="order"></th>
             <?php endif; ?>
-            <?php if (!in_array("name", $exclude)): ?>
-                <?php $excludeSearchParams[] = "name"; ?>
-                <th class="name">
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?php if (!in_array("section", $exclude)): ?>
+                <?php $excludeSearchParams[] = "section"; ?>
+                <th class="section">
+                    <?= $form->field($model, 'section')->textInput(['maxlength' => true]) ?>
+                </th>
+            <?php endif; ?>
+            <?php if (!in_array("department", $exclude)): ?>
+                <?php $excludeSearchParams[] = "department"; ?>
+                <th class="department">
+                    <?= $form->field($model, 'department')->textInput(['maxlength' => true]) ?>
+                </th>
+            <?php endif; ?>
+            <?php if (!in_array("group", $exclude)): ?>
+                <?php $excludeSearchParams[] = "group"; ?>
+                <th class="group">
+                    <?= $form->field($model, 'group')->textInput(['maxlength' => true]) ?>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th>
-                    <input type="hidden" name="page" value="<?=  $dataProvider->pagination->page ?>">
-                    <input type="hidden" name="per-page" value="<?=  $dataProvider->pagination->pageSize ?>">
+                    <?php $pagination = $dataProvider->pagination; ?>
+                    <input type="hidden" name="page" value="<?= $pagination ? $pagination->page : 0 ?>">
+                    <input type="hidden" name="per-page" value="<?= $pagination ? $pagination->pageSize : 0 ?>">
                     <?php
                     $hiddenAttributes = $searchModel->getAttributes(null, $excludeSearchParams);
                     foreach ($hiddenAttributes as $name => $value) {
@@ -73,8 +86,14 @@ if ($searchModel) {
                 <?php $excludeSearchParams[] = "order"; ?>
                 <th class="order"></th>
             <?php endif; ?>
-            <?php if (!in_array("name", $exclude)): ?>
-                <th class="name"><?= 'Name' ?></th>
+            <?php if (!in_array("section", $exclude)): ?>
+                <th class="section"><?= 'Section' ?></th>
+            <?php endif; ?>
+            <?php if (!in_array("department", $exclude)): ?>
+                <th class="department"><?= 'Department' ?></th>
+            <?php endif; ?>
+            <?php if (!in_array("group", $exclude)): ?>
+                <th class="group"><?= 'Group' ?></th>
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th></th>

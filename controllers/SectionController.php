@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\components\AccessRule;
 use Yii;
 use app\models\Section;
 use app\models\search\SectionSearch;
@@ -24,13 +23,10 @@ class SectionController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'ruleConfig' => [
-                    'class' => AccessRule::class
-                ],
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['§'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],

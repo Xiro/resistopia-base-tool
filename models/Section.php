@@ -37,7 +37,7 @@ class Section extends ActiveRecord
     public function rules()
     {
         return [
-            [['section', 'department', 'group', 'key'], 'required'],
+            [['section', 'group', 'key'], 'required'],
             [['access_mask_id', 'order'], 'integer'],
             [['section', 'department', 'group', 'key'], 'string', 'max' => 50],
             [['access_mask_id'], 'exist', 'skipOnError' => true, 'targetClass' => AccessMask::className(), 'targetAttribute' => ['access_mask_id' => 'id']],
@@ -72,7 +72,7 @@ class Section extends ActiveRecord
 
     public function getName()
     {
-        return $this->section . " - " . $this->department;
+        return $this->section . ($this->department ?  " - " . $this->department : "");
     }
 
     /**

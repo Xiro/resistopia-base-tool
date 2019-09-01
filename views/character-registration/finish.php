@@ -14,6 +14,8 @@ $this->title = 'Your SID: ' . $model->sid;
         <div class="container">
             <h1><?= $this->title ?></h1>
 
+            <p class="text-large">Full SID: <?= $model->fullSID ?></p>
+
             <p class="text-large">
                 <b>Important!</b><br> Remember your SID <?= $model->sid ?>, you will need it during the event or if you want to make more changes before the event.<br>
                 If you want to change any information during the event, visit the CIC.

@@ -1,12 +1,12 @@
 <?php
 
-use app\helpers\Html;
+use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Section */
 
-$this->title = $model->name;
+$this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Sections', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -18,7 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model'      => $model,
         'attributes' => [
             'id',
-            'name',
+            'section',
+            'department',
+            'group',
+            'key',
             'access_mask_id',
             'order',
         ],

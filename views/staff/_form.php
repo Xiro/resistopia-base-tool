@@ -121,24 +121,6 @@ use mate\yii\widgets\SelectData;
             ])->label('Team') ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'resistance_cell_id', [
-                'labelOptions' => ['class' => ($model->resistance_cell_id ? 'move' : '')]
-            ])->widget(Select2::class, [
-                'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\ResistanceCell::class),
-                'options'       => [
-                    'placeholder' => '',
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                    'tags'       => true,
-                ],
-            ])->label('Resistance Cell') ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
             <?= $form->field($model, 'special_function_id', [
                 'labelOptions' => ['class' => ($model->special_function_id ? 'move' : '')]
             ])->widget(Select2::class, [
@@ -152,6 +134,9 @@ use mate\yii\widgets\SelectData;
                 ],
             ])->label('Special Function') ?>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-sm-6">
             <?= $form->field($model, 'section_id', [
                 'labelOptions' => ['class' => ($model->section_id ? 'move' : '')]
@@ -165,23 +150,6 @@ use mate\yii\widgets\SelectData;
                     'allowClear' => true,
                 ],
             ])->label('Section') ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <?= $form->field($model, 'rank_id', [
-                'labelOptions' => ['class' => ($model->rank_id ? 'move' : '')]
-            ])->widget(Select2::class, [
-                'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\Rank::class),
-                'options'       => [
-                    'placeholder' => '',
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ])->label('Rank') ?>
         </div>
         <div class="col-sm-6">
             <?= $form->field($model, 'citizenship_id', [
@@ -200,22 +168,66 @@ use mate\yii\widgets\SelectData;
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($model, 'rank_id', [
+                'labelOptions' => ['class' => ($model->rank_id ? 'move' : '')]
+            ])->widget(Select2::class, [
+                'showToggleAll' => false,
+                'data'          => SelectData::fromModel(app\models\Rank::class),
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ])->label('Rank') ?>
+        </div>
+    </div>
+
 
     <h3>System</h3>
 
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'callsign')->textInput([
-                    'maxlength' => true,
-                    'class'     => 'form-control mask-callsign'
-            ]) ?>
-
             <?= $form->field($model, 'registered')->textInput([
                 'class'        => 'form-control mask-date ',
                 'autocomplete' => 'off'
+            ])->label("Registered*") ?>
+        </div>
+        <div class="col-sm-6">
+            <?= $form->field($model, 'resistance_cell_id', [
+                'labelOptions' => ['class' => ($model->resistance_cell_id ? 'move' : '')]
+            ])->widget(Select2::class, [
+                'showToggleAll' => false,
+                'data'          => SelectData::fromModel(app\models\ResistanceCell::class),
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'tags'       => true,
+                ],
+            ])->label('First registered at*') ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($model, 'callsign')->textInput([
+                'maxlength' => true,
+                'class'     => 'form-control mask-callsign'
             ]) ?>
         </div>
+        <div class="col-sm-6">
+            <?= $form->field($model, 'status_alive')->checkbox([
+                'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
+            ])->label('Is Alive') ?>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-sm-6">
 
             <?php if (\app\components\Access::to('staff/grant-rights')): ?>
@@ -235,10 +247,6 @@ use mate\yii\widgets\SelectData;
                     ],
                 ])->label('Access Masks') ?>
             <?php endif; ?>
-
-            <?= $form->field($model, 'status_alive')->checkbox([
-                'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
-            ])->label('Is Alive') ?>
 
         </div>
     </div>

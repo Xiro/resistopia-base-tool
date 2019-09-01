@@ -132,7 +132,6 @@ $personalInfoHelp = [
 
 <?php
 $affiliationInfoHelp = [
-    "Resistance Cell:"    => "Wenn du in der Base startest, wähle Widerstandszelle Mahlwinkel aus.",
     "Section:"            => "Das Spiel außerhalb der Sektion \"Combat\" muss OT abgesprochen sein",
     "Rank:"               => "Wenn nicht IT erspielt, wähle Private aus. Als Teamleiter wähle Corporal oder Sergeant aus. Lass das Feld leer, wenn du keinen Rang hast.",
     "Citizenship & Team:" => "In diesen Feldern können auch neue Werte eingetragen werden, das Eingabefeld ist nicht ausschließlich ein Suchfeld.",
@@ -149,21 +148,6 @@ $affiliationInfoHelp = [
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($staff, 'resistance_cell_id', [
-                'labelOptions' => ['class' => ($staff->resistance_cell_id ? 'move' : '')]
-            ])->widget(Select2::class, [
-                'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\ResistanceCell::class),
-                'options'       => [
-                    'placeholder' => '',
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                    'tags'       => true,
-                ],
-            ])->label('Resistance Cell*') ?>
-        </div>
-        <div class="col-sm-6">
             <?= $form->field($staff, 'team_id', [
                 'labelOptions' => ['class' => ($staff->team_id ? 'move' : '')]
             ])->widget(Select2::class, [
@@ -177,23 +161,6 @@ $affiliationInfoHelp = [
                     'tags'       => true,
                 ],
             ])->label('Team') ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <?= $form->field($staff, 'section_id', [
-                'labelOptions' => ['class' => ($staff->section_id ? 'move' : '')]
-            ])->widget(Select2::class, [
-                'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\Section::class),
-                'options'       => [
-                    'placeholder' => '',
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ])->label('Section*') ?>
         </div>
         <div class="col-sm-6">
             <?= $form->field($staff, 'special_function_id', [
@@ -213,18 +180,18 @@ $affiliationInfoHelp = [
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($staff, 'rank_id', [
-                'labelOptions' => ['class' => ($staff->rank_id ? 'move' : '')]
+            <?= $form->field($staff, 'section_id', [
+                'labelOptions' => ['class' => ($staff->section_id ? 'move' : '')]
             ])->widget(Select2::class, [
                 'showToggleAll' => false,
-                'data'          => SelectData::fromModel(app\models\Rank::class),
+                'data'          => SelectData::fromModel(app\models\Section::class),
                 'options'       => [
                     'placeholder' => '',
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-            ])->label('Rank') ?>
+            ])->label('Section*') ?>
         </div>
         <div class="col-sm-6">
             <?= $form->field($staff, 'citizenship_id', [
@@ -243,6 +210,23 @@ $affiliationInfoHelp = [
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($staff, 'rank_id', [
+                'labelOptions' => ['class' => ($staff->rank_id ? 'move' : '')]
+            ])->widget(Select2::class, [
+                'showToggleAll' => false,
+                'data'          => SelectData::fromModel(app\models\Rank::class),
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ])->label('Rank') ?>
+        </div>
+    </div>
+
     <small>* required</small>
 
 
@@ -250,9 +234,10 @@ $affiliationInfoHelp = [
 
 <?php
 $systemInfoHelp = [
-    "Callsign:"   => "Wird vom CIC vergeben, wenn du Funker bist",
-    "Is Alive:"   => "Nur abwählen, wenn dein Charakter gestorben ist",
-    "Registered:" => "Der Tag, an dem dein Charakter zum ersten mal in einer Basis registriert wurde. Frühestes Datum ist der 26.02.2022, Spielstart ist am 15.09.2022",
+    "Registered:"      => "Der Tag, an dem dein Charakter zum ersten mal in einer Basis registriert wurde. Frühestes Datum ist der 26.02.2022, Spielstart ist am 15.09.2022",
+    "Resistance Cell:" => "Widerstandszelle, in der dein Charakter zum ersten mal registriert wurde.",
+    "Callsign:"        => "Wird vom CIC vergeben, wenn du Funker bist",
+    "Is Alive:"        => "Nur abwählen, wenn dein Charakter gestorben ist",
 ];
 ?>
     <table class="help">
@@ -266,6 +251,30 @@ $systemInfoHelp = [
 
     <div class="row">
         <div class="col-sm-6">
+            <?= $form->field($staff, 'registered')->textInput([
+                'class'        => 'form-control mask-date ',
+                'autocomplete' => 'off'
+            ])->label("Registered*") ?>
+        </div>
+        <div class="col-sm-6">
+            <?= $form->field($staff, 'resistance_cell_id', [
+                'labelOptions' => ['class' => ($staff->resistance_cell_id ? 'move' : '')]
+            ])->widget(Select2::class, [
+                'showToggleAll' => false,
+                'data'          => SelectData::fromModel(app\models\ResistanceCell::class),
+                'options'       => [
+                    'placeholder' => '',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'tags'       => true,
+                ],
+            ])->label('First registered at*') ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
             <?= $form->field($staff, 'callsign')->textInput([
                 'maxlength' => true,
                 'class'     => 'form-control mask-callsign'
@@ -275,17 +284,6 @@ $systemInfoHelp = [
             <?= $form->field($staff, 'status_alive')->checkbox([
                 'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
             ])->label('Is Alive') ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <?= $form->field($staff, 'registered')->textInput([
-                'class'        => 'form-control mask-date ',
-                'autocomplete' => 'off'
-            ])->label("Registered*") ?>
-        </div>
-        <div class="col-sm-6">
         </div>
     </div>
 

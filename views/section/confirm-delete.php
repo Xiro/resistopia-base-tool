@@ -1,11 +1,11 @@
 <?php
 
-use app\helpers\Html;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Section */
 
-$this->title = 'Delete section';
+$this->title = 'Delete Section';
 $this->params['breadcrumbs'][] = ['label' => 'Sections', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

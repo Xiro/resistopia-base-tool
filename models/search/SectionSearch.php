@@ -12,8 +12,6 @@ use app\models\Section;
  */
 class SectionSearch extends Section
 {
-    use AdvancedSearchTrait;
-
     /**
      * @inheritdoc
      */
@@ -21,7 +19,7 @@ class SectionSearch extends Section
     {
         return [
             [['id', 'access_mask_id', 'order'], 'integer'],
-            [['name'], 'safe'],
+            [['section', 'department', 'group', 'key'], 'safe'],
         ];
     }
 
@@ -66,9 +64,10 @@ class SectionSearch extends Section
             'order' => $this->order,
         ]);
 
-        $this->searchCaseInsensitive($query, [
-            ['name', $this->name]
-        ]);
+        $query->andFilterWhere(['like', 'section', $this->section])
+            ->andFilterWhere(['like', 'department', $this->department])
+            ->andFilterWhere(['like', 'group', $this->group])
+            ->andFilterWhere(['like', 'key', $this->key]);
 
         return $dataProvider;
     }
