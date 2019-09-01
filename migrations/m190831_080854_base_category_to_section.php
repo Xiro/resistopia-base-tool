@@ -19,15 +19,6 @@ class m190831_080854_base_category_to_section extends Migration
 
         ");
 
-        $this->execute("
-        ALTER TABLE `section`
-        ALTER `name` DROP DEFAULT;
-        ALTER TABLE `section`
-            CHANGE COLUMN `name` `section` VARCHAR(255) NOT NULL COLLATE 'utf8_bin' AFTER `id`,
-            ADD COLUMN `department` VARCHAR(255) NOT NULL AFTER `section`,
-            ADD COLUMN `group` VARCHAR(255) NOT NULL AFTER `department`;
-        ");
-
         $sections = \app\models\Section::find()->all();
         /** @var \app\models\Section $section */
         foreach ($sections as $section) {
@@ -37,6 +28,15 @@ class m190831_080854_base_category_to_section extends Migration
                 $accessMask->delete();
             }
         }
+
+        $this->execute("
+        ALTER TABLE `section`
+        ALTER `name` DROP DEFAULT;
+        ALTER TABLE `section`
+            CHANGE COLUMN `name` `section` VARCHAR(255) NOT NULL COLLATE 'utf8_bin' AFTER `id`,
+            ADD COLUMN `department` VARCHAR(255) NOT NULL AFTER `section`,
+            ADD COLUMN `group` VARCHAR(255) NOT NULL AFTER `department`;
+        ");
 
         $sectionDataSets = [
             [
