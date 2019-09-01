@@ -50,6 +50,7 @@ class SectionController extends Controller
         $dataProvider->setSort([
             'defaultOrder' => ['order' => SORT_ASC]
         ]);
+        $dataProvider->pagination = false;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
