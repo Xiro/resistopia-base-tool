@@ -234,10 +234,10 @@ $affiliationInfoHelp = [
 
 <?php
 $systemInfoHelp = [
-    "Registered:"      => "Der Tag, an dem dein Charakter zum ersten mal in einer Basis registriert wurde. Frühestes Datum ist der 26.02.2022, Spielstart ist am 15.09.2022",
-    "Resistance Cell:" => "Widerstandszelle, in der dein Charakter zum ersten mal registriert wurde.",
-    "Callsign:"        => "Wird vom CIC vergeben, wenn du Funker bist",
-    "Is Alive:"        => "Nur abwählen, wenn dein Charakter gestorben ist",
+    "Registered:"          => "Tag, an dem dein Charakter zum ersten mal registriert wurde. Frühestes Datum ist der 26.02.2022, Spielstart ist am 15.09.2022",
+    "First registered at:" => "Widerstandszelle, in der dein Charakter zum ersten mal registriert wurde.",
+    "Callsign:"            => "Wird vom CIC vergeben, wenn du Funker bist",
+    "Is Alive:"            => "Nur abwählen, wenn dein Charakter gestorben ist",
 ];
 ?>
     <table class="help">
