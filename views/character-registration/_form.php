@@ -252,7 +252,7 @@ $affiliationInfoHelp = [
 $systemInfoHelp = [
     "Callsign:"   => "Wird vom CIC vergeben, wenn du Funker bist",
     "Is Alive:"   => "Nur abwählen, wenn dein Charakter gestorben ist",
-    "Registered:" => "Der Tag, an dem dein Charakter zum ersten mal in einer Basis registriert wurde. Frühestes Datum ist der 26.02.2022, Spielstart ist am 15.09.202",
+    "Registered:" => "Der Tag, an dem dein Charakter zum ersten mal in einer Basis registriert wurde. Frühestes Datum ist der 26.02.2022, Spielstart ist am 15.09.2022",
 ];
 ?>
     <table class="help">
@@ -283,11 +283,13 @@ $systemInfoHelp = [
             <?= $form->field($staff, 'registered')->textInput([
                 'class'        => 'form-control mask-date ',
                 'autocomplete' => 'off'
-            ]) ?>
+            ])->label("Registered*") ?>
         </div>
         <div class="col-sm-6">
         </div>
     </div>
+
+    <small>* required</small>
 
     <h3>Background</h3>
 

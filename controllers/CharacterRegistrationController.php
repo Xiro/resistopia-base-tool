@@ -63,6 +63,7 @@ class CharacterRegistrationController extends Controller
     public function actionCreate()
     {
         $staff = new StaffForm();
+        $staff->status_alive = 1;
         $background = new StaffBackground();
 
         $post = Yii::$app->request->post();
