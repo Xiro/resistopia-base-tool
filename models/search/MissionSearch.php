@@ -23,8 +23,8 @@ class MissionSearch extends Mission
     public function rules()
     {
         return [
-            [['id', 'slots_total', 'slots_medic', 'slots_radio', 'slots_tech', 'slots_res', 'slots_guard', 'slots_vip', 'mission_status_id', 'operation_id', 'mission_type_id'], 'integer'],
-            [['name', 'description', 'debrief_comment', 'note', 'zone', 'callsign', 'created_by_sid', 'mission_lead_sid', 'time_publish', 'time_lst', 'time_ete', 'time_atf', 'finished', 'created', 'updated'], 'safe'],
+            [['troop_strength', 'id', 'slots_total', 'slots_medic', 'slots_radio', 'slots_tech', 'slots_res', 'slots_guard', 'slots_vip', 'mission_status_id', 'operation_id', 'mission_type_id'], 'integer'],
+            [['name', 'troop_name', 'troop_strength', 'description', 'debrief_comment', 'note', 'zone', 'callsign', 'created_by_sid', 'mission_lead_sid', 'time_publish', 'time_lst', 'time_ete', 'time_atf', 'finished', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -65,6 +65,7 @@ class MissionSearch extends Mission
         // grid filtering conditions
         $query->andFilterWhere([
             'id'                => $this->id,
+            'troop_strength'    => $this->troop_strength,
             'slots_total'       => $this->slots_total,
             'slots_medic'       => $this->slots_medic,
             'slots_radio'       => $this->slots_radio,
@@ -89,6 +90,7 @@ class MissionSearch extends Mission
 
         $this->searchCaseInsensitive($query, [
             'name'            => $this->name,
+            'troop_name'      => $this->troop_name,
             'description'     => $this->description,
             'debrief_comment' => $this->debrief_comment,
             'note'            => $this->note,

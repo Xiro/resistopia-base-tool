@@ -27,7 +27,7 @@ AppAsset::register($this);
 <?= AlertBoxes::htmlFromFlashMessages() ?>
 
 <div class="wrap">
-    <div class="<?= $isAjax ? "" : "container" ?>">
+    <div class="<?= $isAjax ? "" : "" ?>">
         <?= $content ?>
     </div>
 </div>

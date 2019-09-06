@@ -27,7 +27,8 @@
         "yiisoft/yii2-jui": "^2.0",
         "kartik-v/yii2-widget-select2": "@dev",
         "2amigos/yii2-date-time-picker-widget": "~1.0",
-        "igorescobar/jQuery-Mask-Plugin": "^1.14"
+        "igorescobar/jQuery-Mask-Plugin": "^1.14",
+        "ext-json": "^1.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

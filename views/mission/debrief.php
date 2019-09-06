@@ -32,19 +32,11 @@ $this->params['breadcrumbs'][] = 'Debrief';
             <div class="form-group">
                 <?php $statusIds = SelectData::fromModel(MissionStatus::class, 'name', 'id') ?>
                 <?= Html::submitButton(
-                    'Mission Accomplished',
+                    'Save',
                     [
                         "name"  => "MissionForm[mission_status_id]",
                         "value" => $statusIds['completed'],
                         "class" => "btn btn-success"
-                    ]
-                ) ?>
-                <?= Html::submitButton(
-                    'Mission Failed',
-                    [
-                        "name"  => "MissionForm[mission_status_id]",
-                        "value" => $statusIds['failed'],
-                        "class" => "btn btn-danger"
                     ]
                 ) ?>
             </div>

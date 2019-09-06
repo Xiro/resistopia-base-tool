@@ -118,11 +118,12 @@ class StaffController extends Controller
     {
         $searchModel = new StaffSearch();
         $dataProvider = $searchModel->searchMissionForm(Yii::$app->request->queryParams, $missionId);
+        $dataProvider->pagination->setPageSize(5);
 
         return $this->renderPartial('_table-form-body', [
             'dataProvider' => $dataProvider,
             "modelName"    => "MissionForm",
-            'exclude'      => ['callsign'],
+            'exclude'      => ['team'],
             'actionEnableValidators' => $searchModel->getMissionActionEnableValidators(),
         ]);
     }

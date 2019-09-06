@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\AccessRule;
+use app\models\AccessCategory;
 use Yii;
 use app\models\AccessRight;
 use app\models\forms\AccessRightForm;
@@ -111,6 +112,43 @@ class AccessRightController extends Controller
         }
 
         return $this->render('create', ["model" => $model]);
+    }
+
+    /**
+     * This is for quickly creating CRUD access rights
+     * @param $controller
+     * @param null $categoryName
+     * @return \yii\web\Response
+     */
+    public function actionCreateCrud($controller, $categoryName = null)
+    {
+        $controllerParts = explode("-", $controller);
+        foreach ($controllerParts as $key => $controllerPart) {
+            $controllerParts[$key] = ucfirst($controllerPart);
+        }
+        $controllerName = implode(' ', $controllerParts);
+
+        $categoryName = $categoryName ? $categoryName : $controllerName;
+        $category = new AccessCategory();
+        $category->name = $categoryName;
+        $category->order = AccessCategory::find()->count() + 1;
+        $category->save();
+
+        $crudNames = ['view', 'create', 'update', 'delete'];
+        $rightOrder = AccessRight::find()->count();
+        foreach ($crudNames as $crudName) {
+            $rightOrder++;
+            $bit = new AccessRight();
+            $bit->key = $controller . '/' . $crudName;
+            $bit->name = ucfirst($crudName) . ' ' . ucfirst($controllerName);
+            $bit->order = $rightOrder;
+            $bit->access_category_id = $category->id;
+            $bit->save();
+        }
+        Yii::$app->cache->flush();
+        Yii::$app->session->addFlash('success', 'CRUD rights created for ' . $categoryName);
+        return $this->redirect(['site/index']);
+
     }
 
     /**

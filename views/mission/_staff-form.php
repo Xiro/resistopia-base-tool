@@ -11,17 +11,18 @@ use yii\data\ActiveDataProvider;
 <?php
 $searchModel = new StaffSearch();
 $dataProvider = $searchModel->searchMissionForm([], $model->id);
+$dataProvider->pagination->setPageSize(5);
 ?>
 <?= $this->render('../staff/_table-form', [
     'selectableDataProvider' => $dataProvider,
     'selectedDataProvider'   => new ActiveDataProvider([
-        'query' => $model->getStaff()->joinWith('team'),
+        'query' => $model->getStaff()->limit(5),
     ]),
     'form'                   => $form,
     'model'                  => $model,
     'searchUrl'              => Url::to(['staff/search-mission-form', 'missionId' => $model->id]),
     'searchModel'            => $searchModel,
-    'exclude'                => ['callsign'],
+    'exclude'                => ['team'],
     'actionEnableValidators' => $searchModel->getMissionActionEnableValidators(),
 
 ]) ?>

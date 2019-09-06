@@ -79,6 +79,15 @@ StaffSelectFormAsset::register($this);
                             ]) ?>
                         </th>
                     <?php endif; ?>
+                    <?php if (!in_array("callsign", $exclude)): ?>
+                        <?php $excludeSearchParams[] = "callsign"; ?>
+                        <th class="callsign">
+                            <?= $form->field($staff, 'callsign')->textInput([
+                                'maxlength' => true,
+                                'class'     => 'form-control mask-callsign'
+                            ]) ?>
+                        </th>
+                    <?php endif; ?>
                     <th class="actions text-right" style="padding: 8px!important">
                         <input type="hidden" name="page" value="<?= $selectableDataProvider->pagination->page ?>">
                         <input type="hidden" name="per-page"
@@ -133,6 +142,9 @@ StaffSelectFormAsset::register($this);
                 <?php endif; ?>
                 <?php if (!in_array("team", $exclude)): ?>
                     <th class="team"><?= 'Team' ?></th>
+                <?php endif; ?>
+                <?php if (!in_array("callsign", $exclude)): ?>
+                    <th class="callsign"><?= 'callsign' ?></th>
                 <?php endif; ?>
                 <th class="actions" style="padding: 8px!important">
                     <?= Glyphicon::remove(["class" => "assigned-btn remove-all-rows"]) ?>

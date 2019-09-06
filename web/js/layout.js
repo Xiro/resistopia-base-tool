@@ -100,6 +100,7 @@ $(document).ready(function () {
         var speed = typeof element.attr('speed') !== 'undefined' ? parseInt(element.attr('speed')) : 2000;
         var images = typeof element.attr('images') !== 'undefined' ? JSON.parse(element.attr('images')) : [element.attr('src')];
         var currentImage = 0;
+        var flipped = false;
         element.attr('src', images[currentImage]);
 
         element.shrink = function (callback) {
@@ -115,16 +116,18 @@ $(document).ready(function () {
             }, speed, callback);
         };
         element.flip = function() {
-            if(element.css('transform') === "matrix(-1, 0, 0, 1, 0, 0)") {
+            if(flipped === true) {
                 element.css({
                     '-webkit-transform': '',
                     transform: ''
                 });
+                flipped = false;
             } else {
                 element.css({
                     '-webkit-transform': 'scaleX(-1)',
                     transform: 'scaleX(-1)'
                 });
+                flipped = true;
             }
         };
         element.nextImage = function() {

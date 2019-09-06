@@ -53,26 +53,26 @@ class MissionForm extends Mission
      */
     public function rules()
     {
-        $templateStatusId = SelectData::fromModel(
-            MissionStatus::class,
-            'name',
-            'id'
-        )['template'];
+//        $templateStatusId = SelectData::fromModel(
+//            MissionStatus::class,
+//            'name',
+//            'id'
+//        )['template'];
         return array_merge(parent::rules(), [
             [['staffSelect'], 'safe'],
-            [
-                ['time_lst', 'time_ete', 'time_atf'],
-                'required',
-                'when'       => function ($model) use ($templateStatusId) {
-                    /** @var $model MissionForm */
-                    return $model->mission_status_id != $templateStatusId;
-                },
-                'whenClient' => "function (attribute, value) {
-                    return $('#missionform-mission_status_id').val() != $templateStatusId;
-                }"
-            ],
-            ['time_atf', 'validateDuration'],
-            ['mission_lead_sid', 'validateUniqueMissionLead'],
+//            [
+//                ['time_lst', 'time_ete', 'time_atf'],
+//                'required',
+//                'when'       => function ($model) use ($templateStatusId) {
+//                    /** @var $model MissionForm */
+//                    return $model->mission_status_id != $templateStatusId;
+//                },
+//                'whenClient' => "function (attribute, value) {
+//                    return $('#missionform-mission_status_id').val() != $templateStatusId;
+//                }"
+//            ],
+//            ['time_atf', 'validateDuration'],
+//            ['mission_lead_sid', 'validateUniqueMissionLead'],
         ]);
     }
 
@@ -83,29 +83,29 @@ class MissionForm extends Mission
         }
     }
 
-    public function validateUniqueMissionLead($attribute, $params)
-    {
-        $statusIds = MissionStatus::getStatusIds();
-        $lockStatusIds = [
-            $statusIds['planing'],
-            $statusIds['openLeadercall'],
-            $statusIds['openCrewcall'],
-            $statusIds['ready'],
-            $statusIds['active'],
-            $statusIds['back'],
-        ];
-        $otherLeadMissionsQuery = Mission::find()
-            ->where(['mission_status_id' => $lockStatusIds])
-            ->andWhere(['mission_lead_sid' => $this->$attribute]);
-        if($this->id) {
-            $otherLeadMissionsQuery->andWhere(['!=', 'id', $this->id]);
-        }
-        if (in_array($this->mission_status_id, $lockStatusIds) && $otherLeadMissionsQuery->count() > 0) {
-            $missions = $otherLeadMissionsQuery->asArray()->all();
-            $missionNames = array_column($missions, 'name');
-            $this->addError($attribute, "Mission Lead already assigned to another mission (". implode(', ', $missionNames) .")");
-        }
-    }
+//    public function validateUniqueMissionLead($attribute, $params)
+//    {
+//        $statusIds = MissionStatus::getStatusIds();
+//        $lockStatusIds = [
+//            $statusIds['planing'],
+//            $statusIds['openLeadercall'],
+//            $statusIds['openCrewcall'],
+//            $statusIds['ready'],
+//            $statusIds['active'],
+//            $statusIds['back'],
+//        ];
+//        $otherLeadMissionsQuery = Mission::find()
+//            ->where(['mission_status_id' => $lockStatusIds])
+//            ->andWhere(['mission_lead_sid' => $this->$attribute]);
+//        if($this->id) {
+//            $otherLeadMissionsQuery->andWhere(['!=', 'id', $this->id]);
+//        }
+//        if (in_array($this->mission_status_id, $lockStatusIds) && $otherLeadMissionsQuery->count() > 0) {
+//            $missions = $otherLeadMissionsQuery->asArray()->all();
+//            $missionNames = array_column($missions, 'name');
+//            $this->addError($attribute, "Mission Lead already assigned to another mission (". implode(', ', $missionNames) .")");
+//        }
+//    }
 
     /**
      * {@inheritdoc}

@@ -12,6 +12,8 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property string $name
+ * @property string $troop_name
+ * @property string $troop_strength
  * @property string $description
  * @property string $debrief_comment
  * @property string $note
@@ -62,11 +64,11 @@ class Mission extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'zone', 'mission_type_id', 'created_by_sid'], 'required'],
+            [['name', 'troop_name', 'troop_strength', 'mission_type_id', 'created_by_sid'], 'required'],
             [['description', 'debrief_comment', 'note', 'zone'], 'string'],
-            [['slots_total', 'slots_medic', 'slots_radio', 'slots_tech', 'slots_res', 'slots_guard', 'slots_vip', 'mission_status_id', 'mission_type_id'], 'integer', 'max' => 2147483647],
+            [['troop_strength', 'slots_total', 'slots_medic', 'slots_radio', 'slots_tech', 'slots_res', 'slots_guard', 'slots_vip', 'mission_status_id', 'mission_type_id'], 'integer', 'max' => 2147483647],
             [['time_publish', 'time_lst', 'time_ete', 'time_atf', 'finished', 'created', 'updated'], 'safe'],
-            [['name'], 'string', 'max' => 128],
+            [['name', 'troop_name'], 'string', 'max' => 128],
             [['created_by_sid', 'mission_lead_sid'], 'string', 'max' => 8],
             [['mission_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => MissionStatus::class, 'targetAttribute' => ['mission_status_id' => 'id']],
             [['mission_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => MissionType::class, 'targetAttribute' => ['mission_type_id' => 'id']],
@@ -84,6 +86,8 @@ class Mission extends ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'troop_name' => 'Troop Name',
+            'troop_strength' => 'Troop Strength',
             'description' => 'Description',
             'debrief_comment' => 'Debrief Comment',
             'note' => 'Note',

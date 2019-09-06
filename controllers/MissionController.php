@@ -3,19 +3,19 @@
 namespace app\controllers;
 
 use app\components\AccessRule;
-use app\models\forms\MissionGateForm;
-use app\models\MissionStatus;
-use mate\yii\widgets\SelectData;
-use Yii;
-use app\models\Mission;
 use app\models\forms\MissionForm;
+use app\models\forms\MissionGateForm;
+use app\models\Mission;
+use app\models\MissionStatus;
+use app\models\Operation;
 use app\models\search\MissionSearch;
+use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * MissionController implements the CRUD actions for Mission model.
@@ -77,14 +77,14 @@ class MissionController extends Controller
         return $this->renderIndexView('Missions', false);
     }
 
-    /**
-     * Lists all Mission models.
-     * @return mixed
-     */
-    public function actionTemplates()
-    {
-        return $this->renderIndexView('Mission Templates', ['template']);
-    }
+//    /**
+//     * Lists all Mission models.
+//     * @return mixed
+//     */
+//    public function actionTemplates()
+//    {
+//        return $this->renderIndexView('Mission Templates', ['template']);
+//    }
 
     /**
      * Lists all Mission models.
@@ -102,7 +102,7 @@ class MissionController extends Controller
      */
     protected function renderIndexView($title, $statusNames)
     {
-        $this->actionCheckPublishMission();
+//        $this->actionCheckPublishMission();
         $searchModel = new MissionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -136,7 +136,7 @@ class MissionController extends Controller
      */
     public function actionSearch($statusIds = null)
     {
-        $this->actionCheckPublishMission();
+//        $this->actionCheckPublishMission();
         $searchModel = new MissionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if ($statusIds) {
@@ -157,10 +157,10 @@ class MissionController extends Controller
     public function actionControl()
     {
         return $this->renderTables([
-            'Back'    => ['back'],
+//            'Back'    => ['back'],
             'Active'  => ['active'],
-            'Ready'   => ['ready'],
-            'Open'    => ['openLeadercall', 'openCrewcall'],
+//            'Ready'   => ['ready'],
+//            'Open'    => ['openLeadercall', 'openCrewcall'],
             'Planing' => ['planing'],
         ], 'Mission Control', 'control');
     }
@@ -175,27 +175,43 @@ class MissionController extends Controller
         ], 'Planned Missions');
     }
 
-    /**
-     * @return string
-     */
-    public function actionCalled()
-    {
-        return $this->renderTables([
-            'Crewcall'   => ['openCrewcall'],
-            'Leadercall' => ['openLeadercall'],
-        ], 'Called Missions');
-    }
+//    /**
+//     * @return string
+//     */
+//    public function actionCalled()
+//    {
+//        return $this->renderTables([
+//            'Crewcall'   => ['openCrewcall'],
+//            'Leadercall' => ['openLeadercall'],
+//        ], 'Called Missions');
+//    }
 
     /**
      * @return string
      */
     public function actionActive()
     {
-        return $this->renderTables([
-            'Back'   => ['back'],
-            'Active' => ['active'],
-            'Ready'  => ['ready'],
-        ], 'Active Missions');
+        $statusIds = $this->getStatusIds();
+        $activeOperations = Operation::find()
+            ->joinWith("missions")
+            ->where(['mission.mission_status_id' => $statusIds['active']])
+            ->all();
+
+        $tableQueries = [];
+        $tableQueries[] = Mission::find()
+            ->where(['mission.mission_status_id' => $statusIds['active']])
+            ->andWhere(['is', 'operation_id', null]);
+
+        /** @var Operation $operation */
+        foreach ($activeOperations as $operation) {
+            $tableQueries["Operation " . $operation->name] = Mission::find()
+                ->where(['mission.mission_status_id' => $statusIds['active']])
+                ->andWhere(['operation_id' => $operation->id]);
+        }
+        return $this->render('tables', [
+            'title'  => 'Active Missions',
+            'tables' => $tableQueries
+        ]);
     }
 
     /**
@@ -206,7 +222,7 @@ class MissionController extends Controller
      */
     protected function renderTables($tables, $title = null, $view = 'tables')
     {
-        $this->actionCheckPublishMission();
+//        $this->actionCheckPublishMission();
         if (Yii::$app->request->isAjax) {
             $this->layout = false;
         }
@@ -229,7 +245,7 @@ class MissionController extends Controller
     {
         $this->layout = Yii::$app->request->isAjax ? false : 'blank';
 
-        $tables = ['planing', 'openLeadercall', 'openCrewcall', 'ready', 'active'];
+        $tables = ['planing', 'active'];
 
         $statusIds = $this->getStatusIds();
         $tableQueries = [];
@@ -244,35 +260,35 @@ class MissionController extends Controller
         ]);
     }
 
-    public function actionGate($id = null)
-    {
-        $statusIds = $this->getStatusIds();
-        $model = null;
-        if ($id) {
-            $model = MissionGateForm::findOne([
-                'mission_lead_sid'  => $id,
-                'mission_status_id' => [
-                    $statusIds['ready'],
-                    $statusIds['active'],
-                    $statusIds['back'],
-                ],
-            ]);
-        }
-        if (!$model) {
-            $model = new MissionGateForm();
-            $model->mission_lead_sid = $id;
-        }
-        if ($model->load(Yii::$app->request->post())) {
-            if($model->save()) {
-                Yii::$app->session->addFlash('success', 'Mission saved');
-            } else {
-                Yii::$app->session->addFlash('error', 'Failed to save mission');
-            }
-        }
-        return $this->render('gate', [
-            'model' => $model
-        ]);
-    }
+//    public function actionGate($id = null)
+//    {
+//        $statusIds = $this->getStatusIds();
+//        $model = null;
+//        if ($id) {
+//            $model = MissionGateForm::findOne([
+//                'mission_lead_sid'  => $id,
+//                'mission_status_id' => [
+//                    $statusIds['ready'],
+//                    $statusIds['active'],
+//                    $statusIds['back'],
+//                ],
+//            ]);
+//        }
+//        if (!$model) {
+//            $model = new MissionGateForm();
+//            $model->mission_lead_sid = $id;
+//        }
+//        if ($model->load(Yii::$app->request->post())) {
+//            if ($model->save()) {
+//                Yii::$app->session->addFlash('success', 'Mission saved');
+//            } else {
+//                Yii::$app->session->addFlash('error', 'Failed to save mission');
+//            }
+//        }
+//        return $this->render('gate', [
+//            'model' => $model
+//        ]);
+//    }
 
     /**
      * Displays a single Mission model.
@@ -286,18 +302,18 @@ class MissionController extends Controller
         return $this->render('view', ["model" => $model]);
     }
 
-    /**
-     * @return string
-     */
-    public function actionIndexLead()
-    {
-        $leadMissions = Mission::find()
-            ->where(['mission_lead_sid' => AccessRule::activeStaff()->sid])
-            ->all();
-        return $this->render('index-lead', [
-            'models' => $leadMissions
-        ]);
-    }
+//    /**
+//     * @return string
+//     */
+//    public function actionIndexLead()
+//    {
+//        $leadMissions = Mission::find()
+//            ->where(['mission_lead_sid' => AccessRule::activeStaff()->sid])
+//            ->all();
+//        return $this->render('index-lead', [
+//            'models' => $leadMissions
+//        ]);
+//    }
 
     /**
      * Creates a new Mission model.
@@ -397,22 +413,22 @@ class MissionController extends Controller
 
     }
 
-    /**
-     * Check for missions to automatically publish
-     */
-    public function actionCheckPublishMission()
-    {
-        $statusIds = $this->getStatusIds();
-        /** @var Mission[] $missions */
-        $missions = Mission::find()
-            ->where(['mission_status_id' => $statusIds['planing']])
-            ->andWhere(['<=', 'time_publish', date('Y-m-d H:i:s')])
-            ->all();
-        foreach ($missions as $mission) {
-            $mission->mission_status_id = $statusIds['openLeadercall'];
-            $mission->save();
-        }
-    }
+//    /**
+//     * Check for missions to automatically publish
+//     */
+//    public function actionCheckPublishMission()
+//    {
+//        $statusIds = $this->getStatusIds();
+//        /** @var Mission[] $missions */
+//        $missions = Mission::find()
+//            ->where(['mission_status_id' => $statusIds['planing']])
+//            ->andWhere(['<=', 'time_publish', date('Y-m-d H:i:s')])
+//            ->all();
+//        foreach ($missions as $mission) {
+//            $mission->mission_status_id = $statusIds['openLeadercall'];
+//            $mission->save();
+//        }
+//    }
 
     /**
      * Deletes an existing EyeColor model.

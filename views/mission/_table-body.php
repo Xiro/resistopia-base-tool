@@ -25,6 +25,11 @@ $exclude = !isset($exclude) ? ['time_ete', 'mission_type', 'action-status-button
                 <?= $model->name ?>
             </td>
         <?php endif; ?>
+        <?php if (!in_array("troop_name", $exclude)): ?>
+            <td class="troop_name">
+                <?= $model->troop_name . ($model->troop_strength ? " ({$model->troop_strength})" : "") ?>
+            </td>
+        <?php endif; ?>
         <?php if (!in_array("operation", $exclude)): ?>
             <td class="operation">
                 <?= $model->operation_id ? $model->operation->name : '' ?>
@@ -35,16 +40,19 @@ $exclude = !isset($exclude) ? ['time_ete', 'mission_type', 'action-status-button
                 <?= $model->mission_type_id ? $model->missionType->name : '' ?>
             </td>
         <?php endif; ?>
+        <!--
         <?php if (!in_array("zone", $exclude)): ?>
             <td class="zone">
                 <?= $model->zone ?>
             </td>
         <?php endif; ?>
+        -->
         <?php if (!in_array("mission_status", $exclude)): ?>
             <td class="mission_status">
                 <?= $model->mission_status_id ? $model->missionStatus->name : '' ?>
             </td>
         <?php endif; ?>
+        <!--
         <?php if (!in_array("time_lst", $exclude)): ?>
             <td class="time_lst">
                 <?= $model->time_lst ? date('d.m.Y H:i', strtotime($model->time_lst)) : ''; ?>
@@ -60,6 +68,7 @@ $exclude = !isset($exclude) ? ['time_ete', 'mission_type', 'action-status-button
                 <?= $model->time_atf ? date('H:i', strtotime($model->time_atf)) : ''; ?>
             </td>
         <?php endif; ?>
+        -->
         <?php if (!in_array("callsign", $exclude)): ?>
             <td class="callsign">
                 <?= implode(', ', $model->callsigns); ?>
@@ -72,46 +81,8 @@ $exclude = !isset($exclude) ? ['time_ete', 'mission_type', 'action-status-button
             $status = $model->mission_status_id ? $model->missionStatus->name : null;
             switch ($model->missionStatus->name) {
                 case null:
+
                 case 'planing':
-                    echo Html::a(
-                        Html::button(
-                            Glyphicon::transfer() . ' Leadercall',
-                            ['class' => 'btn btn-default']
-                        ),
-                        [
-                            'mission/switch-status',
-                            'missionId' => $model->id,
-                            'statusId'  => $statusData['openLeadercall'],
-                        ]
-                    );
-                    break;
-                case 'openLeadercall':
-                    echo Html::a(
-                        Html::button(
-                            Glyphicon::transfer() . ' Crewcall',
-                            ['class' => 'btn btn-default']
-                        ),
-                        [
-                            'mission/switch-status',
-                            'missionId' => $model->id,
-                            'statusId'  => $statusData['openCrewcall'],
-                        ]
-                    );
-                    break;
-                case 'openCrewcall':
-                    echo Html::a(
-                        Html::button(
-                            Glyphicon::transfer() . ' Ready',
-                            ['class' => 'btn btn-default']
-                        ),
-                        [
-                            'mission/switch-status',
-                            'missionId' => $model->id,
-                            'statusId'  => $statusData['ready'],
-                        ]
-                    );
-                    break;
-                case 'ready':
                     echo Html::a(
                         Html::button(
                             Glyphicon::transfer() . ' Active',
@@ -127,25 +98,87 @@ $exclude = !isset($exclude) ? ['time_ete', 'mission_type', 'action-status-button
                 case 'active':
                     echo Html::a(
                         Html::button(
-                            Glyphicon::transfer() . ' Back',
-                            ['class' => 'btn btn-default']
-                        ),
-                        [
-                            'mission/switch-status',
-                            'missionId' => $model->id,
-                            'statusId'  => $statusData['back'],
-                        ]
-                    );
-                    break;
-                case 'back':
-                    echo Html::a(
-                        Html::button(
                             Glyphicon::edit() . ' Debrief',
                             ['class' => 'btn btn-default']
                         ),
                         ['mission/debrief', 'id' => $model->id]
                     );
                     break;
+
+//                case 'planing':
+//                    echo Html::a(
+//                        Html::button(
+//                            Glyphicon::transfer() . ' Leadercall',
+//                            ['class' => 'btn btn-default']
+//                        ),
+//                        [
+//                            'mission/switch-status',
+//                            'missionId' => $model->id,
+//                            'statusId'  => $statusData['openLeadercall'],
+//                        ]
+//                    );
+//                    break;
+//                case 'openLeadercall':
+//                    echo Html::a(
+//                        Html::button(
+//                            Glyphicon::transfer() . ' Crewcall',
+//                            ['class' => 'btn btn-default']
+//                        ),
+//                        [
+//                            'mission/switch-status',
+//                            'missionId' => $model->id,
+//                            'statusId'  => $statusData['openCrewcall'],
+//                        ]
+//                    );
+//                    break;
+//                case 'openCrewcall':
+//                    echo Html::a(
+//                        Html::button(
+//                            Glyphicon::transfer() . ' Ready',
+//                            ['class' => 'btn btn-default']
+//                        ),
+//                        [
+//                            'mission/switch-status',
+//                            'missionId' => $model->id,
+//                            'statusId'  => $statusData['ready'],
+//                        ]
+//                    );
+//                    break;
+//                case 'ready':
+//                    echo Html::a(
+//                        Html::button(
+//                            Glyphicon::transfer() . ' Active',
+//                            ['class' => 'btn btn-default']
+//                        ),
+//                        [
+//                            'mission/switch-status',
+//                            'missionId' => $model->id,
+//                            'statusId'  => $statusData['active'],
+//                        ]
+//                    );
+//                    break;
+//                case 'active':
+//                    echo Html::a(
+//                        Html::button(
+//                            Glyphicon::transfer() . ' Back',
+//                            ['class' => 'btn btn-default']
+//                        ),
+//                        [
+//                            'mission/switch-status',
+//                            'missionId' => $model->id,
+//                            'statusId'  => $statusData['back'],
+//                        ]
+//                    );
+//                    break;
+//                case 'back':
+//                    echo Html::a(
+//                        Html::button(
+//                            Glyphicon::edit() . ' Debrief',
+//                            ['class' => 'btn btn-default']
+//                        ),
+//                        ['mission/debrief', 'id' => $model->id]
+//                    );
+//                    break;
             }
             ?>
             <?php endif; ?>

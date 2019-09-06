@@ -32,7 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 $skipped++;
                 continue;
             } ?>
-            <h4><?= $label ?></h4>
+            <?php if (!is_numeric($label)): ?>
+                <h4><?= $label ?></h4>
+            <?php endif; ?>
 
             <div class="">
                 <?= $this->render("_table", [

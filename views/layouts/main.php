@@ -63,15 +63,15 @@ AppAsset::register($this);
     $navItems = [];
 
     $adminItems = [];
-    Access::addNavItem(['label' => 'Sections', 'url' => ['section/index']], $adminItems);
     Access::addNavItem(['label' => 'Citizenships', 'url' => ['citizenship/index']], $adminItems);
-    Access::addNavItem(['label' => 'Resistance Cells', 'url' => ['resistance-cell/index']], $adminItems);
+    Access::addNavItem(['label' => 'Drugs', 'url' => ['medicine-drug/index']], $adminItems);
     Access::addNavItem(['label' => 'Eye Colors', 'url' => ['eye-color/index']], $adminItems);
+    Access::addNavItem(['label' => 'Liveticker', 'url' => ['ticker/index']], $adminItems);
     Access::addNavItem(['label' => 'Ranks', 'url' => ['rank/index']], $adminItems);
+    Access::addNavItem(['label' => 'Resistance Cells', 'url' => ['resistance-cell/index']], $adminItems);
+    Access::addNavItem(['label' => 'Sections', 'url' => ['section/index']], $adminItems);
     Access::addNavItem(['label' => 'Special Functions', 'url' => ['special-function/index']], $adminItems);
     Access::addNavItem(['label' => 'Users', 'url' => ['user/index']], $adminItems);
-    Access::addNavItem(['label' => 'Drugs', 'url' => ['medicine-drug/index']], $adminItems);
-    Access::addNavItem(['label' => 'Liveticker', 'url' => ['ticker/index']], $adminItems);
     Access::addNavItem(['label' => 'Clear Cache', 'url' => ['site/clear-cache']], $adminItems);
     if (!empty($adminItems)) {
         $navItems[] = ['label' => 'Admin', 'items' => $adminItems];
@@ -95,14 +95,14 @@ AppAsset::register($this);
     }
 
     $missionItems = [];
-    Access::addNavItem(['label' => 'Show All', 'url' => ['mission/index']], $missionItems);
     Access::addNavItem(['label' => 'Mission Control', 'url' => ['mission/control']], $missionItems);
     Access::addNavItem(['label' => 'Planned', 'url' => ['mission/planned']], $missionItems);
-    Access::addNavItem(['label' => 'Called', 'url' => ['mission/called']], $missionItems);
+//    Access::addNavItem(['label' => 'Called', 'url' => ['mission/called']], $missionItems);
     Access::addNavItem(['label' => 'Active', 'url' => ['mission/active']], $missionItems);
     Access::addNavItem(['label' => 'Archive', 'url' => ['mission/archive']], $missionItems);
-    Access::addNavItem(['label' => 'Templates', 'url' => ['mission/templates']], $missionItems);
-    Access::addNavItem(['label' => 'Gate', 'url' => ['mission/gate']], $missionItems);
+//    Access::addNavItem(['label' => 'Templates', 'url' => ['mission/templates']], $missionItems);
+//    Access::addNavItem(['label' => 'Gate', 'url' => ['mission/gate']], $missionItems);
+    Access::addNavItem(['label' => 'Show All', 'url' => ['mission/index']], $missionItems);
     if(AccessRule::activeStaff()) {
         $statusIds = \app\models\MissionStatus::getStatusIds();
         $leadMissionsCount = Mission::find()->where(['mission_lead_sid' => AccessRule::activeStaff()->sid])->count();

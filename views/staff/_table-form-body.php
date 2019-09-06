@@ -39,6 +39,11 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?= $staff->team_id ? $staff->team->name : null ?>
             </td>
         <?php endif; ?>
+        <?php if (!in_array("callsign", $exclude)): ?>
+            <td class="callsign">
+                <?= $staff->callsign ?>
+            </td>
+        <?php endif; ?>
         <td class="actions">
             <?php if (!in_array("action-view", $exclude)): ?>
                 <?= Html::a(

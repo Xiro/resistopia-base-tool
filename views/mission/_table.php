@@ -47,6 +47,12 @@ if ($searchModel) {
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                 </th>
             <?php endif; ?>
+            <?php if (!in_array("troop_name", $exclude)): ?>
+                <?php $excludeSearchParams[] = "troop_name"; ?>
+                <th class="name">
+                    <?= $form->field($model, 'troop_name')->textInput(['maxlength' => true]) ?>
+                </th>
+            <?php endif; ?>
             <?php if (!in_array("operation", $exclude)): ?>
                 <?php $excludeSearchParams[] = "operation"; ?>
                 <th class="operation">
@@ -81,6 +87,7 @@ if ($searchModel) {
                     ]) ?>
                 </th>
             <?php endif; ?>
+            <!--
             <?php if (!in_array("zone", $exclude)): ?>
                 <?php $excludeSearchParams[] = "zone"; ?>
                 <th class="zone">
@@ -98,6 +105,7 @@ if ($searchModel) {
                     ]) ?>
                 </th>
             <?php endif; ?>
+            -->
             <?php if (!in_array("mission_status", $exclude)): ?>
                 <?php $excludeSearchParams[] = "mission_status"; ?>
                 <th class="mission_status">
@@ -115,6 +123,7 @@ if ($searchModel) {
                     ])->label('Status') ?>
                 </th>
             <?php endif; ?>
+            <!--
             <?php if (!in_array("time_lst", $exclude)): ?>
                 <?php $excludeSearchParams[] = "time_lst"; ?>
                 <th class="time_lst">
@@ -133,6 +142,7 @@ if ($searchModel) {
                     <?= $form->field($model, 'time_atf')->textInput() ?>
                 </th>
             <?php endif; ?>
+            -->
             <?php if (!in_array("callsign", $exclude)): ?>
                 <?php $excludeSearchParams[] = "callsign"; ?>
                 <th class="callsign">
@@ -164,18 +174,24 @@ if ($searchModel) {
             <?php if (!in_array("name", $exclude)): ?>
                 <th class="name"><?= 'Name' ?></th>
             <?php endif; ?>
+            <?php if (!in_array("troop_name", $exclude)): ?>
+                <th class="troop_name"><?= 'Troop Name' ?></th>
+            <?php endif; ?>
             <?php if (!in_array("operation", $exclude)): ?>
                 <th class="operation"><?= 'Operation' ?></th>
             <?php endif; ?>
             <?php if (!in_array("mission_type", $exclude)): ?>
                 <th class="mission_type"><?= 'Type' ?></th>
             <?php endif; ?>
+            <!--
             <?php if (!in_array("zone", $exclude)): ?>
                 <th class="zone"><?= 'Zone' ?></th>
             <?php endif; ?>
+            -->
             <?php if (!in_array("mission_status", $exclude)): ?>
                 <th class="mission_status"><?= 'Status' ?></th>
             <?php endif; ?>
+            <!--
             <?php if (!in_array("time_lst", $exclude)): ?>
                 <th class="time_lst"><?= 'LST' ?></th>
             <?php endif; ?>
@@ -185,6 +201,7 @@ if ($searchModel) {
             <?php if (!in_array("time_atf", $exclude)): ?>
                 <th class="time_atf"><?= 'ATF' ?></th>
             <?php endif; ?>
+            -->
             <?php if (!in_array("callsign", $exclude)): ?>
                 <th class="callsign"><?= 'CS' ?></th>
             <?php endif; ?>
