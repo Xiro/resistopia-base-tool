@@ -194,6 +194,15 @@ class Staff extends ActiveRecord
         foreach ($this->staffFileMemos as $staffFileMemo) {
             $staffFileMemo->delete();
         }
+        foreach ($this->medicineCheckups as $medicineCheckup) {
+            $medicineCheckup->delete();
+        }
+        foreach ($this->medicineTreatments as $medicineTreatment) {
+            $medicineTreatment->delete();
+        }
+        foreach ($this->mediFoamDistributions as $foamDistribution) {
+            $foamDistribution->delete();
+        }
 
         if($this->access_key_id) {
             $this->accessKey->delete();
