@@ -195,7 +195,9 @@ class Staff extends ActiveRecord
             $staffFileMemo->delete();
         }
 
-        $this->accessKey->delete();
+        if($this->access_key_id) {
+            $this->accessKey->delete();
+        }
 
         parent::delete();
     }
