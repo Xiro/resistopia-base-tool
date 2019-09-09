@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\AccessRule;
+use app\components\Lock;
 use app\models\AccessMask;
 use app\models\AccessRight;
 use app\models\AccessCategory;
@@ -77,5 +78,36 @@ class SiteController extends Controller
         Yii::$app->cache->flush();
         Yii::$app->session->addFlash('success', 'Cache Cleared');
         return $this->goBack();
+    }
+
+    /**
+     * Simulates a system failure. Start and end times can be given to plan a failure
+     * @param null $start
+     * @param null $end
+     * @return string
+     */
+    public function actionLock($start = null, $end = null)
+    {
+        Lock::lock($start, $end);
+        return $this->goBack();
+    }
+
+    /**
+     * End a simulated system failure
+     * @return Response
+     */
+    public function actionUnlock()
+    {
+        Lock::unlock();
+        return $this->goBack();
+    }
+
+    /**
+     * Returns 1 if the system is locked and 0 if it's not
+     * @return int
+     */
+    public function actionIsLocked()
+    {
+        return Lock::isLocked() ? 1 : 0;
     }
 }

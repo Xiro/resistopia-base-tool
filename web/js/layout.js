@@ -154,6 +154,27 @@ $(document).ready(function () {
         element.rotate();
     });
 
+    // system failure
+    var getUrl = window.location;
+    var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+    var isLockedUrl = baseUrl + '/web/site/is-locked';
+    var isLocked = null;
+    $.get(isLockedUrl).done(function (response) {
+        isLocked = response;
+    });
+    var checkLockLoop = function () {
+        setTimeout(function () {
+            $.get(isLockedUrl).done(function (response) {
+                console.log(response);
+                if (response !== isLocked) {
+                    window.location.reload();
+                }
+                checkLockLoop();
+            });
+        }, 20000);
+    };
+    checkLockLoop();
+
     // reload button
 
     var ContentReloadHandle = new function () {
