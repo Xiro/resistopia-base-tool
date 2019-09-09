@@ -26,6 +26,8 @@ AppAsset::register($this);
 
 <?php $this->beginBody() ?>
 
+<span class="hidden" id="check-lock-url" data-url="<?= \yii\helpers\Url::to(['site/is-locked']) ?>"></span>
+
 <div class="login-background">
     <div class="login-background-overlay"></div>
     <?= $this->render('_icon-rotation') ?>

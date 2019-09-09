@@ -155,9 +155,7 @@ $(document).ready(function () {
     });
 
     // system failure
-    var getUrl = window.location;
-    var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-    var isLockedUrl = baseUrl + '/web/site/is-locked';
+    var isLockedUrl = $("#check-lock-url").data('url');
     var isLocked = null;
     $.get(isLockedUrl).done(function (response) {
         isLocked = response;
