@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::encode($this->title) ?>
 
             <span class="heading-btn-group pull-right" style="margin-top: -5px;">
-                <div class="animated-label">
+                <div class="animated-label" style="margin-right: 10px">
                     <div class="form-group">
                         <?php
                         echo \kartik\select2\Select2::widget([
@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::a(
                     "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Staff',
                     ["create"],
-                    ["class" => "btn btn-default"]
+                    ["class" => "btn btn-default", "style" => "float: right; margin-top: 10px;"]
                 ); ?>
             </span>
         </h1>
