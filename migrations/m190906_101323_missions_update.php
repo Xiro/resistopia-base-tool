@@ -24,12 +24,11 @@ class m190906_101323_missions_update extends Migration
 
         $this->execute("
         ALTER TABLE `mission`
-        ALTER `zone` DROP DEFAULT;
-        ALTER TABLE `mission`
-            ADD COLUMN `troop_name` VARCHAR(128) NOT NULL AFTER `mission_name`,
-            ADD COLUMN `troop_strength` INT NOT NULL AFTER `troop_name`,
-            CHANGE COLUMN `zone` `zone` ENUM('1','2','3') NULL COLLATE 'utf8_bin' AFTER `note`;
-            ALTER TABLE `mission`
+            ALTER `zone` DROP DEFAULT;
+        ALTER TABLE `mission` 
+            ADD COLUMN `troop_name` VARCHAR(128) NOT NULL AFTER `name`, 
+            ADD COLUMN `troop_strength` INT NOT NULL AFTER `troop_name`, 
+            CHANGE COLUMN `zone` `zone` ENUM('1','2','3') NULL AFTER `note`;
 
         ");
 

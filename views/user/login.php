@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <br>
     <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 content border-light">
 
-        <h2><?= Html::encode($this->title) ?></h2>
+        <h1><?= Html::encode($this->title) ?></h1>
 
         <?php $form = ActiveForm::begin([
             'id'          => 'login-form',
@@ -44,15 +44,29 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::a(
                         Html::button(
                             'Request Account',
-                            ['class' => 'btn btn-primary', 'name' => 'login-button']
+                            ['class' => 'btn btn-default', 'name' => 'login-button', 'style' => 'width: 100%']
                         ),
                         ['user/request']
                     ); ?>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-sm-6">
+                    <?= Html::a(
+                        Html::button(
+                            'Forgot Password',
+                            ['class' => 'btn btn-default', 'name' => 'login-button', 'style' => 'width: 100%']
+                        ),
+                        ['user/forgot-password']
+                    ); ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-12">
                     <?= Html::submitButton(
                         '&nbsp; <span class="glyphicon glyphicon-log-in"></span> &nbsp; Login &nbsp;',
-                        ['class' => 'btn btn-primary', 'name' => 'login-button']
+                        ['class' => 'btn btn-primary', 'name' => 'login-button', 'style' => 'width: 100%']
                     ) ?>
                 </div>
             </div>

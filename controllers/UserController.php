@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\AccessRule;
+use app\models\forms\ForgotPasswordForm;
 use app\models\forms\LoginForm;
 use app\models\forms\UserRequestForm;
 use Yii;
@@ -26,20 +27,20 @@ class UserController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::class,
+                'class'      => AccessControl::class,
                 'ruleConfig' => [
                     'class' => AccessRule::class
                 ],
-                'rules' => [
+                'rules'      => [
                     [
                         'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
+                        'allow'   => true,
+                        'roles'   => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'request'],
-                        'allow' => true,
-                        'roles' => ['?'],
+                        'actions' => ['login', 'request', 'forgot-password'],
+                        'allow'   => true,
+                        'roles'   => ['?'],
                     ],
                     [
                         'allow' => true,
@@ -47,7 +48,7 @@ class UserController extends Controller
                     ],
                 ],
             ],
-            'verbs' => [
+            'verbs'  => [
                 'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
@@ -98,18 +99,47 @@ class UserController extends Controller
         $model = new UserRequestForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->addFlash('success', 'Your account has been requested. Please ask for approval at the CIC human resources department.');
+            Yii::$app->session->addFlash('success', 'Your account has been requested. Please ask for account approval at the administration.');
             return $this->redirect(['login']);
         }
 
         return $this->render('request', ["model" => $model]);
     }
 
+    /**
+     * register account and request its approval
+     * @return string|\yii\web\Response
+     */
+    public function actionForgotPassword()
+    {
+        $this->layout = "login";
+        $model = new ForgotPasswordForm();
+
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            $updateModel = ForgotPasswordForm::findOne(["sid" => $model->sid]);
+            if ($updateModel && $updateModel->load($post) && $updateModel->save()) {
+                Yii::$app->session->addFlash('success', 'Your password was reset. Please ask for approval at the administration.');
+                return $this->redirect(['login']);
+            } else {
+                $model->addError('sid', 'SID not registered');
+            }
+        }
+
+        return $this->render('forgot-password', ["model" => $model]);
+    }
+
+    /**
+     * Approve a requested user
+     * @param null $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionApprove($id = null)
     {
-        if($id && ($user = $this->findModel($id))) {
+        if ($id && ($user = $this->findModel($id))) {
             $user->approved = 1;
-            if($user->save()) {
+            if ($user->save()) {
                 Yii::$app->session->addFlash('success', 'User was approved and should now be able to log in.');
             } else {
                 Yii::$app->session->addFlash('danger', "Error approving the user");
@@ -122,7 +152,7 @@ class UserController extends Controller
         $dataProvider->setPagination(false);
 
         return $this->render('index', [
-            'searchModel' => null,
+            'searchModel'  => null,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -137,7 +167,7 @@ class UserController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

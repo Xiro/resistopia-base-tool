@@ -87,7 +87,7 @@ use yii\helpers\ArrayHelper;
 
     <div class="form-group">
         <?= Html::submitButton(
-            $model->isNewRecord ? $model->approved ? 'Create' : 'Request Account' : 'Update',
+            $model->isNewRecord ? $model->approved ? 'Create' : 'Request' : 'Update',
             ["class" => "btn btn-primary"]
         ) ?>
     </div>

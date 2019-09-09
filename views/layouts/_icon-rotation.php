@@ -2,7 +2,7 @@
 use app\helpers\Html;
 
 echo Html::img(
-    Yii::getAlias('@web/img/resistance_logo_500.png'),
+    Yii::getAlias('@web/img/phoenix_500.png'),
     [
         'class' => 'rotate',
         'speed' => 1500,
