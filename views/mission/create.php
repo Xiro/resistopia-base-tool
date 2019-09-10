@@ -15,41 +15,41 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1>
             <?= Html::encode($this->title) ?>
 
-<!--            <div class="pull-right">
+            <div class="pull-right">
                 <div class="animated-label" style="width: 200px; position: relative; top: -24px">
                     <div class="form-group">
                         <?php
-//                        /** @var \app\models\Mission[] $templates */
-//                        $templates = \app\models\Mission::find()
-//                            ->joinWith('missionStatus')
-//                            ->where(['mission_status.name' => 'template'])
-//                            ->all();
-//                        $selectData = \yii\helpers\ArrayHelper::map(
-//                            $templates,
-//                            function ($template) {
-//                                return Url::to(['mission/create', 'id' => $template->id]);
-//                            },
-//                            'name'
-//                        );
-//                        echo \kartik\select2\Select2::widget([
-//                            'showToggleAll' => false,
-//                            'name'          => 'templates',
-//                            'data'          => $selectData,
-//                            'options'       => [
-//                                'placeholder' => '',
-//                                'class'       => 'form-control',
-//                                'onchange'    => 'location = this.value;',
-//                            ],
-//                            'pluginOptions' => [
-//                                'allowClear' => true,
-//                            ],
-//                        ]);
+                        /** @var \app\models\Mission[] $templates */
+                        $templates = \app\models\Mission::find()
+                            ->joinWith('missionStatus')
+                            ->where(['mission_status.name' => 'template'])
+                            ->all();
+                        $selectData = \yii\helpers\ArrayHelper::map(
+                            $templates,
+                            function ($template) {
+                                return Url::to(['mission/create', 'id' => $template->id]);
+                            },
+                            'name'
+                        );
+                        echo \kartik\select2\Select2::widget([
+                            'showToggleAll' => false,
+                            'name'          => 'templates',
+                            'data'          => $selectData,
+                            'options'       => [
+                                'placeholder' => '',
+                                'class'       => 'form-control',
+                                'onchange'    => 'location = this.value;',
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                            ],
+                        ]);
                         ?>
                         <label for="template" style="font-size: 14px; ">Load Template</label>
                     </div>
                 </div>
             </div>
--->
+
         </h1>
 
 

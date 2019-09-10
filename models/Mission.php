@@ -64,7 +64,7 @@ class Mission extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'troop_name', 'troop_strength', 'mission_type_id', 'created_by_sid'], 'required'],
+            [['name', 'mission_type_id', 'created_by_sid'], 'required'],
             [['description', 'debrief_comment', 'note', 'zone'], 'string'],
             [['troop_strength', 'slots_total', 'slots_medic', 'slots_radio', 'slots_tech', 'slots_res', 'slots_guard', 'slots_vip', 'mission_status_id', 'mission_type_id'], 'integer', 'max' => 2147483647],
             [['time_publish', 'time_lst', 'time_ete', 'time_atf', 'finished', 'created', 'updated'], 'safe'],

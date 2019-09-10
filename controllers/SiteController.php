@@ -33,6 +33,10 @@ class SiteController extends Controller
                 ],
                 'rules'      => [
                     [
+                        'actions' => ['is-locked'],
+                        'allow'   => true,
+                    ],
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],

@@ -163,7 +163,6 @@ $(document).ready(function () {
     var checkLockLoop = function () {
         setTimeout(function () {
             $.get(isLockedUrl).done(function (response) {
-                console.log(response);
                 if (response !== isLocked) {
                     window.location.reload();
                 }
@@ -187,6 +186,7 @@ $(document).ready(function () {
             }
             $.get(handle.url).success(function (html) {
                 handle.target.html(html);
+                setupContent(handle.target);
             });
             handle.timer = setTimeout(handle.start, 5000);
         };

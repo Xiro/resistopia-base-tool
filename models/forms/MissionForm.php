@@ -53,24 +53,25 @@ class MissionForm extends Mission
      */
     public function rules()
     {
-//        $templateStatusId = SelectData::fromModel(
-//            MissionStatus::class,
-//            'name',
-//            'id'
-//        )['template'];
+        $templateStatusId = SelectData::fromModel(
+            MissionStatus::class,
+            'name',
+            'id'
+        )['template'];
         return array_merge(parent::rules(), [
             [['staffSelect'], 'safe'],
-//            [
+            [
 //                ['time_lst', 'time_ete', 'time_atf'],
-//                'required',
-//                'when'       => function ($model) use ($templateStatusId) {
-//                    /** @var $model MissionForm */
-//                    return $model->mission_status_id != $templateStatusId;
-//                },
-//                'whenClient' => "function (attribute, value) {
-//                    return $('#missionform-mission_status_id').val() != $templateStatusId;
-//                }"
-//            ],
+                ['troop_strength', 'troop_name'],
+                'required',
+                'when'       => function ($model) use ($templateStatusId) {
+                    /** @var $model MissionForm */
+                    return $model->mission_status_id != $templateStatusId;
+                },
+                'whenClient' => "function (attribute, value) {
+                    return $('#missionform-mission_status_id').val() != $templateStatusId;
+                }"
+            ],
 //            ['time_atf', 'validateDuration'],
 //            ['mission_lead_sid', 'validateUniqueMissionLead'],
         ]);

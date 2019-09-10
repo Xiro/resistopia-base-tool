@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
     $info["Created by"] = $model->created_by_sid ? $model->createdBy->nameWithSid : "n/a";
     $info["Zone"] = $model->zone;
 
-    $info["Mission Lead"] = $model->mission_lead_sid ? $model->missionLead->nameWithSid : "n/a";
+//    $info["Mission Lead"] = $model->mission_lead_sid ? $model->missionLead->nameWithSid : "n/a";
     $info["Callsign"] = implode(", ", $model->callsigns);
 
     ?>
@@ -65,11 +65,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     $schedule = [];
-    $schedule["Limit of Start Time"] = $model->time_lst ? date('d.m.Y H:i', strtotime($model->time_lst)) : 'n/a';
-    $schedule["Time of Execution"] = $model->time_ete ? date('d.m.Y H:i', strtotime($model->time_ete)) : 'n/a';
+//    $schedule["Limit of Start Time"] = $model->time_lst ? date('d.m.Y H:i', strtotime($model->time_lst)) : 'n/a';
+//    $schedule["Time of Execution"] = $model->time_ete ? date('d.m.Y H:i', strtotime($model->time_ete)) : 'n/a';
 
-    $schedule["Accepted Time Favor"] = $model->time_atf ? date('H:i', strtotime($model->time_atf)) : 'n/a';
-    $schedule["Finished"] = $model->finished ? date('d.m.Y H:i', strtotime($model->finished)) : 'n/a';
+//    $schedule["Accepted Time Favor"] = $model->time_atf ? date('H:i', strtotime($model->time_atf)) : 'n/a';
+//    $schedule["Finished"] = $model->finished ? date('d.m.Y H:i', strtotime($model->finished)) : 'n/a';
 
     $schedule["Created"] = $model->created ? date('d.m.Y H:i', strtotime($model->created)) : 'n/a';
     $schedule["Last Updated"] = $model->updated ? date('d.m.Y H:i', strtotime($model->updated)) : 'n/a';
@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php endforeach; ?>
     </div>
 
-    <h4>Slots</h4>
+<!--    <h4>Slots</h4>
 
     <?php
     $slots = [];
@@ -117,6 +117,8 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         <?php endforeach; ?>
     </div>
+
+-->
 
     <?php if ($model->description): ?>
         <h4>Description</h4>
