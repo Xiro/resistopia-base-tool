@@ -19,6 +19,7 @@ body {
   .navbar-nav > li > a, .navbar-text {
     border-right: 1px solid @brand-primary;
     border-left: none !important;
+
     &:first-child {
       border-left: 1px solid @brand-primary !important;
     }
@@ -38,6 +39,7 @@ body {
   .dropdown-menu > li > a {
     font-size: @font-size-large;
     color: @brand-primary;
+
     &:hover, &:focus, &:active {
       color: lighten(@brand-primary, 10%);
       background: darken(@brand-primary, 25%)
@@ -62,6 +64,7 @@ h1, h2, h3, h4, h5, h6 {
   border-color: @brand-primary;
   //text-transform: uppercase;
   font-family: @font-family-heading;
+
   * {
     font-family: @font-family-base;
   }
@@ -108,6 +111,7 @@ hr {
   background: #000;
   border-color: @text-color;
   color: @text-color;
+
   &:hover, &:focus, &:active {
     background: darken(@brand-primary, 30%);
     border-color: @text-color;
@@ -175,6 +179,29 @@ hr {
 //  }
 //}
 
+.content-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
+.background {
+  z-index: -100;
+  opacity: 0.2;
+  width: 100%;
+  left: 0;
+
+  .background-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: fade(#000, 50%);
+  }
+}
+
 .checkbox {
 
   .cr {
@@ -188,6 +215,7 @@ hr {
     margin-right: .5em;
     font-size: 0.65em;
     top: 0.35em;
+
     .cr-icon {
       position: absolute;
       font-size: .8em;
@@ -198,21 +226,25 @@ hr {
   }
 
   label {
-    padding-left: 0!important;
+    padding-left: 0 !important;
 
     &:after {
       content: '';
       display: table;
       clear: both;
     }
+
     input[type="checkbox"] {
       display: none;
+
       & + .cr > .cr-icon {
         opacity: 0;
       }
+
       &:checked + .cr > .cr-icon {
         opacity: 1;
       }
+
       &:disabled + .cr {
         opacity: .5;
       }
@@ -222,6 +254,7 @@ hr {
 
 form.animated-label .checkbox-group .form-group {
   margin-bottom: 0;
+
   .checkbox {
     margin-top: 0;
   }
@@ -237,6 +270,7 @@ textarea {
 
 .help-block {
   white-space: nowrap;
+
   .help-block-error {
     color: @alert-danger-text;
   }
@@ -260,8 +294,10 @@ textarea {
 
 div.table {
   display: table;
+
   .table-row {
     display: table-row;
+
     > div {
       display: table-cell;
     }
@@ -274,6 +310,7 @@ table tr.animated-label {
 
     .form-group {
       margin-bottom: 0;
+
       input[type='text'],
       .select2-selection,
       select,
@@ -306,9 +343,11 @@ ul.pagination {
     background: transparent;
     border-color: @brand-primary;
   }
+
   > li > a {
     color: @brand-primary;
   }
+
   > li > a:active,
   > li > a:focus,
   > li > a:hover {
@@ -316,9 +355,11 @@ ul.pagination {
     background: darken(@brand-primary, 25%) !important;
     border-color: @brand-primary !important;
   }
+
   > li.disabled > a {
     color: darken(@brand-primary, 10%);
   }
+
   > li.active > a {
     color: lighten(@brand-primary, 15%);
     background: darken(@brand-primary, 25%);
@@ -340,6 +381,7 @@ table {
   .animated-label .actions {
     padding: 8px
   }
+
   .actions {
     white-space: nowrap;
     width: 1%;
@@ -349,6 +391,7 @@ table {
     .user {
       width: 105px;
     }
+
     .created {
       width: 150px;
     }
@@ -361,18 +404,23 @@ table {
       width: 70px;
       white-space: nowrap;
     }
+
     .section {
       min-width: 150px
     }
+
     .special_function {
       min-width: 170px
     }
+
     .team {
       min-width: 160px
     }
+
     .rank {
       width: 90px
     }
+
     .callsign {
       width: 80px;
     }
@@ -384,9 +432,11 @@ table {
     .staff_name {
       min-width: 150px
     }
+
     .author_name {
       min-width: 150px
     }
+
     .access_right {
       min-width: 155px
     }
@@ -398,46 +448,60 @@ table {
     .mission-status {
       min-width: 90px
     }
+
     .mission-type {
       min-width: 90px
     }
+
     .zone {
       min-width: 75px
     }
+
     th.debrief-comment {
       white-space: nowrap;
     }
+
     .description, .debrief-comment {
       max-width: 250px;
     }
+
     .rp, .fp {
       width: 35px;
       text-align: center;
     }
+
     .operation {
       min-width: 110px;
     }
+
     .mission_type {
       min-width: 100px;
     }
+
     .mission_status {
       min-width: 65px;
     }
+
     .time_atf {
       width: 55px;
     }
+
     .time_lst, .time_ete {
       width: 135px;
     }
+
     .callsign {
       max-width: 125px;
     }
+
     td.started {
       white-space: nowrap;
     }
+
     td.ended {
       white-space: nowrap;
     }
+
     .call-sign {
       min-width: 50px;
     }
@@ -445,6 +509,7 @@ table {
 
   .action-status-buttons {
     padding: 0 !important;
+
     .btn {
       width: 100%;
       border: none;
@@ -457,6 +522,7 @@ table {
     th.members, th.unpaid, th.paid {
       padding: 9px;
     }
+
     .members, .unpaid, .paid {
       text-align: right;
     }
@@ -466,51 +532,48 @@ table {
 
 table.changes {
   width: 100%;
+
   tr {
     border-bottom: 1px solid darken(@brand-primary, 30%);
+
     th, td {
       padding: 0 2px;
     }
+
     th:first-child {
       width: 25%;
     }
+
     td:nth-child(2) {
       width: 35%;
       text-align: right;
     }
+
     td:nth-child(3) {
       text-align: center;
     }
+
     td:last-child {
       width: 35%;
     }
   }
+
   tr:last-child {
     border: none;
   }
 }
 
-.site-login {
+body.login {
+  padding-top: 0;
+
   .content {
     background: fade(#000, 75%);
   }
-}
-.login-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  z-index: 0;
-  .login-background-overlay {
-    position: absolute;
+
+  .content-login.content-center > * {
     width: 100%;
-    height: 100%;
-    background: fade(#000, 50%);
-  }
-  img.rotate {
-    margin-top: 60px;
+    max-width: @container-lg;
+    padding: 0 @padding-large-horizontal;
   }
 }
 
@@ -542,6 +605,7 @@ body.layout-blank {
   font-size: 22px;
   cursor: pointer;
   color: darken(@brand-primary, 5%);
+
   &.active {
     color: lighten(@brand-primary, 5%);
   }
@@ -552,6 +616,7 @@ body.layout-blank {
   align-items: center;
   height: 300px;
   height: 50vh;
+
   .row {
     width: 100%;
   }

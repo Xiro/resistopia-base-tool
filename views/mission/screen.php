@@ -17,20 +17,6 @@ TickerAsset::register($this);
 <?php if (!Yii::$app->request->isAjax): ?>
 
 <style>
-    .content-center {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        position: fixed;
-    }
-
-    .background {
-        z-index: -100;
-        opacity: 0.2;
-        width: 100%;
-        left: 0;
-    }
 
     .mission-screen {
         left: 5%;
@@ -40,9 +26,9 @@ TickerAsset::register($this);
         width: 100%;
     }
 
-    .background .background-content {
-        transform: scale(1.5)!important;
-    }
+    /*.background .background-content {*/
+    /*    transform: scale(1.5)!important;*/
+    /*}*/
 </style>
 
 <div class="background content-center">

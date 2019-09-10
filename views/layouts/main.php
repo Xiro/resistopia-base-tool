@@ -52,7 +52,7 @@ AppAsset::register($this);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-left'],
             'items'   => [
-                ['label' => $staff->nameWithSid, 'items' => [
+                ['label' => $staff->sid, 'items' => [
                     ['label' => 'Logout', 'url' => ['user/logout']],
                 ]],
             ],

@@ -151,7 +151,23 @@ $(document).ready(function () {
                 });
             });
         };
-        element.rotate();
+
+        var maxChecks = 100;
+        var checkAmount = 0;
+        element.startCheck = function() {
+            checkAmount++;
+            width = element.width();
+            height = element.height();
+            console.log(checkAmount);
+            console.log(height);
+            console.log(width);
+            if(width === 0 && height === 0 && maxChecks <= maxChecks) {
+                setTimeout(element.startCheck, 5);
+            } else {
+                element.rotate();
+            }
+        };
+        element.startCheck();
     });
 
     // system failure

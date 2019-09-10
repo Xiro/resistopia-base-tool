@@ -16,13 +16,18 @@ $.fn.ticker = function() {
             block.append('<span class="delimiter">' + $.fn.ticker.options.delimiter + '</span>');
         });
 
-        var blockWidth = block.width();
+        var blockWidth = 0;
+        $.each(block.children(), function () {
+            blockWidth += $(this).width();
+        });
+
         var animationTime = blockWidth / $.fn.ticker.options.speed * 1000;
         block.css({
             'left': screenWidth
         });
         block.animate({
-            left: -blockWidth - screenWidth
+            left: -blockWidth - screenWidth,
+            easing: 'linear'
         }, animationTime, function () {
             block.remove();
             ticker.loadMessages();

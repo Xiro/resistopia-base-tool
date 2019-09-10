@@ -2,7 +2,7 @@
 use app\helpers\Html;
 
 echo Html::img(
-    Yii::getAlias('@web/img/phoenix_500.png'),
+    Yii::getAlias('@web/img/phoenix_750.png'),
     [
         'class' => 'rotate',
         'speed' => 1500,
@@ -15,7 +15,7 @@ echo Html::img(
 //            Yii::getAlias('@web/img/kat_kaempfer_500.png'),
 //            Yii::getAlias('@web/img/kat_forschung_500.png'),
 //            Yii::getAlias('@web/img/kat_coh_500.png'),
-            Yii::getAlias('@web/img/phoenix_500.png'),
+            Yii::getAlias('@web/img/phoenix_750.png'),
         ]),
     ]
 );
