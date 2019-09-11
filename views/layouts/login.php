@@ -22,9 +22,9 @@ AppAsset::register($this);
 </head>
 <body class="login">
 
-<?= AlertBoxes::htmlFromFlashMessages() ?>
-
 <?php $this->beginBody() ?>
+
+<?= $this->render('_alert-boxes') ?>
 
 <span class="hidden" id="check-lock-url" data-url="<?= \yii\helpers\Url::to(['site/is-locked']) ?>"></span>
 

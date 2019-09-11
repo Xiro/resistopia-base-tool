@@ -35,7 +35,8 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<?= AlertBoxes::htmlFromFlashMessages() ?>
+<?= $this->render('_alert-boxes') ?>
+
 <span class="hidden" id="check-lock-url" data-url="<?= \yii\helpers\Url::to(['site/is-locked']) ?>"></span>
 <div class="wrap">
     <?php
@@ -96,13 +97,13 @@ AppAsset::register($this);
     $missionItems = [];
     Access::addNavItem(['label' => 'Mission Control', 'url' => ['mission/control']], $missionItems);
     Access::addNavItem(['label' => 'Planned', 'url' => ['mission/planned']], $missionItems);
-//    Access::addNavItem(['label' => 'Called', 'url' => ['mission/called']], $missionItems);
+    //    Access::addNavItem(['label' => 'Called', 'url' => ['mission/called']], $missionItems);
     Access::addNavItem(['label' => 'Active', 'url' => ['mission/active']], $missionItems);
     Access::addNavItem(['label' => 'Archive', 'url' => ['mission/archive']], $missionItems);
-//    Access::addNavItem(['label' => 'Templates', 'url' => ['mission/templates']], $missionItems);
-//    Access::addNavItem(['label' => 'Gate', 'url' => ['mission/gate']], $missionItems);
+    //    Access::addNavItem(['label' => 'Templates', 'url' => ['mission/templates']], $missionItems);
+    //    Access::addNavItem(['label' => 'Gate', 'url' => ['mission/gate']], $missionItems);
     Access::addNavItem(['label' => 'Show All', 'url' => ['mission/index']], $missionItems);
-    if(AccessRule::activeStaff()) {
+    if (AccessRule::activeStaff()) {
         $statusIds = \app\models\MissionStatus::getStatusIds();
         $leadMissionsCount = Mission::find()->where(['mission_lead_sid' => AccessRule::activeStaff()->sid])->count();
         if ($leadMissionsCount) {

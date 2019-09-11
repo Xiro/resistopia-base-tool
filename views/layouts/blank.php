@@ -26,7 +26,7 @@ AppAsset::register($this);
 
 <span class="hidden" id="check-lock-url" data-url="<?= \yii\helpers\Url::to(['site/is-locked']) ?>"></span>
 
-<?= AlertBoxes::htmlFromFlashMessages() ?>
+<?= $this->render('_alert-boxes') ?>
 
 <div class="wrap">
     <div class="<?= $isAjax ? "" : "" ?>">

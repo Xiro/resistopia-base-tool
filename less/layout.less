@@ -179,6 +179,20 @@ hr {
 //  }
 //}
 
+#alert-boxes-wrapper {
+  pointer-events: none;
+  .alert-boxes {
+    max-width: 500px;
+    z-index: 200;
+      .alert {
+        pointer-events: all;
+        &.alert-success {
+          background: fade(darken(@brand-success, 30%), 90%);
+        }
+      }
+  }
+}
+
 .content-center {
   display: flex;
   align-items: center;
@@ -575,6 +589,11 @@ body.login {
     max-width: @container-lg;
     padding: 0 @padding-large-horizontal;
   }
+}
+
+img.rotate {
+  position: relative;
+  z-index: 0;
 }
 
 .model-details {
