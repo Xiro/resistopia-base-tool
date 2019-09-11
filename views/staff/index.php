@@ -4,10 +4,13 @@ use app\helpers\Html;
 use app\models\User;
 use mate\yii\widgets\Glyphicon;
 use yii\helpers\Url;
+use app\models\StaffColumnDisplay;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $searchModel app\models\search\StaffSearch */
+/* @var $columnDisplay StaffColumnDisplay */
 
 $this->title = 'Staff';
 $this->params['breadcrumbs'][] = $this->title;
@@ -20,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::encode($this->title) ?>
 
             <span class="heading-btn-group pull-right" style="margin-top: -5px;">
-                <div class="animated-label" style="margin-right: 10px">
+                <div class="animated-label">
                     <div class="form-group">
                         <?php
                         echo \kartik\select2\Select2::widget([
@@ -38,22 +41,38 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]);
                         ?>
                         <label for="download">
-                            <?= Glyphicon::download_alt()?> Download Table
+                            <?= Glyphicon::download_alt() ?> Download Table
                         </label>
                     </div>
                 </div>
                 <?= Html::a(
-                    "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Staff',
-                    ["create"],
-                    ["class" => "btn btn-default", "style" => "float: right; margin-top: 10px;"]
+                    Html::button(Glyphicon::plus() . ' Create Staff', ["class" => "btn btn-default"]),
+                    ["create"]
+                ); ?>
+                <?= Html::button(
+                    Glyphicon::menu_hamburger(),
+                    [
+                        "class" => "btn btn-default accordion-toggle",
+                        "data"  => [
+                            "toggle" => "#staff-column-select"
+                        ]
+                    ]
                 ); ?>
             </span>
         </h1>
+
+        <div id="staff-column-select" style="display: none">
+            <?= $this->render('../staff-column-display/_form', [
+                'model' => $columnDisplay
+            ]) ?>
+        </div>
 
         <div class="">
             <?= $this->render("_table", [
                 "dataProvider" => $dataProvider,
                 "searchModel"  => $searchModel,
+                "exclude"      => $columnDisplay->getExcludeArray(),
+                "mergeExclude" => false,
             ]) ?>
         </div>
     </div>

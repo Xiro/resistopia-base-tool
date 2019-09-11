@@ -168,6 +168,7 @@ $(document).ready(function () {
     });
 
     // system failure
+
     var isLockedUrl = $("#check-lock-url").data('url');
     var isLocked = null;
     $.get(isLockedUrl).done(function (response) {
@@ -248,6 +249,27 @@ $(document).ready(function () {
         if (checkboxes.length === checkedCheckboxes.length) {
             var groupControlCheckbox = checkboxGroup.find(".group-control-checkbox");
             groupControlCheckbox.prop("checked", true);
+        }
+    });
+
+    // accordion
+
+    var accordionSpeed = 250;
+    $(".accordion-toggle").click(function (e) {
+        if($(e.target).is("a") || $(e.target).parents("a").length !== 0) {
+            return null;
+        }
+        var accordionSelect = $(this).data("toggle");
+        var accordionContent = $(accordionSelect);
+
+        var toggleButton = $(this).hasClass("accordion-button") ? $(this) : $(this).find(".accordion-button");
+
+        if(accordionContent.is(":visible")) {
+            toggleButton.removeClass("glyphicon-menu-up").addClass("glyphicon-menu-down");
+            accordionContent.slideUp(accordionSpeed);
+        } else {
+            toggleButton.removeClass("glyphicon-menu-down").addClass("glyphicon-menu-up");
+            accordionContent.slideDown(accordionSpeed);
         }
     });
 

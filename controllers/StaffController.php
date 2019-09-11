@@ -4,16 +4,17 @@ namespace app\controllers;
 
 use app\components\AccessRule;
 use app\models\forms\AccessKeyForm;
-use mate\Resource\CsvResource;
-use Yii;
-use app\models\Staff;
+use app\models\forms\StaffColumnDisplayForm;
 use app\models\forms\StaffForm;
 use app\models\search\StaffSearch;
-use yii\db\ActiveQuery;
+use app\models\Staff;
+use app\models\StaffColumnDisplay;
+use mate\Resource\CsvResource;
+use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * StaffController implements the CRUD actions for Staff model.
@@ -68,8 +69,9 @@ class StaffController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel'  => $searchModel,
-            'dataProvider' => $dataProvider,
+            'searchModel'   => $searchModel,
+            'dataProvider'  => $dataProvider,
+            'columnDisplay' => $this->getColumnDisplay(),
         ]);
     }
 
@@ -82,9 +84,23 @@ class StaffController extends Controller
         $searchModel = new StaffSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $columnDisplay = $this->getColumnDisplay();
+
         return $this->renderPartial('_table-body', [
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
+            'exclude'      => $columnDisplay->getExcludeArray(),
+            'mergeExclude' => false
         ]);
+    }
+
+    protected function getColumnDisplay()
+    {
+        $columnDisplay = AccessRule::activeStaff()->staffColumnDisplay;
+        if (!$columnDisplay) {
+            $columnDisplay = new StaffColumnDisplay();
+            $columnDisplay->loadDefaultValues();
+        }
+        return $columnDisplay;
     }
 
     /**
@@ -121,9 +137,9 @@ class StaffController extends Controller
         $dataProvider->pagination->setPageSize(5);
 
         return $this->renderPartial('_table-form-body', [
-            'dataProvider' => $dataProvider,
-            "modelName"    => "MissionForm",
-            'exclude'      => ['team'],
+            'dataProvider'           => $dataProvider,
+            "modelName"              => "MissionForm",
+            'exclude'                => ['team'],
             'actionEnableValidators' => $searchModel->getMissionActionEnableValidators(),
         ]);
     }
@@ -242,6 +258,29 @@ class StaffController extends Controller
             'model'     => $model,
             'accessKey' => $accessKey,
         ]);
+    }
+
+    /**
+     * Updates or creates a StaffColumnDisplay model for the active user
+     * If update is successful, the browser will be redirected to the 'index' page.
+     * @return mixed
+     */
+    public function actionColumnDisplay()
+    {
+        $forStaff = AccessRule::activeStaff();
+        $model = $forStaff->staffColumnDisplay;
+        if ($model === null) {
+            $model = new StaffColumnDisplay();
+            $model->staff_sid = $forStaff->sid;
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->addFlash('success', 'Staff column display settings saved');
+        } else {
+            Yii::$app->session->addFlash('danger', 'Error saving your settings');
+        }
+
+        return $this->redirect(['index']);
     }
 
     /**

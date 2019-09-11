@@ -61,11 +61,14 @@ use yii\db\ActiveRecord;
  * @property Team $team
  * @property StaffBackground $staffBackground
  * @property StaffFileMemo[] $staffFileMemos
+ * @property StaffColumnDisplay $staffColumnDisplay
  * @property User $user
  * @property Changelog[] $changes
  */
 class Staff extends ActiveRecord
 {
+
+    public static $defaultTableExclude = ['gender', 'date_of_birth', 'height', 'eye_color', 'profession', 'blood_type', 'section', 'citizenship', 'registered', 'resistance_cell', 'status_alive', 'created', 'updated'];
 
     /**
      * @inheritdoc
@@ -434,6 +437,14 @@ class Staff extends ActiveRecord
     public function getStaffFileMemos()
     {
         return $this->hasMany(StaffFileMemo::class, ['sid' => 'sid']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStaffColumnDisplay()
+    {
+        return $this->hasOne(StaffColumnDisplay::class, ['staff_sid' => 'sid']);
     }
 
     /**

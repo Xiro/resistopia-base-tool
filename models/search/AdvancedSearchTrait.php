@@ -52,6 +52,22 @@ trait AdvancedSearchTrait
         $query->orderBy($order);
     }
 
+    /**
+     * @param ActiveQuery $query
+     * @param $where
+     */
+    public function searchNear(ActiveQuery $query, array $where)
+    {
+        $order = [];
+        foreach ($where as $column => $value) {
+            if(empty($value)) {
+                continue;
+            }
+            $order["ABS(DIFF($column, '$value'))"] = 'ASC';
+        }
+        $query->orderBy($order);
+    }
+
     public function searchCaseInsensitive(ActiveQuery $query, array $where)
     {
         foreach ($where as $key => $value) {
