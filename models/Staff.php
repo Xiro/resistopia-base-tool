@@ -38,7 +38,7 @@ use yii\db\ActiveRecord;
  * @property string $nameWithSid
  * @property string $fullSID
  * @property integer $currentMediFoam
- * @property integer $securityLevel
+ * @property StaffSecurityLevel $securityLevel
  *
  * @property MediFoamDistribution[] $mediFoamDistributions
  * @property MedicineCheckup[] $medicineCheckups
@@ -68,7 +68,7 @@ use yii\db\ActiveRecord;
 class Staff extends ActiveRecord
 {
 
-    public static $defaultTableExclude = ['gender', 'date_of_birth', 'height', 'eye_color', 'profession', 'blood_type', 'section', 'citizenship', 'registered', 'resistance_cell', 'status_alive', 'created', 'updated'];
+    public static $defaultTableExclude = ['gender', 'date_of_birth', 'height', 'eye_color', 'profession', 'blood_type', 'section', 'citizenship', 'security_level', 'registered', 'resistance_cell', 'status_alive', 'created', 'updated'];
 
     /**
      * @inheritdoc
@@ -263,19 +263,20 @@ class Staff extends ActiveRecord
 
     public function getSecurityLevel()
     {
-        $accessList = AccessKey::findAccessList($this->access_key_id);
-        $accessList = array_flip($accessList);
-        $securityLevel = 0;
-        foreach ($accessList as $accessKey) {
-            if('security-level/' != substr($accessKey, 0, 15)) {
-                continue;
-            }
-            $foundLevel = (int) substr($accessKey, 15);
-            if($foundLevel > $securityLevel) {
-                $securityLevel = $foundLevel;
-            }
-        }
-        return $securityLevel;
+//        $accessList = AccessKey::findAccessList($this->access_key_id);
+//        $accessList = array_flip($accessList);
+//        $securityLevel = 0;
+//        foreach ($accessList as $accessKey) {
+//            if('security-level/' != substr($accessKey, 0, 15)) {
+//                continue;
+//            }
+//            $foundLevel = (int) substr($accessKey, 15);
+//            if($foundLevel > $securityLevel) {
+//                $securityLevel = $foundLevel;
+//            }
+//        }
+//        return $securityLevel;
+        return $this->hasOne(StaffSecurityLevel::class, ['sid' => 'sid']);
     }
 
     /**

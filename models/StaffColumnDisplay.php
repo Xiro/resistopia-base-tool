@@ -23,6 +23,7 @@ use yii\db\ActiveRecord;
  * @property integer $department
  * @property integer $citizenship
  * @property integer $rank
+ * @property integer $security_level
  * @property integer $registered
  * @property integer $resistance_cell
  * @property integer $callsign
@@ -49,7 +50,7 @@ class StaffColumnDisplay extends ActiveRecord
     public function rules()
     {
         return [
-            [['sid', 'name', 'gender', 'date_of_birth', 'height', 'eye_color', 'profession', 'blood_type', 'team', 'special_function', 'section', 'department', 'citizenship', 'rank', 'registered', 'resistance_cell', 'callsign', 'status_alive', 'created', 'updated'], 'integer'],
+            [['sid', 'name', 'gender', 'date_of_birth', 'height', 'eye_color', 'profession', 'blood_type', 'team', 'special_function', 'section', 'department', 'citizenship', 'rank', 'security_level', 'registered', 'resistance_cell', 'callsign', 'status_alive', 'created', 'updated'], 'integer'],
             [['staff_sid'], 'required'],
             [['staff_sid'], 'string', 'max' => 8],
             [['staff_sid'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['staff_sid' => 'sid']],
@@ -77,6 +78,7 @@ class StaffColumnDisplay extends ActiveRecord
             'department' => 'Department',
             'citizenship' => 'Citizenship',
             'rank' => 'Rank',
+            'security_level' => 'Security Level',
             'registered' => 'Registered',
             'resistance_cell' => 'First Registered At',
             'callsign' => 'Callsign',

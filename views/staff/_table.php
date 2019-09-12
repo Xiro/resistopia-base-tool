@@ -249,6 +249,34 @@ if ($searchModel) {
                     ]) ?>
                 </th>
             <?php endif; ?>
+            <?php if (!in_array("security_level", $exclude)): ?>
+                <?php $excludeSearchParams[] = "security_level"; ?>
+                <th class="security_level">
+                    <?= $form->field($model, 'security_level', [
+                        'labelOptions' => ['class' => ($model->security_level ? 'move' : '')]
+                    ])->widget(Select2::class, [
+                        'showToggleAll' => false,
+                        'data'          => [
+                                '0' => 'Level 0',
+                                '1' => 'Level 1',
+                                '2' => 'Level 2',
+                                '3' => 'Level 3',
+                                '4' => 'Level 4',
+                                '5' => 'Level 5',
+                                '6' => 'Level 6',
+                                '7' => 'Level 7',
+                                '8' => 'Level 8',
+                                '9' => 'Level 9',
+                            ],
+                        'options'       => [
+                            'placeholder' => '',
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                        ],
+                    ])->label("Security") ?>
+                </th>
+            <?php endif; ?>
             <?php if (!in_array("registered", $exclude)): ?>
                 <?php $excludeSearchParams[] = "registered"; ?>
                 <th class="registered">
@@ -406,6 +434,9 @@ if ($searchModel) {
             <?php endif; ?>
             <?php if (!in_array("rank", $exclude)): ?>
                 <th class="rank"><?= 'Rank' ?></th>
+            <?php endif; ?>
+            <?php if (!in_array("security_level", $exclude)): ?>
+                <th class="security_level"><?= 'Security Level' ?></th>
             <?php endif; ?>
             <?php if (!in_array("registered", $exclude)): ?>
                 <th class="registered"><?= 'Registered' ?></th>

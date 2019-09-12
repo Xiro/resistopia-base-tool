@@ -113,7 +113,7 @@ $this->params['breadcrumbs'][] = $this->title;
     $systemInfo["Alive"] = $model->status_alive ? "Yes" : "No";
     $systemInfo["Created"] = date("d.m.Y H:i", strtotime($model->created));
 
-    $systemInfo["Security"] = "Level " . $model->securityLevel;
+    $systemInfo["Security"] = "Level " . ($model->securityLevel ? $model->securityLevel->security_level : '0');
     $systemInfo["Last Update"] = date("d.m.Y H:i", strtotime($model->updated));
     $systemInfo["In Base"] = $model->status_in_base ? "Yes" : "No";
 

@@ -18,6 +18,7 @@ class StaffSearch extends Staff
 
     public $name;
     public $section;
+    public $security_level;
 
     /**
      * @inheritdoc
@@ -25,7 +26,7 @@ class StaffSearch extends Staff
     public function rules()
     {
         return [
-            [['sid', 'forename', 'surname', 'nickname', 'name', 'gender', 'date_of_birth', 'profession', 'section', 'callsign', 'created', 'updated', 'blood_type_id'], 'safe'],
+            [['sid', 'forename', 'surname', 'nickname', 'name', 'gender', 'date_of_birth', 'profession', 'section', 'security_level', 'callsign', 'created', 'updated', 'blood_type_id'], 'safe'],
             [['height', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'section_id', 'special_function_id', 'citizenship_id', 'eye_color_id', 'team_id'], 'integer'],
         ];
     }
@@ -114,6 +115,11 @@ class StaffSearch extends Staff
         if($this->section) {
             $query->joinWith("section")
                 ->andFilterWhere(['section.section' => $this->section]);
+        }
+
+        if($this->security_level) {
+            $query->joinWith("securityLevel")
+                ->andFilterWhere(['staff_security_level.security_level' => $this->security_level]);
         }
 
         return $dataProvider;

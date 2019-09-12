@@ -101,6 +101,11 @@ if (isset($exclude) && $mergeExclude) {
                 <?= $model->rank_id ? $model->rank->short_name : null ?>
             </td>
         <?php endif; ?>
+        <?php if (!in_array("security_level", $exclude)): ?>
+            <td class="security_level">
+                <?= "Level " . ($model->securityLevel ? $model->securityLevel->security_level : "0") ?>
+            </td>
+        <?php endif; ?>
         <?php if (!in_array("registered", $exclude)): ?>
             <td class="registered">
                 <?= $model->registered ? date("d.m.Y", strtotime($model->registered)) : "" ?>

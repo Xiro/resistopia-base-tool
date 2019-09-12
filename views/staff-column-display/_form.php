@@ -108,6 +108,11 @@ use mate\yii\widgets\ValMap;
 
     <div class="row">
         <div class="col-sm-6 col-md-4 col-lg-3">
+            <?= $form->field($model, 'security_level')->checkbox([
+                'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
+            ]) ?>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
             <?= $form->field($model, 'registered')->checkbox([
                 'template' => '<div class="checkbox">{beginLabel}{input}<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>{labelTitle}{endLabel}{error}{hint}</div>',
             ]) ?>
