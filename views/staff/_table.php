@@ -27,6 +27,7 @@ use app\models\Staff;
 $form = null;
 $searchModel = !isset($searchModel) ? null : $searchModel;
 $searchUrl = !isset($searchUrl) ? Url::to(["staff/search"]) : $searchUrl;
+$mergeExclude = !isset($mergeExclude) ? true : $mergeExclude;
 /** @var \mate\yii\components\SelectData $selectData */
 $selectData = Yii::$app->selectData;
 

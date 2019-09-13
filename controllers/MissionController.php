@@ -77,14 +77,14 @@ class MissionController extends Controller
         return $this->renderIndexView('Missions', false);
     }
 
-//    /**
-//     * Lists all Mission models.
-//     * @return mixed
-//     */
-//    public function actionTemplates()
-//    {
-//        return $this->renderIndexView('Mission Templates', ['template']);
-//    }
+    /**
+     * Lists all Mission models.
+     * @return mixed
+     */
+    public function actionTemplates()
+    {
+        return $this->renderIndexView('Mission Templates', ['template']);
+    }
 
     /**
      * Lists all Mission models.
@@ -102,7 +102,7 @@ class MissionController extends Controller
      */
     protected function renderIndexView($title, $statusNames)
     {
-//        $this->actionCheckPublishMission();
+        $this->actionCheckPublishMission();
         $searchModel = new MissionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -136,7 +136,7 @@ class MissionController extends Controller
      */
     public function actionSearch($statusIds = null)
     {
-//        $this->actionCheckPublishMission();
+        $this->actionCheckPublishMission();
         $searchModel = new MissionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if ($statusIds) {
@@ -222,7 +222,7 @@ class MissionController extends Controller
      */
     protected function renderTables($tables, $title = null, $view = 'tables')
     {
-//        $this->actionCheckPublishMission();
+        $this->actionCheckPublishMission();
         if (Yii::$app->request->isAjax) {
             $this->layout = false;
         }
@@ -413,22 +413,34 @@ class MissionController extends Controller
 
     }
 
-//    /**
-//     * Check for missions to automatically publish
-//     */
-//    public function actionCheckPublishMission()
-//    {
-//        $statusIds = $this->getStatusIds();
-//        /** @var Mission[] $missions */
-//        $missions = Mission::find()
-//            ->where(['mission_status_id' => $statusIds['planing']])
-//            ->andWhere(['<=', 'time_publish', date('Y-m-d H:i:s')])
-//            ->all();
-//        foreach ($missions as $mission) {
-//            $mission->mission_status_id = $statusIds['openLeadercall'];
-//            $mission->save();
-//        }
-//    }
+    /**
+     * Check for missions to automatically publish
+     */
+    public function actionCheckPublishMission()
+    {
+        $statusIds = $this->getStatusIds();
+        /** @var Mission[] $missions */
+        $missions = Mission::find()
+            ->where(['mission_status_id' => $statusIds['OT']])
+            ->andWhere(['<=', 'time_publish', date('Y-m-d H:i:s')])
+            ->all();
+        foreach ($missions as $mission) {
+            $mission->mission_status_id = $statusIds['planing'];
+            $mission->save();
+        }
+    }
+
+    public function actionIsReceivingData()
+    {
+        $receivingTime = strtotime("now +10 seconds");
+        $statusIds = $this->getStatusIds();
+        /** @var Mission[] $missions */
+        $missionCount = Mission::find()
+            ->where(['mission_status_id' => $statusIds['OT']])
+            ->andWhere(['<=', 'time_publish', date('Y-m-d H:i:s', $receivingTime)])
+            ->count();
+        return $missionCount > 0 ? 1 : 0;
+    }
 
     /**
      * Deletes an existing EyeColor model.

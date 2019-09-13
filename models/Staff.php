@@ -87,7 +87,7 @@ class Staff extends ActiveRecord
             [['sid', 'forename', 'surname', 'gender', 'date_of_birth', 'access_key_id', 'section_id', 'resistance_cell_id', 'registered'], 'required'],
             [['gender'], 'string'],
             [['date_of_birth', 'registered', 'created', 'updated'], 'safe'],
-            [['height', 'status_alive', 'status_in_base', 'squat_number', 'access_key_id', 'rank_id', 'section_id', 'special_function_id', 'eye_color_id', 'blood_type_id'], 'integer'],
+            [['height', 'status_alive', 'squat_number', 'access_key_id', 'rank_id', 'section_id', 'special_function_id', 'eye_color_id', 'blood_type_id'], 'integer'],
             [['sid'], 'string', 'max' => 8],
             [['forename', 'surname', 'nickname', 'profession'], 'string', 'max' => 128],
             [['callsign'], 'string', 'max' => 5],

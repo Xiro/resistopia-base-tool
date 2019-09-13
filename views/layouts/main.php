@@ -37,7 +37,24 @@ AppAsset::register($this);
 
 <?= $this->render('_alert-boxes') ?>
 
+<div class="receiving-message content-center" style="display: none">
+    <div class="alert alert-success">
+        <h2>Receiving data from Sanctuary</h2>
+        <?= Html::img(
+            Yii::getAlias('@web/img/phoenix_500_green.png'),
+            [
+                'class' => 'rotate',
+                'speed' => 1500,
+                'images' => json_encode([
+                    Yii::getAlias('@web/img/phoenix_500_green.png'),
+                ]),
+            ]
+        ); ?>
+    </div>
+</div>
+
 <span class="hidden" id="check-lock-url" data-url="<?= \yii\helpers\Url::to(['site/is-locked']) ?>"></span>
+<span class="hidden" id="check-receiving-data-url" data-url="<?= \yii\helpers\Url::to(['mission/is-receiving-data']) ?>"></span>
 <div class="wrap">
     <?php
     $staff = AccessRule::activeStaff(false);
@@ -100,7 +117,7 @@ AppAsset::register($this);
     //    Access::addNavItem(['label' => 'Called', 'url' => ['mission/called']], $missionItems);
     Access::addNavItem(['label' => 'Active', 'url' => ['mission/active']], $missionItems);
     Access::addNavItem(['label' => 'Archive', 'url' => ['mission/archive']], $missionItems);
-    //    Access::addNavItem(['label' => 'Templates', 'url' => ['mission/templates']], $missionItems);
+        Access::addNavItem(['label' => 'Templates', 'url' => ['mission/templates']], $missionItems);
     //    Access::addNavItem(['label' => 'Gate', 'url' => ['mission/gate']], $missionItems);
     Access::addNavItem(['label' => 'Show All', 'url' => ['mission/index']], $missionItems);
     if (AccessRule::activeStaff()) {

@@ -109,6 +109,33 @@ use yii\data\ActiveDataProvider;
         </div>
     </div>
 
+    <?php if(Access::to('mission/create-ot') && ($model->isNewRecord || $model->missionStatus->name == "OT")): ?>
+    <h4>Schedule</h4>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <?= $form->field($model, 'time_publish', [
+        'options'      => ['class' => "form-group date-picker"],
+        'labelOptions' => ['class' => ($model->time_publish ? "move" : "")]
+    ])->widget(DateTimePicker::class, [
+        'size'           => 'sm',
+        'template'       => '{input}',
+        'pickButtonIcon' => 'glyphicon glyphicon-time',
+        'clientOptions'  => [
+            'type'       => 'TYPE_BUTTON',
+            'startView'  => 1,
+            'minView'    => 0,
+            'maxView'    => 1,
+            'autoclose'  => true,
+            'linkFormat' => 'HH:ii P', // if inline = true
+            // 'format' => 'HH:ii P', // if inline = false
+            'todayBtn'   => true
+        ]
+    ])->label('Publish Time'); ?>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <!--<h4>Schedule</h4>
 
     <div class="row">

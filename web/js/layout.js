@@ -175,6 +175,9 @@ $(document).ready(function () {
         isLocked = response;
     });
     var checkLockLoop = function () {
+        if(!isLockedUrl) {
+            return null;
+        }
         setTimeout(function () {
             $.get(isLockedUrl).done(function (response) {
                 if (response !== isLocked) {
@@ -185,6 +188,26 @@ $(document).ready(function () {
         }, 20000);
     };
     checkLockLoop();
+
+    // receiving data screen
+
+    var isReceivingUrl = $("#check-receiving-data-url").data('url');
+    var checkReceiving = function () {
+        setTimeout(function () {
+            if(!isReceivingUrl) {
+                return null;
+            }
+            $.get(isReceivingUrl).done(function (response) {
+                if (response === '1' || response === 1) {
+                    $('.receiving-message').fadeIn()
+                        .delay(10000)
+                        .fadeOut();
+                }
+                checkReceiving();
+            });
+        }, 10000);
+    };
+    checkReceiving();
 
     // reload button
 
