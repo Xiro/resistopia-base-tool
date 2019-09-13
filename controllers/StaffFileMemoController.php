@@ -4,14 +4,13 @@ namespace app\controllers;
 
 use app\components\Access;
 use app\components\AccessRule;
-use Yii;
-use app\models\StaffFileMemo;
 use app\models\search\StaffFileMemoSearch;
+use app\models\StaffFileMemo;
+use Yii;
 use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\web\ForbiddenHttpException;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * StaffFileMemoController implements the CRUD actions for StaffFileMemo model.
@@ -116,7 +115,7 @@ class StaffFileMemoController extends Controller
         $model->author_sid = AccessRule::activeStaff()->sid;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->goBack(['index']);
+            return $this->goBack(['staff/index']);
         }
 
         return $this->render('create', ["model" => $model]);
