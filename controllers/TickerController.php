@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\ScreenText;
 use Yii;
 use app\models\Ticker;
 use app\models\search\TickerSearch;
@@ -67,6 +68,17 @@ class TickerController extends Controller
         $messages = array_column($messages, 'message');
 
         return json_encode($messages);
+    }
+
+    public function actionUpdateScreenText()
+    {
+        $model = ScreenText::read();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('update-screen-text', ["model" => $model]);
     }
 
     /**

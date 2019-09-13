@@ -79,14 +79,19 @@ TickerAsset::register($this);
                 <?php endforeach; ?>
                 </tbody>
             </table>
+            <div class="screen-text jumbotron">
+                <?php $screenText = \app\models\ScreenText::read(); ?>
+                <?= $screenText->heading ? '<h2>' . $screenText->heading . '</h2>' : ''; ?>
+                <?= $screenText->message ? '<div class="lead">' . $screenText->message . '</div>' : ''; ?>
+            </div>
         </div>
 
         <?php if (!Yii::$app->request->isAjax): ?>
         <div class="legend" style="font-size: 13px">
-            <div style="width: 50%; display: inline-block; float:left;">
-                <b>Status Planing:</b> Mission vom CIC geplant. Als in Bereitschaft gemeldete Trupps werden kontaktiert.<br>
-                <b>Status Active:</b> Mission aktiv im Feld.<br>
-            </div>
+<!--            <div style="width: 50%; display: inline-block; float:left;">-->
+<!--                <b>Status Planing:</b> Mission vom CIC geplant. Als in Bereitschaft gemeldete Trupps werden kontaktiert.<br>-->
+<!--                <b>Status Active:</b> Mission aktiv im Feld.<br>-->
+<!--            </div>-->
 <!--            <div style="width: 50%; display: inline-block">-->
 <!--                <b>LST - Limit of Start Time:</b> Latest time the mission team should leave the gate<br>-->
 <!--                <b>ETE - Estimated Time of Execution:</b> Time the mission is executed in the field<br>-->

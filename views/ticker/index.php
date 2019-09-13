@@ -18,6 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <span class="heading-btn-group pull-right">
             <?= Html::a(
+                "<span class=\"glyphicon glyphicon-pencil\"></span> " . 'Update Screen Text',
+                ["update-screen-text"],
+                ["class" => "btn btn-default"]
+            ); ?>
+            <?= Html::a(
                 "<span class=\"glyphicon glyphicon-plus\"></span> " . 'Create Ticker',
                 ["create"],
                 ["class" => "btn btn-default"]

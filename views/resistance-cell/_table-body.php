@@ -2,7 +2,7 @@
 /* @var $dataProvider \yii\data\ActiveDataProvider */
 /* @var $exclude array */
 
-use yii\helpers\Html;
+use app\helpers\Html;
 use mate\yii\widgets\Glyphicon;
 
 $pagination = $dataProvider->pagination;
