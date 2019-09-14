@@ -27,9 +27,9 @@ $exclude = !isset($exclude) ? array() : $exclude;
                 <?= $model->message ?>
             </td>
         <?php endif; ?>
-        <?php if (!in_array("created", $exclude)): ?>
-            <td class="created">
-                <?= $model->created ? date('H:i', strtotime($model->created)) : "" ?>
+        <?php if (!in_array("age", $exclude)): ?>
+            <td class="age">
+                <?= $model->created ? round((time() - strtotime($model->created)) / 60) . " min" : "" ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("actions", $exclude)): ?>

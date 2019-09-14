@@ -53,10 +53,10 @@ if ($searchModel) {
                     <?= $form->field($model, 'message')->textInput(['maxlength' => true]) ?>
                 </th>
             <?php endif; ?>
-            <?php if (!in_array("created", $exclude)): ?>
-                <?php $excludeSearchParams[] = "created"; ?>
-                <th class="created">
-                    <?= $form->field($model, 'created')->textInput() ?>
+            <?php if (!in_array("age", $exclude)): ?>
+                <?php $excludeSearchParams[] = "age"; ?>
+                <th class="age">
+                    <div style="position: relative;left: 10px;top:-12px">Age</div>
                 </th>
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
@@ -82,8 +82,8 @@ if ($searchModel) {
             <?php if (!in_array("message", $exclude)): ?>
                 <th class="message"><?= 'Message' ?></th>
             <?php endif; ?>
-            <?php if (!in_array("created", $exclude)): ?>
-                <th class="created"><?= 'Created' ?></th>
+            <?php if (!in_array("age", $exclude)): ?>
+                <th class="age"><?= 'Age' ?></th>
             <?php endif; ?>
             <?php if (!in_array("actions", $exclude)): ?>
                 <th></th>

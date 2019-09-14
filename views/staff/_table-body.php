@@ -88,7 +88,7 @@ if (isset($exclude) && $mergeExclude) {
         <?php endif; ?>
         <?php if (!in_array("department", $exclude)): ?>
             <td class="department">
-                <?= $model->section_id ? $model->section->department : null ?>
+                <?= $model->section_id ? $model->section->name : null ?>
             </td>
         <?php endif; ?>
         <?php if (!in_array("citizenship", $exclude)): ?>
