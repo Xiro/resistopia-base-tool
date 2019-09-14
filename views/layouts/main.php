@@ -120,6 +120,7 @@ AppAsset::register($this);
         Access::addNavItem(['label' => 'Templates', 'url' => ['mission/templates']], $missionItems);
     //    Access::addNavItem(['label' => 'Gate', 'url' => ['mission/gate']], $missionItems);
     Access::addNavItem(['label' => 'Show All', 'url' => ['mission/index']], $missionItems);
+    Access::addNavItem(['label' => 'Radio Messages', 'url' => ['radio-message/index']], $missionItems);
     if (AccessRule::activeStaff()) {
         $statusIds = \app\models\MissionStatus::getStatusIds();
         $leadMissionsCount = Mission::find()->where(['mission_lead_sid' => AccessRule::activeStaff()->sid])->count();
