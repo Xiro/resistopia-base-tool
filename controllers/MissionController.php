@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use app\components\AccessRule;
 use app\models\forms\MissionForm;
-use app\models\forms\MissionGateForm;
 use app\models\Mission;
 use app\models\MissionStatus;
 use app\models\Operation;
@@ -157,11 +156,11 @@ class MissionController extends Controller
     public function actionControl()
     {
         return $this->renderTables([
-//            'Back'    => ['back'],
             'Active'  => ['active'],
 //            'Ready'   => ['ready'],
 //            'Open'    => ['openLeadercall', 'openCrewcall'],
             'Planing' => ['planing'],
+            'Back'    => ['back'],
         ], 'Mission Control', 'control');
     }
 

@@ -98,6 +98,19 @@ $exclude = !isset($exclude) ? ['time_ete', 'mission_type', 'action-status-button
                 case 'active':
                     echo Html::a(
                         Html::button(
+                            Glyphicon::transfer() . ' Back',
+                            ['class' => 'btn btn-default']
+                        ),
+                        [
+                            'mission/switch-status',
+                            'missionId' => $model->id,
+                            'statusId'  => $statusData['back'],
+                        ]
+                    );
+                    break;
+                case 'back':
+                    echo Html::a(
+                        Html::button(
                             Glyphicon::edit() . ' Debrief',
                             ['class' => 'btn btn-default']
                         ),
